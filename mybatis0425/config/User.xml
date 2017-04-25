@@ -19,4 +19,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</selectKey>
 		insert into user (username,birthday,sex,address) values(#{username},#{birthday},#{sex},#{address})
 	</insert>
+	
+	<delete id="delUserById" parameterType="int">
+		delete from user where id=#{id}
+	</delete>
+	
+	<update id="updateUserById" parameterType="cn.itheima.pojo.User">
+		update user set username=#{username} where id=#{id}
+	</update>
 </mapper>
