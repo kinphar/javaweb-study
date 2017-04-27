@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cn.itheima.mapper.UserMapper;
+import cn.itheima.pojo.QueryVo;
 import cn.itheima.pojo.User;
 
 public class UserMapperTest {
@@ -48,12 +49,27 @@ private SqlSessionFactory factory;
 		UserMapper mapper = openSession.getMapper(UserMapper.class);
 		
 		User user = new User();
-		user.setUsername("老丁");
+		user.setUsername("老王");
 		user.setSex("1");
 		user.setBirthday(new Date());
 		user.setAddress("福建福州");
 		mapper.insertUser(user);
 		
 		openSession.commit();		
+	}
+	
+	@Test
+	public void testFindUserByVo() throws Exception{
+		SqlSession openSession = factory.openSession();
+		UserMapper mapper = openSession.getMapper(UserMapper.class);
+		
+		QueryVo vo = new QueryVo();
+		User user = new User();
+		user.setUsername("王");
+		user.setSex("1");
+		vo.setUser(user);
+		
+		List<User> list = mapper.findUserByVo(vo);	
+		System.out.println(list);
 	}
 }

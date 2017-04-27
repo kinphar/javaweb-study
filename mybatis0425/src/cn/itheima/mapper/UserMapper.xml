@@ -14,10 +14,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="insertUser" parameterType="user">
-		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+		<selectKey keyProperty="id" order="AFTER" resultType="int">
 			select LAST_INSERT_ID()
 		</selectKey>
 		insert into user (username,birthday,sex,address) values(#{username},#{birthday},#{sex},#{address})
 	</insert>
+	
+	<select id="findUserByVo" parameterType="cn.itheima.pojo.QueryVo" resultType="user">
+		select * from user where username like '%${user.username}%' and sex=#{user.sex}
+	</select>
 	
 </mapper>

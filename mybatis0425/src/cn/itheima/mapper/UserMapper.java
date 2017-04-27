@@ -2,6 +2,7 @@ package cn.itheima.mapper;
 
 import java.util.List;
 
+import cn.itheima.pojo.QueryVo;
 import cn.itheima.pojo.User;
 
 public interface UserMapper {
@@ -11,4 +12,6 @@ public interface UserMapper {
 	public List<User> findUserByUserName(String userName);
 	
 	public void insertUser(User user);
+	
+	public List<User> findUserByVo(QueryVo vo);
 }
