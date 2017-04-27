@@ -81,4 +81,16 @@ private SqlSessionFactory factory;
 		Integer count = mapper.findUserCount();
 		System.out.println("====" + count);
 	}
+	
+	@Test
+	public void testFindUserByUserNameAndSex() throws Exception{
+		SqlSession openSession = factory.openSession();
+		UserMapper mapper = openSession.getMapper(UserMapper.class);
+		
+		User user = new User();
+		user.setUsername("Íõ");
+		//user.setSex("1");
+		List<User> list = mapper.findUserByUserNameAndSex(user);
+		System.out.println(list);
+	}
 }

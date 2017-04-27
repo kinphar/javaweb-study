@@ -16,4 +16,6 @@ public interface UserMapper {
 	public List<User> findUserByVo(QueryVo vo);
 	
 	public Integer findUserCount();
+	
+	public List<User> findUserByUserNameAndSex(User user);
 }
