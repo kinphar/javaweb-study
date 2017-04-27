@@ -14,4 +14,6 @@ public interface UserMapper {
 	public void insertUser(User user);
 	
 	public List<User> findUserByVo(QueryVo vo);
+	
+	public Integer findUserCount();
 }

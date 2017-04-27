@@ -72,4 +72,13 @@ private SqlSessionFactory factory;
 		List<User> list = mapper.findUserByVo(vo);	
 		System.out.println(list);
 	}
+	
+	@Test
+	public void testFindUserCount() throws Exception{
+		SqlSession openSession = factory.openSession();
+		UserMapper mapper = openSession.getMapper(UserMapper.class);
+		
+		Integer count = mapper.findUserCount();
+		System.out.println("====" + count);
+	}
 }

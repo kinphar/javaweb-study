@@ -24,4 +24,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from user where username like '%${user.username}%' and sex=#{user.sex}
 	</select>
 	
+	<select id="findUserCount" resultType="java.lang.Integer">
+		select count(*) from user
+	</select>
+	
 </mapper>
