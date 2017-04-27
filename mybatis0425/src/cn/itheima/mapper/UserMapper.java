@@ -18,4 +18,6 @@ public interface UserMapper {
 	public Integer findUserCount();
 	
 	public List<User> findUserByUserNameAndSex(User user);
+	
+	public List<User> findUserByIds(QueryVo vo);
 }

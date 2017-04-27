@@ -1,6 +1,7 @@
 package mybatis0425;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -89,8 +90,23 @@ private SqlSessionFactory factory;
 		
 		User user = new User();
 		user.setUsername("Íõ");
-		//user.setSex("1");
+		user.setSex("1");
 		List<User> list = mapper.findUserByUserNameAndSex(user);
+		System.out.println(list);
+	}
+	
+	@Test
+	public void testFindUserByIds() throws Exception{
+		SqlSession openSession = factory.openSession();
+		UserMapper mapper = openSession.getMapper(UserMapper.class);
+		
+		QueryVo vo = new QueryVo();
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(1);
+		ids.add(16);
+		ids.add(29);
+		vo.setIds(ids);
+		List<User> list = mapper.findUserByIds(vo);		
 		System.out.println(list);
 	}
 }

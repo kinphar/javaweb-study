@@ -44,4 +44,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="user_where"></include>
 	</select>
 	
+	<select id="findUserByIds" parameterType="cn.itheima.pojo.QueryVo" resultType="cn.itheima.pojo.User">
+		select * from user
+		<where>
+			<if test="ids != null">
+				<foreach collection="ids" item="id" open="id in (" close=")" separator=",">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	
 </mapper>
