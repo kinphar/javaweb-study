@@ -4,6 +4,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<properties resource="db.properties"></properties>
+	<typeAliases>
+		<!-- <typeAlias type="cn.itheima.pojo.User" alias="user"/> -->
+		<package name="cn.itheima.pojo"/>
+	</typeAliases>
 	
 	<!-- 和spring整合后 environments配置将废除-->
 	<environments default="development">
@@ -22,7 +26,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	
 	<mappers>
 		<mapper resource="User.xml"/>
-		<mapper class="cn.itheima.mapper.UserMapper"/>
+		<!-- <mapper class="cn.itheima.mapper.UserMapper"/> -->
+		<package name="cn.itheima.mapper"/>
 	</mappers>
 	
 </configuration>
