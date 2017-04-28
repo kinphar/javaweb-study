@@ -23,4 +23,6 @@ public interface UserMapper {
 	public List<User> findUserByIds(QueryVo vo);
 	
 	public List<Orders> findOrdersAndUser();
+	
+	public List<User> findUserAndOrders();
 }

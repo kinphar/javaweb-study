@@ -119,4 +119,13 @@ private SqlSessionFactory factory;
 		List<Orders> list = mapper.findOrdersAndUser();
 		System.out.println();
 	}
+	
+	@Test
+	public void testFindUserAndOrders() throws Exception{
+		SqlSession openSession = factory.openSession();
+		UserMapper mapper = openSession.getMapper(UserMapper.class);
+		
+		List<User> list = mapper.findUserAndOrders();
+		System.out.println(list);
+	}
 }
