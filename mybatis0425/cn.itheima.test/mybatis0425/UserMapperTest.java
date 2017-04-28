@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import cn.itheima.mapper.UserMapper;
+import cn.itheima.pojo.Orders;
 import cn.itheima.pojo.QueryVo;
 import cn.itheima.pojo.User;
 
@@ -108,5 +109,14 @@ private SqlSessionFactory factory;
 		vo.setIds(ids);
 		List<User> list = mapper.findUserByIds(vo);		
 		System.out.println(list);
+	}
+	
+	@Test
+	public void testFindOrdersAndUser() throws Exception{
+		SqlSession openSession = factory.openSession();
+		UserMapper mapper = openSession.getMapper(UserMapper.class);
+		
+		List<Orders> list = mapper.findOrdersAndUser();
+		System.out.println();
 	}
 }

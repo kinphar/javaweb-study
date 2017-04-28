@@ -55,4 +55,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 	
+	<resultMap type="cn.itheima.pojo.Orders" id="orderAndUserResultMap">
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+		<result column="number" property="number"/>
+		<result column="createtime" property="createtime"/>
+		<result column="note" property="note"/>
+		
+		<association property="user" javaType="cn.itheima.pojo.User">
+			<id column="uid" property="id"/>
+			<result column="username" property="username"/>
+			<result column="birthday" property="birthday"/>
+			<result column="sex" property="sex"/>
+			<result column="address" property="address"/>
+		</association>
+	</resultMap>
+	<select id="findOrdersAndUser" resultMap="orderAndUserResultMap">
+		select a.*, b.id uid, username, birthday, sex
+		from orders a, user b
+		where a.user_id = b.id
+	</select>
+	
 </mapper>
