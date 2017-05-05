@@ -12,7 +12,7 @@
         
     <context:component-scan base-package="cn.itheima.controller"></context:component-scan>
     
-    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
     
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
@@ -21,5 +21,14 @@
 		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<!-- jsp后缀 -->
 		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="cn.itheima.controller.converter.CustomGlobalStrToDateConverter"/>
+			</set>
+		</property>
 	</bean>
 </beans>

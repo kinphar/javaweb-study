@@ -46,7 +46,7 @@ public class ItemsController {
 	//public String update(Integer id, String name, Float price, String detail) throws Exception{
 	public String update(Items items) throws Exception{
 
-		items.setCreatetime(new Date());
+		//items.setCreatetime(new Date());
 		
 		itemsService.updateItems(items);
 		
