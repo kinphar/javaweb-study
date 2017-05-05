@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.itheima.mapper.UserMapper">
+
+	<sql id="user_where">
+		<where>
+			<if test="username != null and username != ''">
+				and username like '%${username}%'
+			</if>
+			<if test="sex != null and sex != ''">
+				and sex=#{sex}
+			</if>
+		</where>
+	</sql>
+
+	<select id="findUserById" parameterType="int" resultType="user">
+		select * from user where id=#{id}
+	</select>
+	
+	<select id="findUserByUserName" parameterType="string" resultType="user">
+		select * from user where username like '%${value}%'
+	</select>
+	
+	<insert id="insertUser" parameterType="user">
+		<selectKey keyProperty="id" order="AFTER" resultType="int">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into user (username,birthday,sex,address) values(#{username},#{birthday},#{sex},#{address})
+	</insert>
+	
+	<select id="findUserByVo" parameterType="cn.itheima.pojo.QueryVo" resultType="user">
+		select * from user where username like '%${user.username}%' and sex=#{user.sex}
+	</select>
+	
+	<select id="findUserCount" resultType="java.lang.Integer">
+		select count(*) from user
+	</select>
+	
+	<select id="findUserByUserNameAndSex" parameterType="cn.itheima.pojo.User" resultType="cn.itheima.pojo.User">
+		select * from user
+		<include refid="user_where"></include>
+	</select>
+	
+	<select id="findUserByIds" parameterType="cn.itheima.pojo.QueryVo" resultType="cn.itheima.pojo.User">
+		select * from user
+		<where>
+			<if test="ids != null">
+				<foreach collection="ids" item="id" open="id in (" close=")" separator=",">
+					#{id}
+				</foreach>
+			</if>
+		</where>
+	</select>
+	
+	<resultMap type="cn.itheima.pojo.Orders" id="orderAndUserResultMap">
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+		<result column="number" property="number"/>
+		<result column="createtime" property="createtime"/>
+		<result column="note" property="note"/>
+		
+		<association property="user" javaType="cn.itheima.pojo.User">
+			<id column="uid" property="id"/>
+			<result column="username" property="username"/>
+			<result column="birthday" property="birthday"/>
+			<result column="sex" property="sex"/>
+			<result column="address" property="address"/>
+		</association>
+	</resultMap>
+	<select id="findOrdersAndUser" resultMap="orderAndUserResultMap">
+		select a.*, b.id uid, username, birthday, sex
+		from orders a, user b
+		where a.user_id = b.id
+	</select>
+	
+	<resultMap type="cn.itheima.pojo.User" id="userAndOrdersRewultMap">
+		<id column="id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="birthday" property="birthday"/>
+		<result column="sex" property="sex"/>
+		<result column="address" property="address"/>
+		
+		<collection property="ordersList" ofType="cn.itheima.pojo.Orders">
+			<id column="oid" property="id"/>
+			<result column="user_id" property="userId"/>
+			<result column="number" property="number"/>
+			<result column="createtime" property="createtime"/>
+		</collection>
+	</resultMap>
+	<select id="findUserAndOrders" resultMap="userAndOrdersRewultMap">
+		select a.*, b.id oid, number, createtime 
+		from user a, orders b 
+		where a.id=b.user_id
+	</select>
+	
+</mapper>
