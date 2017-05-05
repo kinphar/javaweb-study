@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.itheima.pojo.Items;
 import cn.itheima.service.ItemsService;
+import cn.itheima.vo.QueryVo;
 
 @Controller
 public class ItemsController {
@@ -50,5 +51,12 @@ public class ItemsController {
 		itemsService.updateItems(items);
 		
 		return "success";
+	}
+	
+	
+	@RequestMapping("/search")
+	public String search(QueryVo vo) throws Exception{
+		System.out.println(vo);
+		return "";
 	}
 }
