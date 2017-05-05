@@ -21,5 +21,17 @@ public class ItemsServiceImpl implements ItemsService {
 		List<Items> list = itemsMapper.selectByExampleWithBLOBs(example);
 		return list;
 	}
+
+	@Override
+	public Items findItemsById(Integer id) throws Exception {
+		Items items = itemsMapper.selectByPrimaryKey(id);
+		return items;
+	}
+
+	@Override
+	public void updateItems(Items items) throws Exception {
+		itemsMapper.updateByPrimaryKeyWithBLOBs(items);
+		
+	}
 	
 }
