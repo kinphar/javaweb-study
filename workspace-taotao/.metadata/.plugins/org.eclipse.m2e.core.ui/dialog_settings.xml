@@ -7,8 +7,13 @@
 		<list key="name">
 		</list>
 		<list key="artifactId">
-			<item value="taotao-parent"/>
+			<item value="taotao-manager-web"/>
 			<item value="taotao-manager"/>
+			<item value="taotao-manager-service"/>
+			<item value="taotao-manager-mapper"/>
+			<item value="taotao-manager-pojo"/>
+			<item value="taotao-parent"/>
+			<item value="taotao-common"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>
@@ -50,10 +55,27 @@
 			<item value="[name]"/>
 		</list>
 	</section>
+	<section name="MavenModuleWizardParentPage">
+		<list key="moduleName">
+			<item value="taotao-manager-web"/>
+			<item value="taotao-manager-service"/>
+			<item value="taotao-manager-mapper"/>
+			<item value="taotao-manager-pojo"/>
+		</list>
+		<list key="projectNameTemplate">
+			<item value="[artifactId]"/>
+			<item value="[artifactId]-TRUNK"/>
+			<item value="[artifactId]-[version]"/>
+			<item value="[groupId].[artifactId]"/>
+			<item value="[groupId].[artifactId]-[version]"/>
+			<item value="[name]"/>
+		</list>
+	</section>
 	<section name="MavenProjectWizardLocationPage">
 		<list key="location">
-			<item value="D:\project\javaweb-study\workspace-taotao\taotao-common"/>
 			<item value="D:\project\javaweb-study\workspace-taotao\taotao-parent"/>
+			<item value="D:\project\javaweb-study\workspace-taotao\taotao-parent\pom.xml"/>
+			<item value="D:\project\javaweb-study\workspace-taotao\taotao-common"/>
 			<item value="D:\project\javaweb-study\workspace-taotao\taotao-common\pom.xml"/>
 		</list>
 		<list key="projectNameTemplate">
@@ -67,10 +89,13 @@
 	</section>
 	<section name="Maven2ProjectWizardArchifactPage">
 		<list key="package">
+			<item value="org.taotao.manager.web"/>
 		</list>
 		<list key="groupId">
+			<item value="com.taotao"/>
 		</list>
 		<list key="artifactId">
+			<item value="taotao-manager-web"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>

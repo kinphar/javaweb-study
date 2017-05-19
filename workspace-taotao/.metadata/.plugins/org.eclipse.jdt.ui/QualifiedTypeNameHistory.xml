@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.github.pagehelper.PageInfo"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="com.github.pagehelper.PageHelper"/>
+<fullyQualifiedTypeName name="com.taotao.common.pojo.TreeNode"/>
+<fullyQualifiedTypeName name="com.taotao.pojo.TbItemCatExample.Criteria"/>
+<fullyQualifiedTypeName name="com.taotao.mapper.TbItemMapper"/>
+<fullyQualifiedTypeName name="com.taotao.pojo.TbItemExample.Criteria"/>
+<fullyQualifiedTypeName name="com.taotao.pojo.TbItemExample"/>
+<fullyQualifiedTypeName name="com.taotao.pojo.TbItem"/>
+<fullyQualifiedTypeName name="com.taotao.service.ItemService"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+</qualifiedTypeNameHistroy>
