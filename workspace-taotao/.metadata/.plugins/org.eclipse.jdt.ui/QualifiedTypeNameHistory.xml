@@ -12,4 +12,8 @@
 <fullyQualifiedTypeName name="com.taotao.service.ItemService"/>
 <fullyQualifiedTypeName name="com.taotao.pojo.TbItemCatExample.Criteria"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.apache.commons.net.ftp.FTP"/>
+<fullyQualifiedTypeName name="com.taotao.utils.IDUtils"/>
+<fullyQualifiedTypeName name="com.taotao.common.utils.FtpUtil"/>
+<fullyQualifiedTypeName name="com.taotao.common.utils.JsonUtils"/>
 </qualifiedTypeNameHistroy>
