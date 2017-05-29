@@ -16,4 +16,7 @@
 <fullyQualifiedTypeName name="com.taotao.utils.IDUtils"/>
 <fullyQualifiedTypeName name="com.taotao.common.utils.FtpUtil"/>
 <fullyQualifiedTypeName name="com.taotao.common.utils.JsonUtils"/>
+<fullyQualifiedTypeName name="com.taotao.common.utils.IDUtils"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="com.taotao.pojo.TbItemParamExample.Criteria"/>
 </qualifiedTypeNameHistroy>
