@@ -1,12 +1,14 @@
 package com.taotao.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taotao.common.pojo.EUTreeNode;
+import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.mapper.TbContentCategoryMapper;
 import com.taotao.pojo.TbContentCategory;
 import com.taotao.pojo.TbContentCategoryExample;
@@ -36,6 +38,28 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
 			resultList.add(node);
 		}
 		return resultList;
+	}
+
+	@Override
+	public TaotaoResult insertContentCategory(long parentId, String name) {
+		
+		TbContentCategory contentCategory = new TbContentCategory();
+		contentCategory.setName(name);
+		contentCategory.setIsParent(false);
+		contentCategory.setStatus(1);
+		contentCategory.setParentId(parentId);
+		contentCategory.setSortOrder(1);
+		contentCategory.setCreated(new Date());
+		contentCategory.setUpdated(new Date());		
+		contentCategoryMapper.insert(contentCategory);
+		
+		TbContentCategory parentCat = contentCategoryMapper.selectByPrimaryKey(parentId);
+		if (!parentCat.getIsParent()) {
+			parentCat.setIsParent(true);
+			contentCategoryMapper.updateByPrimaryKey(parentCat);
+		}
+		
+		return TaotaoResult.ok(contentCategory);
 	}
 
 }
