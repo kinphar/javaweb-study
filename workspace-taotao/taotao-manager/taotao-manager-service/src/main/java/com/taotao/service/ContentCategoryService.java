@@ -10,4 +10,5 @@ public interface ContentCategoryService {
 	List<EUTreeNode> getCategoryList(long parentId);
 	TaotaoResult insertContentCategory(long parentId, String name);
 	TaotaoResult deleteContentCategory(long parentId, long id);
+	TaotaoResult renameContentCategory(long id, String name);
 }

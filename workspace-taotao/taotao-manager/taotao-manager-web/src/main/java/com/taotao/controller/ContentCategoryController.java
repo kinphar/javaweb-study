@@ -40,4 +40,11 @@ public class ContentCategoryController {
 		return result;
 	}
 	
+	@RequestMapping("/update")
+	@ResponseBody
+	public TaotaoResult updateContentCategory(Long id, String name) {
+		TaotaoResult result = contentCategoryService.renameContentCategory(id, name);
+		return result;
+	}
+	
 }
