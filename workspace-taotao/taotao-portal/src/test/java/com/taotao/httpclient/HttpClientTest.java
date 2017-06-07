@@ -68,16 +68,16 @@ public class HttpClientTest {
 		response.close();
 		httpClient.close();
 	}
-	
+	 
 	@Test
 	public void doPostWithParam() throws Exception {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpPost post = new HttpPost("http://localhost:8082/httpclient/post.action");
-	
+	 
 		List<NameValuePair> kvList = new ArrayList<>();
-		kvList.add(new BasicNameValuePair("username", "zhang san"));
+		kvList.add(new BasicNameValuePair("username", "张三"));
 		kvList.add(new BasicNameValuePair("password", "123"));
-		StringEntity entity = new UrlEncodedFormEntity(kvList);
+		StringEntity entity = new UrlEncodedFormEntity(kvList, "utf-8");
 		post.setEntity(entity);
 		
 		CloseableHttpResponse response = httpClient.execute(post);
