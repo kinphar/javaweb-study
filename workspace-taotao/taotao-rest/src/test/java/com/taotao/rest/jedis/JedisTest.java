@@ -1,8 +1,12 @@
 package com.taotao.rest.jedis;
 
+import java.util.HashSet;
+
 import org.junit.Test;
 
+import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 
 public class JedisTest {
@@ -24,6 +28,23 @@ public class JedisTest {
 		System.out.print(string);
 		jedis.close();
 		pool.close();
+	}
+	
+	@Test
+	public void testJedisCluster() {
+		HashSet<HostAndPort> nodes = new HashSet<>();
+		nodes.add(new HostAndPort("192.168.249.132", 7001));
+		nodes.add(new HostAndPort("192.168.249.132", 7002));
+		nodes.add(new HostAndPort("192.168.249.132", 7003));
+		nodes.add(new HostAndPort("192.168.249.132", 7004));
+		nodes.add(new HostAndPort("192.168.249.132", 7005));
+		nodes.add(new HostAndPort("192.168.249.132", 7006));
+		JedisCluster cluster = new JedisCluster(nodes);
+		cluster.set("key1", "1001");
+		String string = cluster.get("key1");
+		System.out.println(string);
+		
+		cluster.close();
 	}
 
 }
