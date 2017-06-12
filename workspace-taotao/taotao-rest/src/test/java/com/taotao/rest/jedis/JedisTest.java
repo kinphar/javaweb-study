@@ -60,4 +60,14 @@ public class JedisTest {
 		jedis.close();
 		pool.close();		
 	}
+	
+	@Test
+	public void testSpringJedisCluster() {
+		ApplicationContext applicationContext = 
+				new ClassPathXmlApplicationContext("classpath:spring/applicationContext-*.xml");
+		JedisCluster jedisCluster = (JedisCluster) applicationContext.getBean("redisClient");
+		String string = jedisCluster.get("key1");
+		System.out.println(string);
+		jedisCluster.close();
+	}
 }
