@@ -102,4 +102,13 @@ public class UserServiceImpl implements UserService {
 		
 		return TaotaoResult.ok(JsonUtils.jsonToPojo(json, TbUser.class));
 	}
+
+	@Override
+	public TaotaoResult userLogout(String token) {
+		String json = jedisClient.get(REDIS_USER_SESSION_KEY + ":" + token);
+		if (!StringUtils.isBlank(json)) {
+			jedisClient.del(REDIS_USER_SESSION_KEY + ":" + token);
+		}
+		return TaotaoResult.ok();
+	}
 }
