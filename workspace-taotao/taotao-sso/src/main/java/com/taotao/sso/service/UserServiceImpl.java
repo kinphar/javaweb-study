@@ -1,9 +1,11 @@
 package com.taotao.sso.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import com.taotao.common.pojo.TaotaoResult;
 import com.taotao.mapper.TbUserMapper;
@@ -36,5 +38,15 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return TaotaoResult.ok(false);
 		}
+	}
+
+	@Override
+	public TaotaoResult createUser(TbUser user) {
+		user.setUpdated(new Date());
+		user.setCreated(new Date());
+		user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
+		
+		userMapper.insert(user);		
+		return TaotaoResult.ok();
 	}
 }
