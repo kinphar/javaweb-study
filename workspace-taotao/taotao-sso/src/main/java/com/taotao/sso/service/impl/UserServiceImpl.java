@@ -1,4 +1,4 @@
-package com.taotao.sso.service;
+package com.taotao.sso.service.impl;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +17,7 @@ import com.taotao.pojo.TbUser;
 import com.taotao.pojo.TbUserExample;
 import com.taotao.pojo.TbUserExample.Criteria;
 import com.taotao.sso.dao.JedisClient;
+import com.taotao.sso.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
