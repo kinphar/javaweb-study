@@ -49,7 +49,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>taotao-order</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
+		<url-pattern>/order/*</url-pattern>
 	</servlet-mapping>
 
 </web-app>
