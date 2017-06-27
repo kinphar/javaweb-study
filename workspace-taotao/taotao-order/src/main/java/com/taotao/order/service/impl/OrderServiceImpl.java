@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
 			orderItemMapper.insert(tbOrderItem);
 		}
 		
-		//补全物理表信息
+		//补全物流信息
 		orderShipping.setOrderId(orderId + "");
 		orderShipping.setCreated(date);
 		orderShipping.setUpdated(date);

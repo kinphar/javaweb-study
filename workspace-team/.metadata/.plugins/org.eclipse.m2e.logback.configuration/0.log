@@ -1,0 +1,88 @@
+2017-06-27 15:32:07,546 [Worker-2] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.numberone.master:numberone:1.0.1 @ D:\project\javaweb-study\workspace-team\numberone-master\pom.xml.
+2017-06-27 15:32:12,700 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /numberone-master/src/main/java
+2017-06-27 15:32:12,701 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /numberone-master/src/main/resources
+2017-06-27 15:32:12,704 [Worker-2] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /numberone-master/src/test/java
+2017-06-27 15:32:13,510 [Worker-2] ERROR o.e.m2e.wtp.WTPProjectConfigurator - Unable to configure numberone-master
+org.eclipse.m2e.wtp.MarkedException: Unable to configure numberone-master
+	at org.eclipse.m2e.wtp.AbstractProjectConfiguratorDelegate.configureProject(AbstractProjectConfiguratorDelegate.java:98) ~[na:na]
+	at org.eclipse.m2e.wtp.WTPProjectConfigurator.configure(WTPProjectConfigurator.java:68) ~[na:na]
+	at org.eclipse.m2e.core.project.configurator.AbstractLifecycleMapping.configure(AbstractLifecycleMapping.java:120) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.project.ProjectConfigurationManager$3.call(ProjectConfigurationManager.java:501) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.project.ProjectConfigurationManager$3.call(ProjectConfigurationManager.java:1) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:176) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:151) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.project.ProjectConfigurationManager.updateProjectConfiguration(ProjectConfigurationManager.java:494) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.project.ProjectConfigurationManager.configureNewMavenProjects(ProjectConfigurationManager.java:281) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.project.ProjectConfigurationManager$1.call(ProjectConfigurationManager.java:168) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.project.ProjectConfigurationManager$1.call(ProjectConfigurationManager.java:1) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.executeBare(MavenExecutionContext.java:176) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:151) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenExecutionContext.execute(MavenExecutionContext.java:99) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.embedder.MavenImpl.execute(MavenImpl.java:1355) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.internal.project.ProjectConfigurationManager.importProjects(ProjectConfigurationManager.java:136) [org.eclipse.m2e.core_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.ui.internal.wizards.ImportMavenProjectsJob$1.doCreateMavenProjects(ImportMavenProjectsJob.java:68) [org.eclipse.m2e.core.ui_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.ui.internal.wizards.AbstractCreateMavenProjectsOperation.run(AbstractCreateMavenProjectsOperation.java:62) [org.eclipse.m2e.core.ui_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.m2e.core.ui.internal.wizards.ImportMavenProjectsJob.runInWorkspace(ImportMavenProjectsJob.java:77) [org.eclipse.m2e.core.ui_1.7.0.20160603-1933.jar:na]
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:39) [org.eclipse.core.resources_3.11.1.v20161107-2032.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55) [org.eclipse.core.jobs_3.8.0.v20160509-0411.jar:na]
+Caused by: org.eclipse.core.runtime.CoreException: One or more constraints have not been satisfied.
+	at org.eclipse.wst.common.project.facet.core.internal.FacetedProject.modifyInternal(FacetedProject.java:363) ~[na:na]
+	at org.eclipse.wst.common.project.facet.core.internal.FacetedProject.mergeChangesInternal(FacetedProject.java:1181) ~[na:na]
+	at org.eclipse.wst.common.project.facet.core.internal.FacetedProject.access$2(FacetedProject.java:1117) ~[na:na]
+	at org.eclipse.wst.common.project.facet.core.internal.FacetedProject$1.run(FacetedProject.java:324) ~[na:na]
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2240) ~[org.eclipse.core.resources_3.11.1.v20161107-2032.jar:na]
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267) ~[org.eclipse.core.resources_3.11.1.v20161107-2032.jar:na]
+	at org.eclipse.wst.common.project.facet.core.internal.FacetedProject.modify(FacetedProject.java:339) ~[na:na]
+	at org.eclipse.m2e.wtp.WebProjectConfiguratorDelegate.configure(WebProjectConfiguratorDelegate.java:136) ~[na:na]
+	at org.eclipse.m2e.wtp.AbstractProjectConfiguratorDelegate.configureProject(AbstractProjectConfiguratorDelegate.java:94) ~[na:na]
+	... 20 common frames omitted
+2017-06-27 15:32:19,390 [Worker-2] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 15 sec
+2017-06-27 15:32:28,920 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:32:28,933 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 65 resources
+2017-06-27 15:32:29,042 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:32:29,043 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\project\javaweb-study\workspace-team\numberone-master\src\test\resources
+2017-06-27 15:36:49,265 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:36:49,267 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 65 resources
+2017-06-27 15:36:49,428 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:36:49,428 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\project\javaweb-study\workspace-team\numberone-master\src\test\resources
+2017-06-27 15:38:08,945 [main] INFO  o.e.m2e.actions.ExecutePomAction - Creating new launch configuration
+2017-06-27 15:40:35,132 [Worker-7] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\project\javaweb-study\workspace-team\numberone-master
+2017-06-27 15:40:35,134 [Worker-7] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B clean tomcat7:run
+2017-06-27 15:45:13,911 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:45:13,927 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-06-27 15:45:13,930 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:45:13,930 [Worker-12] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\project\javaweb-study\workspace-team\numberone-master\src\test\resources
+2017-06-27 15:45:18,726 [Worker-0] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\project\javaweb-study\workspace-team\numberone-master
+2017-06-27 15:45:18,727 [Worker-0] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B clean tomcat7:run
+2017-06-27 15:47:09,103 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:47:09,103 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2017-06-27 15:47:09,106 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:47:09,106 [Worker-14] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\project\javaweb-study\workspace-team\numberone-master\src\test\resources
+2017-06-27 15:47:11,281 [Worker-16] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\project\javaweb-study\workspace-team\numberone-master
+2017-06-27 15:47:11,281 [Worker-16] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B clean tomcat7:run
+2017-06-27 15:48:01,457 [Worker-16] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Cleaning filtered folder for numberone-master
+2017-06-27 15:48:04,285 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:48:04,288 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 65 resources
+2017-06-27 15:48:04,421 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 15:48:04,421 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\project\javaweb-study\workspace-team\numberone-master\src\test\resources
+2017-06-27 15:48:04,421 [Worker-15] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Changed resources require a complete clean of filtered resources of numberone-master
+2017-06-27 15:48:04,422 [Worker-15] INFO  o.e.m.w.i.f.ResourceFilteringBuildParticipant - Executing resource filtering for numberone-master
+2017-06-27 15:48:04,500 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.mortbay.jetty:jetty-maven-plugin:jar:7.6.14.v20131031 is missing, no dependency information available
+2017-06-27 15:48:04,516 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Failed to retrieve plugin descriptor for org.mortbay.jetty:jetty-maven-plugin:7.6.14.v20131031: Plugin org.mortbay.jetty:jetty-maven-plugin:7.6.14.v20131031 or one of its dependencies could not be resolved: Cannot access numberone-repos (http://maven.aliyun.com/nexus/content/groups/public) in offline mode and the artifact org.mortbay.jetty:jetty-maven-plugin:jar:7.6.14.v20131031 has not been downloaded from it before.
+2017-06-27 15:48:04,524 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - The POM for org.mortbay.jetty:jetty-maven-plugin:jar:7.6.14.v20131031 is missing, no dependency information available
+2017-06-27 15:48:04,525 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Failed to retrieve plugin descriptor for org.mortbay.jetty:jetty-maven-plugin:7.6.14.v20131031: Plugin org.mortbay.jetty:jetty-maven-plugin:7.6.14.v20131031 or one of its dependencies could not be resolved: Cannot access numberone-repos (http://maven.aliyun.com/nexus/content/groups/public) in offline mode and the artifact org.mortbay.jetty:jetty-maven-plugin:jar:7.6.14.v20131031 has not been downloaded from it before.
+2017-06-27 15:48:04,547 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 16:01:07,028 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 16:01:07,049 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 65 resources
+2017-06-27 16:01:07,069 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 16:01:07,070 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\project\javaweb-study\workspace-team\numberone-master\src\test\resources
+2017-06-27 16:02:24,241 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 16:02:24,244 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-06-27 16:02:24,247 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 16:02:24,248 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\project\javaweb-study\workspace-team\numberone-master\src\test\resources
+2017-06-27 16:02:55,316 [Worker-17] INFO  o.e.m.i.launch.MavenLaunchDelegate - D:\project\javaweb-study\workspace-team\numberone-master
+2017-06-27 16:02:55,317 [Worker-17] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B clean tomcat7:run
+2017-06-27 16:15:29,384 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 16:15:29,384 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2017-06-27 16:15:29,386 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2017-06-27 16:15:29,387 [Worker-22] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory D:\project\javaweb-study\workspace-team\numberone-master\src\test\resources
