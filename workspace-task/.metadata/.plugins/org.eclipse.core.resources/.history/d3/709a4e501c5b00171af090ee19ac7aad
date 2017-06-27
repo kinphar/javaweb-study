@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/webapp/WEB-INF/views/account/NewAccountForm.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/account/SignonForm.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/caselist/AllCaselist.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/caselist/EditCaselistForm.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/caselist/NewCaselistForm.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/common/IncludeNavbar.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/fileupload/uploadForm.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/my.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/task/EditTaskForm.jsp=UTF-8
+encoding//src/test/java=UTF-8
+encoding/<project>=UTF-8

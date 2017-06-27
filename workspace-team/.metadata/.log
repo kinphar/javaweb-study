@@ -89,3 +89,15 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-06-27 17:20:17.818
+!MESSAGE The POM for org.mortbay.jetty:jetty-maven-plugin:jar:7.6.14.v20131031 is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-06-27 17:20:17.823
+!MESSAGE Failed to retrieve plugin descriptor for org.mortbay.jetty:jetty-maven-plugin:7.6.14.v20131031: Plugin org.mortbay.jetty:jetty-maven-plugin:7.6.14.v20131031 or one of its dependencies could not be resolved: Cannot access numberone-repos (http://maven.aliyun.com/nexus/content/groups/public) in offline mode and the artifact org.mortbay.jetty:jetty-maven-plugin:jar:7.6.14.v20131031 has not been downloaded from it before.
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-06-27 17:20:17.827
+!MESSAGE The POM for org.mortbay.jetty:jetty-maven-plugin:jar:7.6.14.v20131031 is missing, no dependency information available
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2017-06-27 17:20:17.828
+!MESSAGE Failed to retrieve plugin descriptor for org.mortbay.jetty:jetty-maven-plugin:7.6.14.v20131031: Plugin org.mortbay.jetty:jetty-maven-plugin:7.6.14.v20131031 or one of its dependencies could not be resolved: Cannot access numberone-repos (http://maven.aliyun.com/nexus/content/groups/public) in offline mode and the artifact org.mortbay.jetty:jetty-maven-plugin:jar:7.6.14.v20131031 has not been downloaded from it before.
