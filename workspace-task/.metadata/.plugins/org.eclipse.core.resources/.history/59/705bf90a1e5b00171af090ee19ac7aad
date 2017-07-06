@@ -1,5 +1,0 @@
-# local
-jdbc.driverClassName=com.mysql.jdbc.Driver
-jdbc.url=jdbc:mysql://<mysql host>:<mysql 端口>/pfcase
-jdbc.username=root
-jdbc.password=115513875
