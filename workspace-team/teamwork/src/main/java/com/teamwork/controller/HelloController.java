@@ -1,4 +1,4 @@
-package com.kinphar.teamwork.controller;
+package com.teamwork.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
