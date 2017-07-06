@@ -3,24 +3,76 @@
 <%@ include file="common/IncludeNavbar.jsp"%>
 
 <div id="Content" class="container">
+						
+	<nav class="navbar navbar-default" role="navigation">
+	    <div class="container-fluid">
+		    <div class="navbar-header">
+		        <a class="navbar-brand" href="#"></a>
+		    </div>
+		    <div>
+		        <ul class="nav navbar-nav">
+		            <li><a href="#">未分配</a></li>
+		            <li class="active"><a href="#">正在处理</a></li>
+		            <li><a href="#">已完成</a></li>
+		            <li><a href="#">已归档</a></li>
+		            
+		        </ul>
+		        
+		        <ul class="nav navbar-nav navbar-right">
+		        	<li>
+			        	<div class="btn-group">
+						  <button class="btn btn-success"><i class="icon-star"></i> 新建任务</button>
+						  <button data-toggle="dropdown" class="btn btn-success dropdown-toggle"><span class="caret"></span></button>
+						  <ul class="dropdown-menu">
+							<li><a href="#">新建任务</a></li>
+				            <li role="separator" class="divider"></li>
+				            <li><a href="#">新建项目</a></li>
+				            <li role="separator" class="divider"></li>
+				            <li><a href="#">新建其他</a></li>
+						  </ul>
+						</div><!-- /btn-group -->
+					</li>
+			    </ul>  
+		    </div>
+	    </div>
+	</nav>
+	
+	<button class="btn btn-inverse"><span class="glyphicon glyphicon-star"></span> Update</button>
+	<button class="btn btn-primary"><i class="icon-pencil icon-white"></i> Edit</button>
+	<button class="btn btn-danger"><i class="icon-remove icon-white"></i> Delete</button>
+	<button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-sort-by-attributes"></span>
+    </button>
+	
+	<div class="alert alert-info">
+		This page demonstrates a jQuery calendar plugin. Try to add a new event!
+		<a href="#" class="close" data-dismiss="alert">×</a>
+	</div>
+		
     <c:forEach items="${taskMap}" var="taskEntry">
         <div id="task_${taskEntry.key}" class="panel panel-default">
             <!-- Default panel contents -->
             <div class="panel-heading">
-                    <%--${taskEntry.value.taskname}--%>
+                <%--${taskEntry.value.taskname}--%>
                 <ul id="taskInfo" class="list-inline">
-                    <li>${taskEntry.value.taskname}</li>
-
-                    <li><a href="${pageContext.request.contextPath}/task/editTaskForm?taskid=${taskEntry.key}&action=edit">编辑</a></li>
-                    <li><a href="javascript:void(0)" data-id="${taskEntry.key}" class="del">删除</a></li>
-
-                    <%--<sec:authorize access="isAuthenticated()">--%>
-                        <%--<sec:authentication property="principal.account" var="account" />--%>
-                        <%--<c:if test="${account.role != 'cs'}">--%>
-                            <%--<li><a href="${pageContext.request.contextPath}/task/editTaskForm?taskid=${taskEntry.key}&action=edit">编辑</a></li>--%>
-                            <%--<li><a href="javascript:void(0)" data-id="${taskEntry.key}" class="del">删除</a></li>--%>
-                        <%--</c:if>--%>
-                    <%--</sec:authorize>--%>
+                    <li><a href="${pageContext.request.contextPath}/task/editTaskForm?taskid=${taskEntry.key}&action=edit">【20170629-001】魔镜项目第二阶段</a></li>
+                    <li>【预研】</li>
+                    <li>Deadline:20170/06/30</li>
+                    <li class="dropdown">
+		                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		                    <!--<b class="caret"></b>-->
+		                    <span class="caret"></span>
+		                </a>
+		                <ul class="dropdown-menu">
+		                    <li><a href="#">填写进度</a></li>
+		                    <li class="divider"></li>
+		                    <li><a href="#">编辑</a></li>
+		                    <li class="divider"></li>
+		                    <li><a href="#">删除</a></li>
+		                    <li class="divider"></li>
+		                    <li><a href="#">更多操作</a></li>
+		                </ul>
+	            	</li>
                 </ul>
             </div>
             <div class="panel-body">
@@ -51,97 +103,41 @@
                     <dd>${taskEntry.value.modifier}</dd>
                 </dl>
             </div>
-
-            <!-- Table -->
-            <c:if test="${taskEntry.value.prepared == true}">
-                <table class="table table-hover">
-                    <tr>
-                            <%--<th><b>用例id</b></th>--%>
-                        <th class="casename"><b>用例名称</b></th>
-                        <th><b>已执行</b></th>
-                        <th><b>执行质量</b></th>
-                        <th><b>bug链接</b></th>
-                    </tr>
-                    <c:forEach items="${taskcaseMap.get(taskEntry.key)}" var="taskcase">
-                        <c:set var="caseid">${taskcase.getCaseid()}</c:set>
-                        <tr>
-                                <%--<td>${caseid}</td>--%>
-                            <td class="casename"><a href="${pageContext.request.contextPath}/caselist/editCaselistForm?caseid=${caseid}&action=get" target="_blank">${caselistMap.get(caseid).casename}</a></td>
-                            <td>
-                                <sec:authorize access="isAuthenticated()">
-                                    <sec:authentication property="principal.account" var="account" />
-                                    <c:if test="${account.role != 'kf' && account.role != 'admin'}">
-                                        <input id="casedone_${taskEntry.key}_${caseid}" class="casedone" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="checkbox" <c:if test="${taskcase.getCasedone()}">checked</c:if> disabled >
-                                    </c:if>
-                                    <c:if test="${account.role == 'kf' || account.role == 'admin'}">
-                                        <input id="casedone_${taskEntry.key}_${caseid}" class="casedone" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="checkbox" <c:if test="${taskcase.getCasedone()}">checked</c:if> >
-                                    </c:if>
-                                </sec:authorize>
-                            </td>
-                            <td id="casescore_${taskEntry.key}_${caseid}">
-                                <c:choose>
-                                    <c:when test="${taskcase.getEvaluated()}">
-                                        <c:choose>
-                                            <c:when test="${taskcase.getCasescore()}">
-                                                <img class="img_${taskEntry.key}" src="/images/good.png" />
-                                            </c:when>
-                                            <c:otherwise>
-                                                <img class="img_${taskEntry.key}" src="/images/bad.png" />
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <sec:authorize access="isAuthenticated()">
-                                            <sec:authentication property="principal.account" var="account" />
-                                            <c:if test="${account.role != 'cs' && account.role != 'admin'}">
-                                                <input class="btn btn-success good" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="button" value="good" disabled>
-                                                <input class="btn btn-danger bad" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="button" value="bad" disabled>
-                                            </c:if>
-                                            <c:if test="${account.role == 'cs' || account.role == 'admin'}">
-                                                <input class="btn btn-success good" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="button" value="good">
-                                                <input class="btn btn-danger bad" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="button" value="bad">
-                                            </c:if>
-                                        </sec:authorize>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-
-                            <td id="bugurl_${taskEntry.key}_${caseid}">
-                                <c:choose>
-                                    <c:when test="${not empty taskcase.getBugurl()}">
-                                        <a class="buglink" href="${taskcase.getBugurl()}" target="_blank"><img src="/images/bug.png" /></a>
-                                        <sec:authorize access="isAuthenticated()">
-                                            <sec:authentication property="principal.account" var="account" />
-                                            <c:if test="${account.role != 'cs' && account.role != 'admin'}">
-                                                <input class="bugurl" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="url" value="${taskcase.getBugurl()}" disabled>
-                                            </c:if>
-                                            <c:if test="${account.role == 'cs' || account.role == 'admin'}">
-                                                <input class="bugurl" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="url" value="${taskcase.getBugurl()}">
-                                            </c:if>
-                                        </sec:authorize>
-                                    </c:when>
-                                    <c:otherwise>
-
-                                        <sec:authorize access="isAuthenticated()">
-                                            <sec:authentication property="principal.account" var="account" />
-                                            <c:if test="${account.role != 'cs' && account.role != 'admin'}">
-                                                <input class="bugurl" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="url" value="http://" disabled>
-                                            </c:if>
-                                            <c:if test="${account.role == 'cs' || account.role == 'admin'}">
-                                                <input class="bugurl" data-taskid="${taskEntry.key}" data-caseid="${caseid}" type="url" value="http://">
-                                            </c:if>
-                                        </sec:authorize>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </c:if>
+            <!-- <div class="panel-footer"></div> -->            
         </div>
     </c:forEach>
 </div>
 
+<img src="/images/sdog.jpg" class="img-circle">
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            带有 title 的面板标题1
+        </h3>
+    </div>
+    <div class="panel-body">
+        面板内容
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            带有 title 的面板标题2
+        </h3>
+    </div>
+    <div class="panel-body">
+        面板内容
+    </div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar" role="progressbar" aria-valuenow="60" 
+        aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+        <span class="sr-only">40% 完成</span>
+    </div>
+</div>
 
 <%@ include file="common/IncludeJsVendor.jsp"%>
 <script type="text/javascript">

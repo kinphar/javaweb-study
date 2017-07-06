@@ -183,6 +183,18 @@ public class TaskController {
 
         return "redirect:/task/rankForm";
     }
+    
+    @RequestMapping("experience")
+    public String showExperience(ModelMap model) {
+    	model.addAttribute("active_experience", true);
+    	return "task/Chart";
+    }
+    
+    @RequestMapping("information")
+    public String showInformation(ModelMap model) {
+    	model.addAttribute("active_information", true);
+    	return "task/Chart";
+    }
 
 }
 

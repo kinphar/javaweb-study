@@ -10,7 +10,7 @@
   <meta name="author" content="">
   <link rel="icon" href="../images/favicon.ico">
 
-  <title>捉虫记</title>
+  <title>華山論劍</title>
 
   <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <%--<link href="../css/bootstrap-theme.min.css" rel="stylesheet">--%>
+  <link href="../css/bootstrap-theme.min.css" rel="stylesheet">

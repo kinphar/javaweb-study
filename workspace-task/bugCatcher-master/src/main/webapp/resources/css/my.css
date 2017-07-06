@@ -1,5 +1,5 @@
 body {
-    padding-top: 40px;
+    padding-top: 50px;
     padding-bottom: 40px;
     background-color: #eee;
     max-width: 1120px;
@@ -11,12 +11,13 @@ body {
 }
 
 .panel {
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .panel-default>.panel-heading {
-    color: #fff;
-    background: #5cb85c;
+    color: #2F4F4F;
+    /*background: #5cb85c;*/
+    background: #F8F8FF;
 }
 
 .dl-horizontal dt {

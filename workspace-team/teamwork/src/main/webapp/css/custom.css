@@ -1,0 +1,35 @@
+
+
+body {
+	background-color: #F8F6F2;
+} 
+
+body > .container {
+	padding: 30px 15px 0px;	
+}
+
+.pre-scrollable {
+  	max-height: 660px;
+  	overflow-y: scroll;
+}
+
+.panel {
+	margin-top: 0px;
+	background-color: #EEECE8;
+}
+
+.panel-body {
+    padding: 8px;
+}
+
+.well {
+	padding: 15px;
+	margin-top: 5px;
+	margin-bottom: 3px;
+	background-color: #FFFFFF;
+}
+
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 { 
+	font-family: Microsoft YaHei,'ËÎÌו' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+
