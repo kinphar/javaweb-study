@@ -200,7 +200,7 @@
 			<!-- 新建任务，模态框（Modal） -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			    <div class="modal-dialog">
-			        <div class="modal-content" style="padding: 2px 20px">
+			        <div class="modal-content" style="padding: 2px 20px; padding-left: 30px">
 			            <div class="modal-header">
 			                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			                <h4 class="modal-title" id="myModalLabel">新建任务</h4>
@@ -209,7 +209,7 @@
 							<form role="form">
 							  <div class="form-group">
 							    <label for="name">任务描述：</label>
-							    <textarea class="form-control" rows="5"></textarea>
+							    <textarea class="form-control" style="max-width:500px;" rows="5"></textarea>
 							  </div>
 							</form>
 							
@@ -254,6 +254,16 @@
 											<option>陈钟</option>
 											<option>李晴</option>
 											<option>王锦乐</option>
+									      </select>
+									  </div>
+									</form>	
+								</div>
+								<div class="col-md-6">
+									<form role="form">
+									  <div class="form-group">
+									    <label for="projectname">期望完成时间：</label>
+									    <select class="form-control">
+									      	<option>2017-07-28</option>
 									      </select>
 									  </div>
 									</form>	
