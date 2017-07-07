@@ -7,40 +7,22 @@
 
     <display-name>Archetype Created Web Application</display-name>
     <description>teamwork project</description>
-
-    <!-- 加载Spring配置文件 -->
-    <context-param>
-	    <param-name>contextConfigLocation</param-name>
-	    <param-value>classpath:/configs/spring-*.xml</param-value>
-    </context-param>
-
-    <!-- Spring监听 -->
-    <listener>
-	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
-    <!-- Spring MVC配置 -->
-    <servlet>
-	    <servlet-name>Dispatcher</servlet-name>
-	    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <!-- 自定义spring mvc的配置文件名称和路径 -->
-        <init-param>
-			<param-name>contextConfigLocation</param-name>
-            <param-value>classpath:configs/spring-servlet.xml</param-value>
-        </init-param>
-	    <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <!-- spring mvc 请求后缀 -->
-    <servlet-mapping>
-	    <servlet-name>Dispatcher</servlet-name>
-	    <url-pattern>/</url-pattern>
-    </servlet-mapping>
+    <!-- 默认首页设置，如果界面文件存在，可以直接使用 ip:port访问 -->
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
         <welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
     </welcome-file-list>
+
+    <!-- 加载Spring配置文件 -->
+    <context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>classpath:spring/applicationContext-*.xml</param-value>	    
+    </context-param>
+    <!-- Spring监听 -->
+    <listener>
+	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
     
     <!-- 解决post乱码 -->
 	<filter>
@@ -56,5 +38,23 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+    <!-- Spring MVC配置 -->
+    <servlet>
+	    <servlet-name>teamwork</servlet-name>
+	    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 自定义spring mvc的配置文件名称和路径 -->
+        <init-param>
+			<param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/springmvc.xml</param-value>
+        </init-param>
+	    <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- spring mvc 请求后缀 -->
+    <servlet-mapping>
+	    <servlet-name>teamwork</servlet-name>
+	    <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
 </web-app>
 
