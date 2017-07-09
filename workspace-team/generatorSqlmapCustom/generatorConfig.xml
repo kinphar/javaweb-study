@@ -44,6 +44,7 @@
 		<!-- 指定数据库表 -->
 		<table schema="" tableName="user"></table>
 		<table schema="" tableName="task"></table>
+		<table schema="" tableName="project"></table>
 
 	</context>
 </generatorConfiguration>

@@ -1,7 +1,7 @@
 package com.teamwork.service.impl;
 
-import com.teamwork.service.taskService;
+import com.teamwork.service.TaskService;
 
-public class taskServiceImpl implements taskService {
+public class taskServiceImpl implements TaskService {
 
 }

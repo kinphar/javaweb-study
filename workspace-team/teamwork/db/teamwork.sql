@@ -63,6 +63,27 @@ CREATE TABLE `task` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='任务';
 
+--
+-- Definition of table `task`
+--
+
+DROP TABLE IF EXISTS `project`;
+CREATE TABLE `project` (
+  `id` varchar(64) NOT NULL DEFAULT '' COMMENT '主键',
+  `name` varchar(64) DEFAULT NULL COMMENT '项目名称',
+  `description` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '项目需求',
+  `status` varchar(64) DEFAULT NULL COMMENT '项目状态：1、未开始，2、正在进行，3、已完成，4、已结项，5、已归档',
+  `project_manager` varchar(64) DEFAULT NULL COMMENT '项目经理',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',  
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',  
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
+  `updage_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `except_finish_date` datetime DEFAULT NULL COMMENT '期望完成时间',
+  `real_finish_date` datetime DEFAULT NULL COMMENT '实际完成时间',
+  `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='项目';
+
 
 
 

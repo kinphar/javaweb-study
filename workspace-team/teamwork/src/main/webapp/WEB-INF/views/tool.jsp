@@ -29,11 +29,11 @@
 	        </div>
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav navbar-right">
-	          	<li><a href="${pageContext.request.contextPath}/task">任务</a></li>
-	            <li><a href="${pageContext.request.contextPath}/knowledge">知识</a></li>
-	            <li><a href="${pageContext.request.contextPath}/information">资料</a></li>
-	            <li><a href="${pageContext.request.contextPath}/activity">活动</a></li>
-	            <li><a href="${pageContext.request.contextPath}/tool">工具</a></li>
+	          	<li><a href="${ctx}/task">任务</a></li>
+	            <li><a href="${ctx}/knowledge">知识</a></li>
+	            <li><a href="${ctx}/information">资料</a></li>
+	            <li><a href="${ctx}/activity">活动</a></li>
+	            <li><a href="${ctx}/tool">工具</a></li>
 	          </ul>
 	        </div><!--/.navbar-collapse -->
 	      </div>

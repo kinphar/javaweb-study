@@ -9,7 +9,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.teamwork.mapper.ProjectMapper;
 import com.teamwork.mapper.TaskMapper;
+import com.teamwork.pojo.Project;
 import com.teamwork.pojo.Task;
 import com.teamwork.pojo.TaskExample;
 
@@ -28,6 +30,36 @@ public class TestMybatis {
 		task.setCreateDate(new Date());
 		task.setDescription("test task.");
 		mapper.insert(task);
+	}
+	
+	@Test	
+	public void testCreateProject() {
+		//创建一个 spring 容器
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-*.xml");
+		//从spring容器中获得 mapper 的代理对象
+		ProjectMapper mapper = applicationContext.getBean(ProjectMapper.class);
+				
+		Project project = new Project();
+		project.setId("100");
+		project.setName("T91R");
+		project.setCreateBy("dqf");
+		project.setCreateDate(new Date());
+		project.setDescription("first project");
+		mapper.insert(project);
+		
+		project.setId("101");
+		project.setName("I66");
+		project.setCreateBy("liqing");
+		project.setCreateDate(new Date());
+		project.setDescription("second project");
+		mapper.insert(project);
+		
+		project.setId("102");
+		project.setName("i86");
+		project.setCreateBy("chenzhong");
+		project.setCreateDate(new Date());
+		project.setDescription("third project");
+		mapper.insert(project);
 	}
 	
 	@Test	
