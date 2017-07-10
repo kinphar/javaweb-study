@@ -11,9 +11,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.teamwork.mapper.ProjectMapper;
 import com.teamwork.mapper.TaskMapper;
+import com.teamwork.mapper.UserMapper;
 import com.teamwork.pojo.Project;
 import com.teamwork.pojo.Task;
 import com.teamwork.pojo.TaskExample;
+import com.teamwork.pojo.User;
 
 public class TestMybatis {
 	
@@ -60,6 +62,39 @@ public class TestMybatis {
 		project.setCreateDate(new Date());
 		project.setDescription("third project");
 		mapper.insert(project);
+		
+	}
+	
+	@Test	
+	public void testCreateUser() {
+		//创建一个 spring 容器
+		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring/applicationContext-*.xml");
+		//从spring容器中获得 mapper 的代理对象
+		UserMapper mapper = applicationContext.getBean(UserMapper.class);
+		
+		User user = new User();
+		int id = 1000;
+		
+		user.setId(id++ + "");
+		user.setName("丁庆发");
+		user.setEmail("dingqingfa@star-net.cn");
+		user.setPassword("dingqingfa");
+		user.setNo("T10316");
+		mapper.insert(user);
+		
+		user.setId(id++ + "");
+		user.setName("陈钟");
+		user.setEmail("chenzhong.sy@star-net.cn");
+		user.setPassword("chenzhong");
+		user.setNo("T11478");
+		mapper.insert(user);
+		
+		user.setId(id++ + "");
+		user.setName("李晴");
+		user.setEmail("liqing@star-net.cn");
+		user.setPassword("liqing");
+		user.setNo("T10667");
+		mapper.insert(user);
 	}
 	
 	@Test	

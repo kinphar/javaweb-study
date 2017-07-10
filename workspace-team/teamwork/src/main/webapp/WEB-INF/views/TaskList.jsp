@@ -99,7 +99,8 @@
     	  	<table class="table table-striped table-bordered table-hover">
     	  	  <colgroup>
     	  	  	<col style="">
-    	  	  	<col style="width:50%">
+    	  	  	<col style="">
+    	  	  	<col style="width:40%">
     	  	  	<col style="">
     	  	  	<col style="">
     	  	  	<col style="width:8%">
@@ -107,7 +108,8 @@
     	  	  </colgroup>
 			  <thead>
 			    <tr>
-			      <th>项目</th>
+			      <th>编号</th>
+			      <th>所属项目</th>
 			      <th>描述</th>
 			      <th>到期时间</th>
 			      <th>处理人</th>
@@ -117,7 +119,8 @@
 			  </thead>
 			  <tbody>
 			    <tr>
-			      <td><b>板卡定制</b></td>
+			      <td>20170710-001</td>
+			      <td>板卡定制</td>
 			      <td>H61I支持二代身份证，支持IC卡防复制功能，叠加历史需求。</td>
 			      <td>2017-07-16</td>
 			      <td>丁庆发</td>
@@ -136,7 +139,8 @@
 			      </td>
 			    </tr>
 			    <tr>
-			      <td><b>板卡定制</b></td>
+			      <td>20170710-002</td>	
+			      <td>板卡定制</td>
 			      <td>H61I支持二代身份证，支持IC卡防复制功能，叠加历史需求。H61I支持二代身份证.</td>
 			      <td>2017-07-16</td>
 			      <td>丁庆发</td>
@@ -155,7 +159,8 @@
 			      </td>
 			    </tr>
 			    <tr>
-			      <td><b>T91R</b></td>
+			      <td>20170710-003</td>
+			      <td>T91R</td>
 			      <td>LCD B备用方案调试</td>
 			      <td>2017-07-16</td>
 			      <td>丁庆发</td>
@@ -174,7 +179,8 @@
 			      </td>
 			    </tr>
 			    <tr>
-			      <td><b>板卡定制</b></td>
+			      <td>20170710-004</td>
+			      <td>板卡定制</td>
 			      <td>H61I支持二代身份证，支持IC卡防复制功能，叠加历史需求。</td>
 			      <td>2017-07-16</td>
 			      <td>丁庆发</td>
@@ -204,74 +210,55 @@
 			                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			                <h4 class="modal-title" id="myModalLabel">新建任务</h4>
 			            </div>
-			            <div class="modal-body">
+			            <div class="modal-body">           
+
 			            <fieldset>
 							<form role="form">
 							  <div class="form-group">
 							    <label for="name">任务描述：</label>
 							    <form:textarea class="form-control" path="description" style="max-width:500px;" rows="5" />
 							  </div>
-							</form>
-							
-							<div class="row">
+							  
+							  <div class="row">
+							  	<div class="col-md-6">
+								  <div class="form-group">
+								    <label>所属项目：</label>
+								    <form:select class="form-control" path="projectId" id="projectId"
+								      	items="${projects}" itemLabel="name" itemValue="id">
+								      </form:select>
+								   </div>
+								</div>							   
+							   <div class="col-md-6">
+							   	<div class="form-group">
+							    	<label>分配给：</label>
+							    	<form:select class="form-control" path="assignTo" id="assignTo"
+							    		items="${users}" itemLabel="name"  itemValue="no">   								
+							    	</form:select>
+							   	</div>
+							    </div>
+							   </div>
+							   
+							   <div class="row">
 								<div class="col-md-6">
-									<form role="form">
-									  <div class="form-group">
-									    <label for="projectname">所属项目：</label>
-									    <form:select class="form-control" path="projectId">
-									      	<option>所有项目</option>
-											<option>T91R</option>
-											<option>板卡定制</option>
-											<option>主线V5.0.2</option>
-											<option>I66</option>
-											<option>X66L</option>
-									      </form:select>
-									   </div>
-									</form>
-								</div>
-								<div class="col-md-6">
-									<form role="form">
-									  <div class="form-group">
-									    <label for="">任务状态：</label>
-									    <form:select class="form-control" path="status">
-									    	<option>未分配</option>
-									    	<option>正在处理</option>		
-									    	<option>已完成</option>		      								
+									<div class="form-group">
+									    <label>状态：</label>
+									    <form:select class="form-control" path="status" id="status">
+									      	<option>未分配</option>
+											<option>正在处理</option>
+											<option>已完成</option>
 									    </form:select>
-									   </div>
-									</form>
-								</div>
-							</div>
-							
-							<div class="row">
+									</div>
+								  </div>
 								<div class="col-md-6">
-									<form role="form">
-									  <div class="form-group">
-									    <label for="projectname">分配给：</label>
-									    <form:select class="form-control" path="assignTo">
-									      	<option>丁庆发</option>
-											<option>洪桂芳</option>
-											<option>陈钟</option>
-											<option>李晴</option>
-											<option>王锦乐</option>
-									      </form:select>
-									  </div>
-									</form>	
+								  <div class="form-group">
+								    <label>期望完成时间：</label>
+								    <input type="date" class="form-control">
+								  </div>
 								</div>
-								<div class="col-md-6">
-									<form role="form">
-									  <div class="form-group">
-									    <label for="projectname">期望完成时间：</label>
-									    <form:select class="form-control" path="exceptFinishDate">
-									      	<option>2017-07-28</option>
-									      </form:select>
-									  </div>
-									</form>	
-								</div>
-							</div>		
-						</fieldset>	 				 
-						</div>
+								</div>	
+							</form>		
 						
+						</fieldset>
 						
 			            <div class="modal-footer">
 			                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -279,6 +266,7 @@
 			            </div>
 			        </div><!-- /.modal-content -->
 			    </div><!-- /.modal -->
+			</div>
 			</div>
 			</form:form>
 			
