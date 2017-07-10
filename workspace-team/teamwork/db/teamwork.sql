@@ -17,7 +17,7 @@ USE teamwork;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` varchar(64) NOT NULL COMMENT '编号',
+  `id` varchar(64) NOT NULL unique COMMENT '编号',
   `company_id` varchar(64) DEFAULT NULL COMMENT '归属公司',
   `office_id` varchar(64) DEFAULT NULL COMMENT '归属部门',
   `login_name` varchar(100) DEFAULT NULL COMMENT '登录名',
@@ -42,6 +42,9 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
+INSERT INTO `user` VALUES ('101', null, null, null, null, 'T10316', '丁庆发', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('102', null, null, null, null, 'T11478', '陈钟',   null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('103', null, null, null, null, 'T10667', '李晴',   null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 --
 -- Definition of table `task`
 --
@@ -49,7 +52,7 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task` (
   `id` varchar(64) NOT NULL DEFAULT '' COMMENT '主键',
-  `project_id` varchar(64) DEFAULT NULL COMMENT '所属项目',
+  `project_id` varchar(64) DEFAULT NULL unique COMMENT '所属项目',
   `description` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '任务描述',
   `status` varchar(64) DEFAULT NULL COMMENT '任务状态：1、未分配，2、正在处理，3、已完成，4、已审核，5、已归档',
   `assign_to` varchar(64) DEFAULT NULL COMMENT '处理者',
@@ -83,6 +86,33 @@ CREATE TABLE `project` (
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='项目';
+
+INSERT INTO `project` VALUES ('1001', 'T91R', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `project` VALUES ('1002', 'I66', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `project` VALUES ('1003', 'I68', null, null, null, null, null, null, null, null, null, null);
+
+--
+-- Definition of table `sys_dict`
+--
+
+DROP TABLE IF EXISTS `sys_dict`;
+CREATE TABLE `sys_dict` (
+  `id` varchar(64) NOT NULL unique COMMENT '编号',
+  `name` varchar(64) DEFAULT NULL COMMENT '名称',
+  `sort` varchar(64) DEFAULT NULL COMMENT '分类',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统字典';
+
+INSERT INTO `sys_dict` VALUES ('10001', '未分配', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10002', '正在处理', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10003', '已完成', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10004', '已审核', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10005', '已归档', 'task_status', null, null, null, null, null);
 
 
 

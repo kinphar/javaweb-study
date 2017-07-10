@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.teamwork.pojo.Project;
+import com.teamwork.pojo.SysDict;
 import com.teamwork.pojo.Task;
 import com.teamwork.pojo.User;
+import com.teamwork.service.MiscService;
 import com.teamwork.service.ProjectService;
 import com.teamwork.service.UserService;
 
@@ -22,6 +24,8 @@ public class TaskController {
 	private ProjectService projectService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MiscService miscService;
 	
 	@RequestMapping("/task_list")
 	public String listTasks(Model model) {
@@ -37,8 +41,14 @@ public class TaskController {
 			System.out.println("user name : " + user.getName());
 		}
 		
+		List<SysDict> dicts = miscService.getTaskStatusDict();
+		for (SysDict dict: dicts) {
+			System.out.println("status ：" + dict.getId() + ";" + dict.getName() + ";"  + dict.getSort());
+		}
+		
 		model.addAttribute("projects", projects);		
 		model.addAttribute("users", users);	
+		model.addAttribute("statuses", dicts);	
 		model.addAttribute("task", new Task());
 		return "TaskList";		
 	}

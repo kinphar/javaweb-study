@@ -48,21 +48,7 @@ public class TestMybatis {
 		project.setCreateDate(new Date());
 		project.setDescription("first project");
 		mapper.insert(project);
-		
-		project.setId("101");
-		project.setName("I66");
-		project.setCreateBy("liqing");
-		project.setCreateDate(new Date());
-		project.setDescription("second project");
-		mapper.insert(project);
-		
-		project.setId("102");
-		project.setName("i86");
-		project.setCreateBy("chenzhong");
-		project.setCreateDate(new Date());
-		project.setDescription("third project");
-		mapper.insert(project);
-		
+
 	}
 	
 	@Test	
@@ -80,20 +66,6 @@ public class TestMybatis {
 		user.setEmail("dingqingfa@star-net.cn");
 		user.setPassword("dingqingfa");
 		user.setNo("T10316");
-		mapper.insert(user);
-		
-		user.setId(id++ + "");
-		user.setName("陈钟");
-		user.setEmail("chenzhong.sy@star-net.cn");
-		user.setPassword("chenzhong");
-		user.setNo("T11478");
-		mapper.insert(user);
-		
-		user.setId(id++ + "");
-		user.setName("李晴");
-		user.setEmail("liqing@star-net.cn");
-		user.setPassword("liqing");
-		user.setNo("T10667");
 		mapper.insert(user);
 	}
 	

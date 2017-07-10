@@ -45,6 +45,7 @@
 		<table schema="" tableName="user"></table>
 		<table schema="" tableName="task"></table>
 		<table schema="" tableName="project"></table>
+		<table schema="" tableName="sys_dict"></table>
 
 	</context>
 </generatorConfiguration>

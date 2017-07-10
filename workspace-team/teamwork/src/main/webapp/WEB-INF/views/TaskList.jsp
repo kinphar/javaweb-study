@@ -242,10 +242,8 @@
 								<div class="col-md-6">
 									<div class="form-group">
 									    <label>状态：</label>
-									    <form:select class="form-control" path="status" id="status">
-									      	<option>未分配</option>
-											<option>正在处理</option>
-											<option>已完成</option>
+									    <form:select class="form-control" path="status" id="status"
+									      	items="${statuses}" itemLabel="name" itemValue="id">
 									    </form:select>
 									</div>
 								  </div>
