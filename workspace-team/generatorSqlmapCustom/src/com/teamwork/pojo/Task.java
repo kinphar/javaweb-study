@@ -21,7 +21,7 @@ public class Task {
 
     private Date updageDate;
 
-    private Date exceptFinishDate;
+    private String expectFinishDate;
 
     private Date realFinishDate;
 
@@ -99,12 +99,12 @@ public class Task {
         this.updageDate = updageDate;
     }
 
-    public Date getExceptFinishDate() {
-        return exceptFinishDate;
+    public String getExpectFinishDate() {
+        return expectFinishDate;
     }
 
-    public void setExceptFinishDate(Date exceptFinishDate) {
-        this.exceptFinishDate = exceptFinishDate;
+    public void setExpectFinishDate(String expectFinishDate) {
+        this.expectFinishDate = expectFinishDate == null ? null : expectFinishDate.trim();
     }
 
     public Date getRealFinishDate() {

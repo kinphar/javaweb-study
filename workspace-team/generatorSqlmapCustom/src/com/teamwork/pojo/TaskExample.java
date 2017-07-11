@@ -715,63 +715,73 @@ public class TaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateIsNull() {
-            addCriterion("except_finish_date is null");
+        public Criteria andExpectFinishDateIsNull() {
+            addCriterion("expect_finish_date is null");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateIsNotNull() {
-            addCriterion("except_finish_date is not null");
+        public Criteria andExpectFinishDateIsNotNull() {
+            addCriterion("expect_finish_date is not null");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateEqualTo(Date value) {
-            addCriterion("except_finish_date =", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateEqualTo(String value) {
+            addCriterion("expect_finish_date =", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateNotEqualTo(Date value) {
-            addCriterion("except_finish_date <>", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateNotEqualTo(String value) {
+            addCriterion("expect_finish_date <>", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateGreaterThan(Date value) {
-            addCriterion("except_finish_date >", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateGreaterThan(String value) {
+            addCriterion("expect_finish_date >", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("except_finish_date >=", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateGreaterThanOrEqualTo(String value) {
+            addCriterion("expect_finish_date >=", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateLessThan(Date value) {
-            addCriterion("except_finish_date <", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateLessThan(String value) {
+            addCriterion("expect_finish_date <", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateLessThanOrEqualTo(Date value) {
-            addCriterion("except_finish_date <=", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateLessThanOrEqualTo(String value) {
+            addCriterion("expect_finish_date <=", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateIn(List<Date> values) {
-            addCriterion("except_finish_date in", values, "exceptFinishDate");
+        public Criteria andExpectFinishDateLike(String value) {
+            addCriterion("expect_finish_date like", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateNotIn(List<Date> values) {
-            addCriterion("except_finish_date not in", values, "exceptFinishDate");
+        public Criteria andExpectFinishDateNotLike(String value) {
+            addCriterion("expect_finish_date not like", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateBetween(Date value1, Date value2) {
-            addCriterion("except_finish_date between", value1, value2, "exceptFinishDate");
+        public Criteria andExpectFinishDateIn(List<String> values) {
+            addCriterion("expect_finish_date in", values, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateNotBetween(Date value1, Date value2) {
-            addCriterion("except_finish_date not between", value1, value2, "exceptFinishDate");
+        public Criteria andExpectFinishDateNotIn(List<String> values) {
+            addCriterion("expect_finish_date not in", values, "expectFinishDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectFinishDateBetween(String value1, String value2) {
+            addCriterion("expect_finish_date between", value1, value2, "expectFinishDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpectFinishDateNotBetween(String value1, String value2) {
+            addCriterion("expect_finish_date not between", value1, value2, "expectFinishDate");
             return (Criteria) this;
         }
 

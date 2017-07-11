@@ -715,63 +715,63 @@ public class ProjectExample {
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateIsNull() {
-            addCriterion("except_finish_date is null");
+        public Criteria andExpectFinishDateIsNull() {
+            addCriterion("expect_finish_date is null");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateIsNotNull() {
-            addCriterion("except_finish_date is not null");
+        public Criteria andExpectFinishDateIsNotNull() {
+            addCriterion("expect_finish_date is not null");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateEqualTo(Date value) {
-            addCriterion("except_finish_date =", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateEqualTo(Date value) {
+            addCriterion("expect_finish_date =", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateNotEqualTo(Date value) {
-            addCriterion("except_finish_date <>", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateNotEqualTo(Date value) {
+            addCriterion("expect_finish_date <>", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateGreaterThan(Date value) {
-            addCriterion("except_finish_date >", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateGreaterThan(Date value) {
+            addCriterion("expect_finish_date >", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("except_finish_date >=", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("expect_finish_date >=", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateLessThan(Date value) {
-            addCriterion("except_finish_date <", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateLessThan(Date value) {
+            addCriterion("expect_finish_date <", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateLessThanOrEqualTo(Date value) {
-            addCriterion("except_finish_date <=", value, "exceptFinishDate");
+        public Criteria andExpectFinishDateLessThanOrEqualTo(Date value) {
+            addCriterion("expect_finish_date <=", value, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateIn(List<Date> values) {
-            addCriterion("except_finish_date in", values, "exceptFinishDate");
+        public Criteria andExpectFinishDateIn(List<Date> values) {
+            addCriterion("expect_finish_date in", values, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateNotIn(List<Date> values) {
-            addCriterion("except_finish_date not in", values, "exceptFinishDate");
+        public Criteria andExpectFinishDateNotIn(List<Date> values) {
+            addCriterion("expect_finish_date not in", values, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateBetween(Date value1, Date value2) {
-            addCriterion("except_finish_date between", value1, value2, "exceptFinishDate");
+        public Criteria andExpectFinishDateBetween(Date value1, Date value2) {
+            addCriterion("expect_finish_date between", value1, value2, "expectFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andExceptFinishDateNotBetween(Date value1, Date value2) {
-            addCriterion("except_finish_date not between", value1, value2, "exceptFinishDate");
+        public Criteria andExpectFinishDateNotBetween(Date value1, Date value2) {
+            addCriterion("expect_finish_date not between", value1, value2, "expectFinishDate");
             return (Criteria) this;
         }
 

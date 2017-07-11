@@ -32,19 +32,8 @@ public class TaskController {
 		System.out.println("task_list");
 		
 		List<Project> projects = projectService.getAllProject();
-		for (Project project : projects) {
-			System.out.println(project.getId() + ";" + project.getName() + ";" + project.getDescription());
-		}
-		
 		List<User> users = userService.getAllUser();
-		for (User user : users) {
-			System.out.println("user name : " + user.getName());
-		}
-		
 		List<SysDict> dicts = miscService.getTaskStatusDict();
-		for (SysDict dict: dicts) {
-			System.out.println("status ：" + dict.getId() + ";" + dict.getName() + ";"  + dict.getSort());
-		}
 		
 		model.addAttribute("projects", projects);		
 		model.addAttribute("users", users);	
@@ -56,9 +45,10 @@ public class TaskController {
 	@RequestMapping("/task_save") 
 	public String saveTask(@ModelAttribute Task task) {
 		
-		System.out.println(task.getDescription() + ";" + task.getProjectId() + ";" 
-				+ task.getAssignTo() + ";" + task.getStatus() + ";" + task.getExceptFinishDate() + ";");
-		return "";
+		System.out.println("描述：" + task.getDescription() + "; 项目id：" + task.getProjectId() 
+				+ "; 分配给：" + task.getAssignTo() + "; 状态：" + task.getStatus() 
+				+ "; 到期时间：" + task.getExpectFinishDate());
+		return "redirect:task_list";
 	}
 	
 

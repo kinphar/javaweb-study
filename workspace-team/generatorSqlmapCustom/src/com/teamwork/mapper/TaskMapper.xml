@@ -11,7 +11,7 @@
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
     <result column="updage_date" property="updageDate" jdbcType="TIMESTAMP" />
-    <result column="except_finish_date" property="exceptFinishDate" jdbcType="TIMESTAMP" />
+    <result column="expect_finish_date" property="expectFinishDate" jdbcType="VARCHAR" />
     <result column="real_finish_date" property="realFinishDate" jdbcType="TIMESTAMP" />
     <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
   </resultMap>
@@ -75,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, project_id, description, status, assign_to, create_by, create_date, update_by, 
-    updage_date, except_finish_date, real_finish_date, del_flag
+    updage_date, expect_finish_date, real_finish_date, del_flag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.TaskExample" >
     select
@@ -111,12 +111,12 @@
     insert into task (id, project_id, description, 
       status, assign_to, create_by, 
       create_date, update_by, updage_date, 
-      except_finish_date, real_finish_date, del_flag
+      expect_finish_date, real_finish_date, del_flag
       )
     values (#{id,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{assignTo,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updageDate,jdbcType=TIMESTAMP}, 
-      #{exceptFinishDate,jdbcType=TIMESTAMP}, #{realFinishDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}
+      #{expectFinishDate,jdbcType=VARCHAR}, #{realFinishDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.teamwork.pojo.Task" >
@@ -149,8 +149,8 @@
       <if test="updageDate != null" >
         updage_date,
       </if>
-      <if test="exceptFinishDate != null" >
-        except_finish_date,
+      <if test="expectFinishDate != null" >
+        expect_finish_date,
       </if>
       <if test="realFinishDate != null" >
         real_finish_date,
@@ -187,8 +187,8 @@
       <if test="updageDate != null" >
         #{updageDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="exceptFinishDate != null" >
-        #{exceptFinishDate,jdbcType=TIMESTAMP},
+      <if test="expectFinishDate != null" >
+        #{expectFinishDate,jdbcType=VARCHAR},
       </if>
       <if test="realFinishDate != null" >
         #{realFinishDate,jdbcType=TIMESTAMP},
@@ -234,8 +234,8 @@
       <if test="record.updageDate != null" >
         updage_date = #{record.updageDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.exceptFinishDate != null" >
-        except_finish_date = #{record.exceptFinishDate,jdbcType=TIMESTAMP},
+      <if test="record.expectFinishDate != null" >
+        expect_finish_date = #{record.expectFinishDate,jdbcType=VARCHAR},
       </if>
       <if test="record.realFinishDate != null" >
         real_finish_date = #{record.realFinishDate,jdbcType=TIMESTAMP},
@@ -259,7 +259,7 @@
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
       update_by = #{record.updateBy,jdbcType=VARCHAR},
       updage_date = #{record.updageDate,jdbcType=TIMESTAMP},
-      except_finish_date = #{record.exceptFinishDate,jdbcType=TIMESTAMP},
+      expect_finish_date = #{record.expectFinishDate,jdbcType=VARCHAR},
       real_finish_date = #{record.realFinishDate,jdbcType=TIMESTAMP},
       del_flag = #{record.delFlag,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -293,8 +293,8 @@
       <if test="updageDate != null" >
         updage_date = #{updageDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="exceptFinishDate != null" >
-        except_finish_date = #{exceptFinishDate,jdbcType=TIMESTAMP},
+      <if test="expectFinishDate != null" >
+        expect_finish_date = #{expectFinishDate,jdbcType=VARCHAR},
       </if>
       <if test="realFinishDate != null" >
         real_finish_date = #{realFinishDate,jdbcType=TIMESTAMP},
@@ -315,7 +315,7 @@
       create_date = #{createDate,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},
       updage_date = #{updageDate,jdbcType=TIMESTAMP},
-      except_finish_date = #{exceptFinishDate,jdbcType=TIMESTAMP},
+      expect_finish_date = #{expectFinishDate,jdbcType=VARCHAR},
       real_finish_date = #{realFinishDate,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

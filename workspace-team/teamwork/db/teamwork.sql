@@ -60,7 +60,7 @@ CREATE TABLE `task` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',  
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
   `updage_date` datetime DEFAULT NULL COMMENT '更新时间',
-  `except_finish_date` datetime DEFAULT NULL COMMENT '期望完成时间',
+  `expect_finish_date` varchar(64) DEFAULT NULL COMMENT '期望完成时间',
   `real_finish_date` datetime DEFAULT NULL COMMENT '实际完成时间',
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`)
@@ -81,7 +81,7 @@ CREATE TABLE `project` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',  
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
   `updage_date` datetime DEFAULT NULL COMMENT '更新时间',
-  `except_finish_date` datetime DEFAULT NULL COMMENT '期望完成时间',
+  `expect_finish_date` datetime DEFAULT NULL COMMENT '期望完成时间',
   `real_finish_date` datetime DEFAULT NULL COMMENT '实际完成时间',
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`)

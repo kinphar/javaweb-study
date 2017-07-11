@@ -21,7 +21,7 @@ public class Project {
 
     private Date updageDate;
 
-    private Date exceptFinishDate;
+    private Date expectFinishDate;
 
     private Date realFinishDate;
 
@@ -99,12 +99,12 @@ public class Project {
         this.updageDate = updageDate;
     }
 
-    public Date getExceptFinishDate() {
-        return exceptFinishDate;
+    public Date getExpectFinishDate() {
+        return expectFinishDate;
     }
 
-    public void setExceptFinishDate(Date exceptFinishDate) {
-        this.exceptFinishDate = exceptFinishDate;
+    public void setExpectFinishDate(Date expectFinishDate) {
+        this.expectFinishDate = expectFinishDate;
     }
 
     public Date getRealFinishDate() {
