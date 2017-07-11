@@ -37,10 +37,12 @@ public class TaskController {
 		List<Project> projects = projectService.getAllProject();
 		List<User> users = userService.getAllUser();
 		List<SysDict> dicts = miscService.getTaskStatusDict();
+		List<Task> tasks = taskService.getAllTask();
 		
 		model.addAttribute("projects", projects);		
 		model.addAttribute("users", users);	
 		model.addAttribute("statuses", dicts);	
+		model.addAttribute("tasks", tasks);
 		model.addAttribute("task", new Task());
 		return "TaskList";		
 	}

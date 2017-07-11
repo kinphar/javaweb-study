@@ -20,13 +20,13 @@ CREATE TABLE `user` (
   `id` varchar(64) NOT NULL unique COMMENT '编号',
   `company_id` varchar(64) DEFAULT NULL COMMENT '归属公司',
   `office_id` varchar(64) DEFAULT NULL COMMENT '归属部门',
-  `login_name` varchar(100) DEFAULT NULL COMMENT '登录名',
+  `login_name` varchar(100) DEFAULT NULL unique COMMENT '登录名',
   `password` varchar(100) DEFAULT NULL COMMENT '密码',
-  `no` varchar(100) DEFAULT NULL COMMENT '工号',
+  `no` varchar(100) DEFAULT NULL unique COMMENT '工号',
   `name` varchar(100) DEFAULT NULL COMMENT '姓名',
-  `email` varchar(200) DEFAULT NULL COMMENT '邮箱',
-  `phone` varchar(200) DEFAULT NULL COMMENT '电话',
-  `mobile` varchar(200) DEFAULT NULL COMMENT '手机',
+  `email` varchar(200) DEFAULT NULL unique COMMENT '邮箱',
+  `phone` varchar(200) DEFAULT NULL unique COMMENT '电话',
+  `mobile` varchar(200) DEFAULT NULL unique COMMENT '手机',
   `user_type` char(1) DEFAULT NULL COMMENT '用户类型',
   `photo` varchar(1000) DEFAULT NULL COMMENT '用户头像',
   `login_ip` varchar(100) DEFAULT NULL COMMENT '最后登陆IP',
@@ -51,8 +51,8 @@ INSERT INTO `user` VALUES ('103', null, null, null, null, 'T10667', '李晴',   
 
 DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task` (
-  `id` varchar(64) NOT NULL DEFAULT '' COMMENT '主键',
-  `project_name` varchar(64) DEFAULT NULL unique COMMENT '所属项目',
+  `id` varchar(64) NOT NULL DEFAULT '' unique COMMENT '主键',
+  `project_name` varchar(64) DEFAULT NULL COMMENT '所属项目',
   `description` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '任务描述',
   `status` varchar(64) DEFAULT NULL COMMENT '任务状态：1、未分配，2、正在处理，3、已完成，4、已审核，5、已归档',
   `assign_to` varchar(64) DEFAULT NULL COMMENT '处理者',
@@ -72,7 +72,7 @@ CREATE TABLE `task` (
 
 DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
-  `id` varchar(64) NOT NULL DEFAULT '' COMMENT '主键',
+  `id` varchar(64) NOT NULL DEFAULT '' unique COMMENT '主键',
   `name` varchar(64) DEFAULT NULL COMMENT '项目名称',
   `description` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '项目需求',
   `status` varchar(64) DEFAULT NULL COMMENT '项目状态：1、未开始，2、正在进行，3、已完成，4、已结项，5、已归档',

@@ -20,8 +20,7 @@
 	<servlet-api.version>2.5</servlet-api.version>
 	<jsp-api.version>2.0</jsp-api.version>
 	<druid.version>1.0.9</druid.version>
-	<joda-time.version>2.5</joda-time.version>
-  	
+	<joda-time.version>2.5</joda-time.version>  	
   	<junit.version>4.12</junit.version>
   </properties>
 
@@ -58,7 +57,6 @@
 		<groupId>jstl</groupId>
 		<artifactId>jstl</artifactId>
 		<version>${jstl.version}</version>
-		<scope>provided</scope>
 	</dependency>
 	<dependency>
 		<groupId>javax.servlet</groupId>

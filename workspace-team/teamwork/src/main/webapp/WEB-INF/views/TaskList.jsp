@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -121,106 +122,33 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>20170710-001</td>
-					<td>板卡定制</td>
-					<td>H61I支持二代身份证，支持IC卡防复制功能，叠加历史需求。</td>
-					<td>2017-07-16</td>
-					<td>丁庆发</td>
-					<td>
-						<div class="progress">
-							<div class="progress-bar progress-bar-success" role="progressbar"
-								aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-								style="width: 100%;"></div>
-						</div>
-					</td>
-					<td>
-						<button class="btn btn-primary btn-opt" type="submit">
-							<span class="glyphicon glyphicon-zoom-in glyphicon-opt"></span>详情
-						</button>
-						<button class="btn btn-success btn-opt" type="submit">
-							<span class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
-						</button>
-						<button class="btn btn-warning btn-opt" type="submit">
-							<span class="glyphicon glyphicon-check glyphicon-opt"></span>进度
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>20170710-002</td>
-					<td>板卡定制</td>
-					<td>H61I支持二代身份证，支持IC卡防复制功能，叠加历史需求。H61I支持二代身份证.</td>
-					<td>2017-07-16</td>
-					<td>丁庆发</td>
-					<td>
-						<div class="progress">
-							<div class="progress-bar progress-bar-info" role="progressbar"
-								aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-								style="width: 30%;"></div>
-						</div>
-					</td>
-					<td>
-						<button class="btn btn-primary btn-opt" type="submit">
-							<span class="glyphicon glyphicon-zoom-in glyphicon-opt"></span>详情
-						</button>
-						<button class="btn btn-success btn-opt" type="submit">
-							<span class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
-						</button>
-						<button class="btn btn-warning btn-opt" type="submit">
-							<span class="glyphicon glyphicon-check glyphicon-opt"></span>进度
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>20170710-003</td>
-					<td>T91R</td>
-					<td>LCD B备用方案调试</td>
-					<td>2017-07-16</td>
-					<td>丁庆发</td>
-					<td>
-						<div class="progress">
-							<div class="progress-bar progress-bar-success" role="progressbar"
-								aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-								style="width: 0%;"></div>
-						</div>
-					</td>
-					<td>
-						<button class="btn btn-primary btn-opt" type="submit">
-							<span class="glyphicon glyphicon-zoom-in glyphicon-opt"></span>详情
-						</button>
-						<button class="btn btn-success btn-opt" type="submit">
-							<span class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
-						</button>
-						<button class="btn btn-warning btn-opt" type="submit">
-							<span class="glyphicon glyphicon-check glyphicon-opt"></span>进度
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>20170710-004</td>
-					<td>板卡定制</td>
-					<td>H61I支持二代身份证，支持IC卡防复制功能，叠加历史需求。</td>
-					<td>2017-07-16</td>
-					<td>丁庆发</td>
-					<td>
-						<div class="progress">
-							<div class="progress-bar progress-bar-info" role="progressbar"
-								aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-								style="width: 50%;"></div>
-						</div>
-					</td>
-					<td>
-						<button class="btn btn-primary btn-opt" type="submit">
-							<span class="glyphicon glyphicon-zoom-in glyphicon-opt"></span>详情
-						</button>
-						<button class="btn btn-success btn-opt" type="submit">
-							<span class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
-						</button>
-						<button class="btn btn-warning btn-opt" type="submit">
-							<span class="glyphicon glyphicon-check glyphicon-opt"></span>进度
-						</button>
-					</td>
-				</tr>
+				<c:forEach items="${tasks}" var="task">
+					<tr>
+						<td>${task.id}</td>
+						<td>${task.projectName}</td>
+						<td>${task.description}</td>
+						<td>${task.expectFinishDate}</td>
+						<td>${task.assignTo}</td>
+						<td>
+							<div class="progress">
+								<div class="progress-bar progress-bar-success"
+									role="progressbar" aria-valuenow="60" aria-valuemin="0"
+									aria-valuemax="100" style="width: 100%;"></div>
+							</div>
+						</td>
+						<td>
+							<button class="btn btn-primary btn-opt" type="submit">
+								<span class="glyphicon glyphicon-zoom-in glyphicon-opt"></span>详情
+							</button>
+							<button class="btn btn-success btn-opt" type="submit">
+								<span class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
+							</button>
+							<button class="btn btn-warning btn-opt" type="submit">
+								<span class="glyphicon glyphicon-check glyphicon-opt"></span>进度
+							</button>
+						</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 
