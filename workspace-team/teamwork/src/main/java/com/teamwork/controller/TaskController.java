@@ -14,6 +14,7 @@ import com.teamwork.pojo.Task;
 import com.teamwork.pojo.User;
 import com.teamwork.service.MiscService;
 import com.teamwork.service.ProjectService;
+import com.teamwork.service.TaskService;
 import com.teamwork.service.UserService;
 
 @Controller
@@ -26,10 +27,12 @@ public class TaskController {
 	private UserService userService;
 	@Autowired
 	private MiscService miscService;
+	@Autowired
+	private TaskService taskService;
 	
 	@RequestMapping("/task_list")
 	public String listTasks(Model model) {
-		System.out.println("task_list");
+		System.out.println("---Request--- : task_list");
 		
 		List<Project> projects = projectService.getAllProject();
 		List<User> users = userService.getAllUser();
@@ -44,10 +47,14 @@ public class TaskController {
 	
 	@RequestMapping("/task_save") 
 	public String saveTask(@ModelAttribute Task task) {
-		
-		System.out.println("描述：" + task.getDescription() + "; 项目id：" + task.getProjectId() 
-				+ "; 分配给：" + task.getAssignTo() + "; 状态：" + task.getStatus() 
+		System.out.println("---Request--- : task_save");
+		System.out.println("描述：" + task.getDescription() 
+				+ "; 项目id：" + task.getProjectName()
+				+ "; 分配给：" + task.getAssignTo() 
+				+ "; 状态：" + task.getStatus() 
 				+ "; 到期时间：" + task.getExpectFinishDate());
+		
+		taskService.createTask(task);
 		return "redirect:task_list";
 	}
 	

@@ -5,7 +5,7 @@ import java.util.Date;
 public class Task {
     private String id;
 
-    private String projectId;
+    private String projectName;
 
     private String description;
 
@@ -35,12 +35,12 @@ public class Task {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getProjectId() {
-        return projectId;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId == null ? null : projectId.trim();
+    public void setProjectName(String projectName) {
+        this.projectName = projectName == null ? null : projectName.trim();
     }
 
     public String getDescription() {

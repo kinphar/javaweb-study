@@ -52,7 +52,7 @@ INSERT INTO `user` VALUES ('103', null, null, null, null, 'T10667', '李晴',   
 DROP TABLE IF EXISTS `task`;
 CREATE TABLE `task` (
   `id` varchar(64) NOT NULL DEFAULT '' COMMENT '主键',
-  `project_id` varchar(64) DEFAULT NULL unique COMMENT '所属项目',
+  `project_name` varchar(64) DEFAULT NULL unique COMMENT '所属项目',
   `description` varchar(128) COLLATE utf8_bin DEFAULT NULL COMMENT '任务描述',
   `status` varchar(64) DEFAULT NULL COMMENT '任务状态：1、未分配，2、正在处理，3、已完成，4、已审核，5、已归档',
   `assign_to` varchar(64) DEFAULT NULL COMMENT '处理者',
@@ -64,7 +64,7 @@ CREATE TABLE `task` (
   `real_finish_date` datetime DEFAULT NULL COMMENT '实际完成时间',
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='任务';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='任务';
 
 --
 -- Definition of table `task`
@@ -85,7 +85,7 @@ CREATE TABLE `project` (
   `real_finish_date` datetime DEFAULT NULL COMMENT '实际完成时间',
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='项目';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目';
 
 INSERT INTO `project` VALUES ('1001', 'T91R', null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `project` VALUES ('1002', 'I66', null, null, null, null, null, null, null, null, null, null);
@@ -98,7 +98,7 @@ INSERT INTO `project` VALUES ('1003', 'I68', null, null, null, null, null, null,
 DROP TABLE IF EXISTS `sys_dict`;
 CREATE TABLE `sys_dict` (
   `id` varchar(64) NOT NULL unique COMMENT '编号',
-  `name` varchar(64) DEFAULT NULL COMMENT '名称',
+  `name` varchar(64) DEFAULT NULL unique COMMENT '名称',
   `sort` varchar(64) DEFAULT NULL COMMENT '分类',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',

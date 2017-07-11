@@ -211,13 +211,13 @@
 					</td>
 					<td>
 						<button class="btn btn-primary btn-opt" type="submit">
-							<span class="glyphicon glyphicon-zoom-in"></span>详情
+							<span class="glyphicon glyphicon-zoom-in glyphicon-opt"></span>详情
 						</button>
 						<button class="btn btn-success btn-opt" type="submit">
-							<span class="glyphicon glyphicon-pencil"></span>编辑
+							<span class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
 						</button>
 						<button class="btn btn-warning btn-opt" type="submit">
-							<span class="glyphicon glyphicon-check"></span>进度
+							<span class="glyphicon glyphicon-check glyphicon-opt"></span>进度
 						</button>
 					</td>
 				</tr>
@@ -251,9 +251,9 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>所属项目：</label>
-												<form:select class="form-control" path="projectId"
-													id="projectId" items="${projects}" itemLabel="name"
-													itemValue="id">
+												<form:select class="form-control" path="projectName"
+													id="projectName" items="${projects}" itemLabel="name"
+													itemValue="name">
 												</form:select>
 											</div>
 										</div>
@@ -262,7 +262,7 @@
 												<label>分配给：</label>
 												<form:select class="form-control" path="assignTo"
 													id="assignTo" items="${users}" itemLabel="name"
-													itemValue="no">
+													itemValue="name">
 												</form:select>
 											</div>
 										</div>
@@ -273,7 +273,7 @@
 											<div class="form-group">
 												<label>状态：</label>
 												<form:select class="form-control" path="status" id="status"
-													items="${statuses}" itemLabel="name" itemValue="id">
+													items="${statuses}" itemLabel="name" itemValue="name">
 												</form:select>
 											</div>
 										</div>

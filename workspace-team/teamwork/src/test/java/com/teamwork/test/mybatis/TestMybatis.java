@@ -27,10 +27,11 @@ public class TestMybatis {
 		TaskMapper mapper = applicationContext.getBean(TaskMapper.class);
 				
 		Task task = new Task();
-		task.setId("10086");
+		task.setId("10088");
 		task.setCreateBy("dqf");
 		task.setCreateDate(new Date());
-		task.setDescription("test task.");
+		task.setStatus("doing");
+		task.setDescription("这是一个测试任务");
 		mapper.insert(task);
 	}
 	

@@ -3,7 +3,7 @@
 <mapper namespace="com.teamwork.mapper.TaskMapper" >
   <resultMap id="BaseResultMap" type="com.teamwork.pojo.Task" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="project_id" property="projectId" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="assign_to" property="assignTo" jdbcType="VARCHAR" />
@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, project_id, description, status, assign_to, create_by, create_date, update_by, 
+    id, project_name, description, status, assign_to, create_by, create_date, update_by, 
     updage_date, expect_finish_date, real_finish_date, del_flag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.TaskExample" >
@@ -108,12 +108,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.teamwork.pojo.Task" >
-    insert into task (id, project_id, description, 
+    insert into task (id, project_name, description, 
       status, assign_to, create_by, 
       create_date, update_by, updage_date, 
       expect_finish_date, real_finish_date, del_flag
       )
-    values (#{id,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{assignTo,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updageDate,jdbcType=TIMESTAMP}, 
       #{expectFinishDate,jdbcType=VARCHAR}, #{realFinishDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}
@@ -125,8 +125,8 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="projectId != null" >
-        project_id,
+      <if test="projectName != null" >
+        project_name,
       </if>
       <if test="description != null" >
         description,
@@ -163,8 +163,8 @@
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="projectId != null" >
-        #{projectId,jdbcType=VARCHAR},
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
@@ -210,8 +210,8 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.projectId != null" >
-        project_id = #{record.projectId,jdbcType=VARCHAR},
+      <if test="record.projectName != null" >
+        project_name = #{record.projectName,jdbcType=VARCHAR},
       </if>
       <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
@@ -251,7 +251,7 @@
   <update id="updateByExample" parameterType="map" >
     update task
     set id = #{record.id,jdbcType=VARCHAR},
-      project_id = #{record.projectId,jdbcType=VARCHAR},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=VARCHAR},
       assign_to = #{record.assignTo,jdbcType=VARCHAR},
@@ -269,8 +269,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.pojo.Task" >
     update task
     <set >
-      <if test="projectId != null" >
-        project_id = #{projectId,jdbcType=VARCHAR},
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
@@ -307,7 +307,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.teamwork.pojo.Task" >
     update task
-    set project_id = #{projectId,jdbcType=VARCHAR},
+    set project_name = #{projectName,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
       assign_to = #{assignTo,jdbcType=VARCHAR},

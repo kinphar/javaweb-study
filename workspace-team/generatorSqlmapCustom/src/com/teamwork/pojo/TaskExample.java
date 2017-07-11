@@ -175,73 +175,73 @@ public class TaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdIsNull() {
-            addCriterion("project_id is null");
+        public Criteria andProjectNameIsNull() {
+            addCriterion("project_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdIsNotNull() {
-            addCriterion("project_id is not null");
+        public Criteria andProjectNameIsNotNull() {
+            addCriterion("project_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdEqualTo(String value) {
-            addCriterion("project_id =", value, "projectId");
+        public Criteria andProjectNameEqualTo(String value) {
+            addCriterion("project_name =", value, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotEqualTo(String value) {
-            addCriterion("project_id <>", value, "projectId");
+        public Criteria andProjectNameNotEqualTo(String value) {
+            addCriterion("project_name <>", value, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdGreaterThan(String value) {
-            addCriterion("project_id >", value, "projectId");
+        public Criteria andProjectNameGreaterThan(String value) {
+            addCriterion("project_name >", value, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdGreaterThanOrEqualTo(String value) {
-            addCriterion("project_id >=", value, "projectId");
+        public Criteria andProjectNameGreaterThanOrEqualTo(String value) {
+            addCriterion("project_name >=", value, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdLessThan(String value) {
-            addCriterion("project_id <", value, "projectId");
+        public Criteria andProjectNameLessThan(String value) {
+            addCriterion("project_name <", value, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdLessThanOrEqualTo(String value) {
-            addCriterion("project_id <=", value, "projectId");
+        public Criteria andProjectNameLessThanOrEqualTo(String value) {
+            addCriterion("project_name <=", value, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdLike(String value) {
-            addCriterion("project_id like", value, "projectId");
+        public Criteria andProjectNameLike(String value) {
+            addCriterion("project_name like", value, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotLike(String value) {
-            addCriterion("project_id not like", value, "projectId");
+        public Criteria andProjectNameNotLike(String value) {
+            addCriterion("project_name not like", value, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdIn(List<String> values) {
-            addCriterion("project_id in", values, "projectId");
+        public Criteria andProjectNameIn(List<String> values) {
+            addCriterion("project_name in", values, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotIn(List<String> values) {
-            addCriterion("project_id not in", values, "projectId");
+        public Criteria andProjectNameNotIn(List<String> values) {
+            addCriterion("project_name not in", values, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdBetween(String value1, String value2) {
-            addCriterion("project_id between", value1, value2, "projectId");
+        public Criteria andProjectNameBetween(String value1, String value2) {
+            addCriterion("project_name between", value1, value2, "projectName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotBetween(String value1, String value2) {
-            addCriterion("project_id not between", value1, value2, "projectId");
+        public Criteria andProjectNameNotBetween(String value1, String value2) {
+            addCriterion("project_name not between", value1, value2, "projectName");
             return (Criteria) this;
         }
 
