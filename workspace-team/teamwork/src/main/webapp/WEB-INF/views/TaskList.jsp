@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -26,6 +27,7 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#">Prison Break</a>
+				<img id="Brand" class="img-rounded" alt="Brand" src="/images/bug.gif" style="height: 35px; width: 35px; margin-top: 8px">
 				<form class="navbar-form navbar-right">
 					<input type="text" class="form-control" placeholder="Search...">
 				</form>
@@ -68,9 +70,7 @@
 							<option>我自己</option>
 						</select>
 					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="查找任务...">
-					</div>
+
 					<div class="form-group" style="float: right">
 						<div class="dropdown">
 							<button type="button" class="btn dropdown-toggle btn-newtask"
@@ -102,9 +102,8 @@
 
 		<table class="table table-striped table-bordered table-hover">
 			<colgroup>
+				<col style="width: 50%">
 				<col style="">
-				<col style="">
-				<col style="width: 40%">
 				<col style="">
 				<col style="">
 				<col style="width: 8%">
@@ -112,11 +111,10 @@
 			</colgroup>
 			<thead>
 				<tr>
-					<th>编号</th>
+					<th>任务内容</th>
 					<th>所属项目</th>
-					<th>描述</th>
-					<th>到期时间</th>
-					<th>处理人</th>
+					<th>负责人</th>
+					<th>到期时间</th>					
 					<th>进度</th>
 					<th>操作</th>
 				</tr>
@@ -124,26 +122,26 @@
 			<tbody>
 				<c:forEach items="${tasks}" var="task">
 					<tr>
-						<td>${task.id}</td>
-						<td>${task.projectName}</td>
 						<td>${task.description}</td>
-						<td>${task.expectFinishDate}</td>
+						<td>${task.projectName}</td>
 						<td>${task.assignTo}</td>
+						<td>${task.expectFinishDate}</td>						
 						<td>
 							<div class="progress">
-								<div class="progress-bar progress-bar-success"
-									role="progressbar" aria-valuenow="60" aria-valuemin="0"
-									aria-valuemax="100" style="width: 100%;"></div>
+								<div class="progress-bar progress-bar-info" role="progressbar"
+									aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+									style="width: ${task.progress}%;"></div>
 							</div>
+
 						</td>
 						<td>
-							<button class="btn btn-primary btn-opt" type="submit">
+							<button class="btn btn-default btn-opt" type="submit">
 								<span class="glyphicon glyphicon-zoom-in glyphicon-opt"></span>详情
 							</button>
-							<button class="btn btn-success btn-opt" type="submit">
+							<button class="btn btn-default btn-opt" type="submit">
 								<span class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
 							</button>
-							<button class="btn btn-warning btn-opt" type="submit">
+							<button class="btn btn-default btn-opt" type="submit">
 								<span class="glyphicon glyphicon-check glyphicon-opt"></span>进度
 							</button>
 						</td>
@@ -166,56 +164,53 @@
 							<h4 class="modal-title" id="myModalLabel">新建任务</h4>
 						</div>
 						<div class="modal-body">
+							<form role="form">
+								<div class="form-group">
+									<label for="name">任务描述：</label>
+									<form:textarea class="form-control" path="description"
+										style="max-width:500px;" rows="5" />
+								</div>
 
-							<fieldset>
-								<form role="form">
-									<div class="form-group">
-										<label for="name">任务描述：</label>
-										<form:textarea class="form-control" path="description"
-											style="max-width:500px;" rows="5" />
-									</div>
-
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>所属项目：</label>
-												<form:select class="form-control" path="projectName"
-													id="projectName" items="${projects}" itemLabel="name"
-													itemValue="name">
-												</form:select>
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>分配给：</label>
-												<form:select class="form-control" path="assignTo"
-													id="assignTo" items="${users}" itemLabel="name"
-													itemValue="name">
-												</form:select>
-											</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>所属项目：</label>
+											<form:select class="form-control" path="projectName"
+												id="projectName" items="${projects}" itemLabel="name"
+												itemValue="name">
+											</form:select>
 										</div>
 									</div>
-
-									<div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>状态：</label>
-												<form:select class="form-control" path="status" id="status"
-													items="${statuses}" itemLabel="name" itemValue="name">
-												</form:select>
-											</div>
-										</div>
-
-										<div class="col-md-6">
-											<div class="form-group">
-												<label>DeadLine：</label>
-												<form:input class="form-control" type="date"
-													path="expectFinishDate" id="expectFinishDate" />
-											</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>分配给：</label>
+											<form:select class="form-control" path="assignTo"
+												id="assignTo" items="${users}" itemLabel="name"
+												itemValue="name">
+											</form:select>
 										</div>
 									</div>
-								</form>
-							</fieldset>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>状态：</label>
+											<form:select class="form-control" path="status" id="status"
+												items="${statuses}" itemLabel="name" itemValue="name">
+											</form:select>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>DeadLine：</label>
+											<form:input class="form-control" type="date"
+												path="expectFinishDate" id="expectFinishDate" />
+										</div>
+									</div>
+								</div>
+							</form>
 
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"

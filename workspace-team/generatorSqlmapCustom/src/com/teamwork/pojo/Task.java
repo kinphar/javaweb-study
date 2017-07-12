@@ -11,6 +11,8 @@ public class Task {
 
     private String status;
 
+    private String progress;
+
     private String assignTo;
 
     private String createBy;
@@ -57,6 +59,14 @@ public class Task {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress == null ? null : progress.trim();
     }
 
     public String getAssignTo() {

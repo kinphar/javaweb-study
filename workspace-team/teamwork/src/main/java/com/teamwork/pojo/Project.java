@@ -11,6 +11,8 @@ public class Project {
 
     private String status;
 
+    private String progress;
+
     private String projectManager;
 
     private String createBy;
@@ -57,6 +59,14 @@ public class Project {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress == null ? null : progress.trim();
     }
 
     public String getProjectManager() {

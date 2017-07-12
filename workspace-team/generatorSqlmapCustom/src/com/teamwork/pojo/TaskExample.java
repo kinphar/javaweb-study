@@ -385,6 +385,76 @@ public class TaskExample {
             return (Criteria) this;
         }
 
+        public Criteria andProgressIsNull() {
+            addCriterion("progress is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressIsNotNull() {
+            addCriterion("progress is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressEqualTo(String value) {
+            addCriterion("progress =", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressNotEqualTo(String value) {
+            addCriterion("progress <>", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressGreaterThan(String value) {
+            addCriterion("progress >", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressGreaterThanOrEqualTo(String value) {
+            addCriterion("progress >=", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressLessThan(String value) {
+            addCriterion("progress <", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressLessThanOrEqualTo(String value) {
+            addCriterion("progress <=", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressLike(String value) {
+            addCriterion("progress like", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressNotLike(String value) {
+            addCriterion("progress not like", value, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressIn(List<String> values) {
+            addCriterion("progress in", values, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressNotIn(List<String> values) {
+            addCriterion("progress not in", values, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressBetween(String value1, String value2) {
+            addCriterion("progress between", value1, value2, "progress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProgressNotBetween(String value1, String value2) {
+            addCriterion("progress not between", value1, value2, "progress");
+            return (Criteria) this;
+        }
+
         public Criteria andAssignToIsNull() {
             addCriterion("assign_to is null");
             return (Criteria) this;
