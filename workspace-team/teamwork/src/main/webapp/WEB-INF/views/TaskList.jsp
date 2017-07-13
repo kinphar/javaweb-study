@@ -13,6 +13,15 @@
 <link rel="stylesheet" href="/css/task.css" />
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function submitForm() {
+		var form = document.getElementById("filterForm");
+		form.submit();
+	}
+	function submitFormWithStatus() {
+
+	}
+</script>
 </head>
 
 <body>
@@ -26,8 +35,9 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Prison Break</a>
-				<img id="Brand" class="img-rounded" alt="Brand" src="/images/bug.gif" style="height: 35px; width: 35px; margin-top: 8px">
+				<a class="navbar-brand" href="#">Prison Break</a> <img id="Brand"
+					class="img-rounded" alt="Brand" src="/images/bug.gif"
+					style="height: 35px; width: 35px; margin-top: 8px">
 				<form class="navbar-form navbar-right">
 					<input type="text" class="form-control" placeholder="Search...">
 				</form>
@@ -50,60 +60,63 @@
 			<h3>任务管理</h3>
 		</div>
 
-		<nav class="navbar navbar-default" role="navigation">
-			<div class="container-fluid">
-				<form class="form-inline" role="form">
+		<form:form id="filterForm" commandName="taskQuery"
+			action="${ctx}/task/task_list" method="post" class="form-inline">
+			<div class="row breadcrumb"
+				style="margin: 10px 0px; padding: 8px 2px">
+				<div class="col-sm-12">
 					<div class="form-group">
-						<label for="projectname">项目名称：</label> <select
-							class="form-control">
-							<option>所有项目</option>
-							<option>T91R</option>
-							<option>板卡定制</option>
-							<option>主线V5.0.2</option>
-							<option>I66</option>
-							<option>X66L</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="">负责人：</label> <select class="form-control">
-							<option>所有人</option>
-							<option>我自己</option>
-						</select>
+						所属项目：
+						<form:select onchange="submitForm();" class="form-control"
+							path="queryProject.name" id="queryProject.name"
+							items="${taskQuery.selectProjects}" itemLabel="name"
+							itemValue="name">
+						</form:select>
 					</div>
 
-					<div class="form-group" style="float: right">
-						<div class="dropdown">
-							<button type="button" class="btn dropdown-toggle btn-newtask"
-								id="dropdownMenu1" data-toggle="dropdown">
-								<span class="glyphicon glyphicon-plus-sign"></span> 新建 <span
-									class="caret"></span>
-							</button>
-							<ul class="dropdown-menu pull-right" role="menu"
-								aria-labelledby="dropdownMenu1">
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#" class="text-center" data-toggle="modal"
-									data-target="#myModal">添加任务</a></li>
-								<li role="presentation"><a role="menuitem" tabindex="-1"
-									href="#" class="text-center" data-toggle="modal"
-									data-target="#myModal">新建项目</a></li>
-							</ul>
-						</div>
+					<div class="form-group">
+						负责人：
+						<form:select onchange="submitForm();" class="form-control"
+							path="queryTask.assignTo" id="queryTask.assignTo"
+							items="${taskQuery.selectUsers}" itemLabel="name"
+							itemValue="name">
+						</form:select>
 					</div>
-				</form>
+
+					<div class="dropdown" style="float: right">
+						<button type="button" class="btn dropdown-toggle btn-newtask"
+							id="dropdownMenu1" data-toggle="dropdown">
+							<span class="glyphicon glyphicon-plus-sign"></span> 新建 <span
+								class="caret"></span>
+						</button>
+						<ul class="dropdown-menu pull-right" role="menu"
+							aria-labelledby="dropdownMenu1">
+							<li role="presentation"><a role="menuitem" tabindex="-1"
+								href="#" class="text-center" data-toggle="modal"
+								data-target="#myModal">添加任务</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1"
+								href="#" class="text-center" data-toggle="modal"
+								data-target="#myModal">新建项目</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
-		</nav>
+		
 
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#">ALL</a></li>
-			<li role="presentation"><a href="#">未开始</a></li>
-			<li role="presentation"><a href="#">正在处理</a></li>
-			<li role="presentation"><a href="#">已完成</a></li>
-		</ul>
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" onclick="submitForm();"><a href="#">ALL</a></li>
+				<li role="presentation" class="active"><a href="#">未开始</a></li>
+				<li role="presentation"><a href="#">正在处理</a></li>
+				<li role="presentation"><a href="#">已完成</a></li>
+				<li role="presentation"><a href="#">已归档</a></li>
+			</ul>
+		
+		</form:form>
 
 		<table class="table table-striped table-bordered table-hover">
 			<colgroup>
-				<col style="width: 50%">
 				<col style="">
+				<col style="width: 50%">
 				<col style="">
 				<col style="">
 				<col style="width: 8%">
@@ -111,10 +124,10 @@
 			</colgroup>
 			<thead>
 				<tr>
-					<th>任务内容</th>
 					<th>所属项目</th>
+					<th>任务内容</th>
 					<th>负责人</th>
-					<th>到期时间</th>					
+					<th>到期时间</th>
 					<th>进度</th>
 					<th>操作</th>
 				</tr>
@@ -122,17 +135,16 @@
 			<tbody>
 				<c:forEach items="${tasks}" var="task">
 					<tr>
-						<td>${task.description}</td>
 						<td>${task.projectName}</td>
+						<td>${task.description}</td>
 						<td>${task.assignTo}</td>
-						<td>${task.expectFinishDate}</td>						
+						<td>${task.expectFinishDate}</td>
 						<td>
 							<div class="progress">
 								<div class="progress-bar progress-bar-info" role="progressbar"
 									aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
 									style="width: ${task.progress}%;"></div>
 							</div>
-
 						</td>
 						<td>
 							<button class="btn btn-default btn-opt" type="submit">
@@ -167,7 +179,7 @@
 							<form role="form">
 								<div class="form-group">
 									<label for="name">任务描述：</label>
-									<form:textarea class="form-control" path="description"
+									<form:textarea class="form-control required" path="description"
 										style="max-width:500px;" rows="5" />
 								</div>
 
@@ -175,7 +187,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>所属项目：</label>
-											<form:select class="form-control" path="projectName"
+											<form:select class="form-control required" path="projectName"
 												id="projectName" items="${projects}" itemLabel="name"
 												itemValue="name">
 											</form:select>
@@ -184,7 +196,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>分配给：</label>
-											<form:select class="form-control" path="assignTo"
+											<form:select class="form-control required" path="assignTo"
 												id="assignTo" items="${users}" itemLabel="name"
 												itemValue="name">
 											</form:select>
@@ -196,8 +208,9 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>状态：</label>
-											<form:select class="form-control" path="status" id="status"
-												items="${statuses}" itemLabel="name" itemValue="name">
+											<form:select class="form-control required" path="status"
+												id="status" items="${statuses}" itemLabel="name"
+												itemValue="name">
 											</form:select>
 										</div>
 									</div>
@@ -205,7 +218,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>DeadLine：</label>
-											<form:input class="form-control" type="date"
+											<form:input class="form-control required" type="date"
 												path="expectFinishDate" id="expectFinishDate" />
 										</div>
 									</div>

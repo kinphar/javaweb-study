@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-07-11 23:51:48
+Date: 2017-07-13 09:00:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -96,9 +96,14 @@ CREATE TABLE `task` (
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES ('T17071117455409', 'T91R', '这是一个测试任务', '未分配', null, '丁庆发', null, '2017-07-11 17:45:55', null, '2017-07-11 17:45:55', '2017-07-13', null, null);
-INSERT INTO `task` VALUES ('T17071123471501', 'I66', '乌龟王八蛋', '正在处理', null, '陈钟', null, '2017-07-11 23:47:15', null, '2017-07-11 23:47:15', '2017-07-15', null, null);
-INSERT INTO `task` VALUES ('T17071123473245', 'I68', '两只垃圾桶', '已完成', null, '陈钟', null, '2017-07-11 23:47:33', null, '2017-07-11 23:47:33', '2017-07-22', null, null);
+INSERT INTO `task` VALUES ('T17071117455409', 'T91R', '这是一个测试任务', '未分配', '30', '丁庆发', null, '2017-07-11 17:45:55', null, '2017-07-11 17:45:55', '2017-07-13', null, null);
+INSERT INTO `task` VALUES ('T17071123471501', 'I66', '乌龟王八蛋', '正在处理', '60', '陈钟', null, '2017-07-11 23:47:15', null, '2017-07-11 23:47:15', '2017-07-15', null, null);
+INSERT INTO `task` VALUES ('T17071123473245', 'I68', '两只垃圾桶', '已完成', '100', '陈钟', null, '2017-07-11 23:47:33', null, '2017-07-11 23:47:33', '2017-07-22', null, null);
+INSERT INTO `task` VALUES ('T17071201110769', 'I66', '这是一个策士任务', '未分配', '0', '陈钟', null, '2017-07-12 01:11:07', null, '2017-07-12 01:11:07', '2017-07-08', null, null);
+INSERT INTO `task` VALUES ('T17071201302728', 'I66', '去买一瓶酱油', '正在处理', '0', '陈钟', null, '2017-07-12 01:30:27', null, '2017-07-12 01:30:27', '2017-07-23', null, null);
+INSERT INTO `task` VALUES ('T17071208572495', 'I66', '清理卫生吧', '正在处理', '0', '丁庆发', null, '2017-07-12 08:57:25', null, '2017-07-12 08:57:25', '2017-07-14', null, null);
+INSERT INTO `task` VALUES ('T17071213415847', 'T91R', '参加目屿岛拓展活动', '正在处理', '0', '陈钟', null, '2017-07-12 13:41:58', null, '2017-07-12 13:41:58', '2017-07-13', null, null);
+INSERT INTO `task` VALUES ('T17071218595768', 'T91R', '再来一个任务。', '正在处理', '0', '丁庆发', null, '2017-07-12 18:59:58', null, '2017-07-12 18:59:58', '', null, null);
 
 -- ----------------------------
 -- Table structure for user
@@ -139,6 +144,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+INSERT INTO `user` VALUES ('1', null, null, null, null, 'ALL', '所有人', null, null, null, null, null, null, null, null, null, null, null, null, null, '0', null);
 INSERT INTO `user` VALUES ('101', null, null, null, null, 'T10316', '丁庆发', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `user` VALUES ('102', null, null, null, null, 'T11478', '陈钟', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `user` VALUES ('103', null, null, null, null, 'T10667', '李晴', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
