@@ -37,13 +37,13 @@ public class TaskController {
 		
 		List<Project> projects = projectService.getAllProject();
 		List<User> users = userService.getAllUser();
-		List<SysDict> dicts = miscService.getTaskStatusDict();
-		List<Task> tasks = taskService.getAllTask();		
+		List<SysDict> dicts = miscService.getTaskStatusDict();				
 			
 		// query part start.
-		if (taskQuery.getQueryProject() != null && taskQuery.getQueryTask() != null) {
-			System.out.print("条件：项目-" + taskQuery.getQueryProject().getName() 
-					+ ";处理人-" + taskQuery.getQueryTask().getAssignTo());
+		if (taskQuery.getQueryTask() != null) {
+			System.out.print("条件：项目-" + taskQuery.getQueryTask().getProjectName()
+					+ ";处理人-" + taskQuery.getQueryTask().getAssignTo()
+					+ ";任务状态-" + taskQuery.getQueryTask().getStatus());
 		}
 				
 		taskQuery.setSelectProjects(projects);
@@ -64,10 +64,12 @@ public class TaskController {
 				
 		model.addAttribute("users", users);	
 		model.addAttribute("statuses", dicts);	
-		model.addAttribute("projects", projects);		
-		model.addAttribute("tasks", tasks);
+		model.addAttribute("projects", projects);				
 		model.addAttribute("task", new Task());
 		model.addAttribute("taskQuery", taskQuery);		
+		
+		List<Task> tasks = taskService.getTaskByFilter(taskQuery);
+		model.addAttribute("tasks", tasks);
 		
 		return "TaskList";		
 	}

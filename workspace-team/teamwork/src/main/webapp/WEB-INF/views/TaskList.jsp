@@ -18,8 +18,9 @@
 		var form = document.getElementById("filterForm");
 		form.submit();
 	}
-	function submitFormWithStatus() {
-
+	function submitFormWithStatus(s) {
+		document.getElementById("statusFilter").value=s;
+		submitForm();
 	}
 </script>
 </head>
@@ -68,7 +69,7 @@
 					<div class="form-group">
 						所属项目：
 						<form:select onchange="submitForm();" class="form-control"
-							path="queryProject.name" id="queryProject.name"
+							path="queryTask.projectName" id="queryTask.projectName"
 							items="${taskQuery.selectProjects}" itemLabel="name"
 							itemValue="name">
 						</form:select>
@@ -102,14 +103,14 @@
 				</div>
 			</div>
 		
-
 			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" onclick="submitForm();"><a href="#">ALL</a></li>
-				<li role="presentation" class="active"><a href="#">未开始</a></li>
-				<li role="presentation"><a href="#">正在处理</a></li>
-				<li role="presentation"><a href="#">已完成</a></li>
-				<li role="presentation"><a href="#">已归档</a></li>
+				<li role="presentation" onclick="submitFormWithStatus(1000);" class="active"><a href="#">ALL</a></li>
+				<li role="presentation" onclick="submitFormWithStatus(1001);"><a href="#">未开始</a></li>
+				<li role="presentation" onclick="submitFormWithStatus(1002);"><a href="#">正在处理</a></li>
+				<li role="presentation" onclick="submitFormWithStatus(1003);"><a href="#">已完成</a></li>
+				<li role="presentation" onclick="submitFormWithStatus(1004);"><a href="#">已归档</a></li>
 			</ul>
+			<form:hidden path="queryTask.status" id="statusFilter" name="statusFilter"/>
 		
 		</form:form>
 
