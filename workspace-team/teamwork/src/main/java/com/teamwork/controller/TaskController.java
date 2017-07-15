@@ -71,6 +71,16 @@ public class TaskController {
 		List<Task> tasks = taskService.getTaskByFilter(taskQuery);
 		model.addAttribute("tasks", tasks);
 		
+		String statusFilter = null;
+		if (taskQuery.getQueryTask() == null) {
+			statusFilter = "10000";
+		} else {
+			statusFilter = taskQuery.getQueryTask().getStatus();
+		}
+		model.addAttribute("statusFilter", statusFilter);
+		
+		model.addAttribute("testVar", statusFilter);
+		
 		return "TaskList";		
 	}
 	

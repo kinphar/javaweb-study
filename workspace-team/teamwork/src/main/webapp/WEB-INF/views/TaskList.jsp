@@ -15,12 +15,14 @@
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	function submitForm() {
+		document.getElementById("statusFilter").value = "10000";
 		var form = document.getElementById("filterForm");
 		form.submit();
 	}
 	function submitFormWithStatus(s) {
-		document.getElementById("statusFilter").value=s;
-		submitForm();
+		document.getElementById("statusFilter").value = s;
+		var form = document.getElementById("filterForm");
+		form.submit();
 	}
 </script>
 </head>
@@ -102,16 +104,23 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" onclick="submitFormWithStatus(1000);" class="active"><a href="#">ALL</a></li>
-				<li role="presentation" onclick="submitFormWithStatus(1001);"><a href="#">未开始</a></li>
-				<li role="presentation" onclick="submitFormWithStatus(1002);"><a href="#">正在处理</a></li>
-				<li role="presentation" onclick="submitFormWithStatus(1003);"><a href="#">已完成</a></li>
-				<li role="presentation" onclick="submitFormWithStatus(1004);"><a href="#">已归档</a></li>
+				<li <c:if test="${statusFilter=='10000'}">class="active"</c:if>
+					onclick="submitFormWithStatus(10000);"><a href="#">全部状态</a></li>
+				<li <c:if test="${statusFilter=='10001'}">class="active"</c:if>
+					onclick="submitFormWithStatus(10001);"><a href="#">未开始</a></li>
+				<li <c:if test="${statusFilter=='10002'}">class="active"</c:if>
+					onclick="submitFormWithStatus(10002);"><a href="#">正在处理</a></li>
+				<li <c:if test="${statusFilter=='10003'}">class="active"</c:if>
+					onclick="submitFormWithStatus(10003);"><a href="#">已完成</a></li>
+				<li <c:if test="${statusFilter=='10004'}">class="active"</c:if>
+					onclick="submitFormWithStatus(10004);"><a href="#">已归档</a></li>
 			</ul>
-			<form:hidden path="queryTask.status" id="statusFilter" name="statusFilter"/>
-		
+
+			<form:hidden path="queryTask.status" id="statusFilter"
+				name="statusFilter" />
+
 		</form:form>
 
 		<table class="table table-striped table-bordered table-hover">
@@ -211,7 +220,7 @@
 											<label>状态：</label>
 											<form:select class="form-control required" path="status"
 												id="status" items="${statuses}" itemLabel="name"
-												itemValue="name">
+												itemValue="id">
 											</form:select>
 										</div>
 									</div>
