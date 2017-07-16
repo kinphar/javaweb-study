@@ -24,6 +24,15 @@
 		var form = document.getElementById("filterForm");
 		form.submit();
 	}
+
+	function delcfm(url) {
+		$('#url').val(url);//给会话中的隐藏属性URL赋值  
+		$('#delcfmModel').modal();
+	}
+	function urlSubmit() {
+		var url = $.trim($("#url").val());//获取会话中的隐藏属性URL  
+		window.location.href = url;
+	}
 </script>
 </head>
 
@@ -73,8 +82,8 @@
 						<form:select onchange="submitForm();" class="form-control"
 							path="queryTask.projectName" id="queryTask.projectName">
 							<form:option value="all" label="所有项目" />
-							<form:options items="${taskQuery.selectProjects}" itemLabel="name"
-								itemValue="name" />
+							<form:options items="${taskQuery.selectProjects}"
+								itemLabel="name" itemValue="name" />
 						</form:select>
 					</div>
 
@@ -128,7 +137,7 @@
 		<table class="table table-striped table-bordered table-hover">
 			<colgroup>
 				<col style="">
-				<col style="width: 50%">
+				<col style="width: 40%">
 				<col style="">
 				<col style="">
 				<col style="width: 8%">
@@ -137,7 +146,7 @@
 			<thead>
 				<tr>
 					<th>所属项目</th>
-					<th>任务内容</th>
+					<th>标题</th>
 					<th>负责人</th>
 					<th>到期时间</th>
 					<th>进度</th>
@@ -158,21 +167,47 @@
 									style="width: ${task.progress}%;"></div>
 							</div>
 						</td>
-						<td>
-							<button class="btn btn-default btn-opt" type="submit">
-								<span class="glyphicon glyphicon-zoom-in glyphicon-opt"></span>详情
-							</button>
-							<button class="btn btn-default btn-opt" type="submit">
-								<span class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
-							</button>
-							<button class="btn btn-default btn-opt" type="submit">
-								<span class="glyphicon glyphicon-check glyphicon-opt"></span>进度
-							</button>
-						</td>
+						<td><a class="btn btn-default btn-opt"
+							onClick="delcfm('${ctx}/task/task_delete?id=${task.id}')"> <span
+								class="glyphicon glyphicon-check glyphicon-opt"></span>进度
+						</a> <a class="btn btn-default btn-opt"
+							onClick="delcfm('${ctx}/task/task_delete?id=${task.id}')"> <span
+								class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
+						</a> <a class="btn btn-default btn-opt"
+							onClick="delcfm('${ctx}/task/task_delete?taskid=${task.id}')"> <span
+								class="glyphicon glyphicon-trash glyphicon-opt"></span>删除
+						</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+
+		<!-- 信息删除确认 -->
+		<div class="modal fade" id="delcfmModel">
+			<div class="modal-dialog">
+				<div class="modal-content message_align">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title">提示信息</h4>
+					</div>
+					<div class="modal-body">
+						<p>您确认要删除吗？</p>
+					</div>
+					<div class="modal-footer">
+						<input type="hidden" id="url" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<a onclick="urlSubmit()" class="btn btn-success"
+							data-dismiss="modal">确定</a>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
 
 		<!-- 新建任务，模态框（Modal） -->
 		<form:form commandName="task" action="${ctx}/task/task_save"

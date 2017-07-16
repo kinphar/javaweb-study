@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.pojo.Project;
@@ -80,6 +81,12 @@ public class TaskController {
 				+ "; 到期时间：" + task.getExpectFinishDate());
 		
 		taskService.createTask(task);
+		return "redirect:task_list";
+	}
+	
+	@RequestMapping("/task_delete")
+	public String deleteTask(@RequestParam("taskid") String taskid) {
+		taskService.deleteTask(taskid);
 		return "redirect:task_list";
 	}
 }

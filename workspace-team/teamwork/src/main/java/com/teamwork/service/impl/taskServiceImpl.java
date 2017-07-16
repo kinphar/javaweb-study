@@ -30,6 +30,7 @@ public class taskServiceImpl implements TaskService {
 		task.setCreateDate(date);
 		task.setUpdageDate(date);
 		task.setProgress("0");
+		task.setDelFlag("0");
 		taskMapper.insert(task);
 		return FriendlyResult.ok();
 	}
@@ -59,7 +60,18 @@ public class taskServiceImpl implements TaskService {
 				createCriteria.andStatusEqualTo(status);
 			}
 		}
-
+		
+		createCriteria.andDelFlagNotEqualTo("1");
 		return taskMapper.selectByExample(example);
+	}
+
+	@Override
+	public FriendlyResult deleteTask(String id) {
+		//logic delete.
+		Task task = new Task();
+		task.setId(id);
+		task.setDelFlag("1");
+		taskMapper.updateByPrimaryKey(task);  
+		return FriendlyResult.ok();
 	}
 }
