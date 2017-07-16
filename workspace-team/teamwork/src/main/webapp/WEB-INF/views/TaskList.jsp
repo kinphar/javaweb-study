@@ -15,7 +15,7 @@
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	function submitForm() {
-		document.getElementById("statusFilter").value = "10000";
+		document.getElementById("statusFilter").value = "all";
 		var form = document.getElementById("filterForm");
 		form.submit();
 	}
@@ -71,18 +71,20 @@
 					<div class="form-group">
 						所属项目：
 						<form:select onchange="submitForm();" class="form-control"
-							path="queryTask.projectName" id="queryTask.projectName"
-							items="${taskQuery.selectProjects}" itemLabel="name"
-							itemValue="name">
+							path="queryTask.projectName" id="queryTask.projectName">
+							<form:option value="all" label="所有项目" />
+							<form:options items="${taskQuery.selectProjects}" itemLabel="name"
+								itemValue="name" />
 						</form:select>
 					</div>
 
 					<div class="form-group">
 						负责人：
 						<form:select onchange="submitForm();" class="form-control"
-							path="queryTask.assignTo" id="queryTask.assignTo"
-							items="${taskQuery.selectUsers}" itemLabel="name"
-							itemValue="name">
+							path="queryTask.assignTo" id="queryTask.assignTo">
+							<form:option value="all" label="所有人" />
+							<form:options items="${taskQuery.selectUsers}" itemLabel="name"
+								itemValue="name" />
 						</form:select>
 					</div>
 
@@ -106,8 +108,8 @@
 			</div>
 
 			<ul class="nav nav-tabs" role="tablist">
-				<li <c:if test="${statusFilter=='10000'}">class="active"</c:if>
-					onclick="submitFormWithStatus(10000);"><a href="#">全部状态</a></li>
+				<li <c:if test="${statusFilter=='all'}">class="active"</c:if>
+					onclick="submitFormWithStatus('all');"><a href="#">全部</a></li>
 				<li <c:if test="${statusFilter=='10001'}">class="active"</c:if>
 					onclick="submitFormWithStatus(10001);"><a href="#">未开始</a></li>
 				<li <c:if test="${statusFilter=='10002'}">class="active"</c:if>
@@ -198,8 +200,10 @@
 										<div class="form-group">
 											<label>所属项目：</label>
 											<form:select class="form-control required" path="projectName"
-												id="projectName" items="${projects}" itemLabel="name"
-												itemValue="name">
+												id="projectName">
+												<form:option value="" label="" />
+												<form:options items="${projects}" itemLabel="name"
+													itemValue="name" />
 											</form:select>
 										</div>
 									</div>
@@ -207,8 +211,10 @@
 										<div class="form-group">
 											<label>分配给：</label>
 											<form:select class="form-control required" path="assignTo"
-												id="assignTo" items="${users}" itemLabel="name"
-												itemValue="name">
+												id="assignTo">
+												<form:option value="" label="" />
+												<form:options items="${users}" itemLabel="name"
+													itemValue="name" />
 											</form:select>
 										</div>
 									</div>
@@ -219,8 +225,10 @@
 										<div class="form-group">
 											<label>状态：</label>
 											<form:select class="form-control required" path="status"
-												id="status" items="${statuses}" itemLabel="name"
-												itemValue="id">
+												id="status">
+												<form:option value="" label="" />
+												<form:options items="${statuses}" itemLabel="name"
+													itemValue="id" />
 											</form:select>
 										</div>
 									</div>
@@ -249,15 +257,9 @@
 		</form:form>
 
 
-		<div class="row-fluid">
-			<div id="footer" class="span12">
-				2017 - 2018 &copy; Brought to you by <a href="#">kinphar.</a>
-			</div>
-		</div>
+		<!-- <s:include value="footer.jsp"></s:include> -->
 
 	</div>
-
-
 
 </body>
 </html>

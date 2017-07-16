@@ -47,15 +47,15 @@ public class taskServiceImpl implements TaskService {
 		
 		if (taskQuery.getQueryTask() != null) {
 			String projectName = taskQuery.getQueryTask().getProjectName();
-			if (!StringUtils.isBlank(projectName) && !projectName.equals("所有项目")) {
+			if (!StringUtils.isBlank(projectName) && !projectName.equals("all")) {
 				createCriteria.andProjectNameEqualTo(projectName);
 			}
 			String assignTo = taskQuery.getQueryTask().getAssignTo();
-			if (!StringUtils.isBlank(assignTo) && !assignTo.equals("所有人")) {
+			if (!StringUtils.isBlank(assignTo) && !assignTo.equals("all")) {
 				createCriteria.andAssignToEqualTo(assignTo);
 			}
 			String status = taskQuery.getQueryTask().getStatus();
-			if (!StringUtils.isBlank(status) && !status.equals("10000")) {
+			if (!StringUtils.isBlank(status) && !status.equals("all")) {
 				createCriteria.andStatusEqualTo(status);
 			}
 		}

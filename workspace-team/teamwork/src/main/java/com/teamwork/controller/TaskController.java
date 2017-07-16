@@ -47,21 +47,9 @@ public class TaskController {
 		}
 				
 		taskQuery.setSelectProjects(projects);
-		Project allProject = new Project();
-		allProject.setId("10000");
-		allProject.setName("所有项目");
-		allProject.setCreateBy("admin");		
-		taskQuery.getSelectProjects().add(0, allProject);
-		
 		taskQuery.setSelectUsers(users);
-		User allUser = new User();
-		allUser.setId("10000");
-		allUser.setName("所有人");
-		allUser.setCreateBy("admin");
-		taskQuery.getSelectUsers().add(0, allUser);		
 		// query part end.
-				
-				
+								
 		model.addAttribute("users", users);	
 		model.addAttribute("statuses", dicts);	
 		model.addAttribute("projects", projects);				
@@ -73,14 +61,12 @@ public class TaskController {
 		
 		String statusFilter = null;
 		if (taskQuery.getQueryTask() == null) {
-			statusFilter = "10000";
+			statusFilter = "all";
 		} else {
 			statusFilter = taskQuery.getQueryTask().getStatus();
 		}
 		model.addAttribute("statusFilter", statusFilter);
-		
-		model.addAttribute("testVar", statusFilter);
-		
+				
 		return "TaskList";		
 	}
 	

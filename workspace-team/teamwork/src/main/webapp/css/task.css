@@ -1,12 +1,10 @@
-
-
-
-body > .container {
-	padding: 40px 15px 0px;	
+body>.container {
+	padding: 40px 15px 0px;
 }
 
-body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 { 
-	font-family: Microsoft YaHei,'ËÎÌå' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+	font-family: Microsoft YaHei, 'ï¿½ï¿½ï¿½ï¿½', Tahoma, Helvetica, Arial,
+		"\5b8b\4f53", sans-serif;
 }
 
 .table {
@@ -32,16 +30,17 @@ body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
 }
 
 .form-group {
-	margin-right: 20px; 
+	margin-right: 20px;
 }
 
-.progress{
-    height: 16px;
-    margin-top: 5px;
-    margin-bottom: 4px;
+.progress {
+	height: 16px;
+	margin-top: 5px;
+	margin-bottom: 4px;
 }
 
 .glyphicon-opt {
 	font-size: 5px;
 	margin-right: 2px;
 }
+
