@@ -224,9 +224,14 @@
 						<div class="modal-body">
 							<form role="form">
 								<div class="form-group">
-									<label for="name">任务描述：</label>
+									<label for="name">标题：</label>
+									<form:input class="form-control required" path="title" />
+								</div>
+								
+								<div class="form-group">
+									<label for="name">内容：</label>
 									<form:textarea class="form-control required" path="description"
-										style="max-width:500px;" rows="5" />
+										style="max-width:500px;" rows="5" placeholder="可选，主要描述需求详情。"/>
 								</div>
 
 								<div class="row">
