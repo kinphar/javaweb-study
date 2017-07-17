@@ -157,7 +157,7 @@
 				<c:forEach items="${tasks}" var="task">
 					<tr>
 						<td>${task.projectName}</td>
-						<td>${task.description}</td>
+						<td>${task.title}</td>
 						<td>${task.assignTo}</td>
 						<td>${task.expectFinishDate}</td>
 						<td>

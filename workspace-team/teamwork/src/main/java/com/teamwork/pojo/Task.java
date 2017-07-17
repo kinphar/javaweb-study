@@ -7,6 +7,8 @@ public class Task {
 
     private String projectName;
 
+    private String title;
+
     private String description;
 
     private String status;
@@ -43,6 +45,14 @@ public class Task {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName == null ? null : projectName.trim();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
     public String getDescription() {
