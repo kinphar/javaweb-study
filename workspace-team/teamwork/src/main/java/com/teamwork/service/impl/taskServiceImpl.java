@@ -61,17 +61,21 @@ public class taskServiceImpl implements TaskService {
 			}
 		}
 		
-		createCriteria.andDelFlagNotEqualTo("1");
+		createCriteria.andDelFlagIsNotNull().andDelFlagNotEqualTo("1");
 		return taskMapper.selectByExample(example);
 	}
 
 	@Override
 	public FriendlyResult deleteTask(String id) {
 		//logic delete.
+		TaskExample example = new TaskExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andIdEqualTo(id);
+		
 		Task task = new Task();
-		task.setId(id);
 		task.setDelFlag("1");
-		taskMapper.updateByPrimaryKey(task);  
+		
+		taskMapper.updateByExampleSelective(task, example);
 		return FriendlyResult.ok();
 	}
 }
