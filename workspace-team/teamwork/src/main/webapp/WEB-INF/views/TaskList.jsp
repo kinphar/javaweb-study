@@ -109,8 +109,7 @@
 								href="#" class="text-center" data-toggle="modal"
 								data-target="#myModal">添加任务</a></li>
 							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="#" class="text-center" data-toggle="modal"
-								data-target="#myModal">新建项目</a></li>
+								href="#" class="text-center">新建项目</a></li>
 						</ul>
 					</div>
 				</div>
@@ -147,9 +146,9 @@
 				<tr>
 					<th>所属项目</th>
 					<th>标题</th>
-					<th>负责人</th>
-					<th>到期时间</th>
-					<th>进度</th>
+					<th style='text-align: center;'>负责人</th>
+					<th style='text-align: center;'>到期时间</th>
+					<th style='text-align: center;'>进度</th>
 					<th>操作</th>
 				</tr>
 			</thead>
@@ -158,8 +157,8 @@
 					<tr>
 						<td>${task.projectName}</td>
 						<td>${task.title}</td>
-						<td>${task.assignTo}</td>
-						<td>${task.expectFinishDate}</td>
+						<td style='text-align: center;'>${task.assignTo}</td>
+						<td style='text-align: center;'>${task.expectFinishDate}</td>
 						<td>
 							<div class="progress">
 								<div class="progress-bar progress-bar-info" role="progressbar"
