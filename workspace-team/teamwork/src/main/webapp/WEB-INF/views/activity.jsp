@@ -29,7 +29,7 @@
 	        </div>
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav navbar-right">
-	          	<li><a href="${pageContext.request.contextPath}/task">任务</a></li>
+	          	<li><a href="${pageContext.request.contextPath}/task/task_list">任务</a></li>
 	            <li><a href="${pageContext.request.contextPath}/knowledge">知识</a></li>
 	            <li><a href="${pageContext.request.contextPath}/information">资料</a></li>
 	            <li><a href="${pageContext.request.contextPath}/activity">活动</a></li>

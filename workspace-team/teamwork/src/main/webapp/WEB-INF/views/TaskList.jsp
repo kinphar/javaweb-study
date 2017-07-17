@@ -183,7 +183,7 @@
 		</table>
 
 		<!-- 信息删除确认 -->
-		<div class="modal fade" id="delcfmModel">
+		<div class="modal modal-small fade" id="delcfmModel">
 			<div class="modal-dialog">
 				<div class="modal-content message_align">
 					<div class="modal-header">
@@ -194,12 +194,12 @@
 						<h4 class="modal-title">提示信息</h4>
 					</div>
 					<div class="modal-body">
-						<p>您确认要删除吗？</p>
+						<label class="text-center">您确认要删除吗？</label>
 					</div>
 					<div class="modal-footer">
 						<input type="hidden" id="url" />
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<a onclick="urlSubmit()" class="btn btn-success"
+						<a onclick="urlSubmit()" class="btn btn-primary"
 							data-dismiss="modal">确定</a>
 					</div>
 				</div>
