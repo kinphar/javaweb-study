@@ -23,7 +23,7 @@ public class Task {
 
     private String updateBy;
 
-    private Date updageDate;
+    private Date updateDate;
 
     private String expectFinishDate;
 
@@ -111,12 +111,12 @@ public class Task {
         this.updateBy = updateBy == null ? null : updateBy.trim();
     }
 
-    public Date getUpdageDate() {
-        return updageDate;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public void setUpdageDate(Date updageDate) {
-        this.updageDate = updageDate;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     public String getExpectFinishDate() {

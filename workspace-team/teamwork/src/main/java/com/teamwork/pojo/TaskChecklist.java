@@ -2,18 +2,14 @@ package com.teamwork.pojo;
 
 import java.util.Date;
 
-public class Project {
+public class TaskChecklist {
     private String id;
 
-    private String name;
+    private String parentId;
 
     private String description;
 
     private String status;
-
-    private String progress;
-
-    private String projectManager;
 
     private String createBy;
 
@@ -22,10 +18,6 @@ public class Project {
     private String updateBy;
 
     private Date updateDate;
-
-    private Date expectFinishDate;
-
-    private Date realFinishDate;
 
     private String delFlag;
 
@@ -37,12 +29,12 @@ public class Project {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getParentId() {
+        return parentId;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setParentId(String parentId) {
+        this.parentId = parentId == null ? null : parentId.trim();
     }
 
     public String getDescription() {
@@ -59,22 +51,6 @@ public class Project {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
-    }
-
-    public String getProgress() {
-        return progress;
-    }
-
-    public void setProgress(String progress) {
-        this.progress = progress == null ? null : progress.trim();
-    }
-
-    public String getProjectManager() {
-        return projectManager;
-    }
-
-    public void setProjectManager(String projectManager) {
-        this.projectManager = projectManager == null ? null : projectManager.trim();
     }
 
     public String getCreateBy() {
@@ -107,22 +83,6 @@ public class Project {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
-    }
-
-    public Date getExpectFinishDate() {
-        return expectFinishDate;
-    }
-
-    public void setExpectFinishDate(Date expectFinishDate) {
-        this.expectFinishDate = expectFinishDate;
-    }
-
-    public Date getRealFinishDate() {
-        return realFinishDate;
-    }
-
-    public void setRealFinishDate(Date realFinishDate) {
-        this.realFinishDate = realFinishDate;
     }
 
     public String getDelFlag() {

@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.teamwork.mapper.TaskMapper" >
-  <resultMap id="BaseResultMap" type="com.teamwork.pojo.Task" >
+<mapper namespace="com.teamwork.mapper.TaskChecklistMapper" >
+  <resultMap id="BaseResultMap" type="com.teamwork.pojo.TaskChecklist" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="progress" property="progress" jdbcType="VARCHAR" />
-    <result column="assign_to" property="assignTo" jdbcType="VARCHAR" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
-    <result column="expect_finish_date" property="expectFinishDate" jdbcType="VARCHAR" />
-    <result column="real_finish_date" property="realFinishDate" jdbcType="TIMESTAMP" />
     <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -76,16 +71,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, project_name, title, description, status, progress, assign_to, create_by, create_date, 
-    update_by, update_date, expect_finish_date, real_finish_date, del_flag
+    id, parent_id, description, status, create_by, create_date, update_by, update_date, 
+    del_flag
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.TaskExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.TaskChecklistExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from task
+    from task_checklist
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,54 +91,43 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from task
+    from task_checklist
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from task
+    delete from task_checklist
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.teamwork.pojo.TaskExample" >
-    delete from task
+  <delete id="deleteByExample" parameterType="com.teamwork.pojo.TaskChecklistExample" >
+    delete from task_checklist
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.teamwork.pojo.Task" >
-    insert into task (id, project_name, title, 
-      description, status, progress, 
-      assign_to, create_by, create_date, 
-      update_by, update_date, expect_finish_date, 
-      real_finish_date, del_flag)
-    values (#{id,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{progress,jdbcType=VARCHAR}, 
-      #{assignTo,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{expectFinishDate,jdbcType=VARCHAR}, 
-      #{realFinishDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.teamwork.pojo.TaskChecklist" >
+    insert into task_checklist (id, parent_id, description, 
+      status, create_by, create_date, 
+      update_by, update_date, del_flag
+      )
+    values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.teamwork.pojo.Task" >
-    insert into task
+  <insert id="insertSelective" parameterType="com.teamwork.pojo.TaskChecklist" >
+    insert into task_checklist
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="projectName != null" >
-        project_name,
-      </if>
-      <if test="title != null" >
-        title,
+      <if test="parentId != null" >
+        parent_id,
       </if>
       <if test="description != null" >
         description,
       </if>
       <if test="status != null" >
         status,
-      </if>
-      <if test="progress != null" >
-        progress,
-      </if>
-      <if test="assignTo != null" >
-        assign_to,
       </if>
       <if test="createBy != null" >
         create_by,
@@ -157,12 +141,6 @@
       <if test="updateDate != null" >
         update_date,
       </if>
-      <if test="expectFinishDate != null" >
-        expect_finish_date,
-      </if>
-      <if test="realFinishDate != null" >
-        real_finish_date,
-      </if>
       <if test="delFlag != null" >
         del_flag,
       </if>
@@ -171,23 +149,14 @@
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="projectName != null" >
-        #{projectName,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         #{description,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=VARCHAR},
-      </if>
-      <if test="progress != null" >
-        #{progress,jdbcType=VARCHAR},
-      </if>
-      <if test="assignTo != null" >
-        #{assignTo,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null" >
         #{createBy,jdbcType=VARCHAR},
@@ -201,46 +170,31 @@
       <if test="updateDate != null" >
         #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="expectFinishDate != null" >
-        #{expectFinishDate,jdbcType=VARCHAR},
-      </if>
-      <if test="realFinishDate != null" >
-        #{realFinishDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="delFlag != null" >
         #{delFlag,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.teamwork.pojo.TaskExample" resultType="java.lang.Integer" >
-    select count(*) from task
+  <select id="countByExample" parameterType="com.teamwork.pojo.TaskChecklistExample" resultType="java.lang.Integer" >
+    select count(*) from task_checklist
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update task
+    update task_checklist
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.projectName != null" >
-        project_name = #{record.projectName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.title != null" >
-        title = #{record.title,jdbcType=VARCHAR},
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
       </if>
       <if test="record.description != null" >
         description = #{record.description,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=VARCHAR},
-      </if>
-      <if test="record.progress != null" >
-        progress = #{record.progress,jdbcType=VARCHAR},
-      </if>
-      <if test="record.assignTo != null" >
-        assign_to = #{record.assignTo,jdbcType=VARCHAR},
       </if>
       <if test="record.createBy != null" >
         create_by = #{record.createBy,jdbcType=VARCHAR},
@@ -254,12 +208,6 @@
       <if test="record.updateDate != null" >
         update_date = #{record.updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.expectFinishDate != null" >
-        expect_finish_date = #{record.expectFinishDate,jdbcType=VARCHAR},
-      </if>
-      <if test="record.realFinishDate != null" >
-        real_finish_date = #{record.realFinishDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.delFlag != null" >
         del_flag = #{record.delFlag,jdbcType=VARCHAR},
       </if>
@@ -269,45 +217,31 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update task
+    update task_checklist
     set id = #{record.id,jdbcType=VARCHAR},
-      project_name = #{record.projectName,jdbcType=VARCHAR},
-      title = #{record.title,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=VARCHAR},
-      progress = #{record.progress,jdbcType=VARCHAR},
-      assign_to = #{record.assignTo,jdbcType=VARCHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
       update_by = #{record.updateBy,jdbcType=VARCHAR},
       update_date = #{record.updateDate,jdbcType=TIMESTAMP},
-      expect_finish_date = #{record.expectFinishDate,jdbcType=VARCHAR},
-      real_finish_date = #{record.realFinishDate,jdbcType=TIMESTAMP},
       del_flag = #{record.delFlag,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.pojo.Task" >
-    update task
+  <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.pojo.TaskChecklist" >
+    update task_checklist
     <set >
-      <if test="projectName != null" >
-        project_name = #{projectName,jdbcType=VARCHAR},
-      </if>
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
       </if>
       <if test="description != null" >
         description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=VARCHAR},
-      </if>
-      <if test="progress != null" >
-        progress = #{progress,jdbcType=VARCHAR},
-      </if>
-      <if test="assignTo != null" >
-        assign_to = #{assignTo,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null" >
         create_by = #{createBy,jdbcType=VARCHAR},
@@ -321,32 +255,21 @@
       <if test="updateDate != null" >
         update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="expectFinishDate != null" >
-        expect_finish_date = #{expectFinishDate,jdbcType=VARCHAR},
-      </if>
-      <if test="realFinishDate != null" >
-        real_finish_date = #{realFinishDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="delFlag != null" >
         del_flag = #{delFlag,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.teamwork.pojo.Task" >
-    update task
-    set project_name = #{projectName,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.teamwork.pojo.TaskChecklist" >
+    update task_checklist
+    set parent_id = #{parentId,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
-      progress = #{progress,jdbcType=VARCHAR},
-      assign_to = #{assignTo,jdbcType=VARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
-      expect_finish_date = #{expectFinishDate,jdbcType=VARCHAR},
-      real_finish_date = #{realFinishDate,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>

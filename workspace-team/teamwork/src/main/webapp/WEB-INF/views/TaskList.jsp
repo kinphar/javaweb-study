@@ -33,6 +33,19 @@
 		var url = $.trim($("#url").val());//获取会话中的隐藏属性URL  
 		window.location.href = url;
 	}
+	
+
+	function addCheckList() {
+		var oCheckbox=document.createElement("input");
+		var myText=document.createTextNode("蚂蚁部落");
+		oCheckbox.setAttribute("type","checkbox");
+		oCheckbox.setAttribute("id","mayi");
+				
+		var mydiv=document.getElementById("taskCheckList");
+		mydiv.appendChild(oCheckbox);
+		mydiv.appendChild(myText);
+	}
+	
 </script>
 </head>
 
@@ -166,22 +179,19 @@
 									style="width: ${task.progress}%;"></div>
 							</div>
 						</td>
-						<td><a class="btn btn-default btn-opt"
-							onClick="delcfm('${ctx}/task/task_delete?id=${task.id}')"> <span
-								class="glyphicon glyphicon-check glyphicon-opt"></span>进度
+						<td><a class="btn btn-default btn-opt" role="menuitem"
+							data-toggle="modal" data-target="#myModal"> <span
+								class="glyphicon glyphicon-screenshot glyphicon-opt"></span>打开
 						</a> <a class="btn btn-default btn-opt"
-							onClick="delcfm('${ctx}/task/task_delete?id=${task.id}')"> <span
-								class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
-						</a> <a class="btn btn-default btn-opt"
-							onClick="delcfm('${ctx}/task/task_delete?taskid=${task.id}')"> <span
-								class="glyphicon glyphicon-trash glyphicon-opt"></span>删除
+							onClick="delcfm('${ctx}/task/task_delete?taskid=${task.id}')">
+								<span class="glyphicon glyphicon-trash glyphicon-opt"></span>删除
 						</a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 
-		<!-- 信息删除确认 -->
+		<!-- 删除确认 -->
 		<div class="modal modal-small fade" id="delcfmModel">
 			<div class="modal-dialog">
 				<div class="modal-content message_align">
@@ -202,11 +212,8 @@
 							data-dismiss="modal">确定</a>
 					</div>
 				</div>
-				<!-- /.modal-content -->
 			</div>
-			<!-- /.modal-dialog -->
 		</div>
-		<!-- /.modal -->
 
 		<!-- 新建任务，模态框（Modal） -->
 		<form:form commandName="task" action="${ctx}/task/task_save"
@@ -225,13 +232,13 @@
 							<form role="form">
 								<div class="form-group">
 									<label for="name">标题：</label>
-									<form:input class="form-control" path="title" required="true"/>
+									<form:input class="form-control" path="title" required="true" />
 								</div>
-								
+
 								<div class="form-group">
 									<label for="name">内容：</label>
-									<form:textarea class="form-control required" path="description"
-										style="max-width:500px;" rows="5" placeholder="可选，主要描述需求详情。"/>
+									<form:textarea class="form-control" path="description"
+										style="max-width:500px;" rows="5" placeholder="可选，主要描述需求详情。" />
 								</div>
 
 								<div class="row">
@@ -263,8 +270,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>状态：</label>
-											<form:select class="form-control" path="status"
-												id="status" required="true">
+											<form:select class="form-control" path="status" id="status"
+												required="true">
 												<form:option value="" label="" />
 												<form:options items="${statuses}" itemLabel="name"
 													itemValue="id" />
@@ -276,8 +283,38 @@
 										<div class="form-group">
 											<label>DeadLine：</label>
 											<form:input class="form-control" type="date"
-												path="expectFinishDate" id="expectFinishDate" required="true"/>
+												path="expectFinishDate" id="expectFinishDate"
+												required="true" />
 										</div>
+									</div>
+								</div>
+
+								<hr />
+
+								<div class="row">
+									<div class="col-md-3">
+										<label for="name"><span
+											class="glyphicon glyphicon-th-list"></span> 检查项：</label>
+									</div>
+									<div class="well col-md-8"
+										style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
+										<div class="progress">
+											<div class="progress-bar progress-bar-success"
+												role="progressbar" aria-valuenow="10" aria-valuemin="0"
+												aria-valuemax="100" style="width: 50%;"></div>
+										</div>
+
+										<ul id="taskCheckList" class="list-unstyled checkbox">
+											<li><label> <input type="checkbox">请打勾1
+											</label></li>
+											<li><label> <input type="checkbox">请打勾2
+											</label></li>
+											<li><label> <input type="checkbox">请打勾3
+											</label></li>
+											<li><label> <input type="checkbox">请打勾4
+											</label></li>
+											<li style="margin-top:10px" onclick="addCheckList()"><a href="#">+新增检查项</a></li>
+										</ul>
 									</div>
 								</div>
 							</form>
@@ -288,9 +325,7 @@
 								<button type="submit" id="submit" class="btn btn-primary">提交任务</button>
 							</div>
 						</div>
-						<!-- /.modal-content -->
 					</div>
-					<!-- /.modal -->
 				</div>
 			</div>
 		</form:form>
