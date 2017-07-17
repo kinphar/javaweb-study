@@ -225,7 +225,7 @@
 							<form role="form">
 								<div class="form-group">
 									<label for="name">标题：</label>
-									<form:input class="form-control required" path="title" />
+									<form:input class="form-control" path="title" required="true"/>
 								</div>
 								
 								<div class="form-group">
@@ -238,8 +238,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>所属项目：</label>
-											<form:select class="form-control required" path="projectName"
-												id="projectName">
+											<form:select class="form-control" path="projectName"
+												id="projectName" required="true">
 												<form:option value="" label="" />
 												<form:options items="${projects}" itemLabel="name"
 													itemValue="name" />
@@ -249,8 +249,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>分配给：</label>
-											<form:select class="form-control required" path="assignTo"
-												id="assignTo">
+											<form:select class="form-control" path="assignTo"
+												id="assignTo" required="true">
 												<form:option value="" label="" />
 												<form:options items="${users}" itemLabel="name"
 													itemValue="name" />
@@ -263,8 +263,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>状态：</label>
-											<form:select class="form-control required" path="status"
-												id="status">
+											<form:select class="form-control" path="status"
+												id="status" required="true">
 												<form:option value="" label="" />
 												<form:options items="${statuses}" itemLabel="name"
 													itemValue="id" />
@@ -275,8 +275,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>DeadLine：</label>
-											<form:input class="form-control required" type="date"
-												path="expectFinishDate" id="expectFinishDate" />
+											<form:input class="form-control" type="date"
+												path="expectFinishDate" id="expectFinishDate" required="true"/>
 										</div>
 									</div>
 								</div>
