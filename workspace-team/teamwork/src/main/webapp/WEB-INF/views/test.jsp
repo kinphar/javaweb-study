@@ -11,6 +11,24 @@
 <script type="application/javascript" src="js/jquery.min.js"></script>
 <script type="application/javascript" src="js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+<script type="text/javascript">
+	var i=1;
+	function add(){
+	var top=document.getElementById("top");
+	var input=document.createElement("input");
+	var div=document.createElement("div");
+	div.innerHTML="studen:"+i
+	div.id=i
+	i=i+1;
+	input.type="input"
+	input.name="v";
+	input.onclick=function remo(){alert(i);top.removeChild(div)};//点击删除控件
+	input.value="nihao";
+	input.id="v";
+	div.appendChild(input);
+	top.appendChild(div);
+	}
+</script>
 
 </head>
 
@@ -41,7 +59,7 @@
 		</div>
 	</nav>
 
-	<div class="container theme-showcase" role="main">
+	<div class="container theme-showcase" role="main" style="margin-bottom: 50px">
 		<div class="page-header">
 			<h1>Task manager</h1>
 		</div>
@@ -206,13 +224,19 @@
 			</div>
 			<!-- /.col-sm-4 -->
 		</div>
+		
+		<div class="page-header">
+			<h1>create widget</h1>
+		</div>
+		<div><input type="button" onclick="add()" value="Add" /></div>
+		<div id="top"></div>
 
 
 
 
 	</div>
 
-	<div id="footer" class="container">
+<!-- 	<div id="footer" class="container">
 		<nav class="navbar navbar-default navbar-fixed-bottom">
 			<div class="navbar-inner navbar-content-center">
 				<p class="text-muted credit text-center" style="padding: 0px;">
@@ -220,7 +244,7 @@
 				</p>
 			</div>
 		</nav>
-	</div>
+	</div> -->
 
 </body>
 </html>

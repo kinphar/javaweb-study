@@ -33,19 +33,44 @@
 		var url = $.trim($("#url").val());//获取会话中的隐藏属性URL  
 		window.location.href = url;
 	}
-	
 
-	function addCheckList() {
-		var oCheckbox=document.createElement("input");
-		var myText=document.createTextNode("蚂蚁部落");
-		oCheckbox.setAttribute("type","checkbox");
-		oCheckbox.setAttribute("id","mayi");
-				
-		var mydiv=document.getElementById("taskCheckList");
-		mydiv.appendChild(oCheckbox);
-		mydiv.appendChild(myText);
+	function addCheckList(s) {
+		var top = document.getElementById("taskCheckList");
+		var div = document.createElement("div");
+		div.innerHTML = '<li><input type="checkbox">' + s + '</li>';
+		top.appendChild(div);
 	}
 	
+	function showObject(id) {
+		var ui = document.getElementById(id);
+		ui.style.display = "inline";
+	}
+	
+	function hideObject(id) {
+		var ui = document.getElementById(id);
+		ui.style.display = "none";
+	}
+	
+	function checkListToInputMode() {
+		document.getElementById("inputContent").value = "";
+		showObject("inputCheckList");
+		hideObject("addCheckList");
+	}
+	
+	function checkListToIdleMode() {
+		showObject("addCheckList");
+		hideObject("inputCheckList");
+	}
+	
+	function createNewCheckList() {
+		var content = $("#inputContent").val();
+		alert(content);
+		if (content != null && content != "") {
+			addCheckList($("#inputContent").val());
+		}		
+		checkListToIdleMode();
+	}
+
 </script>
 </head>
 
@@ -304,17 +329,18 @@
 												aria-valuemax="100" style="width: 50%;"></div>
 										</div>
 
-										<ul id="taskCheckList" class="list-unstyled checkbox">
-											<li><label> <input type="checkbox">请打勾1
-											</label></li>
-											<li><label> <input type="checkbox">请打勾2
-											</label></li>
-											<li><label> <input type="checkbox">请打勾3
-											</label></li>
-											<li><label> <input type="checkbox">请打勾4
-											</label></li>
-											<li style="margin-top:10px" onclick="addCheckList()"><a href="#">+新增检查项</a></li>
+										<ul id="taskCheckList" class="list-unstyled checkbox"
+											style="margin-left: 24px">
 										</ul>
+
+										<a id="addCheckList" href="#" onclick="checkListToInputMode();">+新增检查项</a>
+
+										<div id="inputCheckList" style="display: none">
+											<input type="text" class="form-control" style="margin:5px 0px"
+												id="inputContent" placeholder="请输入内容">
+											<button type="button" onclick="checkListToIdleMode();" class="btn btn-default">取消</button>
+											<button type="button" onclick="createNewCheckList();" class="btn btn-newtask">确认</button>											
+										</div>
 									</div>
 								</div>
 							</form>
@@ -322,7 +348,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
-								<button type="submit" id="submit" class="btn btn-primary">提交任务</button>
+								<button type="submit" id="submit" class="btn btn-newtask">提交任务</button>
 							</div>
 						</div>
 					</div>
