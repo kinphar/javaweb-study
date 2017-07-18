@@ -34,11 +34,12 @@
 		window.location.href = url;
 	}
 
-	function addCheckList(s) {
+	function addCheckList(desc) {
 		var top = document.getElementById("taskCheckList");
-		var div = document.createElement("div");
-		div.innerHTML = '<li><input type="checkbox">' + s + '</li>';
-		top.appendChild(div);
+		var num = top.getElementsByTagName("input").length;
+		var li = document.createElement("li");
+		li.innerHTML = '<input type="checkbox" name=checkList[' + num +  '].description value='+ desc +'/>' + desc;
+		top.appendChild(li);
 	}
 	
 	function showObject(id) {
@@ -64,7 +65,7 @@
 	
 	function createNewCheckList() {
 		var content = $("#inputContent").val();
-		alert(content);
+		/* alert(content); */
 		if (content != null && content != "") {
 			addCheckList($("#inputContent").val());
 		}		
@@ -233,7 +234,7 @@
 					<div class="modal-footer">
 						<input type="hidden" id="url" />
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<a onclick="urlSubmit()" class="btn btn-primary"
+						<a onclick="urlSubmit()" class="btn btn-newtask"
 							data-dismiss="modal">确定</a>
 					</div>
 				</div>
@@ -241,7 +242,7 @@
 		</div>
 
 		<!-- 新建任务，模态框（Modal） -->
-		<form:form commandName="task" action="${ctx}/task/task_save"
+		<form:form commandName="newTaskInfo" action="${ctx}/task/task_save"
 			method="post">
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
@@ -257,12 +258,12 @@
 							<form role="form">
 								<div class="form-group">
 									<label for="name">标题：</label>
-									<form:input class="form-control" path="title" required="true" />
+									<form:input class="form-control" path="task.title" required="true" />
 								</div>
 
 								<div class="form-group">
 									<label for="name">内容：</label>
-									<form:textarea class="form-control" path="description"
+									<form:textarea class="form-control" path="task.description"
 										style="max-width:500px;" rows="5" placeholder="可选，主要描述需求详情。" />
 								</div>
 
@@ -270,7 +271,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>所属项目：</label>
-											<form:select class="form-control" path="projectName"
+											<form:select class="form-control" path="task.projectName"
 												id="projectName" required="true">
 												<form:option value="" label="" />
 												<form:options items="${projects}" itemLabel="name"
@@ -281,7 +282,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>分配给：</label>
-											<form:select class="form-control" path="assignTo"
+											<form:select class="form-control" path="task.assignTo"
 												id="assignTo" required="true">
 												<form:option value="" label="" />
 												<form:options items="${users}" itemLabel="name"
@@ -295,7 +296,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>状态：</label>
-											<form:select class="form-control" path="status" id="status"
+											<form:select class="form-control" path="task.status" id="status"
 												required="true">
 												<form:option value="" label="" />
 												<form:options items="${statuses}" itemLabel="name"
@@ -308,7 +309,7 @@
 										<div class="form-group">
 											<label>DeadLine：</label>
 											<form:input class="form-control" type="date"
-												path="expectFinishDate" id="expectFinishDate"
+												path="task.expectFinishDate" id="expectFinishDate"
 												required="true" />
 										</div>
 									</div>
@@ -331,6 +332,8 @@
 
 										<ul id="taskCheckList" class="list-unstyled checkbox"
 											style="margin-left: 24px">
+											<li><input type="checkbox" name="checkList[0].description" value="checkbox0 on" />hello1</li>
+											<li><input type="checkbox" name="checkList[1].description" value="checkbox1 on" />hello2</li>
 										</ul>
 
 										<a id="addCheckList" href="#" onclick="checkListToInputMode();">+新增检查项</a>

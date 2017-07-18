@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.teamwork.common.pojo.NewTaskInfo;
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.pojo.Project;
 import com.teamwork.pojo.SysDict;
@@ -54,7 +55,7 @@ public class TaskController {
 		model.addAttribute("users", users);	
 		model.addAttribute("statuses", dicts);	
 		model.addAttribute("projects", projects);				
-		model.addAttribute("task", new Task());
+		model.addAttribute("newTaskInfo", new NewTaskInfo());
 		model.addAttribute("taskQuery", taskQuery);		
 		
 		List<Task> tasks = taskService.getTaskByFilter(taskQuery);
@@ -72,15 +73,15 @@ public class TaskController {
 	}
 	
 	@RequestMapping("/task_save") 
-	public String saveTask(@ModelAttribute Task task) {
+	public String saveTask(@ModelAttribute NewTaskInfo newTaskInfo) {
 		System.out.println("---Request--- : task_save");
-		System.out.println("描述：" + task.getDescription() 
-				+ "; 项目id：" + task.getProjectName()
-				+ "; 分配给：" + task.getAssignTo() 
-				+ "; 状态：" + task.getStatus() 
-				+ "; 到期时间：" + task.getExpectFinishDate());
+		System.out.println("描述：" + newTaskInfo.getTask().getDescription() 
+				+ "; 项目id：" + newTaskInfo.getTask().getProjectName()
+				+ "; 分配给：" + newTaskInfo.getTask().getAssignTo() 
+				+ "; 状态：" + newTaskInfo.getTask().getStatus() 
+				+ "; 到期时间：" + newTaskInfo.getTask().getExpectFinishDate());
 		
-		taskService.createTask(task);
+		taskService.createTask(newTaskInfo.getTask());
 		return "redirect:task_list";
 	}
 	
