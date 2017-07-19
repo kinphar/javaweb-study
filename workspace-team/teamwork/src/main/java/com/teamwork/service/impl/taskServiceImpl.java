@@ -6,11 +6,16 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.teamwork.common.pojo.FriendlyResult;
+import com.teamwork.common.pojo.NewTaskInfo;
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.common.utils.IDUtils;
+import com.teamwork.mapper.TaskCheckListMapper;
 import com.teamwork.mapper.TaskMapper;
 import com.teamwork.pojo.Task;
+import com.teamwork.pojo.TaskCheckList;
+import com.teamwork.pojo.TaskCheckListExample;
 import com.teamwork.pojo.TaskExample;
 import com.teamwork.pojo.TaskExample.Criteria;
 import com.teamwork.service.TaskService;
@@ -20,18 +25,31 @@ public class taskServiceImpl implements TaskService {
 	
 	@Autowired
 	private TaskMapper taskMapper;
+	@Autowired
+	private TaskCheckListMapper taskCheckListMapper;
 
 	@Override
-	public FriendlyResult createTask(Task task) {
+	public FriendlyResult createTask(NewTaskInfo newTaskInfo) {
 		
-		task.setId(IDUtils.genTaskId());	
+		Task taskBase = newTaskInfo.getTask();
+		String taskId = IDUtils.genTaskId();
+		taskBase.setId(taskId);	
 
 		Date date = new Date();
-		task.setCreateDate(date);
-		task.setUpdateDate(date);
-		task.setProgress("0");
-		task.setDelFlag("0");
-		taskMapper.insert(task);
+		taskBase.setCreateDate(date);
+		taskBase.setUpdateDate(date);
+		taskBase.setProgress("0");
+		taskBase.setDelFlag("0");
+		taskMapper.insert(taskBase);
+		
+		List<TaskCheckList> list = newTaskInfo.getCheckList();
+		for (TaskCheckList item : list) {		
+			item.setParentId(taskId);
+			item.setCreateDate(date);
+			item.setUpdateDate(date);
+			item.setDelFlag("0");
+			taskCheckListMapper.insert(item);
+		}
 		return FriendlyResult.ok();
 	}
 
@@ -70,12 +88,22 @@ public class taskServiceImpl implements TaskService {
 		//logic delete.
 		TaskExample example = new TaskExample();
 		Criteria createCriteria = example.createCriteria();
-		createCriteria.andIdEqualTo(id);
-		
+		createCriteria.andIdEqualTo(id);		
 		Task task = new Task();
-		task.setDelFlag("1");
-		
+		task.setDelFlag("1");		
 		taskMapper.updateByExampleSelective(task, example);
+		
+		TaskCheckListExample exampleCheckList = new TaskCheckListExample();
+		exampleCheckList.createCriteria().andParentIdEqualTo(id);
+		List<TaskCheckList> list = taskCheckListMapper.selectByExample(exampleCheckList);
+		
+		for (TaskCheckList item : list) {
+			item.setDelFlag("1");
+			taskCheckListMapper.updateByPrimaryKey(item);
+		}
 		return FriendlyResult.ok();
 	}
+	
+	
+	
 }

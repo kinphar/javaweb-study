@@ -24,6 +24,23 @@
 		var form = document.getElementById("filterForm");
 		form.submit();
 	}
+	
+	function newTaskFormSubmit() {
+		var list = document.getElementById("taskCheckList").getElementsByTagName("input");
+		for (i = 0; i < list.length; i++) {
+			if (list[i].type == "checkbox") {
+				if (!list[i].checked) {
+					list[i].checked = true;
+					list[i].value = "0";
+				} else {
+					list[i].value = "1";
+				}
+			}
+		}
+		
+		var form = document.getElementById("newTaskForm");
+		form.submit();
+	}
 
 	function delcfm(url) {
 		$('#url').val(url);//给会话中的隐藏属性URL赋值  
@@ -36,42 +53,42 @@
 
 	function addCheckList(desc) {
 		var top = document.getElementById("taskCheckList");
-		var num = top.getElementsByTagName("input").length;
+		var num = top.getElementsByTagName("li").length;
 		var li = document.createElement("li");
-		li.innerHTML = '<input type="checkbox" name=checkList[' + num +  '].description value='+ desc +'/>' + desc;
+		li.innerHTML = '<input type="checkbox" name=checkList[' + num +  '].status />'
+				+ '<input style="background-color: #F8F6F2; border-width: 0px;" type="text" name="checkList[' + num + '].description" + value=' + desc + '>';
 		top.appendChild(li);
 	}
-	
+
 	function showObject(id) {
 		var ui = document.getElementById(id);
 		ui.style.display = "inline";
 	}
-	
+
 	function hideObject(id) {
 		var ui = document.getElementById(id);
 		ui.style.display = "none";
 	}
-	
+
 	function checkListToInputMode() {
 		document.getElementById("inputContent").value = "";
 		showObject("inputCheckList");
 		hideObject("addCheckList");
 	}
-	
+
 	function checkListToIdleMode() {
 		showObject("addCheckList");
 		hideObject("inputCheckList");
 	}
-	
+
 	function createNewCheckList() {
 		var content = $("#inputContent").val();
 		/* alert(content); */
 		if (content != null && content != "") {
 			addCheckList($("#inputContent").val());
-		}		
+		}
 		checkListToIdleMode();
 	}
-
 </script>
 </head>
 
@@ -242,7 +259,7 @@
 		</div>
 
 		<!-- 新建任务，模态框（Modal） -->
-		<form:form commandName="newTaskInfo" action="${ctx}/task/task_save"
+		<form:form id="newTaskForm" commandName="newTaskInfo" action="${ctx}/task/task_save"
 			method="post">
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
@@ -258,7 +275,8 @@
 							<form role="form">
 								<div class="form-group">
 									<label for="name">标题：</label>
-									<form:input class="form-control" path="task.title" required="true" />
+									<form:input class="form-control" path="task.title"
+										required="true" />
 								</div>
 
 								<div class="form-group">
@@ -296,8 +314,8 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label>状态：</label>
-											<form:select class="form-control" path="task.status" id="status"
-												required="true">
+											<form:select class="form-control" path="task.status"
+												id="status" required="true">
 												<form:option value="" label="" />
 												<form:options items="${statuses}" itemLabel="name"
 													itemValue="id" />
@@ -332,17 +350,27 @@
 
 										<ul id="taskCheckList" class="list-unstyled checkbox"
 											style="margin-left: 24px">
-											<li><input type="checkbox" name="checkList[0].description" value="checkbox0 on" />hello1</li>
-											<li><input type="checkbox" name="checkList[1].description" value="checkbox1 on" />hello2</li>
+											<li><input type="checkbox" name="checkList[0].status" />
+												<input style="background-color: #F8F6F2; border-width: 0px;"
+												type="text" name="checkList[0].description" value="hello1"
+												size="40" /></li>
+											<li><input type="checkbox" name="checkList[1].status" />
+												<input style="background-color: #F8F6F2; border-width: 0px;"
+												type="text" name="checkList[1].description" value="hello2"
+												size="40" /></li>
 										</ul>
 
-										<a id="addCheckList" href="#" onclick="checkListToInputMode();">+新增检查项</a>
+										<a id="addCheckList" href="#"
+											onclick="checkListToInputMode();">+新增检查项</a>
 
 										<div id="inputCheckList" style="display: none">
-											<input type="text" class="form-control" style="margin:5px 0px"
-												id="inputContent" placeholder="请输入内容">
-											<button type="button" onclick="checkListToIdleMode();" class="btn btn-default">取消</button>
-											<button type="button" onclick="createNewCheckList();" class="btn btn-newtask">确认</button>											
+											<input type="text" class="form-control"
+												style="margin: 5px 0px" id="inputContent"
+												placeholder="请输入内容">
+											<button type="button" onclick="checkListToIdleMode();"
+												class="btn btn-default">取消</button>
+											<button type="button" onclick="createNewCheckList();"
+												class="btn btn-newtask">确认</button>
 										</div>
 									</div>
 								</div>
@@ -351,7 +379,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
-								<button type="submit" id="submit" class="btn btn-newtask">提交任务</button>
+								<button type="button" onclick="newTaskFormSubmit();" class="btn btn-newtask">提交任务</button>
 							</div>
 						</div>
 					</div>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.teamwork.mapper.TaskChecklistMapper" >
-  <resultMap id="BaseResultMap" type="com.teamwork.pojo.TaskChecklist" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
+<mapper namespace="com.teamwork.mapper.TaskCheckListMapper" >
+  <resultMap id="BaseResultMap" type="com.teamwork.pojo.TaskCheckList" >
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
@@ -74,13 +74,13 @@
     id, parent_id, description, status, create_by, create_date, update_by, update_date, 
     del_flag
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.TaskChecklistExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.TaskCheckListExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from task_checklist
+    from task_check_list
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,34 +88,34 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from task_checklist
-    where id = #{id,jdbcType=VARCHAR}
+    from task_check_list
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from task_checklist
-    where id = #{id,jdbcType=VARCHAR}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from task_check_list
+    where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.teamwork.pojo.TaskChecklistExample" >
-    delete from task_checklist
+  <delete id="deleteByExample" parameterType="com.teamwork.pojo.TaskCheckListExample" >
+    delete from task_check_list
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.teamwork.pojo.TaskChecklist" >
-    insert into task_checklist (id, parent_id, description, 
+  <insert id="insert" parameterType="com.teamwork.pojo.TaskCheckList" >
+    insert into task_check_list (id, parent_id, description, 
       status, create_by, create_date, 
       update_by, update_date, del_flag
       )
-    values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.teamwork.pojo.TaskChecklist" >
-    insert into task_checklist
+  <insert id="insertSelective" parameterType="com.teamwork.pojo.TaskCheckList" >
+    insert into task_check_list
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -147,7 +147,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="parentId != null" >
         #{parentId,jdbcType=VARCHAR},
@@ -175,17 +175,17 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.teamwork.pojo.TaskChecklistExample" resultType="java.lang.Integer" >
-    select count(*) from task_checklist
+  <select id="countByExample" parameterType="com.teamwork.pojo.TaskCheckListExample" resultType="java.lang.Integer" >
+    select count(*) from task_check_list
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update task_checklist
+    update task_check_list
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=VARCHAR},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.parentId != null" >
         parent_id = #{record.parentId,jdbcType=VARCHAR},
@@ -217,8 +217,8 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update task_checklist
-    set id = #{record.id,jdbcType=VARCHAR},
+    update task_check_list
+    set id = #{record.id,jdbcType=BIGINT},
       parent_id = #{record.parentId,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=VARCHAR},
@@ -231,8 +231,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.pojo.TaskChecklist" >
-    update task_checklist
+  <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.pojo.TaskCheckList" >
+    update task_check_list
     <set >
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=VARCHAR},
@@ -259,10 +259,10 @@
         del_flag = #{delFlag,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.teamwork.pojo.TaskChecklist" >
-    update task_checklist
+  <update id="updateByPrimaryKey" parameterType="com.teamwork.pojo.TaskCheckList" >
+    update task_check_list
     set parent_id = #{parentId,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
@@ -271,6 +271,6 @@
       update_by = #{updateBy,jdbcType=VARCHAR},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

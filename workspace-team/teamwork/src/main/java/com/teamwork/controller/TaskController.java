@@ -81,7 +81,7 @@ public class TaskController {
 				+ "; 状态：" + newTaskInfo.getTask().getStatus() 
 				+ "; 到期时间：" + newTaskInfo.getTask().getExpectFinishDate());
 		
-		taskService.createTask(newTaskInfo.getTask());
+		taskService.createTask(newTaskInfo);
 		return "redirect:task_list";
 	}
 	

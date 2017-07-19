@@ -1,30 +1,30 @@
 package com.teamwork.mapper;
 
-import com.teamwork.pojo.TaskChecklist;
-import com.teamwork.pojo.TaskChecklistExample;
+import com.teamwork.pojo.TaskCheckList;
+import com.teamwork.pojo.TaskCheckListExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface TaskChecklistMapper {
-    int countByExample(TaskChecklistExample example);
+public interface TaskCheckListMapper {
+    int countByExample(TaskCheckListExample example);
 
-    int deleteByExample(TaskChecklistExample example);
+    int deleteByExample(TaskCheckListExample example);
 
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(Long id);
 
-    int insert(TaskChecklist record);
+    int insert(TaskCheckList record);
 
-    int insertSelective(TaskChecklist record);
+    int insertSelective(TaskCheckList record);
 
-    List<TaskChecklist> selectByExample(TaskChecklistExample example);
+    List<TaskCheckList> selectByExample(TaskCheckListExample example);
 
-    TaskChecklist selectByPrimaryKey(String id);
+    TaskCheckList selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(@Param("record") TaskChecklist record, @Param("example") TaskChecklistExample example);
+    int updateByExampleSelective(@Param("record") TaskCheckList record, @Param("example") TaskCheckListExample example);
 
-    int updateByExample(@Param("record") TaskChecklist record, @Param("example") TaskChecklistExample example);
+    int updateByExample(@Param("record") TaskCheckList record, @Param("example") TaskCheckListExample example);
 
-    int updateByPrimaryKeySelective(TaskChecklist record);
+    int updateByPrimaryKeySelective(TaskCheckList record);
 
-    int updateByPrimaryKey(TaskChecklist record);
+    int updateByPrimaryKey(TaskCheckList record);
 }

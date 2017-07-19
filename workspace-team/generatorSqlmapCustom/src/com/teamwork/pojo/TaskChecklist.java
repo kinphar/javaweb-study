@@ -2,8 +2,8 @@ package com.teamwork.pojo;
 
 import java.util.Date;
 
-public class TaskChecklist {
-    private String id;
+public class TaskCheckList {
+    private Long id;
 
     private String parentId;
 
@@ -21,12 +21,12 @@ public class TaskChecklist {
 
     private String delFlag;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getParentId() {
