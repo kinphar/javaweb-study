@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -14,6 +15,25 @@
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+	$(document).ready(function() {
+		$(".del").click(function() {
+			var link = $(this);
+			$.ajax({
+				type: "POST",
+				url: "${pageContext.request.contextPath}/task/task_delete",
+				data: {
+					taskid: '1234'
+				},
+				success: function(resp) {
+					alert(resp);
+				},
+				error: function(xhr) {
+				}
+			});
+		});
+	});
+
+	
 	function submitForm() {
 		document.getElementById("statusFilter").value = "all";
 		var form = document.getElementById("filterForm");
@@ -42,15 +62,38 @@
 		form.submit();
 	}
 
-	function delcfm(url) {
-		$('#url').val(url);//给会话中的隐藏属性URL赋值  
-		$('#delcfmModel').modal();
+	function delTask(id) {
+		$('#taskId').val(id);			//给会话中的隐藏属性URL赋值  
+		$('#delcfmModel').modal();		//显示对话框
 	}
-	function urlSubmit() {
-		var url = $.trim($("#url").val());//获取会话中的隐藏属性URL  
-		window.location.href = url;
+	
+	function doDel() {
+		var id = document.getElementById('taskId').value;
+		$.ajax({
+			type: "POST",
+			url: "${ctx}/task/task_delete",
+			data: {
+				taskid: id
+			},
+			success: function(resp) {
+				$("#task_" + resp).remove();
+			},
+			error: function(xhr) {
+			}
+		});
 	}
-
+	
+	function taskModalDisplay() {
+		$('#taskModal').modal();
+	}
+	
+	function taskEdit(index) {
+		alert(index);	
+		
+		alert('${tasks["" + index + ""].title}');
+		alert('${fn:length(tasks)}');
+	}
+	
 	function addCheckList(desc) {
 		var top = document.getElementById("taskCheckList");
 		var num = top.getElementsByTagName("li").length;
@@ -83,7 +126,6 @@
 
 	function createNewCheckList() {
 		var content = $("#inputContent").val();
-		/* alert(content); */
 		if (content != null && content != "") {
 			addCheckList($("#inputContent").val());
 		}
@@ -162,8 +204,7 @@
 						<ul class="dropdown-menu pull-right" role="menu"
 							aria-labelledby="dropdownMenu1">
 							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="#" class="text-center" data-toggle="modal"
-								data-target="#myModal">添加任务</a></li>
+								href="#" class="text-center" onclick="taskModalDisplay();">添加任务</a></li>
 							<li role="presentation"><a role="menuitem" tabindex="-1"
 								href="#" class="text-center">新建项目</a></li>
 						</ul>
@@ -209,8 +250,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${tasks}" var="task">
-					<tr>
+				<c:forEach items="${tasks}" var="task" varStatus="states">
+					<tr id="task_${task.id}">
 						<td>${task.projectName}</td>
 						<td>${task.title}</td>
 						<td style='text-align: center;'>${task.assignTo}</td>
@@ -222,11 +263,10 @@
 									style="width: ${task.progress}%;"></div>
 							</div>
 						</td>
-						<td><a class="btn btn-default btn-opt" role="menuitem"
-							data-toggle="modal" data-target="#myModal"> <span
+
+						<td><a id="openTask" class="btn btn-default btn-opt"> <span
 								class="glyphicon glyphicon-screenshot glyphicon-opt"></span>打开
-						</a> <a class="btn btn-default btn-opt"
-							onClick="delcfm('${ctx}/task/task_delete?taskid=${task.id}')">
+						</a> <a class="btn btn-default btn-opt" onClick="delTask('${task.id}')">
 								<span class="glyphicon glyphicon-trash glyphicon-opt"></span>删除
 						</a></td>
 					</tr>
@@ -249,19 +289,18 @@
 						<label class="text-center">您确认要删除吗？</label>
 					</div>
 					<div class="modal-footer">
-						<input type="hidden" id="url" />
+						<input type="hidden" id="taskId" />
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<a onclick="urlSubmit()" class="btn btn-newtask"
-							data-dismiss="modal">确定</a>
+						<a onclick="doDel()" class="btn btn-newtask" data-dismiss="modal">确定</a>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- 新建任务，模态框（Modal） -->
-		<form:form id="newTaskForm" commandName="newTaskInfo" action="${ctx}/task/task_save"
-			method="post">
-			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		<form:form id="newTaskForm" commandName="newTaskInfo"
+			action="${ctx}/task/task_save" method="post">
+			<div class="modal fade" id="taskModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content"
@@ -379,7 +418,8 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
-								<button type="button" onclick="newTaskFormSubmit();" class="btn btn-newtask">提交任务</button>
+								<button type="button" onclick="newTaskFormSubmit();"
+									class="btn btn-newtask">提交任务</button>
 							</div>
 						</div>
 					</div>
