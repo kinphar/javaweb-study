@@ -60,13 +60,11 @@ public class TaskController {
 		model.addAttribute("tasks", tasks);
 		
 		NewTaskInfo newTaskInfo = new NewTaskInfo();
-		newTaskInfo.setTask(tasks.get(1));		
 		model.addAttribute("newTaskInfo", newTaskInfo);
 		
 		//任务检查项
-		List<TaskCheckList> taskCheckList = taskCheckListService.getCheckListByTasks(tasks);
-		model.addAttribute("taskCheckList", taskCheckList);	
-		model.addAttribute("taskCheckListSize", taskCheckList.size());	
+		List<TaskCheckList> list = taskCheckListService.getCheckListByTasks(tasks);
+		model.addAttribute("taskCheckList", list);
 		
 		//返回任务状态，用于显示对于的状态tab
 		String statusFilter = null;
