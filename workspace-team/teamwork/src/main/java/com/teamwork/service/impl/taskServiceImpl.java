@@ -83,7 +83,7 @@ public class taskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public FriendlyResult deleteTask(String id) {
+	public FriendlyResult deleteTaskById(String id) {
 		//logic delete.
 		TaskExample example = new TaskExample();
 		Criteria createCriteria = example.createCriteria();
@@ -92,10 +92,10 @@ public class taskServiceImpl implements TaskService {
 		task.setDelFlag("1");		
 		taskMapper.updateByExampleSelective(task, example);
 		
+		//删除关联检查项；
 		TaskCheckListExample exampleCheckList = new TaskCheckListExample();
 		exampleCheckList.createCriteria().andParentIdEqualTo(id);
-		List<TaskCheckList> list = taskCheckListMapper.selectByExample(exampleCheckList);
-		
+		List<TaskCheckList> list = taskCheckListMapper.selectByExample(exampleCheckList);		
 		for (TaskCheckList item : list) {
 			item.setDelFlag("1");
 			taskCheckListMapper.updateByPrimaryKey(item);
@@ -123,6 +123,12 @@ public class taskServiceImpl implements TaskService {
 	public String getTaskStatusById(String id) {
 		Task task = taskMapper.selectByPrimaryKey(id);
 		return task.getStatus();
-	}	
-	
+	}
+
+	@Override
+	public FriendlyResult updateTaskByObj(Task task) {
+		task.setUpdateDate(new Date());
+		taskMapper.updateByPrimaryKeySelective(task);
+		return null;
+	}		
 }

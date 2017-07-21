@@ -8,12 +8,15 @@ import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.pojo.Task;
 
 public interface TaskService {
-	
-	FriendlyResult createTask(NewTaskInfo newTaskInfo);
-	List<Task> getAllTask();
-	List<Task> getTaskByFilter(TaskQuery taskQuery);
-	FriendlyResult deleteTask(String id);
+		
 	Task getTaskById(String id);
 	int getTaskNumByStatus(String status);
+	List<Task> getAllTask();
+	List<Task> getTaskByFilter(TaskQuery taskQuery);
 	String getTaskStatusById(String id);
+	
+	FriendlyResult deleteTaskById(String id);
+	FriendlyResult updateTaskByObj(Task task);
+	FriendlyResult createTask(NewTaskInfo newTaskInfo);
+
 }

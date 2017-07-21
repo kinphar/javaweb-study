@@ -76,8 +76,7 @@ public class TaskController {
 		} else {
 			statusFilter = taskQuery.getQueryTask().getStatus();
 		}
-		model.addAttribute("statusFilter", statusFilter);
-		
+		model.addAttribute("statusFilter", statusFilter);		
 
 		taskService.getTaskNumByStatus("10001");
 		model.addAttribute("number",Arrays.asList(
@@ -92,14 +91,18 @@ public class TaskController {
 	
 	@RequestMapping("/task_save") 
 	public String saveTask(@ModelAttribute NewTaskInfo newTaskInfo) {
-		taskService.createTask(newTaskInfo);
+		if (newTaskInfo.getTask().getId() != null) {
+			taskService.updateTaskByObj(newTaskInfo.getTask());
+		} else {
+			taskService.createTask(newTaskInfo);
+		}
 		return "redirect:task_list";
 	}
 	
 	@RequestMapping("/task_delete")
 	@ResponseBody
 	public Map<String,Object> deleteTask(@RequestParam("taskid") String taskid) {
-		taskService.deleteTask(taskid);
+		taskService.deleteTaskById(taskid);
 		String status = taskService.getTaskStatusById(taskid);
 		int numCur = taskService.getTaskNumByStatus(status);
 		int numAll = taskService.getTaskNumByStatus("all");
@@ -119,13 +122,4 @@ public class TaskController {
 		return task;
 	}
 	
-	@RequestMapping("/task_edit")
-	public String editTask(Model model) {
-		return "taskForm";
-	}
-	
-	@RequestMapping("/task_update")
-	public void updateTask(HttpServletRequest request) {
-		System.out.println(request.getParameter("content"));
-	}
 }

@@ -16,7 +16,12 @@
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-
+	});
+	
+	$('#taskModal').on('show.bs.modal', function(event) {
+		var widget = $(event.relateTarget);
+		var type = widget.data('whatever');
+		alert(type);
 	});
 
 	function submitForm() {
@@ -81,26 +86,27 @@
 			dataType : 'json',
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
-				console.log(data.expectFinishDate);
-
 				$('#editTaskId').val(data.id);
 				$('#editTaskTitle').val(data.title);
 				$('#editTaskDescription').val(data.description);
 				$('#editTaskProjectName').val(data.projectName);
 				$('#editTaskAssignTo').val(data.assignTo);
 				$('#editTaskStatus').val(data.status);
-				/* var date = new Date(data.expectFinishDate.replace(/-/, "/"));
-				document.getElementById("editTaskExpectFinishDate").value = date; */
-				$('#editTaskExpectFinishDate').val(data.expectFinishDate);
-
-				taskModalDisplay();
+				$('#editTaskExpectFinishDate').val(data.expectFinishDate);								
+				taskModalDisplay('editMode');
 			},
 			error : function(xhr) {
 			}
 		});
 	}
 
-	function taskModalDisplay() {
+	function taskModalDisplay(type) {
+		if (type == 'editMode') {
+			$('#myModalLabel').html("编辑任务");			
+		} else {
+			$('#myModalLabel').html("新建任务");	
+		}
+		
 		$('#taskModal').modal();
 	}
 
@@ -285,7 +291,7 @@
 
 						<td><a class="btn btn-default btn-opt"
 							onClick="editTask('${task.id}')"> <span
-								class="glyphicon glyphicon-screenshot glyphicon-opt"></span>打开
+								class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
 						</a> <a class="btn btn-default btn-opt"
 							onClick="delTask('${task.id}')"> <span
 								class="glyphicon glyphicon-trash glyphicon-opt"></span>删除
@@ -333,7 +339,7 @@
 						</div>
 						<div class="modal-body">
 							<form role="form">
-								<input type="hidden" id="editTaskId" />
+								<form:input type="hidden" path="task.id" id="editTaskId" />
 								<div class="form-group">
 									<label for="name">标题：</label>
 									<form:input class="form-control" path="task.title"
@@ -389,7 +395,7 @@
 										<div class="form-group">
 											<label>DeadLine：</label>
 											<form:input class="form-control" type="date"
-												path="task.expectFinishDate" id="editTaskexpectFinishDate"
+												path="task.expectFinishDate" id="editTaskExpectFinishDate"
 												required="true" />
 										</div>
 									</div>
