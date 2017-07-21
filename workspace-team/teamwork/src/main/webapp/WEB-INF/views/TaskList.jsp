@@ -61,8 +61,10 @@
 			data : {
 				taskid : id
 			},
-			success : function(resp) {
-				$("#task_" + resp).remove();
+			success : function(data) {
+				$("#task_" + data.id).remove();
+				$("#status_" + data.statusCur).html(data.numCur);
+				$("#status_all").html(data.numAll);
 			},
 			error : function(xhr) {
 			}
@@ -90,7 +92,7 @@
 				/* var date = new Date(data.expectFinishDate.replace(/-/, "/"));
 				document.getElementById("editTaskExpectFinishDate").value = date; */
 				$('#editTaskExpectFinishDate').val(data.expectFinishDate);
-				
+
 				taskModalDisplay();
 			},
 			error : function(xhr) {
@@ -227,15 +229,20 @@
 
 			<ul class="nav nav-tabs" role="tablist">
 				<li <c:if test="${statusFilter=='all'}">class="active"</c:if>
-					onclick="submitFormWithStatus('all');"><a href="#">全部</a></li>
+					onclick="submitFormWithStatus('all');"><a href="#">全部 <span
+						class="badge" id="status_all">${number[0]}</span></a></li>
 				<li <c:if test="${statusFilter=='10001'}">class="active"</c:if>
-					onclick="submitFormWithStatus(10001);"><a href="#">未开始</a></li>
+					onclick="submitFormWithStatus(10001);"><a href="#">未开始 <span
+						class="badge" id="status_10001">${number[1]}</span></a></li>
 				<li <c:if test="${statusFilter=='10002'}">class="active"</c:if>
-					onclick="submitFormWithStatus(10002);"><a href="#">正在处理</a></li>
+					onclick="submitFormWithStatus(10002);"><a href="#">正在处理 <span
+						class="badge" id="status_10002" style="background-color:#5bc0de">${number[2]}</span></a></li>
 				<li <c:if test="${statusFilter=='10003'}">class="active"</c:if>
-					onclick="submitFormWithStatus(10003);"><a href="#">已完成</a></li>
-				<li <c:if test="${statusFilter=='10004'}">class="active"</c:if>
-					onclick="submitFormWithStatus(10004);"><a href="#">已归档</a></li>
+					onclick="submitFormWithStatus(10003);"><a href="#">已完成 <span
+						class="badge" id="status_10003" style="background-color:#5cb85c">${number[3]}</span></a></li>
+				<li <c:if test="${statusFilter=='10005'}">class="active"</c:if>
+					onclick="submitFormWithStatus(10005);"><a href="#">已归档 <span
+						class="badge" id="status_10005">${number[4]}</span></a></li>
 			</ul>
 
 			<form:hidden path="queryTask.status" id="statusFilter"

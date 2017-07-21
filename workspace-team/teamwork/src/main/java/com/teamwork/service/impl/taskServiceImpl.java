@@ -29,8 +29,7 @@ public class taskServiceImpl implements TaskService {
 	private TaskCheckListMapper taskCheckListMapper;
 
 	@Override
-	public FriendlyResult createTask(NewTaskInfo newTaskInfo) {
-		
+	public FriendlyResult createTask(NewTaskInfo newTaskInfo) {		
 		Task taskBase = newTaskInfo.getTask();
 		String taskId = IDUtils.genTaskId();
 		taskBase.setId(taskId);	
@@ -107,6 +106,23 @@ public class taskServiceImpl implements TaskService {
 	@Override
 	public Task getTaskById(String id) {
 		return taskMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int getTaskNumByStatus(String status) {
+		TaskExample example = new TaskExample();
+		Criteria createCriteria = example.createCriteria();
+		if (!status.equals("all")) {
+			createCriteria.andStatusEqualTo(status);
+		}
+		createCriteria.andDelFlagNotEqualTo("1");
+		return taskMapper.countByExample(example);
+	}
+
+	@Override
+	public String getTaskStatusById(String id) {
+		Task task = taskMapper.selectByPrimaryKey(id);
+		return task.getStatus();
 	}	
 	
 }

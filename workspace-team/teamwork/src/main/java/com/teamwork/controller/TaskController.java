@@ -1,6 +1,9 @@
 package com.teamwork.controller;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -74,6 +77,15 @@ public class TaskController {
 			statusFilter = taskQuery.getQueryTask().getStatus();
 		}
 		model.addAttribute("statusFilter", statusFilter);
+		
+
+		taskService.getTaskNumByStatus("10001");
+		model.addAttribute("number",Arrays.asList(
+				taskService.getTaskNumByStatus("all"), 
+				taskService.getTaskNumByStatus("10001"), 
+				taskService.getTaskNumByStatus("10002"), 
+				taskService.getTaskNumByStatus("10003"), 
+				taskService.getTaskNumByStatus("10005")));    
 				
 		return "TaskList";		
 	}
@@ -86,9 +98,18 @@ public class TaskController {
 	
 	@RequestMapping("/task_delete")
 	@ResponseBody
-	public String deleteTask(@RequestParam("taskid") String taskid) {
+	public Map<String,Object> deleteTask(@RequestParam("taskid") String taskid) {
 		taskService.deleteTask(taskid);
-		return taskid;
+		String status = taskService.getTaskStatusById(taskid);
+		int numCur = taskService.getTaskNumByStatus(status);
+		int numAll = taskService.getTaskNumByStatus("all");
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("id", taskid);
+		map.put("statusCur", status);
+		map.put("numCur", numCur);
+		map.put("numAll", numAll);
+		return map;
 	}
 	
 	@RequestMapping("/task_get")
