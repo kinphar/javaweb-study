@@ -126,9 +126,12 @@ public class taskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public FriendlyResult updateTaskByObj(Task task) {
+	public FriendlyResult updateTask(NewTaskInfo newTaskInfo) {
+		Task task = newTaskInfo.getTask();
 		task.setUpdateDate(new Date());
 		taskMapper.updateByPrimaryKeySelective(task);
+		
+		//add checkupdate.
 		return null;
 	}		
 }

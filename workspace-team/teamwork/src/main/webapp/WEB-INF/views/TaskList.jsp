@@ -52,6 +52,15 @@
 		var form = document.getElementById("newTaskForm");
 		form.submit();
 	}
+	
+	function clearCheckList() {
+		var list = document.getElementById("taskCheckList")
+				.getElementsByTagName("li");		
+		var len = list.length;
+		for (i = 0; i < len; i++) {
+			list[0].remove();			
+		}
+	}
 
 	function delTask(id) {
 		$('#taskId').val(id); //给会话中的隐藏属性URL赋值  
@@ -75,8 +84,8 @@
 			}
 		});
 	}
-
-	function editTask(id) {
+	
+	function editTaskInputInfo(id) {
 		$.ajax({
 			type : "GET",
 			url : "${ctx}/task/task_get",
@@ -92,12 +101,34 @@
 				$('#editTaskProjectName').val(data.projectName);
 				$('#editTaskAssignTo').val(data.assignTo);
 				$('#editTaskStatus').val(data.status);
-				$('#editTaskExpectFinishDate').val(data.expectFinishDate);								
-				taskModalDisplay('editMode');
+				$('#editTaskExpectFinishDate').val(data.expectFinishDate);				
 			},
 			error : function(xhr) {
 			}
 		});
+		
+		$.ajax({
+			type : "GET",
+			url : "${ctx}/task/task_get_checklist",
+			data : {
+				taskid : id
+			},
+			dataType : 'json',
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				for (var i = 0; i < data.length; i++) {
+					addCheckList(data[i].status, data[i].description);
+				}			
+			},
+			error : function(xhr) {
+			}
+		});
+	}
+
+	function editTask(id) {
+		clearCheckList();
+		editTaskInputInfo(id);
+		taskModalDisplay('editMode');
 	}
 
 	function taskModalDisplay(type) {
@@ -105,22 +136,20 @@
 			$('#myModalLabel').html("编辑任务");			
 		} else {
 			$('#myModalLabel').html("新建任务");	
+			document.getElementById('newTaskForm').reset();
 		}
 		
 		$('#taskModal').modal();
 	}
 
-	function taskEdit(index) {
-		alert(index);
-		alert('${fn:length(tasks)}');
-	}
-
-	function addCheckList(desc) {
+	function addCheckList(checked, desc) {
 		var top = document.getElementById("taskCheckList");
 		var num = top.getElementsByTagName("li").length;
 		var li = document.createElement("li");
-		li.innerHTML = '<input type="checkbox" name=checkList[' + num +  '].status />'
-				+ '<input style="background-color: #F8F6F2; border-width: 0px;" type="text" name="checkList[' + num + '].description" + value=' + desc + '>';
+		var checkedFlag = (checked == '1') ? 'checked="checked"' : '';
+		li.innerHTML = '<input type="checkbox" name=checkList[' + num +  '].status ' + checkedFlag + '"/>'
+				+ '<input type="text" style="background-color: #F8F6F2; border-width: 0px;"' 
+				+ 'name="checkList[' + num + '].description" + value=' + desc + '>';
 		top.appendChild(li);
 	}
 
@@ -148,7 +177,7 @@
 	function createNewCheckList() {
 		var content = $("#inputContent").val();
 		if (content != null && content != "") {
-			addCheckList($("#inputContent").val());
+			addCheckList('0', $("#inputContent").val());
 		}
 		checkListToIdleMode();
 	}
@@ -417,15 +446,7 @@
 										</div>
 
 										<ul id="taskCheckList" class="list-unstyled checkbox"
-											style="margin-left: 24px">
-											<li><input type="checkbox" name="checkList[0].status" />
-												<input style="background-color: #F8F6F2; border-width: 0px;"
-												type="text" name="checkList[0].description" value="hello1"
-												size="40" /></li>
-											<li><input type="checkbox" name="checkList[1].status" />
-												<input style="background-color: #F8F6F2; border-width: 0px;"
-												type="text" name="checkList[1].description" value="hello2"
-												size="40" /></li>
+											style="margin-left: 24px">																	
 										</ul>
 
 										<a id="addCheckList" href="#"

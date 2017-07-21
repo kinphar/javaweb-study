@@ -16,7 +16,7 @@ public interface TaskService {
 	String getTaskStatusById(String id);
 	
 	FriendlyResult deleteTaskById(String id);
-	FriendlyResult updateTaskByObj(Task task);
+	FriendlyResult updateTask(NewTaskInfo newTaskInfo);
 	FriendlyResult createTask(NewTaskInfo newTaskInfo);
 
 }

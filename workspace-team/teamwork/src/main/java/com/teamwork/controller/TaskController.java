@@ -64,10 +64,6 @@ public class TaskController {
 		NewTaskInfo newTaskInfo = new NewTaskInfo();
 		model.addAttribute("newTaskInfo", newTaskInfo);
 		
-		//任务检查项
-		List<TaskCheckList> list = taskCheckListService.getCheckListByTasks(tasks);
-		model.addAttribute("taskCheckList", list);
-		
 		//返回任务状态，用于显示对于的状态tab
 		String statusFilter = null;
 		if (taskQuery.getQueryTask() == null) {
@@ -77,6 +73,7 @@ public class TaskController {
 		}
 		model.addAttribute("statusFilter", statusFilter);		
 
+		//任务数量
 		taskService.getTaskNumByStatus("10001");
 		model.addAttribute("number",Arrays.asList(
 				taskService.getTaskNumByStatus("all"), 
@@ -94,7 +91,7 @@ public class TaskController {
 		if (StringUtils.isBlank(taskId)) {
 			taskService.createTask(newTaskInfo);
 		} else {
-			taskService.updateTaskByObj(newTaskInfo.getTask());			
+			taskService.updateTask(newTaskInfo);			
 		}
 		return "redirect:task_list";
 	}
@@ -120,6 +117,14 @@ public class TaskController {
 	public Task getTask(@RequestParam("taskid") String taskid) {
 		Task task = taskService.getTaskById(taskid);
 		return task;
+	}
+	
+	@RequestMapping("/task_get_checklist")
+	@ResponseBody
+	public List<TaskCheckList> getTaskCheckList(@RequestParam("taskid") String taskid) {
+		List<TaskCheckList> list = taskCheckListService.getCheckListByParentId(taskid);
+		System.out.println("checklist.num=" + list.size());
+		return list;
 	}
 	
 }
