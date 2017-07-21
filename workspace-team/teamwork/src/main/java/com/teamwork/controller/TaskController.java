@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -91,10 +90,11 @@ public class TaskController {
 	
 	@RequestMapping("/task_save") 
 	public String saveTask(@ModelAttribute NewTaskInfo newTaskInfo) {
-		if (newTaskInfo.getTask().getId() != null) {
-			taskService.updateTaskByObj(newTaskInfo.getTask());
-		} else {
+		String taskId = newTaskInfo.getTask().getId();
+		if (StringUtils.isBlank(taskId)) {
 			taskService.createTask(newTaskInfo);
+		} else {
+			taskService.updateTaskByObj(newTaskInfo.getTask());			
 		}
 		return "redirect:task_list";
 	}
