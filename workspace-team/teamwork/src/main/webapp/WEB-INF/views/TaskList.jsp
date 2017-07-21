@@ -16,24 +16,9 @@
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".del").click(function() {
-			var link = $(this);
-			$.ajax({
-				type: "POST",
-				url: "${pageContext.request.contextPath}/task/task_delete",
-				data: {
-					taskid: '1234'
-				},
-				success: function(resp) {
-					alert(resp);
-				},
-				error: function(xhr) {
-				}
-			});
-		});
+
 	});
 
-	
 	function submitForm() {
 		document.getElementById("statusFilter").value = "all";
 		var form = document.getElementById("filterForm");
@@ -44,9 +29,10 @@
 		var form = document.getElementById("filterForm");
 		form.submit();
 	}
-	
+
 	function newTaskFormSubmit() {
-		var list = document.getElementById("taskCheckList").getElementsByTagName("input");
+		var list = document.getElementById("taskCheckList")
+				.getElementsByTagName("input");
 		for (i = 0; i < list.length; i++) {
 			if (list[i].type == "checkbox") {
 				if (!list[i].checked) {
@@ -57,43 +43,70 @@
 				}
 			}
 		}
-		
+
 		var form = document.getElementById("newTaskForm");
 		form.submit();
 	}
 
 	function delTask(id) {
-		$('#taskId').val(id);			//给会话中的隐藏属性URL赋值  
-		$('#delcfmModel').modal();		//显示对话框
+		$('#taskId').val(id); //给会话中的隐藏属性URL赋值  
+		$('#delcfmModel').modal(); //显示对话框
 	}
-	
+
 	function doDel() {
 		var id = document.getElementById('taskId').value;
 		$.ajax({
-			type: "POST",
-			url: "${ctx}/task/task_delete",
-			data: {
-				taskid: id
+			type : "POST",
+			url : "${ctx}/task/task_delete",
+			data : {
+				taskid : id
 			},
-			success: function(resp) {
+			success : function(resp) {
 				$("#task_" + resp).remove();
 			},
-			error: function(xhr) {
+			error : function(xhr) {
 			}
 		});
 	}
-	
+
+	function editTask(id) {
+		$.ajax({
+			type : "GET",
+			url : "${ctx}/task/task_get",
+			data : {
+				taskid : id
+			},
+			dataType : 'json',
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				console.log(data.expectFinishDate);
+
+				$('#editTaskId').val(data.id);
+				$('#editTaskTitle').val(data.title);
+				$('#editTaskDescription').val(data.description);
+				$('#editTaskProjectName').val(data.projectName);
+				$('#editTaskAssignTo').val(data.assignTo);
+				$('#editTaskStatus').val(data.status);
+				/* var date = new Date(data.expectFinishDate.replace(/-/, "/"));
+				document.getElementById("editTaskExpectFinishDate").value = date; */
+				$('#editTaskExpectFinishDate').val(data.expectFinishDate);
+				
+				taskModalDisplay();
+			},
+			error : function(xhr) {
+			}
+		});
+	}
+
 	function taskModalDisplay() {
 		$('#taskModal').modal();
 	}
-	
+
 	function taskEdit(index) {
-		alert(index);	
-		
-		alert('${tasks["" + index + ""].title}');
+		alert(index);
 		alert('${fn:length(tasks)}');
 	}
-	
+
 	function addCheckList(desc) {
 		var top = document.getElementById("taskCheckList");
 		var num = top.getElementsByTagName("li").length;
@@ -227,7 +240,6 @@
 
 			<form:hidden path="queryTask.status" id="statusFilter"
 				name="statusFilter" />
-
 		</form:form>
 
 		<table class="table table-striped table-bordered table-hover">
@@ -264,10 +276,12 @@
 							</div>
 						</td>
 
-						<td><a id="openTask" class="btn btn-default btn-opt"> <span
+						<td><a class="btn btn-default btn-opt"
+							onClick="editTask('${task.id}')"> <span
 								class="glyphicon glyphicon-screenshot glyphicon-opt"></span>打开
-						</a> <a class="btn btn-default btn-opt" onClick="delTask('${task.id}')">
-								<span class="glyphicon glyphicon-trash glyphicon-opt"></span>删除
+						</a> <a class="btn btn-default btn-opt"
+							onClick="delTask('${task.id}')"> <span
+								class="glyphicon glyphicon-trash glyphicon-opt"></span>删除
 						</a></td>
 					</tr>
 				</c:forEach>
@@ -312,16 +326,18 @@
 						</div>
 						<div class="modal-body">
 							<form role="form">
+								<input type="hidden" id="editTaskId" />
 								<div class="form-group">
 									<label for="name">标题：</label>
 									<form:input class="form-control" path="task.title"
-										required="true" />
+										id="editTaskTitle" required="true" />
 								</div>
 
 								<div class="form-group">
 									<label for="name">内容：</label>
 									<form:textarea class="form-control" path="task.description"
-										style="max-width:500px;" rows="5" placeholder="可选，主要描述需求详情。" />
+										id="editTaskDescription" style="max-width:500px;" rows="5"
+										placeholder="可选，主要描述需求详情。" />
 								</div>
 
 								<div class="row">
@@ -329,7 +345,7 @@
 										<div class="form-group">
 											<label>所属项目：</label>
 											<form:select class="form-control" path="task.projectName"
-												id="projectName" required="true">
+												id="editTaskProjectName" required="true">
 												<form:option value="" label="" />
 												<form:options items="${projects}" itemLabel="name"
 													itemValue="name" />
@@ -340,7 +356,7 @@
 										<div class="form-group">
 											<label>分配给：</label>
 											<form:select class="form-control" path="task.assignTo"
-												id="assignTo" required="true">
+												id="editTaskAssignTo" required="true">
 												<form:option value="" label="" />
 												<form:options items="${users}" itemLabel="name"
 													itemValue="name" />
@@ -354,7 +370,7 @@
 										<div class="form-group">
 											<label>状态：</label>
 											<form:select class="form-control" path="task.status"
-												id="status" required="true">
+												id="editTaskStatus" required="true">
 												<form:option value="" label="" />
 												<form:options items="${statuses}" itemLabel="name"
 													itemValue="id" />
@@ -366,7 +382,7 @@
 										<div class="form-group">
 											<label>DeadLine：</label>
 											<form:input class="form-control" type="date"
-												path="task.expectFinishDate" id="expectFinishDate"
+												path="task.expectFinishDate" id="editTaskexpectFinishDate"
 												required="true" />
 										</div>
 									</div>

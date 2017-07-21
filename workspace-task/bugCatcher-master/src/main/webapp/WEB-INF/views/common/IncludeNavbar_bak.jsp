@@ -11,12 +11,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="${pageContext.request.contextPath}/my">捉虫记</a>
-      <img id="Brand" alt="Brand" src="/images/capture_bug.png" style="height: 50px; width: 50px;">
+      <a class="navbar-brand" href="${pageContext.request.contextPath}/my">華山論劍</a>
+      <img id="Brand" alt="Brand" src="/images/capture_bug.png" style="height: 40px; width: 40px;">
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li <c:if test="${active_my == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/my">我的任务</a></li>
+        <li <c:if test="${active_my == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/my">任务管理</a></li>
         <%--<sec:authorize access="isAuthenticated()">--%>
           <%--<sec:authentication property="principal.account" var="account" />--%>
           <%--<c:if test="${account.role != 'cs'}">--%>
@@ -24,10 +24,12 @@
           <%--</c:if>--%>
         <%--</sec:authorize>--%>
         <li <c:if test="${active_newTask == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/task/newTaskForm">新建任务</a></li>
-        <li <c:if test="${active_newCase == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/caselist/newCaselistForm">新建用例</a></li>
-        <li <c:if test="${active_allCase == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/caselist/all">查看用例</a></li>
-        <li <c:if test="${active_fileUpload == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/fileupload">自列用例</a></li>
-        <li <c:if test="${active_chart == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/task/chart">执行质量</a></li>
+        <li <c:if test="${active_experience == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/task/experience">技术经验</a></li>
+        <li <c:if test="${active_information == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/task/information">资料中心</a></li>
+        <%--<li <c:if test="${active_newCase == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/caselist/newCaselistForm">新建用例</a></li>--%>
+        <%--<li <c:if test="${active_allCase == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/caselist/all">查看用例</a></li>--%>
+        <%--<li <c:if test="${active_fileUpload == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/fileupload">自列用例</a></li>--%>
+        <%--<li <c:if test="${active_chart == true}">class="active"</c:if>><a href="${pageContext.request.contextPath}/task/chart">执行质量</a></li>--%>
         <sec:authorize access="isAuthenticated()">
           <sec:authentication property="principal.account" var="account" />
           <c:if test="${account.role == 'cs' || account.role == 'admin' || account.username == 'funny'}">

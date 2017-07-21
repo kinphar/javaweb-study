@@ -91,6 +91,13 @@ public class TaskController {
 		return taskid;
 	}
 	
+	@RequestMapping("/task_get")
+	@ResponseBody
+	public Task getTask(@RequestParam("taskid") String taskid) {
+		Task task = taskService.getTaskById(taskid);
+		return task;
+	}
+	
 	@RequestMapping("/task_edit")
 	public String editTask(Model model) {
 		return "taskForm";

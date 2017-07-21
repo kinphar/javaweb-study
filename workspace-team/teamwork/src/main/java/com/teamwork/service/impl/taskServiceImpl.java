@@ -103,7 +103,10 @@ public class taskServiceImpl implements TaskService {
 		}
 		return FriendlyResult.ok();
 	}
-	
-	
+
+	@Override
+	public Task getTaskById(String id) {
+		return taskMapper.selectByPrimaryKey(id);
+	}	
 	
 }
