@@ -18,18 +18,12 @@
 	$(document).ready(function() {
 	});
 	
-	$('#taskModal').on('show.bs.modal', function(event) {
-		var widget = $(event.relateTarget);
-		var type = widget.data('whatever');
-		alert(type);
-	});
-
-	function submitForm() {
+	function queryFormSubmit() {
 		document.getElementById("statusFilter").value = "all";
 		var form = document.getElementById("filterForm");
 		form.submit();
 	}
-	function submitFormWithStatus(s) {
+	function queryFormSubmitWithStatus(s) {
 		document.getElementById("statusFilter").value = s;
 		var form = document.getElementById("filterForm");
 		form.submit();
@@ -53,15 +47,6 @@
 		form.submit();
 	}
 	
-	function clearCheckList() {
-		var list = document.getElementById("taskCheckList")
-				.getElementsByTagName("li");		
-		var len = list.length;
-		for (i = 0; i < len; i++) {
-			list[0].remove();			
-		}
-	}
-
 	function delTask(id) {
 		$('#taskId').val(id); //给会话中的隐藏属性URL赋值  
 		$('#delcfmModel').modal(); //显示对话框
@@ -85,7 +70,7 @@
 		});
 	}
 	
-	function editTaskInputInfo(id) {
+	function fillTaskForm(id) {
 		$.ajax({
 			type : "GET",
 			url : "${ctx}/task/task_get",
@@ -124,24 +109,7 @@
 			}
 		});
 	}
-
-	function editTask(id) {
-		clearCheckList();
-		editTaskInputInfo(id);
-		taskModalDisplay('editMode');
-	}
-
-	function taskModalDisplay(type) {
-		if (type == 'editMode') {
-			$('#myModalLabel').html("编辑任务");			
-		} else {
-			$('#myModalLabel').html("新建任务");	
-			document.getElementById('newTaskForm').reset();
-		}
-		
-		$('#taskModal').modal();
-	}
-
+	
 	function addCheckList(checked, desc) {
 		var top = document.getElementById("taskCheckList");
 		var num = top.getElementsByTagName("li").length;
@@ -152,26 +120,50 @@
 				+ 'name="checkList[' + num + '].description" + value=' + desc + '>';
 		top.appendChild(li);
 	}
+	
+	function checkListReset() {
+		var list = document.getElementById("taskCheckList")
+				.getElementsByTagName("li");		
+		var len = list.length;
+		for (i = 0; i < len; i++) {
+			list[0].remove();			
+		}
+		
+		checkListToIdleMode();
+	}
 
-	function showObject(id) {
+	function editTask(id) {
+		document.getElementById("newTaskForm").reset();
+		checkListReset();				
+		if (id == null) {			
+			$('#myModalLabel').html("新建任务");					
+		} else {
+			fillTaskForm(id);
+			$('#myModalLabel').html("编辑任务");	
+		}
+		
+		$('#taskModal').modal();
+	}	
+
+	function showObjectById(id) {
 		var ui = document.getElementById(id);
 		ui.style.display = "inline";
 	}
 
-	function hideObject(id) {
+	function hideObjectById(id) {
 		var ui = document.getElementById(id);
 		ui.style.display = "none";
 	}
 
 	function checkListToInputMode() {
 		document.getElementById("inputContent").value = "";
-		showObject("inputCheckList");
-		hideObject("addCheckList");
+		showObjectById("inputCheckList");
+		hideObjectById("addCheckList");
 	}
 
 	function checkListToIdleMode() {
-		showObject("addCheckList");
-		hideObject("inputCheckList");
+		showObjectById("addCheckList");
+		hideObjectById("inputCheckList");
 	}
 
 	function createNewCheckList() {
@@ -227,7 +219,7 @@
 				<div class="col-sm-12">
 					<div class="form-group">
 						所属项目：
-						<form:select onchange="submitForm();" class="form-control"
+						<form:select onchange="queryFormSubmit();" class="form-control"
 							path="queryTask.projectName" id="queryTask.projectName">
 							<form:option value="all" label="所有项目" />
 							<form:options items="${taskQuery.selectProjects}"
@@ -237,7 +229,7 @@
 
 					<div class="form-group">
 						负责人：
-						<form:select onchange="submitForm();" class="form-control"
+						<form:select onchange="queryFormSubmit();" class="form-control"
 							path="queryTask.assignTo" id="queryTask.assignTo">
 							<form:option value="all" label="所有人" />
 							<form:options items="${taskQuery.selectUsers}" itemLabel="name"
@@ -254,7 +246,7 @@
 						<ul class="dropdown-menu pull-right" role="menu"
 							aria-labelledby="dropdownMenu1">
 							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="#" class="text-center" onclick="taskModalDisplay();">添加任务</a></li>
+								href="#" class="text-center" onclick="editTask();">添加任务</a></li>
 							<li role="presentation"><a role="menuitem" tabindex="-1"
 								href="#" class="text-center">新建项目</a></li>
 						</ul>
@@ -264,19 +256,19 @@
 
 			<ul class="nav nav-tabs" role="tablist">
 				<li <c:if test="${statusFilter=='all'}">class="active"</c:if>
-					onclick="submitFormWithStatus('all');"><a href="#">全部 <span
+					onclick="queryFormSubmitWithStatus('all');"><a href="#">全部 <span
 						class="badge" id="status_all">${number[0]}</span></a></li>
 				<li <c:if test="${statusFilter=='10001'}">class="active"</c:if>
-					onclick="submitFormWithStatus(10001);"><a href="#">未开始 <span
+					onclick="queryFormSubmitWithStatus(10001);"><a href="#">未开始 <span
 						class="badge" id="status_10001">${number[1]}</span></a></li>
 				<li <c:if test="${statusFilter=='10002'}">class="active"</c:if>
-					onclick="submitFormWithStatus(10002);"><a href="#">正在处理 <span
+					onclick="queryFormSubmitWithStatus(10002);"><a href="#">正在处理 <span
 						class="badge" id="status_10002" style="background-color:#5bc0de">${number[2]}</span></a></li>
 				<li <c:if test="${statusFilter=='10003'}">class="active"</c:if>
-					onclick="submitFormWithStatus(10003);"><a href="#">已完成 <span
+					onclick="queryFormSubmitWithStatus(10003);"><a href="#">已完成 <span
 						class="badge" id="status_10003" style="background-color:#5cb85c">${number[3]}</span></a></li>
 				<li <c:if test="${statusFilter=='10005'}">class="active"</c:if>
-					onclick="submitFormWithStatus(10005);"><a href="#">已归档 <span
+					onclick="queryFormSubmitWithStatus(10005);"><a href="#">已归档 <span
 						class="badge" id="status_10005">${number[4]}</span></a></li>
 			</ul>
 
