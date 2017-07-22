@@ -101,13 +101,19 @@
 			dataType : 'json',
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
+				console.log("checklist:" + data.length);
 				for (var i = 0; i < data.length; i++) {
 					addCheckList(data[i].status, data[i].description);
 				}			
+				updateCheckListProgress();
 			},
 			error : function(xhr) {
 			}
 		});
+	}
+	
+	function doCheck() {
+		updateCheckListProgress();
 	}
 	
 	function addCheckList(checked, desc) {
@@ -115,10 +121,37 @@
 		var num = top.getElementsByTagName("li").length;
 		var li = document.createElement("li");
 		var checkedFlag = (checked == '1') ? 'checked="checked"' : '';
-		li.innerHTML = '<input type="checkbox" name=checkList[' + num +  '].status ' + checkedFlag + '"/>'
+		li.innerHTML = '<input type="checkbox" onClick="doCheck()" name=checkList[' + num +  '].status ' + checkedFlag + '>'
 				+ '<input type="text" style="background-color: #F8F6F2; border-width: 0px;"' 
-				+ 'name="checkList[' + num + '].description" + value=' + desc + '>';
+				+ 'name="checkList[' + num + '].description" value=' + desc + '>';
 		top.appendChild(li);
+		updateCheckListProgress();
+	}
+	
+	function updateCheckListProgress() {
+		var liList = document.getElementById("taskCheckList")
+				.getElementsByTagName("li");
+		var inputList = document.getElementById("taskCheckList")
+				.getElementsByTagName("input");
+		var inputNum = inputList.length;
+		var checkedNum = 0;
+		var checkboxTotal = 0;
+		for (i = 0; i < inputNum; i++) {
+			if (inputList[i].type == "checkbox") {				
+				if (inputList[i].checked) {
+					checkedNum++;
+				}
+				checkboxTotal++;				
+			}
+		}
+		
+		console.log("checkbox:" + checkedNum + "/" + checkboxTotal);
+		var p = 0;
+		if (checkboxTotal != 0) {
+			p = checkedNum * 100 / checkboxTotal;
+		}
+		var progress = document.getElementById("progressCheckList");
+		progress.style.width = p + "%";
 	}
 	
 	function checkListReset() {
@@ -127,8 +160,9 @@
 		var len = list.length;
 		for (i = 0; i < len; i++) {
 			list[0].remove();			
-		}
+		}		
 		
+		updateCheckListProgress("10%");
 		checkListToIdleMode();
 	}
 
@@ -246,7 +280,7 @@
 						<ul class="dropdown-menu pull-right" role="menu"
 							aria-labelledby="dropdownMenu1">
 							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="#" class="text-center" onclick="editTask();">添加任务</a></li>
+								href="#" class="text-center" onclick="editTask();">新建任务</a></li>
 							<li role="presentation"><a role="menuitem" tabindex="-1"
 								href="#" class="text-center">新建项目</a></li>
 						</ul>
@@ -432,9 +466,9 @@
 									<div class="well col-md-8"
 										style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
 										<div class="progress">
-											<div class="progress-bar progress-bar-success"
+											<div class="progress-bar progress-bar-success" id="progressCheckList"
 												role="progressbar" aria-valuenow="10" aria-valuemin="0"
-												aria-valuemax="100" style="width: 50%;"></div>
+												aria-valuemax="100" style="width: 0%;"></div>
 										</div>
 
 										<ul id="taskCheckList" class="list-unstyled checkbox"

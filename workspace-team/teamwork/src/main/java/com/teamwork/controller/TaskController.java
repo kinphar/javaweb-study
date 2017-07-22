@@ -64,7 +64,7 @@ public class TaskController {
 		NewTaskInfo newTaskInfo = new NewTaskInfo();
 		model.addAttribute("newTaskInfo", newTaskInfo);
 		
-		//返回任务状态，用于显示对于的状态tab
+		//返回任务状态，用于高亮对应的状态tab
 		String statusFilter = null;
 		if (taskQuery.getQueryTask() == null) {
 			statusFilter = "all";
