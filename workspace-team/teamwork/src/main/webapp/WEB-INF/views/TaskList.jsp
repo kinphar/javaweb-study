@@ -62,8 +62,12 @@
 			},
 			success : function(data) {
 				$("#task_" + data.id).remove();
-				$("#status_" + data.statusCur).html(data.numCur);
-				$("#status_all").html(data.numAll);
+
+				var newNum = $("#status_" + data.statusCur).html() - 1;
+				$("#status_" + data.statusCur).html(newNum);
+				
+				newNum = $("#status_all").html() - 1;
+				$("#status_all").html(newNum);
 			},
 			error : function(xhr) {
 			}

@@ -14,6 +14,7 @@ public interface TaskService {
 	List<Task> getAllTask();
 	List<Task> getTaskByFilter(TaskQuery taskQuery);
 	String getTaskStatusById(String id);
+	List<Integer> getTaskNumByFilter(TaskQuery taskQuery);
 	
 	FriendlyResult deleteTaskById(String id);
 	FriendlyResult updateTask(NewTaskInfo newTaskInfo);

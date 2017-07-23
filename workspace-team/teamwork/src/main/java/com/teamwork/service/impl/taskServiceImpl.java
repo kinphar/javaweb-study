@@ -1,5 +1,6 @@
 package com.teamwork.service.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.teamwork.common.pojo.FriendlyResult;
 import com.teamwork.common.pojo.NewTaskInfo;
 import com.teamwork.common.pojo.TaskQuery;
@@ -133,5 +135,41 @@ public class taskServiceImpl implements TaskService {
 		
 		//add checkupdate.
 		return null;
+	}
+
+	@Override
+	public List<Integer> getTaskNumByFilter(TaskQuery taskQuery) {
+		TaskExample example = new TaskExample();		
+		Criteria createCriteria = example.createCriteria();		
+		if (taskQuery.getQueryTask() != null) {
+			String projectName = taskQuery.getQueryTask().getProjectName();
+			if (!StringUtils.isBlank(projectName) && !projectName.equals("all")) {
+				createCriteria.andProjectNameEqualTo(projectName);
+			}
+			String assignTo = taskQuery.getQueryTask().getAssignTo();
+			if (!StringUtils.isBlank(assignTo) && !assignTo.equals("all")) {
+				createCriteria.andAssignToEqualTo(assignTo);
+			}
+		}
+		
+		createCriteria.andDelFlagIsNotNull().andDelFlagNotEqualTo("1");
+		List<Task> tasks = taskMapper.selectByExample(example);
+		
+		int n_all = tasks.size();
+		int n_10001 = 0, n_10002 = 0, n_10003 = 0, n_10005 = 0;
+		for (Task item : tasks) {
+			switch (item.getStatus()) {
+				case "10001" :
+					n_10001++; break;
+				case "10002" :
+					n_10002++; break;
+				case "10003" :
+					n_10003++; break;
+				case "10005" :
+					n_10005++; break;
+			}
+		}
+		List<Integer> nums = Arrays.asList(n_all, n_10001, n_10002, n_10003, n_10005);
+		return nums;
 	}		
 }

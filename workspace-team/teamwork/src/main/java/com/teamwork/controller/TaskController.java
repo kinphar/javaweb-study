@@ -74,13 +74,7 @@ public class TaskController {
 		model.addAttribute("statusFilter", statusFilter);		
 
 		//任务数量
-		taskService.getTaskNumByStatus("10001");
-		model.addAttribute("number",Arrays.asList(
-				taskService.getTaskNumByStatus("all"), 
-				taskService.getTaskNumByStatus("10001"), 
-				taskService.getTaskNumByStatus("10002"), 
-				taskService.getTaskNumByStatus("10003"), 
-				taskService.getTaskNumByStatus("10005")));    
+		model.addAttribute("number", taskService.getTaskNumByFilter(taskQuery));  
 				
 		return "TaskList";		
 	}
