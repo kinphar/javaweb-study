@@ -343,7 +343,7 @@
 			</colgroup>
 			<thead>
 				<tr>
-					<th>所属项目</th>
+					<th style='text-align: center;'>所属项目</th>
 					<th>标题</th>
 					<th style='text-align: center;'>负责人</th>
 					<th style='text-align: center;'>到期时间</th>
@@ -354,7 +354,7 @@
 			<tbody>
 				<c:forEach items="${tasks}" var="task" varStatus="states">
 					<tr id="task_${task.id}">
-						<td>${task.projectName}</td>
+						<td style='text-align: center; color:#777'>${task.projectName}</td>
 						<td>${task.title}</td>
 						<td style='text-align: center;'>${task.assignTo}</td>
 						<td style='text-align: center;'>${task.expectFinishDate}</td>
