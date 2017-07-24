@@ -1,6 +1,5 @@
 package com.teamwork.controller;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,12 +80,19 @@ public class TaskController {
 	
 	@RequestMapping("/task_save") 
 	public String saveTask(@ModelAttribute NewTaskInfo newTaskInfo) {
-		String taskId = newTaskInfo.getTask().getId();
+		Task task = newTaskInfo.getTask();
+		String taskId = task.getId();
 		if (StringUtils.isBlank(taskId)) {
-			taskService.createTask(newTaskInfo);
+			taskService.createTask(task);
 		} else {
-			taskService.updateTask(newTaskInfo);			
+			taskService.updateTask(task);			
 		}
+		
+		List<TaskCheckList> list = newTaskInfo.getCheckList();
+		if (list != null && list.size() > 0) {
+			taskCheckListService.updateCheckLists(list, task.getId());
+		}
+		
 		return "redirect:task_list";
 	}
 	

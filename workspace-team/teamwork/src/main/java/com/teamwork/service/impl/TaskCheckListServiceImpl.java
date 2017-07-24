@@ -1,10 +1,12 @@
 package com.teamwork.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.teamwork.common.pojo.FriendlyResult;
 import com.teamwork.mapper.TaskCheckListMapper;
 import com.teamwork.pojo.Task;
 import com.teamwork.pojo.TaskCheckList;
@@ -37,4 +39,22 @@ public class TaskCheckListServiceImpl implements TaskCheckListService {
 		return taskCheckListMapper.selectByExample(example);
 	}
 
+	@Override
+	public FriendlyResult updateCheckLists(List<TaskCheckList> list, String parentId) {
+		for (TaskCheckList item : list) {
+			Long checkListId = item.getId();
+			if (checkListId != null && checkListId > 0) {
+				taskCheckListMapper.updateByPrimaryKeySelective(item);				
+			} else {
+				Date date = new Date();
+				item.setParentId(parentId);
+				item.setCreateDate(date);
+				item.setUpdateDate(date);
+				item.setDelFlag("0");
+				taskCheckListMapper.insert(item);
+			}
+		}
+		return FriendlyResult.ok();
+	}
+	
 }

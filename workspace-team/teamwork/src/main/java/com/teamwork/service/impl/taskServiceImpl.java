@@ -8,9 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mysql.fabric.xmlrpc.base.Array;
 import com.teamwork.common.pojo.FriendlyResult;
-import com.teamwork.common.pojo.NewTaskInfo;
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.common.utils.IDUtils;
 import com.teamwork.mapper.TaskCheckListMapper;
@@ -31,26 +29,17 @@ public class taskServiceImpl implements TaskService {
 	private TaskCheckListMapper taskCheckListMapper;
 
 	@Override
-	public FriendlyResult createTask(NewTaskInfo newTaskInfo) {		
-		Task taskBase = newTaskInfo.getTask();
+	public FriendlyResult createTask(Task task) {		
 		String taskId = IDUtils.genTaskId();
-		taskBase.setId(taskId);	
+		task.setId(taskId);	
 
 		Date date = new Date();
-		taskBase.setCreateDate(date);
-		taskBase.setUpdateDate(date);
-		taskBase.setProgress("0");
-		taskBase.setDelFlag("0");
-		taskMapper.insert(taskBase);
+		task.setCreateDate(date);
+		task.setUpdateDate(date);
+		task.setProgress("0");
+		task.setDelFlag("0");
+		taskMapper.insert(task);
 		
-		List<TaskCheckList> list = newTaskInfo.getCheckList();
-		for (TaskCheckList item : list) {		
-			item.setParentId(taskId);
-			item.setCreateDate(date);
-			item.setUpdateDate(date);
-			item.setDelFlag("0");
-			taskCheckListMapper.insert(item);
-		}
 		return FriendlyResult.ok();
 	}
 
@@ -128,13 +117,10 @@ public class taskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public FriendlyResult updateTask(NewTaskInfo newTaskInfo) {
-		Task task = newTaskInfo.getTask();
+	public FriendlyResult updateTask(Task task) {
 		task.setUpdateDate(new Date());
 		taskMapper.updateByPrimaryKeySelective(task);
-		
-		//add checkupdate.
-		return null;
+		return FriendlyResult.ok();
 	}
 
 	@Override

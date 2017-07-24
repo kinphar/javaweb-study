@@ -107,7 +107,7 @@
 			success : function(data) {
 				console.log("checklist:" + data.length);
 				for (var i = 0; i < data.length; i++) {
-					addCheckList(data[i].status, data[i].description);
+					addCheckList(data[i].id, data[i].status, data[i].description);
 				}			
 				updateCheckListProgress();
 			},
@@ -120,14 +120,16 @@
 		updateCheckListProgress();
 	}
 	
-	function addCheckList(checked, desc) {
+	function addCheckList(id, checked, desc) {
 		var top = document.getElementById("taskCheckList");
 		var num = top.getElementsByTagName("li").length;
 		var li = document.createElement("li");
 		var checkedFlag = (checked == '1') ? 'checked="checked"' : '';
 		li.innerHTML = '<input type="checkbox" onClick="doCheck()" name=checkList[' + num +  '].status ' + checkedFlag + '>'
 				+ '<input type="text" style="background-color: #F8F6F2; border-width: 0px;"' 
-				+ 'name="checkList[' + num + '].description" value=' + desc + '>';
+				+ 'name="checkList[' + num + '].description" value=' + desc + '>'
+				+ '<input type="hidden" name="checkList[' + num + '].id" value=' + id + '>';
+		console.log(li.innerHTML);
 		top.appendChild(li);
 		updateCheckListProgress();
 	}
@@ -207,7 +209,7 @@
 	function createNewCheckList() {
 		var content = $("#inputContent").val();
 		if (content != null && content != "") {
-			addCheckList('0', $("#inputContent").val());
+			addCheckList("", '0', $("#inputContent").val());
 		}
 		checkListToIdleMode();
 	}
@@ -509,8 +511,10 @@
 
 
 		<!-- <s:include value="footer.jsp"></s:include> -->
+		
 
 	</div>
+
 
 </body>
 </html>
