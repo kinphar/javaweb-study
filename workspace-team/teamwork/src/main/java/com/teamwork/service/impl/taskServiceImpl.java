@@ -11,11 +11,8 @@ import org.springframework.stereotype.Service;
 import com.teamwork.common.pojo.FriendlyResult;
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.common.utils.IDUtils;
-import com.teamwork.mapper.TaskCheckListMapper;
 import com.teamwork.mapper.TaskMapper;
 import com.teamwork.pojo.Task;
-import com.teamwork.pojo.TaskCheckList;
-import com.teamwork.pojo.TaskCheckListExample;
 import com.teamwork.pojo.TaskExample;
 import com.teamwork.pojo.TaskExample.Criteria;
 import com.teamwork.service.TaskService;
@@ -25,8 +22,6 @@ public class taskServiceImpl implements TaskService {
 	
 	@Autowired
 	private TaskMapper taskMapper;
-	@Autowired
-	private TaskCheckListMapper taskCheckListMapper;
 
 	@Override
 	public FriendlyResult createTask(Task task) {		
@@ -82,15 +77,6 @@ public class taskServiceImpl implements TaskService {
 		Task task = new Task();
 		task.setDelFlag("1");		
 		taskMapper.updateByExampleSelective(task, example);
-		
-		//删除关联检查项；
-		TaskCheckListExample exampleCheckList = new TaskCheckListExample();
-		exampleCheckList.createCriteria().andParentIdEqualTo(id);
-		List<TaskCheckList> list = taskCheckListMapper.selectByExample(exampleCheckList);		
-		for (TaskCheckList item : list) {
-			item.setDelFlag("1");
-			taskCheckListMapper.updateByPrimaryKey(item);
-		}
 		return FriendlyResult.ok();
 	}
 

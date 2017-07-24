@@ -100,6 +100,8 @@ public class TaskController {
 	@ResponseBody
 	public Map<String,Object> deleteTask(@RequestParam("taskid") String taskid) {
 		taskService.deleteTaskById(taskid);
+		taskCheckListService.deleteCheckListByParentId(taskid);
+		
 		String status = taskService.getTaskStatusById(taskid);
 		int numCur = taskService.getTaskNumByStatus(status);
 		int numAll = taskService.getTaskNumByStatus("all");

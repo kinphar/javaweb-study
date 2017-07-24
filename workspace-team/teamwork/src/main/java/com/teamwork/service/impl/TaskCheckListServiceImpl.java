@@ -43,9 +43,7 @@ public class TaskCheckListServiceImpl implements TaskCheckListService {
 	public FriendlyResult updateCheckLists(List<TaskCheckList> list, String parentId) {
 		if (list != null && list.size() > 0) {
 			//delete all first.
-			TaskCheckListExample example = new TaskCheckListExample();
-			example.createCriteria().andParentIdEqualTo(parentId);
-			taskCheckListMapper.deleteByExample(example);
+			deleteCheckListByParentId(parentId);
 			
 			for (TaskCheckList item : list) {
 				if (item.getStatus() == null || item.getDescription() == null) {
@@ -60,6 +58,14 @@ public class TaskCheckListServiceImpl implements TaskCheckListService {
 			}			
 		}
 
+		return FriendlyResult.ok();
+	}
+
+	@Override
+	public FriendlyResult deleteCheckListByParentId(String parentId) {
+		TaskCheckListExample example = new TaskCheckListExample();
+		example.createCriteria().andParentIdEqualTo(parentId);
+		taskCheckListMapper.deleteByExample(example);
 		return FriendlyResult.ok();
 	}
 	
