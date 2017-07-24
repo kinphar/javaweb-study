@@ -41,19 +41,25 @@ public class TaskCheckListServiceImpl implements TaskCheckListService {
 
 	@Override
 	public FriendlyResult updateCheckLists(List<TaskCheckList> list, String parentId) {
-		for (TaskCheckList item : list) {
-			Long checkListId = item.getId();
-			if (checkListId != null && checkListId > 0) {
-				taskCheckListMapper.updateByPrimaryKeySelective(item);				
-			} else {
+		if (list != null && list.size() > 0) {
+			//delete all first.
+			TaskCheckListExample example = new TaskCheckListExample();
+			example.createCriteria().andParentIdEqualTo(parentId);
+			taskCheckListMapper.deleteByExample(example);
+			
+			for (TaskCheckList item : list) {
+				if (item.getStatus() == null || item.getDescription() == null) {
+					continue; //to delete item.
+				}
 				Date date = new Date();
 				item.setParentId(parentId);
 				item.setCreateDate(date);
 				item.setUpdateDate(date);
 				item.setDelFlag("0");
 				taskCheckListMapper.insert(item);
-			}
+			}			
 		}
+
 		return FriendlyResult.ok();
 	}
 	

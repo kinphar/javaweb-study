@@ -17,7 +17,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 	});
-	
+
 	function queryFormSubmit() {
 		document.getElementById("statusFilter").value = "all";
 		var form = document.getElementById("filterForm");
@@ -46,7 +46,7 @@
 		var form = document.getElementById("newTaskForm");
 		form.submit();
 	}
-	
+
 	function delTask(id) {
 		$('#taskId').val(id); //给会话中的隐藏属性URL赋值  
 		$('#delcfmModel').modal(); //显示对话框
@@ -65,7 +65,7 @@
 
 				var newNum = $("#status_" + data.statusCur).html() - 1;
 				$("#status_" + data.statusCur).html(newNum);
-				
+
 				newNum = $("#status_all").html() - 1;
 				$("#status_all").html(newNum);
 			},
@@ -73,7 +73,7 @@
 			}
 		});
 	}
-	
+
 	function fillTaskForm(id) {
 		$.ajax({
 			type : "GET",
@@ -90,12 +90,12 @@
 				$('#editTaskProjectName').val(data.projectName);
 				$('#editTaskAssignTo').val(data.assignTo);
 				$('#editTaskStatus').val(data.status);
-				$('#editTaskExpectFinishDate').val(data.expectFinishDate);				
+				$('#editTaskExpectFinishDate').val(data.expectFinishDate);
 			},
 			error : function(xhr) {
 			}
 		});
-		
+
 		$.ajax({
 			type : "GET",
 			url : "${ctx}/task/task_get_checklist",
@@ -107,33 +107,42 @@
 			success : function(data) {
 				console.log("checklist:" + data.length);
 				for (var i = 0; i < data.length; i++) {
-					addCheckList(data[i].id, data[i].status, data[i].description);
-				}			
+					addCheckList(data[i].status, data[i].description);
+				}
 				updateCheckListProgress();
 			},
 			error : function(xhr) {
 			}
 		});
 	}
-	
+
 	function doCheck() {
 		updateCheckListProgress();
 	}
-	
-	function addCheckList(id, checked, desc) {
+
+	function delEmpty(index) {
+		var id = 'checkList[' + index + '].description';
+		var e = document.getElementById(id);
+		if (e.value == "") {
+			var top = document.getElementById("taskCheckList");
+			var li = top.getElementsByTagName("li");
+			li[index].remove();
+		}
+	}
+
+	function addCheckList(checked, desc) {
 		var top = document.getElementById("taskCheckList");
 		var num = top.getElementsByTagName("li").length;
 		var li = document.createElement("li");
 		var checkedFlag = (checked == '1') ? 'checked="checked"' : '';
-		li.innerHTML = '<input type="checkbox" onClick="doCheck()" name=checkList[' + num +  '].status ' + checkedFlag + '>'
-				+ '<input type="text" style="background-color: #F8F6F2; border-width: 0px;"' 
-				+ 'name="checkList[' + num + '].description" value=' + desc + '>'
-				+ '<input type="hidden" name="checkList[' + num + '].id" value=' + id + '>';
+		li.innerHTML = '<input type="checkbox" onClick="doCheck()" name=checkList[' + num + '].status ' + checkedFlag + '>'
+				+ '<input type="text" onchange="delEmpty(' + num + ')" style="background-color: #F8F6F2; border-width: 0px;"'
+				+ 'name="checkList[' + num + '].description" id="checkList[' + num + '].description" value=' + desc + '>';
 		console.log(li.innerHTML);
 		top.appendChild(li);
 		updateCheckListProgress();
 	}
-	
+
 	function updateCheckListProgress() {
 		var liList = document.getElementById("taskCheckList")
 				.getElementsByTagName("li");
@@ -143,14 +152,14 @@
 		var checkedNum = 0;
 		var checkboxTotal = 0;
 		for (i = 0; i < inputNum; i++) {
-			if (inputList[i].type == "checkbox") {				
+			if (inputList[i].type == "checkbox") {
 				if (inputList[i].checked) {
 					checkedNum++;
 				}
-				checkboxTotal++;				
+				checkboxTotal++;
 			}
 		}
-		
+
 		console.log("checkbox:" + checkedNum + "/" + checkboxTotal);
 		var p = 0;
 		if (checkboxTotal != 0) {
@@ -159,31 +168,31 @@
 		var progress = document.getElementById("progressCheckList");
 		progress.style.width = p + "%";
 	}
-	
+
 	function checkListReset() {
 		var list = document.getElementById("taskCheckList")
-				.getElementsByTagName("li");		
+				.getElementsByTagName("li");
 		var len = list.length;
 		for (i = 0; i < len; i++) {
-			list[0].remove();			
-		}		
-		
+			list[0].remove();
+		}
+
 		updateCheckListProgress("10%");
 		checkListToIdleMode();
 	}
 
 	function editTask(id) {
 		document.getElementById("newTaskForm").reset();
-		checkListReset();				
-		if (id == null) {			
-			$('#myModalLabel').html("新建任务");					
+		checkListReset();
+		if (id == null) {
+			$('#myModalLabel').html("新建任务");
 		} else {
 			fillTaskForm(id);
-			$('#myModalLabel').html("编辑任务");	
+			$('#myModalLabel').html("编辑任务");
 		}
-		
+
 		$('#taskModal').modal();
-	}	
+	}
 
 	function showObjectById(id) {
 		var ui = document.getElementById(id);
@@ -209,7 +218,7 @@
 	function createNewCheckList() {
 		var content = $("#inputContent").val();
 		if (content != null && content != "") {
-			addCheckList("", '0', $("#inputContent").val());
+			addCheckList('0', $("#inputContent").val());
 		}
 		checkListToIdleMode();
 	}
@@ -296,20 +305,27 @@
 
 			<ul class="nav nav-tabs" role="tablist">
 				<li <c:if test="${statusFilter=='all'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus('all');"><a href="#">全部 <span
-						class="badge" id="status_all">${number[0]}</span></a></li>
+					onclick="queryFormSubmitWithStatus('all');"><a href="#">全部
+						<span class="badge" id="status_all">${number[0]}</span>
+				</a></li>
 				<li <c:if test="${statusFilter=='10001'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus(10001);"><a href="#">未开始 <span
-						class="badge" id="status_10001">${number[1]}</span></a></li>
+					onclick="queryFormSubmitWithStatus(10001);"><a href="#">未开始
+						<span class="badge" id="status_10001">${number[1]}</span>
+				</a></li>
 				<li <c:if test="${statusFilter=='10002'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus(10002);"><a href="#">正在处理 <span
-						class="badge" id="status_10002" style="background-color:#5bc0de">${number[2]}</span></a></li>
+					onclick="queryFormSubmitWithStatus(10002);"><a href="#">正在处理
+						<span class="badge" id="status_10002"
+						style="background-color: #5bc0de">${number[2]}</span>
+				</a></li>
 				<li <c:if test="${statusFilter=='10003'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus(10003);"><a href="#">已完成 <span
-						class="badge" id="status_10003" style="background-color:#5cb85c">${number[3]}</span></a></li>
+					onclick="queryFormSubmitWithStatus(10003);"><a href="#">已完成
+						<span class="badge" id="status_10003"
+						style="background-color: #5cb85c">${number[3]}</span>
+				</a></li>
 				<li <c:if test="${statusFilter=='10005'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus(10005);"><a href="#">已归档 <span
-						class="badge" id="status_10005">${number[4]}</span></a></li>
+					onclick="queryFormSubmitWithStatus(10005);"><a href="#">已归档
+						<span class="badge" id="status_10005">${number[4]}</span>
+				</a></li>
 			</ul>
 
 			<form:hidden path="queryTask.status" id="statusFilter"
@@ -472,13 +488,13 @@
 									<div class="well col-md-8"
 										style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
 										<div class="progress">
-											<div class="progress-bar progress-bar-success" id="progressCheckList"
-												role="progressbar" aria-valuenow="10" aria-valuemin="0"
-												aria-valuemax="100" style="width: 0%;"></div>
+											<div class="progress-bar progress-bar-success"
+												id="progressCheckList" role="progressbar" aria-valuenow="10"
+												aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
 										</div>
 
 										<ul id="taskCheckList" class="list-unstyled checkbox"
-											style="margin-left: 24px">																	
+											style="margin-left: 24px">
 										</ul>
 
 										<a id="addCheckList" href="#"
@@ -511,7 +527,7 @@
 
 
 		<!-- <s:include value="footer.jsp"></s:include> -->
-		
+
 
 	</div>
 
