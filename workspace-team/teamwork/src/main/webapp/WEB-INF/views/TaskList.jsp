@@ -135,9 +135,18 @@
 		var num = top.getElementsByTagName("li").length;
 		var li = document.createElement("li");
 		var checkedFlag = (checked == '1') ? 'checked="checked"' : '';
-		li.innerHTML = '<input type="checkbox" onClick="doCheck()" name=checkList[' + num + '].status ' + checkedFlag + '>'
-				+ '<input type="text" onchange="delEmpty(' + num + ')" style="background-color: #F8F6F2; border-width: 0px;"'
-				+ 'name="checkList[' + num + '].description" id="checkList[' + num + '].description" value=' + desc + '>';
+		li.innerHTML = '<input type="checkbox" onClick="doCheck()" name=checkList['
+				+ num
+				+ '].status '
+				+ checkedFlag
+				+ '>'
+				+ '<input type="text" onchange="delEmpty('
+				+ num
+				+ ')" style="background-color: #F8F6F2; border-width: 0px; width:80%"'
+				+ 'name="checkList['
+				+ num
+				+ '].description" id="checkList['
+				+ num + '].description" value=' + desc + '>';
 		console.log(li.innerHTML);
 		top.appendChild(li);
 		updateCheckListProgress();
@@ -354,7 +363,7 @@
 			<tbody>
 				<c:forEach items="${tasks}" var="task" varStatus="states">
 					<tr id="task_${task.id}">
-						<td style='text-align: center; color:#777'>${task.projectName}</td>
+						<td style='text-align: center; color: #999; font-weight: bold'>${task.projectName}</td>
 						<td>${task.title}</td>
 						<td style='text-align: center;'>${task.assignTo}</td>
 						<td style='text-align: center;'>${task.expectFinishDate}</td>
@@ -412,104 +421,109 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel" style="font-weight:bold">新建任务</h4>
+							<h4 class="modal-title" id="myModalLabel"
+								style="font-weight: bold">新建任务</h4>
 						</div>
 						<div class="modal-body">
-							<form role="form">
+							<form role="form" class="form-inline">
 								<form:input type="hidden" path="task.id" id="editTaskId" />
-								<div class="form-group">
-									<p>标题：</p>
-									<form:input class="form-control" path="task.title" style="font-weight:bold"
-										id="editTaskTitle" required="true" />
-								</div>
 
-								<div class="form-group">
-									<p>内容：</p>
-									<form:textarea class="form-control" path="task.description"
-										id="editTaskDescription" style="max-width:500px; font-weight:bold" rows="5"
-										placeholder="可选，主要描述需求详情。" />
-								</div>
+								<table
+									class="table table-bordered table-condensed dataTables-example dataTable no-footer">
+									<tbody>
+										<tr>
+											<td class="width-15 active" style="vertical-align: middle"><label
+												class="pull-right">标题：</label></td>
+											<td class="width-85" colspan="3"><form:input
+													class="form-control" path="task.title" id="editTaskTitle"
+													required="true" /></td>
+										</tr>
+										<tr>
+											<td class="width-15 active" style="vertical-align: middle"><label
+												class="pull-right">内容：</label></td>
+											<td class="width-85" colspan="3"><form:textarea
+													class="form-control" path="task.description"
+													id="editTaskDescription" rows="5" placeholder="描述需求详情。" />
+											</td>
+										</tr>
+										<tr>
+											<td class="width-15 active" style="vertical-align: middle"><label
+												class="pull-right">附件(3)：</label></td>
+											<td class="width-85" colspan="3"><form:select
+													class="form-control" path="task.createBy" required="true">
+													<form:option value="" label=".../fileupload/1.txt" />
+												</form:select></td>
+										</tr>
+										<tr>
+											<td class="width-15 active" style="vertical-align: middle"><label
+												class="pull-right">所属项目：</label></td>
+											<td class="width-35"><form:select class="form-control"
+													path="task.projectName" id="editTaskProjectName"
+													required="true">
+													<form:option value="" label="" />
+													<form:options items="${projects}" itemLabel="name"
+														itemValue="name" />
+												</form:select></td>
+											<td class="width-15 active" style="vertical-align: middle"><label
+												class="pull-right">分配给：</label></td>
+											<td class="width-35"><form:select class="form-control"
+													path="task.assignTo" id="editTaskAssignTo" required="true">
+													<form:option value="" label="" />
+													<form:options items="${users}" itemLabel="name"
+														itemValue="name" />
+												</form:select></td>
+										</tr>
+										<tr>
+											<td class="width-15 active" style="vertical-align: middle"><label
+												class="pull-right">状态：</label></td>
+											<td class="width-35"><form:select class="form-control"
+													path="task.status" id="editTaskStatus" required="true">
+													<form:option value="" label="" />
+													<form:options items="${statuses}" itemLabel="name"
+														itemValue="id" />
+												</form:select></td>
+											<td class="width-15 active" style="vertical-align: middle"><label
+												class="pull-right">期限：</label></td>
+											<td class="width-35"><form:input class="form-control"
+													type="date" path="task.expectFinishDate"
+													id="editTaskExpectFinishDate" required="true" /></td>
+										</tr>
+										<tr>
+											<td class="width-15 active" style="vertical-align: middle"><label
+												class="pull-right"><span
+													class="glyphicon glyphicon-th-list"></span> 检查项：</label>
+											<td class="width-85" colspan="3">
+												<div class="well"
+													style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
+													<div class="progress">
+														<div class="progress-bar progress-bar-success"
+															id="progressCheckList" role="progressbar"
+															aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+															style="width: 0%;"></div>
+													</div>
 
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<p>所属项目：</p>
-											<form:select class="form-control" path="task.projectName" style="font-weight:bold"
-												id="editTaskProjectName" required="true">
-												<form:option value="" label="" />
-												<form:options items="${projects}" itemLabel="name"
-													itemValue="name" />
-											</form:select>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<p>分配给：</p>
-											<form:select class="form-control" path="task.assignTo" style="font-weight:bold"
-												id="editTaskAssignTo" required="true">
-												<form:option value="" label="" />
-												<form:options items="${users}" itemLabel="name"
-													itemValue="name" />
-											</form:select>
-										</div>
-									</div>
-								</div>
+													<ul id="taskCheckList" class="list-unstyled checkbox"
+														style="margin-left: 24px">
+													</ul>
 
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<p>状态：</p>
-											<form:select class="form-control" path="task.status" style="font-weight:bold"
-												id="editTaskStatus" required="true">
-												<form:option value="" label="" />
-												<form:options items="${statuses}" itemLabel="name"
-													itemValue="id" />
-											</form:select>
-										</div>
-									</div>
+													<a id="addCheckList" href="#"
+														onclick="checkListToInputMode();">+新增检查项</a>
 
-									<div class="col-md-6">
-										<div class="form-group">
-											<p>DeadLine：</p>
-											<form:input class="form-control" type="date" style="font-weight:bold"
-												path="task.expectFinishDate" id="editTaskExpectFinishDate"
-												required="true" />
-										</div>
-									</div>
-								</div>
+													<div id="inputCheckList" style="display: none">
+														<input type="text" class="form-control"
+															style="margin: 5px 0px" id="inputContent"
+															placeholder="请输入内容">
+														<button type="button" onclick="checkListToIdleMode();"
+															class="btn btn-default">取消</button>
+														<button type="button" onclick="createNewCheckList();"
+															class="btn btn-newtask">确认</button>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 
-								<hr />
-
-								<div class="row">
-									<div class="col-md-3">
-										<p><span class="glyphicon glyphicon-th-list"></span> 检查项：</p>
-									</div>
-									<div class="well col-md-8"
-										style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
-										<div class="progress">
-											<div class="progress-bar progress-bar-success"
-												id="progressCheckList" role="progressbar" aria-valuenow="10"
-												aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
-										</div>
-
-										<ul id="taskCheckList" class="list-unstyled checkbox"
-											style="margin-left: 24px">
-										</ul>
-
-										<a id="addCheckList" href="#"
-											onclick="checkListToInputMode();">+新增检查项</a>
-
-										<div id="inputCheckList" style="display: none">
-											<input type="text" class="form-control"
-												style="margin: 5px 0px" id="inputContent"
-												placeholder="请输入内容">
-											<button type="button" onclick="checkListToIdleMode();"
-												class="btn btn-default">取消</button>
-											<button type="button" onclick="createNewCheckList();"
-												class="btn btn-newtask">确认</button>
-										</div>
-									</div>
-								</div>
 							</form>
 
 							<div class="modal-footer">

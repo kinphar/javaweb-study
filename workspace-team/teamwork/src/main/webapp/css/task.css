@@ -55,5 +55,22 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-dialog {
-    width: 600px;
+    width: 800px;
 }
+
+.width-15 {
+	width:15%;
+}
+
+.width-35 {
+	width:35%;
+}
+
+.width-85 {
+	width:85%;
+}
+
+.well {
+	margin:6px;
+}
+
