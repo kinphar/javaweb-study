@@ -368,7 +368,7 @@
 
 						<td><a class="btn btn-default btn-opt"
 							onClick="editTask('${task.id}')"> <span
-								class="glyphicon glyphicon-pencil glyphicon-opt"></span>编辑
+								class="glyphicon glyphicon-screenshot glyphicon-opt"></span>打开
 						</a> <a class="btn btn-default btn-opt"
 							onClick="delTask('${task.id}')"> <span
 								class="glyphicon glyphicon-trash glyphicon-opt"></span>删除
@@ -412,29 +412,29 @@
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">新建任务</h4>
+							<h4 class="modal-title" id="myModalLabel" style="font-weight:bold">新建任务</h4>
 						</div>
 						<div class="modal-body">
 							<form role="form">
 								<form:input type="hidden" path="task.id" id="editTaskId" />
 								<div class="form-group">
-									<label for="name">标题：</label>
-									<form:input class="form-control" path="task.title"
+									<p>标题：</p>
+									<form:input class="form-control" path="task.title" style="font-weight:bold"
 										id="editTaskTitle" required="true" />
 								</div>
 
 								<div class="form-group">
-									<label for="name">内容：</label>
+									<p>内容：</p>
 									<form:textarea class="form-control" path="task.description"
-										id="editTaskDescription" style="max-width:500px;" rows="5"
+										id="editTaskDescription" style="max-width:500px; font-weight:bold" rows="5"
 										placeholder="可选，主要描述需求详情。" />
 								</div>
 
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>所属项目：</label>
-											<form:select class="form-control" path="task.projectName"
+											<p>所属项目：</p>
+											<form:select class="form-control" path="task.projectName" style="font-weight:bold"
 												id="editTaskProjectName" required="true">
 												<form:option value="" label="" />
 												<form:options items="${projects}" itemLabel="name"
@@ -444,8 +444,8 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>分配给：</label>
-											<form:select class="form-control" path="task.assignTo"
+											<p>分配给：</p>
+											<form:select class="form-control" path="task.assignTo" style="font-weight:bold"
 												id="editTaskAssignTo" required="true">
 												<form:option value="" label="" />
 												<form:options items="${users}" itemLabel="name"
@@ -458,8 +458,8 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>状态：</label>
-											<form:select class="form-control" path="task.status"
+											<p>状态：</p>
+											<form:select class="form-control" path="task.status" style="font-weight:bold"
 												id="editTaskStatus" required="true">
 												<form:option value="" label="" />
 												<form:options items="${statuses}" itemLabel="name"
@@ -470,8 +470,8 @@
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>DeadLine：</label>
-											<form:input class="form-control" type="date"
+											<p>DeadLine：</p>
+											<form:input class="form-control" type="date" style="font-weight:bold"
 												path="task.expectFinishDate" id="editTaskExpectFinishDate"
 												required="true" />
 										</div>
@@ -482,8 +482,7 @@
 
 								<div class="row">
 									<div class="col-md-3">
-										<label for="name"><span
-											class="glyphicon glyphicon-th-list"></span> 检查项：</label>
+										<p><span class="glyphicon glyphicon-th-list"></span> 检查项：</p>
 									</div>
 									<div class="well col-md-8"
 										style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
