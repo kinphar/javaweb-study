@@ -17,6 +17,22 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 	});
+	
+	$(function(){
+		$("#enableEditCheckbox").click(function(){		
+			if (this.checked) {				
+				enableFieldSet(true, "taskInfoFieldSet");
+				var status = $('#editTaskStatus').val();
+				console.log("---status:" + status);
+				if (status == "10003") {
+					enableFieldSet(true, "taskFinishFieldSet");
+				}
+			} else {
+				enableFieldSet(false, "taskInfoFieldSet");
+				enableFieldSet(false, "taskFinishFieldSet");
+			}
+	　　});
+	})
 
 	function queryFormSubmit() {
 		document.getElementById("statusFilter").value = "all";
@@ -142,7 +158,7 @@
 				+ '>'
 				+ '<input type="text" onchange="delEmpty('
 				+ num
-				+ ')" style="background-color: #F8F6F2; border-width: 0px; width:80%"'
+				+ ')" style="background-color: #F8F6F2; border-width: 0px; width:90%"'
 				+ 'name="checkList['
 				+ num
 				+ '].description" id="checkList['
@@ -189,6 +205,11 @@
 		updateCheckListProgress("10%");
 		checkListToIdleMode();
 	}
+	
+	function enableFieldSet(bool, fieldSet) {
+		var x = document.getElementById(fieldSet);
+		x.disabled = !bool;		
+	}
 
 	function editTask(id) {
 		document.getElementById("newTaskForm").reset();
@@ -197,10 +218,21 @@
 			$('#myModalLabel').html("新建任务");
 		} else {
 			fillTaskForm(id);
-			$('#myModalLabel').html("编辑任务");
+			enableFieldSet(false, "taskInfoFieldSet");
+			enableFieldSet(false, "taskFinishFieldSet");
+			$('#myModalLabel').html("任务详情");
 		}
 
 		$('#taskModal').modal();
+	}
+
+	function taskStatusChange() {
+		var status = $("#editTaskStatus").val();
+		if (status == "10003") {
+			enableFieldSet(true, "taskFinishFieldSet");
+		} else {
+			enableFieldSet(false, "taskFinishFieldSet");
+		}
 	}
 
 	function showObjectById(id) {
@@ -341,7 +373,8 @@
 				name="statusFilter" />
 		</form:form>
 
-		<table class="table table-striped table-bordered table-hover">
+		<table
+			class="table table-striped table-bordered table-hover table-for-tasklist">
 			<colgroup>
 				<col style="">
 				<col style="width: 40%">
@@ -352,21 +385,21 @@
 			</colgroup>
 			<thead>
 				<tr>
-					<th style='text-align: center;'>所属项目</th>
+					<th style="text-align: center">所属项目</th>
 					<th>标题</th>
-					<th style='text-align: center;'>负责人</th>
-					<th style='text-align: center;'>到期时间</th>
-					<th style='text-align: center;'>进度</th>
+					<th style="text-align: center">负责人</th>
+					<th style="text-align: center">到期时间</th>
+					<th style="text-align: center">进度</th>
 					<th>操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${tasks}" var="task" varStatus="states">
 					<tr id="task_${task.id}">
-						<td style='text-align: center; color: #999; font-weight: bold'>${task.projectName}</td>
+						<td style="text-align: center; color: #999; font-weight: bold">${task.projectName}</td>
 						<td>${task.title}</td>
-						<td style='text-align: center;'>${task.assignTo}</td>
-						<td style='text-align: center;'>${task.expectFinishDate}</td>
+						<td style="text-align: center">${task.assignTo}</td>
+						<td style="text-align: center">${task.expectFinishDate}</td>
 						<td>
 							<div class="progress">
 								<div class="progress-bar progress-bar-info" role="progressbar"
@@ -427,110 +460,146 @@
 						<div class="modal-body">
 							<form role="form" class="form-inline">
 								<form:input type="hidden" path="task.id" id="editTaskId" />
+								<fieldset id="taskInfoFieldSet">
+									<table class="table table-bordered table-condensed">
+										<tbody>
+											<tr>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">标题：</label></td>
+												<td class="width-l" colspan="3"><form:input
+														class="form-control" path="task.title" id="editTaskTitle"
+														required="true" /></td>
+												<td class="width-l" rowspan="6"><label><span
+														class="glyphicon glyphicon-th-list"></span> 分解任务：</label>
+													<div class="well"
+														style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
+														<div class="progress">
+															<div class="progress-bar progress-bar-success"
+																id="progressCheckList" role="progressbar"
+																aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+																style="width: 0%;"></div>
+														</div>
 
-								<table
-									class="table table-bordered table-condensed dataTables-example dataTable no-footer">
-									<tbody>
-										<tr>
-											<td class="width-15 active" style="vertical-align: middle"><label
-												class="pull-right">标题：</label></td>
-											<td class="width-85" colspan="3"><form:input
-													class="form-control" path="task.title" id="editTaskTitle"
-													required="true" /></td>
-										</tr>
-										<tr>
-											<td class="width-15 active" style="vertical-align: middle"><label
-												class="pull-right">内容：</label></td>
-											<td class="width-85" colspan="3"><form:textarea
-													class="form-control" path="task.description"
-													id="editTaskDescription" rows="5" placeholder="描述需求详情。" />
-											</td>
-										</tr>
-										<tr>
-											<td class="width-15 active" style="vertical-align: middle"><label
-												class="pull-right">附件(3)：</label></td>
-											<td class="width-85" colspan="3"><form:select
-													class="form-control" path="task.createBy" required="true">
-													<form:option value="" label=".../fileupload/1.txt" />
-												</form:select></td>
-										</tr>
-										<tr>
-											<td class="width-15 active" style="vertical-align: middle"><label
-												class="pull-right">所属项目：</label></td>
-											<td class="width-35"><form:select class="form-control"
-													path="task.projectName" id="editTaskProjectName"
-													required="true">
-													<form:option value="" label="" />
-													<form:options items="${projects}" itemLabel="name"
-														itemValue="name" />
-												</form:select></td>
-											<td class="width-15 active" style="vertical-align: middle"><label
-												class="pull-right">分配给：</label></td>
-											<td class="width-35"><form:select class="form-control"
-													path="task.assignTo" id="editTaskAssignTo" required="true">
-													<form:option value="" label="" />
-													<form:options items="${users}" itemLabel="name"
-														itemValue="name" />
-												</form:select></td>
-										</tr>
-										<tr>
-											<td class="width-15 active" style="vertical-align: middle"><label
-												class="pull-right">状态：</label></td>
-											<td class="width-35"><form:select class="form-control"
-													path="task.status" id="editTaskStatus" required="true">
-													<form:option value="" label="" />
-													<form:options items="${statuses}" itemLabel="name"
-														itemValue="id" />
-												</form:select></td>
-											<td class="width-15 active" style="vertical-align: middle"><label
-												class="pull-right">期限：</label></td>
-											<td class="width-35"><form:input class="form-control"
-													type="date" path="task.expectFinishDate"
-													id="editTaskExpectFinishDate" required="true" /></td>
-										</tr>
-										<tr>
-											<td class="width-15 active" style="vertical-align: middle"><label
-												class="pull-right"><span
-													class="glyphicon glyphicon-th-list"></span> 检查项：</label>
-											<td class="width-85" colspan="3">
-												<div class="well"
-													style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
-													<div class="progress">
-														<div class="progress-bar progress-bar-success"
-															id="progressCheckList" role="progressbar"
-															aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
-															style="width: 0%;"></div>
-													</div>
+														<ul id="taskCheckList" class="list-unstyled checkbox"
+															style="margin-left: 24px">
+														</ul>
 
-													<ul id="taskCheckList" class="list-unstyled checkbox"
-														style="margin-left: 24px">
-													</ul>
+														<a id="addCheckList" href="#"
+															onclick="checkListToInputMode();">+新增检查项</a>
 
-													<a id="addCheckList" href="#"
-														onclick="checkListToInputMode();">+新增检查项</a>
+														<div id="inputCheckList" style="display: none">
+															<input type="text" class="form-control"
+																style="margin: 5px 0px" id="inputContent"
+																placeholder="请输入内容">
+															<button type="button" onclick="checkListToIdleMode();"
+																class="btn btn-default">取消</button>
+															<button type="button" onclick="createNewCheckList();"
+																class="btn btn-newtask">确认</button>
+														</div>
+													</div></td>
+											</tr>
+											<tr>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">内容：</label></td>
+												<td class="width-l" colspan="3"><form:textarea
+														class="form-control" path="task.description"
+														id="editTaskDescription" rows="5" placeholder="描述需求详情。" />
+												</td>
+											</tr>
+											<tr>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">所属项目：</label></td>
+												<td class="width-m"><form:select class="form-control"
+														path="task.projectName" id="editTaskProjectName"
+														required="true">
+														<form:option value="" label="" />
+														<form:options items="${projects}" itemLabel="name"
+															itemValue="name" />
+													</form:select></td>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">分配给：</label></td>
+												<td class="width-m"><form:select class="form-control"
+														path="task.assignTo" id="editTaskAssignTo" required="true">
+														<form:option value="" label="" />
+														<form:options items="${users}" itemLabel="name"
+															itemValue="name" />
+													</form:select></td>
+											</tr>
+											<tr>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">状态：</label></td>
+												<td class="width-m"><form:select class="form-control"
+														onchange="taskStatusChange()" path="task.status"
+														id="editTaskStatus" required="true">
+														<form:option value="" label="" />
+														<form:options items="${statuses}" itemLabel="name"
+															itemValue="id" />
+													</form:select></td>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">期限：</label></td>
+												<td class="width-m"><form:input class="form-control"
+														type="date" path="task.expectFinishDate"
+														id="editTaskExpectFinishDate" required="true" /></td>
+											</tr>
+											<tr>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">附件(3)：</label></td>
+												<td class="width-l" colspan="3"><p>1.txt</p></td>
+											</tr>
+										</tbody>
+									</table>
+								</fieldset>
 
-													<div id="inputCheckList" style="display: none">
-														<input type="text" class="form-control"
-															style="margin: 5px 0px" id="inputContent"
-															placeholder="请输入内容">
-														<button type="button" onclick="checkListToIdleMode();"
-															class="btn btn-default">取消</button>
-														<button type="button" onclick="createNewCheckList();"
-															class="btn btn-newtask">确认</button>
-													</div>
-												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-
+								<fieldset id="taskFinishFieldSet" disabled>
+									<table class="table table-bordered table-condensed"
+										id="taskFinishTable">
+										<tbody>
+											<tr>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">完成时间：</label></td>
+												<td style="width: 60%"><form:input class="form-control"
+														type="date" path="task.realFinishDate"
+														id="editTaskRealFinishDate" /></td>
+												<td
+													style="width: 30%; text-align: center; vertical-align: middle;"
+													rowspan="4"><img class="img-rounded" alt="Brand"
+													src="/images/qrcode.jpg"
+													style="height: 160px; width: 160px;"></td>
+											</tr>
+											<tr>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">处理说明：</label></td>
+												<td style="width: 60%"><form:textarea
+														class="form-control" path="task.description"
+														id="editTaskDescription" rows="4" placeholder="说明处理方法和结果" /></td>
+											</tr>
+											<tr>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">软件链接：</label></td>
+												<td style="width: 60%"><form:input class="form-control"
+														path="task.title" id="editTaskTitle" required="true" /></td>
+											</tr>
+											<tr>
+												<td class="width-s active" style="vertical-align: middle"><label
+													class="pull-right">操作：</label></td>
+												<td style="width: 60%"><a
+													class="btn btn-default btn-opt"> <span
+														class="glyphicon glyphicon-export glyphicon-opt"></span>结果导出到EXCEL
+												</a></td>
+											</tr>
+										</tbody>
+									</table>
+								</fieldset>
 							</form>
 
 							<div class="modal-footer">
+								<label class="checkbox-inline pull-left"> <input
+									type="checkbox" id="enableEditCheckbox" value="option1">我要编辑
+								</label>
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
 								<button type="button" onclick="newTaskFormSubmit();"
-									class="btn btn-newtask">提交任务</button>
+									class="btn btn-newtask">保存</button>
 							</div>
 						</div>
 					</div>

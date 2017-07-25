@@ -7,7 +7,7 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
 		"\5b8b\4f53", sans-serif;
 }
 
-.table {
+.table-for-tasklist {
 	margin-top: 10px;
 }
 
@@ -55,22 +55,24 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
 }
 
 .modal-dialog {
-    width: 800px;
+    width: 1000px;
 }
 
-.width-15 {
+.width-l {
+	width:40%;
+}
+
+.width-m {
 	width:15%;
 }
 
-.width-35 {
-	width:35%;
-}
-
-.width-85 {
-	width:85%;
+.width-s {
+	width:10%;
 }
 
 .well {
-	margin:6px;
+	margin: 0px 4px 4px 4px;
 }
+
+
 
