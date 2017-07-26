@@ -21,15 +21,17 @@
 	$(function(){
 		$("#enableEditCheckbox").click(function(){		
 			if (this.checked) {				
+				$('#myModalLabel').html("编辑任务");
 				enableFieldSet(true, "taskInfoFieldSet");
-				var status = $('#editTaskStatus').val();
-				console.log("---status:" + status);
-				if (status == "10003") {
+				if ($('#editTaskStatus').val() == "10003") {
 					enableFieldSet(true, "taskFinishFieldSet");
 				}
+				showObjectById("saveTaskButton");				
 			} else {
+				$('#myModalLabel').html("任务详情");
 				enableFieldSet(false, "taskInfoFieldSet");
 				enableFieldSet(false, "taskFinishFieldSet");
+				hideObjectById("saveTaskButton");	
 			}
 	　　});
 	})
@@ -214,10 +216,16 @@
 	function editTask(id) {
 		document.getElementById("newTaskForm").reset();
 		checkListReset();
-		if (id == null) {
+		if (id == null) {			
+			hideObjectById("editEnableGroud");
+			showObjectById("saveTaskButton");
+			enableFieldSet(true, "taskInfoFieldSet");
+			enableFieldSet(true, "taskFinishFieldSet");
 			$('#myModalLabel').html("新建任务");
 		} else {
 			fillTaskForm(id);
+			showObjectById("editEnableGroud");
+			hideObjectById("saveTaskButton");
 			enableFieldSet(false, "taskInfoFieldSet");
 			enableFieldSet(false, "taskFinishFieldSet");
 			$('#myModalLabel').html("任务详情");
@@ -544,7 +552,7 @@
 											<tr>
 												<td class="width-s active" style="vertical-align: middle"><label
 													class="pull-right">附件(3)：</label></td>
-												<td class="width-l" colspan="3"><p>1.txt</p></td>
+												<td class="width-l" colspan="3"><p>test.txt</p></td>
 											</tr>
 										</tbody>
 									</table>
@@ -576,15 +584,22 @@
 											<tr>
 												<td class="width-s active" style="vertical-align: middle"><label
 													class="pull-right">软件链接：</label></td>
-												<td style="width: 60%"><form:input class="form-control"
-														path="task.title" id="editTaskTitle" required="true" /></td>
+												<td style="width: 60%">
+													<div class="input-group">
+														<input type="text" class="form-control"> <span
+															class="input-group-btn">
+															<button class="btn btn-default" type="button"><span
+														class="glyphicon glyphicon-duplicate"></span></button>
+														</span>
+													</div>
+												</td>
 											</tr>
 											<tr>
 												<td class="width-s active" style="vertical-align: middle"><label
 													class="pull-right">操作：</label></td>
 												<td style="width: 60%"><a
 													class="btn btn-default btn-opt"> <span
-														class="glyphicon glyphicon-export glyphicon-opt"></span>结果导出到EXCEL
+														class="glyphicon glyphicon-export glyphicon-opt"></span>导出结果到EXCEL
 												</a></td>
 											</tr>
 										</tbody>
@@ -593,12 +608,12 @@
 							</form>
 
 							<div class="modal-footer">
-								<label class="checkbox-inline pull-left"> <input
-									type="checkbox" id="enableEditCheckbox" value="option1">我要编辑
+								<label id="editEnableGroud" class="checkbox-inline pull-left">
+									<input type="checkbox" id="enableEditCheckbox" value="option1">我要编辑
 								</label>
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
-								<button type="button" onclick="newTaskFormSubmit();"
+								<button id="saveTaskButton" type="button" onclick="newTaskFormSubmit();"
 									class="btn btn-newtask">保存</button>
 							</div>
 						</div>
