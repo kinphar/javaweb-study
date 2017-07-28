@@ -27,7 +27,7 @@ public class Task {
 
     private String expectFinishDate;
 
-    private Date realFinishDate;
+    private String realFinishDate;
 
     private String finishInfo;
 
@@ -131,12 +131,12 @@ public class Task {
         this.expectFinishDate = expectFinishDate == null ? null : expectFinishDate.trim();
     }
 
-    public Date getRealFinishDate() {
+    public String getRealFinishDate() {
         return realFinishDate;
     }
 
-    public void setRealFinishDate(Date realFinishDate) {
-        this.realFinishDate = realFinishDate;
+    public void setRealFinishDate(String realFinishDate) {
+        this.realFinishDate = realFinishDate == null ? null : realFinishDate.trim();
     }
 
     public String getFinishInfo() {

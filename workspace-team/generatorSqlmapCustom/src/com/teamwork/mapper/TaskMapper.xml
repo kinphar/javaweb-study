@@ -14,7 +14,7 @@
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="expect_finish_date" property="expectFinishDate" jdbcType="VARCHAR" />
-    <result column="real_finish_date" property="realFinishDate" jdbcType="TIMESTAMP" />
+    <result column="real_finish_date" property="realFinishDate" jdbcType="VARCHAR" />
     <result column="finish_info" property="finishInfo" jdbcType="VARCHAR" />
     <result column="finish_link" property="finishLink" jdbcType="VARCHAR" />
     <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
@@ -123,7 +123,7 @@
       #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{progress,jdbcType=VARCHAR}, 
       #{assignTo,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{expectFinishDate,jdbcType=VARCHAR}, 
-      #{realFinishDate,jdbcType=TIMESTAMP}, #{finishInfo,jdbcType=VARCHAR}, #{finishLink,jdbcType=VARCHAR}, 
+      #{realFinishDate,jdbcType=VARCHAR}, #{finishInfo,jdbcType=VARCHAR}, #{finishLink,jdbcType=VARCHAR}, 
       #{delFlag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.teamwork.pojo.Task" >
@@ -216,7 +216,7 @@
         #{expectFinishDate,jdbcType=VARCHAR},
       </if>
       <if test="realFinishDate != null" >
-        #{realFinishDate,jdbcType=TIMESTAMP},
+        #{realFinishDate,jdbcType=VARCHAR},
       </if>
       <if test="finishInfo != null" >
         #{finishInfo,jdbcType=VARCHAR},
@@ -275,7 +275,7 @@
         expect_finish_date = #{record.expectFinishDate,jdbcType=VARCHAR},
       </if>
       <if test="record.realFinishDate != null" >
-        real_finish_date = #{record.realFinishDate,jdbcType=TIMESTAMP},
+        real_finish_date = #{record.realFinishDate,jdbcType=VARCHAR},
       </if>
       <if test="record.finishInfo != null" >
         finish_info = #{record.finishInfo,jdbcType=VARCHAR},
@@ -305,7 +305,7 @@
       update_by = #{record.updateBy,jdbcType=VARCHAR},
       update_date = #{record.updateDate,jdbcType=TIMESTAMP},
       expect_finish_date = #{record.expectFinishDate,jdbcType=VARCHAR},
-      real_finish_date = #{record.realFinishDate,jdbcType=TIMESTAMP},
+      real_finish_date = #{record.realFinishDate,jdbcType=VARCHAR},
       finish_info = #{record.finishInfo,jdbcType=VARCHAR},
       finish_link = #{record.finishLink,jdbcType=VARCHAR},
       del_flag = #{record.delFlag,jdbcType=VARCHAR}
@@ -350,7 +350,7 @@
         expect_finish_date = #{expectFinishDate,jdbcType=VARCHAR},
       </if>
       <if test="realFinishDate != null" >
-        real_finish_date = #{realFinishDate,jdbcType=TIMESTAMP},
+        real_finish_date = #{realFinishDate,jdbcType=VARCHAR},
       </if>
       <if test="finishInfo != null" >
         finish_info = #{finishInfo,jdbcType=VARCHAR},
@@ -377,7 +377,7 @@
       update_by = #{updateBy,jdbcType=VARCHAR},
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       expect_finish_date = #{expectFinishDate,jdbcType=VARCHAR},
-      real_finish_date = #{realFinishDate,jdbcType=TIMESTAMP},
+      real_finish_date = #{realFinishDate,jdbcType=VARCHAR},
       finish_info = #{finishInfo,jdbcType=VARCHAR},
       finish_link = #{finishLink,jdbcType=VARCHAR},
       del_flag = #{delFlag,jdbcType=VARCHAR}

@@ -34,7 +34,7 @@
 				hideObjectById("saveTaskButton");	
 			}
 	　　})
-	})
+	});
 
 	function queryFormSubmit() {
 		document.getElementById("statusFilter").value = "all";
@@ -112,6 +112,11 @@
 				$('#editTaskAssignTo').val(data.assignTo);
 				$('#editTaskStatus').val(data.status);
 				$('#editTaskExpectFinishDate').val(data.expectFinishDate);
+				
+				//finish information
+				$('#editTaskRealFinishDate').val(data.realFinishDate);
+				$('#editFinishInfo').val(data.finishInfo);
+				$('#editFinishLink').val(data.finishLink);
 			},
 			error : function(xhr) {
 			}
@@ -573,7 +578,7 @@
 									</table>
 								</fieldset>
 
-								<fieldset id="taskFinishFieldSet" disabled>
+								<fieldset id="taskFinishFieldSet">
 									<table class="table table-bordered table-condensed"
 										id="taskFinishTable">
 										<tbody>
@@ -594,14 +599,14 @@
 													class="pull-right">处理说明：</label></td>
 												<td style="width: 60%"><form:textarea
 														class="form-control" path="task.finishInfo"
-														id="editTaskDescription" rows="4" placeholder="说明处理方法和结果" /></td>
+														id="editFinishInfo" rows="4" placeholder="说明处理方法和结果" /></td>
 											</tr>
 											<tr>
 												<td class="width-s active" style="vertical-align: middle"><label
 													class="pull-right">软件链接：</label></td>
 												<td style="width: 60%">
 													<div class="input-group">
-														<input type="text" class="form-control"> <span
+														<input type="text" name="task.finishLink" id="editFinishLink" class="form-control"> <span
 															class="input-group-btn">
 															<button class="btn btn-default" type="button"><span
 														class="glyphicon glyphicon-duplicate"></span></button>
@@ -624,7 +629,7 @@
 
 							<div class="modal-footer">
 								<label id="editEnableGroud" class="checkbox-inline pull-left">
-									<input type="checkbox" id="enableEditCheckbox" value="option1">我要编辑
+									<input type="checkbox" id="enableEditCheckbox" value="option1">改一下
 								</label>
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>

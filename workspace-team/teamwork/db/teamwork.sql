@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-07-26 11:28:30
+Date: 2017-07-28 15:45:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,6 +41,7 @@ CREATE TABLE `project` (
 -- Records of project
 -- ----------------------------
 INSERT INTO `project` VALUES ('10', '板卡定制', null, null, null, null, 'admin', null, null, null, null, null, null);
+INSERT INTO `project` VALUES ('100', 'T91R', 'first project', null, null, null, 'dqf', '2017-07-27 19:45:16', null, null, null, null, null);
 INSERT INTO `project` VALUES ('1001', 'T91R', null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `project` VALUES ('1002', 'I66', null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `project` VALUES ('1003', 'I68', null, null, null, null, null, null, null, null, null, null, null);
@@ -94,7 +95,7 @@ CREATE TABLE `task` (
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `expect_finish_date` varchar(64) DEFAULT NULL COMMENT '期望完成时间',
-  `real_finish_date` datetime DEFAULT NULL COMMENT '实际完成时间',
+  `real_finish_date` varchar(64) DEFAULT NULL COMMENT '实际完成时间',
   `finish_info` varchar(512) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '完成说明',
   `finish_link` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '任务标题',
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
@@ -105,12 +106,13 @@ CREATE TABLE `task` (
 -- ----------------------------
 -- Records of task
 -- ----------------------------
+INSERT INTO `task` VALUES ('10088', null, null, '这是一个测试任务', 'doing', null, null, 'dqf', '2017-07-27 19:45:18', null, null, null, null, null, null, null);
 INSERT INTO `task` VALUES ('T17071817141458', 'teamwork', '支持发送邮件', '12341234', '10003', '0', '丁庆发', '', '2017-07-18 17:14:14', null, '2017-07-25 16:01:02', '2017-07-21', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17071817150796', 'teamwork', '账号注册登录以及权限校验', 'fsfffffffff啊手动阀手动阀', '10002', '25%', '丁庆发', null, '2017-07-18 17:15:07', null, '2017-07-26 11:27:20', '2017-07-21', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17071817150796', 'teamwork', '账号注册登录以及权限校验', 'fsfffffffff啊手动阀手动阀', '10002', '25%', '丁庆发', null, '2017-07-18 17:15:07', null, '2017-07-28 15:41:13', '2017-07-21', null, null, null, '0');
 INSERT INTO `task` VALUES ('T17071909424315', 'T91R', 'test', '', '10003', '0', '陈钟', null, '2017-07-19 09:42:43', null, '2017-07-24 17:36:42', '2017-07-15', null, null, null, '1');
 INSERT INTO `task` VALUES ('T17071914373941', 'I68', '检查项测试任务', '123412341', '10003', '0', '丁庆发', null, '2017-07-19 14:37:40', null, '2017-07-25 08:57:39', '2017-07-14', null, null, null, '1');
 INSERT INTO `task` VALUES ('T17071917375748', 'T91R', '检查项测试', '', '10001', '0', '陈钟', null, '2017-07-19 17:37:57', null, '2017-07-19 17:37:57', '2017-07-22', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17072111340965', 'teamwork', '任务状态增加数量显示；', '', '10002', '5%', '丁庆发', null, '2017-07-21 11:34:10', null, '2017-07-26 11:21:04', '2017-07-22', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17072111340965', '板卡定制', '任务状态增加数量显示；', '', '10002', '0%', '丁庆发', null, '2017-07-21 11:34:10', null, '2017-07-28 11:38:15', '2017-07-31', null, null, null, '0');
 INSERT INTO `task` VALUES ('T17072119425981', 'I68', '两只垃圾桶，一只乌龟。一只小鸟。', '什么鸟', '10002', '0', '陈钟', null, '2017-07-21 19:43:00', null, '2017-07-21 19:49:45', '2017-07-22', null, null, null, '1');
 INSERT INTO `task` VALUES ('T17072119590044', 'I66', '测试任务 1234132', '', '10001', '0', '丁庆发', null, '2017-07-21 19:59:00', null, '2017-07-21 19:59:07', '2017-07-14', null, null, null, '1');
 INSERT INTO `task` VALUES ('T17072200154722', 'T91R', '测试任务', '', '10003', '0', '陈钟', null, '2017-07-22 00:15:47', null, '2017-07-22 00:15:47', '2017-07-30', null, null, null, '1');
@@ -136,15 +138,15 @@ CREATE TABLE `task_check_list` (
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='任务检查项';
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COMMENT='任务检查项';
 
 -- ----------------------------
 -- Records of task_check_list
 -- ----------------------------
-INSERT INTO `task_check_list` VALUES ('62', 'T17071817150796', '1234123', '1', null, '2017-07-26 11:27:20', null, '2017-07-26 11:27:20', '0');
-INSERT INTO `task_check_list` VALUES ('63', 'T17071817150796', '41234', '0', null, '2017-07-26 11:27:20', null, '2017-07-26 11:27:20', '0');
-INSERT INTO `task_check_list` VALUES ('64', 'T17071817150796', '1234123', '0', null, '2017-07-26 11:27:20', null, '2017-07-26 11:27:20', '0');
-INSERT INTO `task_check_list` VALUES ('65', 'T17071817150796', '789789', '0', null, '2017-07-26 11:27:20', null, '2017-07-26 11:27:20', '0');
+INSERT INTO `task_check_list` VALUES ('70', 'T17071817150796', '1234123', '1', null, '2017-07-28 15:41:13', null, '2017-07-28 15:41:13', '0');
+INSERT INTO `task_check_list` VALUES ('71', 'T17071817150796', '41234', '0', null, '2017-07-28 15:41:13', null, '2017-07-28 15:41:13', '0');
+INSERT INTO `task_check_list` VALUES ('72', 'T17071817150796', '1234123', '0', null, '2017-07-28 15:41:13', null, '2017-07-28 15:41:13', '0');
+INSERT INTO `task_check_list` VALUES ('73', 'T17071817150796', '789789', '0', null, '2017-07-28 15:41:13', null, '2017-07-28 15:41:13', '0');
 
 -- ----------------------------
 -- Table structure for user

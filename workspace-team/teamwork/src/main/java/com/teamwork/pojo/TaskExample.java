@@ -935,52 +935,62 @@ public class TaskExample {
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateEqualTo(Date value) {
+        public Criteria andRealFinishDateEqualTo(String value) {
             addCriterion("real_finish_date =", value, "realFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateNotEqualTo(Date value) {
+        public Criteria andRealFinishDateNotEqualTo(String value) {
             addCriterion("real_finish_date <>", value, "realFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateGreaterThan(Date value) {
+        public Criteria andRealFinishDateGreaterThan(String value) {
             addCriterion("real_finish_date >", value, "realFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateGreaterThanOrEqualTo(Date value) {
+        public Criteria andRealFinishDateGreaterThanOrEqualTo(String value) {
             addCriterion("real_finish_date >=", value, "realFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateLessThan(Date value) {
+        public Criteria andRealFinishDateLessThan(String value) {
             addCriterion("real_finish_date <", value, "realFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateLessThanOrEqualTo(Date value) {
+        public Criteria andRealFinishDateLessThanOrEqualTo(String value) {
             addCriterion("real_finish_date <=", value, "realFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateIn(List<Date> values) {
+        public Criteria andRealFinishDateLike(String value) {
+            addCriterion("real_finish_date like", value, "realFinishDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealFinishDateNotLike(String value) {
+            addCriterion("real_finish_date not like", value, "realFinishDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealFinishDateIn(List<String> values) {
             addCriterion("real_finish_date in", values, "realFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateNotIn(List<Date> values) {
+        public Criteria andRealFinishDateNotIn(List<String> values) {
             addCriterion("real_finish_date not in", values, "realFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateBetween(Date value1, Date value2) {
+        public Criteria andRealFinishDateBetween(String value1, String value2) {
             addCriterion("real_finish_date between", value1, value2, "realFinishDate");
             return (Criteria) this;
         }
 
-        public Criteria andRealFinishDateNotBetween(Date value1, Date value2) {
+        public Criteria andRealFinishDateNotBetween(String value1, String value2) {
             addCriterion("real_finish_date not between", value1, value2, "realFinishDate");
             return (Criteria) this;
         }
