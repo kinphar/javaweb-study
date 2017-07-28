@@ -290,6 +290,11 @@
 		}
 		checkListToIdleMode();
 	}
+	
+	function exportExcel(){
+        var url="task_export";
+        window.open(url);
+    }
 </script>
 </head>
 
@@ -618,7 +623,7 @@
 												<td class="width-s active" style="vertical-align: middle"><label
 													class="pull-right">操作：</label></td>
 												<td style="width: 60%"><a
-													class="btn btn-default btn-opt"> <span
+													class="btn btn-default btn-opt" onClick="exportExcel()"> <span
 														class="glyphicon glyphicon-export glyphicon-opt"></span>导出结果到EXCEL
 												</a></td>
 											</tr>
