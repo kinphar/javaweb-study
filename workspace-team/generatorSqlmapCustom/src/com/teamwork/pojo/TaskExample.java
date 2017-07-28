@@ -985,6 +985,146 @@ public class TaskExample {
             return (Criteria) this;
         }
 
+        public Criteria andFinishInfoIsNull() {
+            addCriterion("finish_info is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoIsNotNull() {
+            addCriterion("finish_info is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoEqualTo(String value) {
+            addCriterion("finish_info =", value, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoNotEqualTo(String value) {
+            addCriterion("finish_info <>", value, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoGreaterThan(String value) {
+            addCriterion("finish_info >", value, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoGreaterThanOrEqualTo(String value) {
+            addCriterion("finish_info >=", value, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoLessThan(String value) {
+            addCriterion("finish_info <", value, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoLessThanOrEqualTo(String value) {
+            addCriterion("finish_info <=", value, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoLike(String value) {
+            addCriterion("finish_info like", value, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoNotLike(String value) {
+            addCriterion("finish_info not like", value, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoIn(List<String> values) {
+            addCriterion("finish_info in", values, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoNotIn(List<String> values) {
+            addCriterion("finish_info not in", values, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoBetween(String value1, String value2) {
+            addCriterion("finish_info between", value1, value2, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishInfoNotBetween(String value1, String value2) {
+            addCriterion("finish_info not between", value1, value2, "finishInfo");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkIsNull() {
+            addCriterion("finish_link is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkIsNotNull() {
+            addCriterion("finish_link is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkEqualTo(String value) {
+            addCriterion("finish_link =", value, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkNotEqualTo(String value) {
+            addCriterion("finish_link <>", value, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkGreaterThan(String value) {
+            addCriterion("finish_link >", value, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkGreaterThanOrEqualTo(String value) {
+            addCriterion("finish_link >=", value, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkLessThan(String value) {
+            addCriterion("finish_link <", value, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkLessThanOrEqualTo(String value) {
+            addCriterion("finish_link <=", value, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkLike(String value) {
+            addCriterion("finish_link like", value, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkNotLike(String value) {
+            addCriterion("finish_link not like", value, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkIn(List<String> values) {
+            addCriterion("finish_link in", values, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkNotIn(List<String> values) {
+            addCriterion("finish_link not in", values, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkBetween(String value1, String value2) {
+            addCriterion("finish_link between", value1, value2, "finishLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinishLinkNotBetween(String value1, String value2) {
+            addCriterion("finish_link not between", value1, value2, "finishLink");
+            return (Criteria) this;
+        }
+
         public Criteria andDelFlagIsNull() {
             addCriterion("del_flag is null");
             return (Criteria) this;

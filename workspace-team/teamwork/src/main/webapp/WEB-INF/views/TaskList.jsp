@@ -33,7 +33,7 @@
 				enableFieldSet(false, "taskFinishFieldSet");
 				hideObjectById("saveTaskButton");	
 			}
-	　　});
+	　　})
 	})
 
 	function queryFormSubmit() {
@@ -60,6 +60,9 @@
 				}
 			}
 		}
+		
+		var progress = document.getElementById("progressCheckList");
+		document.getElementById("editTaskProgress").value = progress.style.width;
 
 		var form = document.getElementById("newTaskForm");
 		form.submit();
@@ -127,7 +130,7 @@
 				for (var i = 0; i < data.length; i++) {
 					addCheckList(data[i].status, data[i].description);
 				}
-				updateCheckListProgress();
+				calculateCheckListProgress();
 			},
 			error : function(xhr) {
 			}
@@ -135,7 +138,7 @@
 	}
 
 	function doCheck() {
-		updateCheckListProgress();
+		calculateCheckListProgress();
 	}
 
 	function delEmpty(index) {
@@ -167,10 +170,10 @@
 				+ num + '].description" value=' + desc + '>';
 		console.log(li.innerHTML);
 		top.appendChild(li);
-		updateCheckListProgress();
+		calculateCheckListProgress();
 	}
 
-	function updateCheckListProgress() {
+	function calculateCheckListProgress() {
 		var liList = document.getElementById("taskCheckList")
 				.getElementsByTagName("li");
 		var inputList = document.getElementById("taskCheckList")
@@ -181,7 +184,10 @@
 		for (i = 0; i < inputNum; i++) {
 			if (inputList[i].type == "checkbox") {
 				if (inputList[i].checked) {
+					inputList[i + 1].style.textDecoration = "line-through";
 					checkedNum++;
+				} else {
+					inputList[i + 1].style.textDecoration = "none";
 				}
 				checkboxTotal++;
 			}
@@ -204,7 +210,7 @@
 			list[0].remove();
 		}
 
-		updateCheckListProgress("10%");
+		calculateCheckListProgress();
 		checkListToIdleMode();
 	}
 	
@@ -239,6 +245,14 @@
 		if (status == "10003") {
 			enableFieldSet(true, "taskFinishFieldSet");
 		} else {
+			if (status == "10002") {
+				//切换到正在处理状态设置进度条为5%
+				var progress = document.getElementById("progressCheckList");
+				console.log("progress:" + progress.style.width);
+				if (progress.style.width == "0%") {
+					progress.style.width = "5%";
+				}
+			}
 			enableFieldSet(false, "taskFinishFieldSet");
 		}
 	}
@@ -404,7 +418,7 @@
 			<tbody>
 				<c:forEach items="${tasks}" var="task" varStatus="states">
 					<tr id="task_${task.id}">
-						<td style="text-align: center; color: #999; font-weight: bold">${task.projectName}</td>
+						<td style="text-align: center; color: #446e9b">${task.projectName}</td>
 						<td>${task.title}</td>
 						<td style="text-align: center">${task.assignTo}</td>
 						<td style="text-align: center">${task.expectFinishDate}</td>
@@ -412,7 +426,7 @@
 							<div class="progress">
 								<div class="progress-bar progress-bar-info" role="progressbar"
 									aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
-									style="width: ${task.progress}%;"></div>
+									style="width: ${task.progress};"></div>
 							</div>
 						</td>
 
@@ -456,7 +470,7 @@
 			action="${ctx}/task/task_save" method="post">
 			<div class="modal fade" id="taskModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
+				<div class="modal-dialog modal-dialog-task">
 					<div class="modal-content"
 						style="padding: 2px 20px; padding-left: 30px">
 						<div class="modal-header">
@@ -481,6 +495,7 @@
 														class="glyphicon glyphicon-th-list"></span> 分解任务：</label>
 													<div class="well"
 														style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
+														<form:input type="hidden" path="task.progress" id="editTaskProgress" />
 														<div class="progress">
 															<div class="progress-bar progress-bar-success"
 																id="progressCheckList" role="progressbar"
@@ -578,7 +593,7 @@
 												<td class="width-s active" style="vertical-align: middle"><label
 													class="pull-right">处理说明：</label></td>
 												<td style="width: 60%"><form:textarea
-														class="form-control" path="task.description"
+														class="form-control" path="task.finishInfo"
 														id="editTaskDescription" rows="4" placeholder="说明处理方法和结果" /></td>
 											</tr>
 											<tr>

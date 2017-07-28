@@ -29,6 +29,10 @@ public class Task {
 
     private Date realFinishDate;
 
+    private String finishInfo;
+
+    private String finishLink;
+
     private String delFlag;
 
     public String getId() {
@@ -133,6 +137,22 @@ public class Task {
 
     public void setRealFinishDate(Date realFinishDate) {
         this.realFinishDate = realFinishDate;
+    }
+
+    public String getFinishInfo() {
+        return finishInfo;
+    }
+
+    public void setFinishInfo(String finishInfo) {
+        this.finishInfo = finishInfo == null ? null : finishInfo.trim();
+    }
+
+    public String getFinishLink() {
+        return finishLink;
+    }
+
+    public void setFinishLink(String finishLink) {
+        this.finishLink = finishLink == null ? null : finishLink.trim();
     }
 
     public String getDelFlag() {

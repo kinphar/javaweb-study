@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-07-19 14:04:09
+Date: 2017-07-26 11:28:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -85,7 +85,7 @@ CREATE TABLE `task` (
   `id` varchar(64) NOT NULL DEFAULT '' COMMENT '主键',
   `project_name` varchar(64) DEFAULT NULL COMMENT '所属项目',
   `title` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '任务标题',
-  `description` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '任务描述',
+  `description` varchar(512) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '任务描述',
   `status` varchar(64) DEFAULT NULL COMMENT '任务状态：1、未分配，2、正在处理，3、已完成，4、已审核，5、已归档',
   `progress` varchar(64) DEFAULT NULL COMMENT '任务进度',
   `assign_to` varchar(64) DEFAULT NULL COMMENT '处理者',
@@ -95,6 +95,8 @@ CREATE TABLE `task` (
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `expect_finish_date` varchar(64) DEFAULT NULL COMMENT '期望完成时间',
   `real_finish_date` datetime DEFAULT NULL COMMENT '实际完成时间',
+  `finish_info` varchar(512) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '完成说明',
+  `finish_link` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '任务标题',
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
@@ -103,41 +105,20 @@ CREATE TABLE `task` (
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES ('T17071117455409', 'T91R', '这是一个测试任务', null, '10001', '0', '丁庆发', null, '2017-07-11 17:45:55', null, '2017-07-11 17:45:55', '2017-07-13', null, '0');
-INSERT INTO `task` VALUES ('T17071123471501', 'I66', '乌龟王八蛋', null, '10002', '60', '陈钟', null, '2017-07-11 23:47:15', null, '2017-07-11 23:47:15', '2017-07-15', null, '0');
-INSERT INTO `task` VALUES ('T17071123473245', 'I68', '两只垃圾桶', null, '10003', '100', '陈钟', null, '2017-07-11 23:47:33', null, '2017-07-11 23:47:33', '2017-07-22', null, '0');
-INSERT INTO `task` VALUES ('T17071201110769', 'I66', '这是一个策士任务', null, '10004', '0', '陈钟', null, '2017-07-12 01:11:07', null, '2017-07-12 01:11:07', '2017-07-08', null, '1');
-INSERT INTO `task` VALUES ('T17071201302728', 'I66', '去买一瓶酱油', null, '10001', '0', '陈钟', null, '2017-07-12 01:30:27', null, '2017-07-12 01:30:27', '2017-07-23', null, '0');
-INSERT INTO `task` VALUES ('T17071208572495', 'I66', '清理卫生吧', null, '10001', '0', '丁庆发', null, '2017-07-12 08:57:25', null, '2017-07-12 08:57:25', '2017-07-14', null, '0');
-INSERT INTO `task` VALUES ('T17071213415847', 'T91R', '参加目屿岛拓展活动', null, '10002', '0', '陈钟', null, '2017-07-12 13:41:58', null, '2017-07-12 13:41:58', '2017-07-13', null, '0');
-INSERT INTO `task` VALUES ('T17071218595768', 'T91R', '再来一个任务。', null, '10002', '0', '丁庆发', null, '2017-07-12 18:59:58', null, '2017-07-12 18:59:58', '2017-07-13', null, '1');
-INSERT INTO `task` VALUES ('T17071412262738', 'T91R', '参加年中大会', null, '10003', '0', '丁庆发', null, '2017-07-14 12:26:28', null, '2017-07-14 12:26:28', '2017-07-28', null, '0');
-INSERT INTO `task` VALUES ('T17071711311582', 'T91R', '美格新7寸室内机', '', '10002', '0', '丁庆发', null, '2017-07-17 11:31:15', null, '2017-07-17 11:31:15', '2017-07-21', null, '0');
-INSERT INTO `task` VALUES ('T17071711321772', '板卡定制', '降龙美格10寸室内机微居版本。', '', '10002', '0', '陈钟', null, '2017-07-17 11:32:17', null, '2017-07-17 11:32:17', '2017-07-20', null, '0');
-INSERT INTO `task` VALUES ('T17071714074058', '板卡定制', '搞什么名堂', '', '10002', '0', '丁庆发', null, '2017-07-17 14:07:41', null, '2017-07-17 14:07:41', '2017-07-23', null, '0');
-INSERT INTO `task` VALUES ('T17071714092240', 'T91R', '生如夏花', '', '10002', '0', '陈钟', null, '2017-07-17 14:09:23', null, '2017-07-17 14:09:23', '2017-07-08', null, '1');
-INSERT INTO `task` VALUES ('T17071817141458', 'teamwork', '支持发送邮件', '', '10001', '0', '丁庆发', null, '2017-07-18 17:14:14', null, '2017-07-18 17:14:14', '2017-07-21', null, '0');
-INSERT INTO `task` VALUES ('T17071817150796', 'teamwork', '账号注册登录以及权限校验', '', '10001', '0', '丁庆发', null, '2017-07-18 17:15:07', null, '2017-07-18 17:15:07', '2017-07-21', null, '0');
-INSERT INTO `task` VALUES ('T17071819393760', null, null, null, null, '0', null, null, '2017-07-18 19:39:38', null, '2017-07-18 19:39:38', null, null, '1');
-INSERT INTO `task` VALUES ('T17071819421500', '板卡定制', '测试任务', '', '10001', '0', '丁庆发', null, '2017-07-18 19:42:16', null, '2017-07-18 19:42:16', '2017-07-21', null, '1');
-INSERT INTO `task` VALUES ('T17071819484633', '板卡定制', '测试任务', '', '10002', '0', '陈钟', null, '2017-07-18 19:48:46', null, '2017-07-18 19:48:46', '2017-07-15', null, '0');
-INSERT INTO `task` VALUES ('T17071819551674', '板卡定制', 'TEST', '', '10001', '0', '陈钟', null, '2017-07-18 19:55:17', null, '2017-07-18 19:55:17', '2017-06-30', null, '0');
-INSERT INTO `task` VALUES ('T17071820025361', '板卡定制', '测试任务', '', '10001', '0', '丁庆发', null, '2017-07-18 20:02:54', null, '2017-07-18 20:02:54', '2017-07-14', null, '0');
-INSERT INTO `task` VALUES ('T17071820043637', '板卡定制', '测试任务', '', '10001', '0', '丁庆发', null, '2017-07-18 20:04:36', null, '2017-07-18 20:04:36', '2017-12-31', null, '0');
-INSERT INTO `task` VALUES ('T17071820183260', 'T91R', 'test', '', '10001', '0', '丁庆发', null, '2017-07-18 20:18:33', null, '2017-07-18 20:18:33', '2017-07-01', null, '0');
-INSERT INTO `task` VALUES ('T17071820214850', 'T91R', 'test', '', '10001', '0', '陈钟', null, '2017-07-18 20:21:48', null, '2017-07-18 20:21:48', '2017-07-08', null, '0');
-INSERT INTO `task` VALUES ('T17071820311733', '板卡定制', 'test', '', '10001', '0', '丁庆发', null, '2017-07-18 20:31:18', null, '2017-07-18 20:31:18', '2017-07-14', null, '0');
-INSERT INTO `task` VALUES ('T17071909164436', 'I68', '1234', '', '10001', '0', '丁庆发', null, '2017-07-19 09:16:44', null, '2017-07-19 09:16:44', '2017-07-07', null, '0');
-INSERT INTO `task` VALUES ('T17071909413243', 'I66', 'test', '', '10002', '0', '陈钟', null, '2017-07-19 09:41:32', null, '2017-07-19 09:41:32', '2017-07-07', null, '0');
-INSERT INTO `task` VALUES ('T17071909424315', 'T91R', 'test', '', '10003', '0', '陈钟', null, '2017-07-19 09:42:43', null, '2017-07-19 09:42:43', '2017-07-15', null, '0');
-INSERT INTO `task` VALUES ('T17071909454695', 'I66', '12341', '', '10002', '0', '陈钟', null, '2017-07-19 09:45:46', null, '2017-07-19 09:45:46', '2017-07-14', null, '0');
-INSERT INTO `task` VALUES ('T17071909563005', '板卡定制', '1234', '', '10001', '0', '丁庆发', null, '2017-07-19 09:56:30', null, '2017-07-19 09:56:30', '2017-07-21', null, '0');
-INSERT INTO `task` VALUES ('T17071909572035', '板卡定制', '1234', '', '10001', '0', '丁庆发', null, '2017-07-19 09:57:21', null, '2017-07-19 09:57:21', '2017-07-21', null, '0');
-INSERT INTO `task` VALUES ('T17071910005768', '板卡定制', '1234', '', '10002', '0', '陈钟', null, '2017-07-19 10:00:58', null, '2017-07-19 10:00:58', '2017-07-22', null, '0');
-INSERT INTO `task` VALUES ('T17071910115382', 'T91R', '4132', '4123', '10001', '0', '丁庆发', null, '2017-07-19 10:11:54', null, '2017-07-19 10:11:54', '2017-07-22', null, '0');
-INSERT INTO `task` VALUES ('T17071911284733', 'T91R', '1234', '', '10001', '0', '陈钟', null, '2017-07-19 11:28:47', null, '2017-07-19 11:28:47', '2017-07-14', null, '0');
-INSERT INTO `task` VALUES ('T17071913552440', 'I66', 'tes', '', '10002', '0', '陈钟', null, '2017-07-19 13:55:25', null, '2017-07-19 13:55:25', '2017-07-21', null, '0');
-INSERT INTO `task` VALUES ('T17071913560162', '板卡定制', 'test', '1234', '10001', '0', '陈钟', null, '2017-07-19 13:56:02', null, '2017-07-19 13:56:02', '2017-07-21', null, '0');
+INSERT INTO `task` VALUES ('T17071817141458', 'teamwork', '支持发送邮件', '12341234', '10003', '0', '丁庆发', '', '2017-07-18 17:14:14', null, '2017-07-25 16:01:02', '2017-07-21', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17071817150796', 'teamwork', '账号注册登录以及权限校验', 'fsfffffffff啊手动阀手动阀', '10002', '25%', '丁庆发', null, '2017-07-18 17:15:07', null, '2017-07-26 11:27:20', '2017-07-21', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17071909424315', 'T91R', 'test', '', '10003', '0', '陈钟', null, '2017-07-19 09:42:43', null, '2017-07-24 17:36:42', '2017-07-15', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17071914373941', 'I68', '检查项测试任务', '123412341', '10003', '0', '丁庆发', null, '2017-07-19 14:37:40', null, '2017-07-25 08:57:39', '2017-07-14', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17071917375748', 'T91R', '检查项测试', '', '10001', '0', '陈钟', null, '2017-07-19 17:37:57', null, '2017-07-19 17:37:57', '2017-07-22', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17072111340965', 'teamwork', '任务状态增加数量显示；', '', '10002', '5%', '丁庆发', null, '2017-07-21 11:34:10', null, '2017-07-26 11:21:04', '2017-07-22', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17072119425981', 'I68', '两只垃圾桶，一只乌龟。一只小鸟。', '什么鸟', '10002', '0', '陈钟', null, '2017-07-21 19:43:00', null, '2017-07-21 19:49:45', '2017-07-22', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17072119590044', 'I66', '测试任务 1234132', '', '10001', '0', '丁庆发', null, '2017-07-21 19:59:00', null, '2017-07-21 19:59:07', '2017-07-14', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17072200154722', 'T91R', '测试任务', '', '10003', '0', '陈钟', null, '2017-07-22 00:15:47', null, '2017-07-22 00:15:47', '2017-07-30', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17072323154929', 'teamwork', '检查项测试任务', '', '10001', '0', '陈钟', null, '2017-07-23 23:15:50', null, '2017-07-23 23:16:36', '2017-07-14', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17072400483980', '板卡定制', '检查项测试任务', '', '10002', '0', '丁庆发', null, '2017-07-24 00:48:39', null, '2017-07-24 17:35:24', '2017-07-14', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17072416440079', '板卡定制', '123134', '', '10002', '0', '陈钟', null, '2017-07-24 16:44:01', null, '2017-07-24 23:38:52', '2017-07-15', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17072417032911', 'T91R', '12341', '', '10002', '0', '李晴', null, '2017-07-24 17:03:30', null, '2017-07-25 00:03:42', '2017-07-08', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17072610461800', 'T91R', '瓦力瓦力', '', '10001', '0', '陈钟', null, '2017-07-26 10:46:18', null, '2017-07-26 10:46:18', '2017-07-14', null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for task_check_list
@@ -155,11 +136,15 @@ CREATE TABLE `task_check_list` (
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='任务检查项';
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='任务检查项';
 
 -- ----------------------------
--- Records of task_checklist
+-- Records of task_check_list
 -- ----------------------------
+INSERT INTO `task_check_list` VALUES ('62', 'T17071817150796', '1234123', '1', null, '2017-07-26 11:27:20', null, '2017-07-26 11:27:20', '0');
+INSERT INTO `task_check_list` VALUES ('63', 'T17071817150796', '41234', '0', null, '2017-07-26 11:27:20', null, '2017-07-26 11:27:20', '0');
+INSERT INTO `task_check_list` VALUES ('64', 'T17071817150796', '1234123', '0', null, '2017-07-26 11:27:20', null, '2017-07-26 11:27:20', '0');
+INSERT INTO `task_check_list` VALUES ('65', 'T17071817150796', '789789', '0', null, '2017-07-26 11:27:20', null, '2017-07-26 11:27:20', '0');
 
 -- ----------------------------
 -- Table structure for user

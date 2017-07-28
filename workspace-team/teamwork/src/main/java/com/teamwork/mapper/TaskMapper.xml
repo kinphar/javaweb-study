@@ -15,6 +15,8 @@
     <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
     <result column="expect_finish_date" property="expectFinishDate" jdbcType="VARCHAR" />
     <result column="real_finish_date" property="realFinishDate" jdbcType="TIMESTAMP" />
+    <result column="finish_info" property="finishInfo" jdbcType="VARCHAR" />
+    <result column="finish_link" property="finishLink" jdbcType="VARCHAR" />
     <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -77,7 +79,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, project_name, title, description, status, progress, assign_to, create_by, create_date, 
-    update_by, update_date, expect_finish_date, real_finish_date, del_flag
+    update_by, update_date, expect_finish_date, real_finish_date, finish_info, finish_link, 
+    del_flag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.TaskExample" >
     select
@@ -114,12 +117,14 @@
       description, status, progress, 
       assign_to, create_by, create_date, 
       update_by, update_date, expect_finish_date, 
-      real_finish_date, del_flag)
+      real_finish_date, finish_info, finish_link, 
+      del_flag)
     values (#{id,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{progress,jdbcType=VARCHAR}, 
       #{assignTo,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{expectFinishDate,jdbcType=VARCHAR}, 
-      #{realFinishDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR})
+      #{realFinishDate,jdbcType=TIMESTAMP}, #{finishInfo,jdbcType=VARCHAR}, #{finishLink,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.teamwork.pojo.Task" >
     insert into task
@@ -162,6 +167,12 @@
       </if>
       <if test="realFinishDate != null" >
         real_finish_date,
+      </if>
+      <if test="finishInfo != null" >
+        finish_info,
+      </if>
+      <if test="finishLink != null" >
+        finish_link,
       </if>
       <if test="delFlag != null" >
         del_flag,
@@ -206,6 +217,12 @@
       </if>
       <if test="realFinishDate != null" >
         #{realFinishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishInfo != null" >
+        #{finishInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="finishLink != null" >
+        #{finishLink,jdbcType=VARCHAR},
       </if>
       <if test="delFlag != null" >
         #{delFlag,jdbcType=VARCHAR},
@@ -260,6 +277,12 @@
       <if test="record.realFinishDate != null" >
         real_finish_date = #{record.realFinishDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.finishInfo != null" >
+        finish_info = #{record.finishInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.finishLink != null" >
+        finish_link = #{record.finishLink,jdbcType=VARCHAR},
+      </if>
       <if test="record.delFlag != null" >
         del_flag = #{record.delFlag,jdbcType=VARCHAR},
       </if>
@@ -283,6 +306,8 @@
       update_date = #{record.updateDate,jdbcType=TIMESTAMP},
       expect_finish_date = #{record.expectFinishDate,jdbcType=VARCHAR},
       real_finish_date = #{record.realFinishDate,jdbcType=TIMESTAMP},
+      finish_info = #{record.finishInfo,jdbcType=VARCHAR},
+      finish_link = #{record.finishLink,jdbcType=VARCHAR},
       del_flag = #{record.delFlag,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -327,6 +352,12 @@
       <if test="realFinishDate != null" >
         real_finish_date = #{realFinishDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="finishInfo != null" >
+        finish_info = #{finishInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="finishLink != null" >
+        finish_link = #{finishLink,jdbcType=VARCHAR},
+      </if>
       <if test="delFlag != null" >
         del_flag = #{delFlag,jdbcType=VARCHAR},
       </if>
@@ -347,6 +378,8 @@
       update_date = #{updateDate,jdbcType=TIMESTAMP},
       expect_finish_date = #{expectFinishDate,jdbcType=VARCHAR},
       real_finish_date = #{realFinishDate,jdbcType=TIMESTAMP},
+      finish_info = #{finishInfo,jdbcType=VARCHAR},
+      finish_link = #{finishLink,jdbcType=VARCHAR},
       del_flag = #{delFlag,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
