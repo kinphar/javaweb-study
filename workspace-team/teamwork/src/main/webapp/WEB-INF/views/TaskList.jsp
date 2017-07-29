@@ -298,6 +298,12 @@
 		var url = "task_export" + "/" + id;
 		window.open(url);
 	}
+	
+	function doLinkCopy() {
+		var link = document.getElementById("editFinishLink");
+		link.select(); 
+		document.execCommand("Copy");
+	}
 </script>
 </head>
 
@@ -503,7 +509,7 @@
 													class="pull-right">标题：</label></td>
 												<td class="width-l" colspan="3"><form:input
 														class="form-control" path="task.title" id="editTaskTitle"
-														required="true" /></td>
+														required="true"/></td>
 												<td class="width-l" rowspan="6"><label><span
 														class="glyphicon glyphicon-th-list"></span> 分解任务：</label>
 													<div class="well"
@@ -618,7 +624,7 @@
 														<input type="text" name="task.finishLink"
 															id="editFinishLink" class="form-control"> <span
 															class="input-group-btn">
-															<button class="btn btn-default" type="button">
+															<button class="btn btn-default" type="button" onClick="doLinkCopy()">
 																<span class="glyphicon glyphicon-duplicate"></span>
 															</button>
 														</span>
