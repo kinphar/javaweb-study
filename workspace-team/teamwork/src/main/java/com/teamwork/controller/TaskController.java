@@ -1,20 +1,33 @@
 package com.teamwork.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.teamwork.common.pojo.NewTaskInfo;
 import com.teamwork.common.pojo.TaskQuery;
+import com.teamwork.common.utils.ExcelUtil;
 import com.teamwork.pojo.Project;
 import com.teamwork.pojo.SysDict;
 import com.teamwork.pojo.Task;
@@ -128,5 +141,75 @@ public class TaskController {
 		System.out.println("checklist.num=" + list.size());
 		return list;
 	}
+		
+	@RequestMapping("/task_export/{taskId}")
+    public String exportTask(@PathVariable String taskId, HttpServletRequest request,HttpServletResponse response) throws IOException{
+        String fileName = taskId + "-任务数据";
+        
+        System.out.println("exportTask:" + taskId);
+        
+        //填充projects数据
+        List<Map<String,Object>> mapList = createExcelRecord(taskId);
+        String columnNames[] = {"任务ID", "标题", "内容", "所属项目", "处理人", "期望完成时间", "实际完成时间", "处理说明", "软件链接"};//列名
+        String keys[] = {"id", "title", "description", "projectName", "assignTo", "expectFinishDate", "realFinishDate", "finishInfo", "finishLink"};//map中的key
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            ExcelUtil.createTaskBook(mapList, keys,columnNames).write(os);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] content = os.toByteArray();
+        InputStream is = new ByteArrayInputStream(content);
+        // 设置response参数，可以打开下载页面
+        response.reset();
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        response.setHeader("Content-Disposition", "attachment;filename="+ new String((fileName + ".xls").getBytes(), "iso-8859-1"));
+        ServletOutputStream out = response.getOutputStream();
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+        try {
+            bis = new BufferedInputStream(is);
+            bos = new BufferedOutputStream(out);
+            byte[] buff = new byte[2048];
+            int bytesRead;
+            // Simple read/write loop.
+            while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+                bos.write(buff, 0, bytesRead);
+            }
+        } catch (final IOException e) {
+            throw e;
+        } finally {
+            if (bis != null)
+                bis.close();
+            if (bos != null)
+                bos.close();
+        }
+        return null;
+    }
+	
+    private List<Map<String, Object>> createExcelRecord(String taskId) {    	
+        List<Map<String, Object>> listmap = new ArrayList<Map<String, Object>>();
+        
+        //sheet name;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("sheetName", "sheet1");
+        listmap.add(map);
+        
+        //sheet data;
+        Task task = taskService.getTaskById(taskId);
+        Map<String, Object> mapValue = new HashMap<String, Object>();
+        mapValue.put("id", task.getId());
+        mapValue.put("title", task.getTitle());
+        mapValue.put("description", task.getDescription());
+        mapValue.put("projectName", task.getProjectName());
+        mapValue.put("assignTo", task.getAssignTo());
+        mapValue.put("expectFinishDate", task.getExpectFinishDate());
+        mapValue.put("realFinishDate", task.getRealFinishDate());
+        mapValue.put("finishInfo", task.getFinishInfo());
+        mapValue.put("finishLink", task.getFinishLink());
+        listmap.add(mapValue);
+
+        return listmap;
+    }
 	
 }

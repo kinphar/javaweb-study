@@ -17,23 +17,23 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 	});
-	
-	$(function(){
-		$("#enableEditCheckbox").click(function(){		
-			if (this.checked) {				
+
+	$(function() {
+		$("#enableEditCheckbox").click(function() {
+			if (this.checked) {
 				$('#myModalLabel').html("编辑任务");
 				enableFieldSet(true, "taskInfoFieldSet");
 				if ($('#editTaskStatus').val() == "10003") {
 					enableFieldSet(true, "taskFinishFieldSet");
 				}
-				showObjectById("saveTaskButton");				
+				showObjectById("saveTaskButton");
 			} else {
 				$('#myModalLabel').html("任务详情");
 				enableFieldSet(false, "taskInfoFieldSet");
 				enableFieldSet(false, "taskFinishFieldSet");
-				hideObjectById("saveTaskButton");	
+				hideObjectById("saveTaskButton");
 			}
-	　　})
+		})
 	});
 
 	function queryFormSubmit() {
@@ -60,7 +60,7 @@
 				}
 			}
 		}
-		
+
 		var progress = document.getElementById("progressCheckList");
 		document.getElementById("editTaskProgress").value = progress.style.width;
 
@@ -112,7 +112,7 @@
 				$('#editTaskAssignTo').val(data.assignTo);
 				$('#editTaskStatus').val(data.status);
 				$('#editTaskExpectFinishDate').val(data.expectFinishDate);
-				
+
 				//finish information
 				$('#editTaskRealFinishDate').val(data.realFinishDate);
 				$('#editFinishInfo').val(data.finishInfo);
@@ -218,20 +218,21 @@
 		calculateCheckListProgress();
 		checkListToIdleMode();
 	}
-	
+
 	function enableFieldSet(bool, fieldSet) {
 		var x = document.getElementById(fieldSet);
-		x.disabled = !bool;		
+		x.disabled = !bool;
 	}
 
 	function editTask(id) {
 		document.getElementById("newTaskForm").reset();
 		checkListReset();
-		if (id == null) {			
+		if (id == null) {
 			hideObjectById("editEnableGroud");
 			showObjectById("saveTaskButton");
 			enableFieldSet(true, "taskInfoFieldSet");
 			enableFieldSet(true, "taskFinishFieldSet");
+			enableFieldSet(false, "taskOptFieldSet");			
 			$('#myModalLabel').html("新建任务");
 		} else {
 			fillTaskForm(id);
@@ -290,11 +291,13 @@
 		}
 		checkListToIdleMode();
 	}
-	
-	function exportExcel(){
-        var url="task_export";
-        window.open(url);
-    }
+
+	function exportExcel() {
+		var id = $("#editTaskId").val();
+		console.log("exportExcel:" + id);
+		var url = "task_export" + "/" + id;
+		window.open(url);
+	}
 </script>
 </head>
 
@@ -505,7 +508,8 @@
 														class="glyphicon glyphicon-th-list"></span> 分解任务：</label>
 													<div class="well"
 														style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
-														<form:input type="hidden" path="task.progress" id="editTaskProgress" />
+														<form:input type="hidden" path="task.progress"
+															id="editTaskProgress" />
 														<div class="progress">
 															<div class="progress-bar progress-bar-success"
 																id="progressCheckList" role="progressbar"
@@ -594,7 +598,7 @@
 														type="date" path="task.realFinishDate"
 														id="editTaskRealFinishDate" /></td>
 												<td
-													style="width: 30%; text-align: center; vertical-align: middle;"
+													style="width: 20%; text-align: center; vertical-align: middle;"
 													rowspan="4"><img class="img-rounded" alt="Brand"
 													src="/images/qrcode.jpg"
 													style="height: 160px; width: 160px;"></td>
@@ -602,35 +606,44 @@
 											<tr>
 												<td class="width-s active" style="vertical-align: middle"><label
 													class="pull-right">处理说明：</label></td>
-												<td style="width: 60%"><form:textarea
+												<td style="width: 70%"><form:textarea
 														class="form-control" path="task.finishInfo"
 														id="editFinishInfo" rows="4" placeholder="说明处理方法和结果" /></td>
 											</tr>
 											<tr>
 												<td class="width-s active" style="vertical-align: middle"><label
 													class="pull-right">软件链接：</label></td>
-												<td style="width: 60%">
+												<td style="width: 70%">
 													<div class="input-group">
-														<input type="text" name="task.finishLink" id="editFinishLink" class="form-control"> <span
+														<input type="text" name="task.finishLink"
+															id="editFinishLink" class="form-control"> <span
 															class="input-group-btn">
-															<button class="btn btn-default" type="button"><span
-														class="glyphicon glyphicon-duplicate"></span></button>
+															<button class="btn btn-default" type="button">
+																<span class="glyphicon glyphicon-duplicate"></span>
+															</button>
 														</span>
 													</div>
 												</td>
-											</tr>
-											<tr>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">操作：</label></td>
-												<td style="width: 60%"><a
-													class="btn btn-default btn-opt" onClick="exportExcel()"> <span
-														class="glyphicon glyphicon-export glyphicon-opt"></span>导出结果到EXCEL
-												</a></td>
 											</tr>
 										</tbody>
 									</table>
 								</fieldset>
 							</form>
+
+							<fieldset id="taskOptFieldSet">
+								<table class="table table-bordered table-condensed">
+									<tbody>
+										<tr>
+											<td class="width-s active" style="vertical-align: middle"><label
+												class="pull-right">操作：</label></td>
+											<td style="width: 90%"><a
+												class="btn btn-default btn-opt" onClick="exportExcel()">
+													<span class="glyphicon glyphicon-export glyphicon-opt"></span>导出到EXCEL
+											</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</fieldset>
 
 							<div class="modal-footer">
 								<label id="editEnableGroud" class="checkbox-inline pull-left">
@@ -638,8 +651,8 @@
 								</label>
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
-								<button id="saveTaskButton" type="button" onclick="newTaskFormSubmit();"
-									class="btn btn-newtask">保存</button>
+								<button id="saveTaskButton" type="button"
+									onclick="newTaskFormSubmit();" class="btn btn-newtask">保存</button>
 							</div>
 						</div>
 					</div>

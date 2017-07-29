@@ -3,7 +3,9 @@ package com.teamwork.common.utils;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -22,8 +24,10 @@ public class ExcelUtil {
     public static Workbook createWorkBook(List<Map<String, Object>> list,String []keys,String columnNames[]) {
         // 创建excel工作簿
         Workbook wb = new HSSFWorkbook();
+        
         // 创建第一个sheet（页），并命名
         Sheet sheet = wb.createSheet(list.get(0).get("sheetName").toString());
+        
         // 手动设置列宽。第一个参数表示要为第几列设；，第二个参数表示列的宽度，n为列高的像素数。
         for(int i=0;i<keys.length;i++){
             sheet.setColumnWidth((short) i, (short) (35.7 * 150));
@@ -85,6 +89,69 @@ public class ExcelUtil {
                 cell.setCellValue(list.get(i).get(keys[j]) == null?" ": list.get(i).get(keys[j]).toString());
                 cell.setCellStyle(cs2);
             }
+        }
+        return wb;
+    }
+    
+    public static Workbook createTaskBook(List<Map<String, Object>> list,String []keys,String columnNames[]) {
+        // 创建excel工作簿
+        Workbook wb = new HSSFWorkbook();
+        
+        // 创建第一个sheet（页），并命名
+        Sheet sheet = wb.createSheet(list.get(0).get("sheetName").toString());
+        
+        // 手动设置列宽。
+        sheet.setColumnWidth(0, (short) (35.7 * 150)); 	//name
+        sheet.setColumnWidth(1, (short) (35.7 * 400)); 	//value
+
+        // 创建两种单元格格式
+        CellStyle cs = wb.createCellStyle();
+        CellStyle cs2 = wb.createCellStyle();
+
+        // 创建两种字体
+        Font f = wb.createFont();
+        Font f2 = wb.createFont();
+
+        // 创建第一种字体样式（用于列名）
+        f.setFontHeightInPoints((short) 10);
+        f.setColor(IndexedColors.BLACK.getIndex());
+        f.setBoldweight(Font.BOLDWEIGHT_BOLD);
+
+        // 创建第二种字体样式（用于值）
+        f2.setFontHeightInPoints((short) 10);
+        f2.setColor(IndexedColors.BLACK.getIndex());
+
+        // 设置第一种单元格的样式（用于列名）
+        cs.setFont(f);
+        cs.setBorderLeft(CellStyle.BORDER_THIN);
+        cs.setBorderRight(CellStyle.BORDER_THIN);
+        cs.setBorderTop(CellStyle.BORDER_THIN);
+        cs.setBorderBottom(CellStyle.BORDER_THIN);
+        cs.setAlignment(CellStyle.VERTICAL_CENTER);
+        
+        cs.setFillForegroundColor(IndexedColors.SKY_BLUE.getIndex());
+        cs.setFillPattern(CellStyle.SOLID_FOREGROUND);
+
+        // 设置第二种单元格的样式（用于值）
+        cs2.setFont(f2);
+        cs2.setBorderLeft(CellStyle.BORDER_THIN);
+        cs2.setBorderRight(CellStyle.BORDER_THIN);
+        cs2.setBorderTop(CellStyle.BORDER_THIN);
+        cs2.setBorderBottom(CellStyle.BORDER_THIN);
+        cs2.setAlignment(CellStyle.ALIGN_LEFT);
+             
+        int totalRow = keys.length;
+        for (int i = 0; i < totalRow; i++) {
+        	Row r = sheet.createRow(i);
+        	r.setHeightInPoints(20);
+        	
+        	Cell nameCell = r.createCell(0);
+        	nameCell.setCellValue(columnNames[i]);
+        	nameCell.setCellStyle(cs);
+        	
+        	Cell valueCell = r.createCell(1);
+        	valueCell.setCellValue(list.get(1).get(keys[i]) == null?" ": list.get(1).get(keys[i]).toString());
+        	valueCell.setCellStyle(cs2);
         }
         return wb;
     }
