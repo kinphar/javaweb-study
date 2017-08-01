@@ -152,8 +152,6 @@ public class TaskController {
     public String exportTask(@PathVariable String taskId, HttpServletRequest request,HttpServletResponse response) throws IOException{
         String fileName = taskId + "-任务数据";
         
-        System.out.println("exportTask:" + taskId);
-        
         //填充projects数据
         List<Map<String,Object>> mapList = createExcelRecord(taskId);
         String columnNames[] = {"任务ID", "标题", "内容", "所属项目", "处理人", "期望完成时间", "实际完成时间", "处理说明", "软件链接"};//列名
@@ -166,6 +164,7 @@ public class TaskController {
         }
         byte[] content = os.toByteArray();
         InputStream is = new ByteArrayInputStream(content);
+        
         // 设置response参数，可以打开下载页面
         response.reset();
         response.setContentType("application/vnd.ms-excel;charset=utf-8");

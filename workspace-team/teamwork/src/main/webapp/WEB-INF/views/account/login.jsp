@@ -8,9 +8,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../../favicon.ico">
-
 <title>登录</title>
+
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/common.css" />
 <link rel="stylesheet" href="/css/signin.css" />
 </head>
 
@@ -21,7 +22,7 @@
 			<img class="img-rounded" alt="Brand" src="/images/justgun.gif"
 				style="height: 100%; width: 100%; margin-top: 10px; margin-bottom: 30px">
 				
-			<h4 class="form-signin-heading">用户登录</h4>
+			<h4 class="form-signin-heading">诺曼底登录</h4>
 			<input type="email" id="inputEmail" name="email" class="form-control"
 				placeholder="Email" required autofocus> <input
 				type="password" id="inputPassword" name="password"

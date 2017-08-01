@@ -58,11 +58,11 @@ public class HelloController {
 		return mv;
 	}
 	
-	@RequestMapping("/tool")
+/*	@RequestMapping("/tools")
 	public ModelAndView tool() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("tool");
+		mv.setViewName("tools");
 		return mv;
-	}
+	}*/
 
 }
