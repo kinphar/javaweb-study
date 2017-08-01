@@ -14,21 +14,24 @@
 <script type="text/javascript">
 	function timeStampConvert() {
 		var ts = $('#inputTimeStamp').val();
-		console.log("timeStampConvert: ts=" + ts);
-		$.ajax({
-			type : "GET",
-			url : "${ctx}/tools/timestamp_convert",
-			data : {
-				timeStamp : ts
-			},
-			dataType : 'json',
-			contentType : "application/json; charset=utf-8",
-			success : function(data) {
-				$('#inputDate').val(data.result);
-			},
-			error : function(xhr) {
-			}
-		});
+		if (ts.length != 10) {
+			alert("Unix时间戳长度必须为 10.");
+		} else {
+			$.ajax({
+				type : "GET",
+				url : "${ctx}/tools/timestamp_convert",
+				data : {
+					timeStamp : ts
+				},
+				dataType : 'json',
+				contentType : "application/json; charset=utf-8",
+				success : function(data) {
+					$('#inputDate').val(data.result);
+				},
+				error : function(xhr) {
+				}
+			});
+		}
 	}	
 
 </script>

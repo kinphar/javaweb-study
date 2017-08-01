@@ -36,12 +36,7 @@ public class ToolsController {
 	@ResponseBody
 	public Map<String,Object> timeConvert(@RequestParam("timeStamp") String timeStamp) {
 		Map<String,Object> map = new HashMap<String,Object>();
-
-		if (timeStamp != null && timeStamp.length() == 10) {
-			map.put("result", TimeUtils.timeStamp2Date(timeStamp, "yyyy/MM/dd HH:mm:ss"));
-		} else {
-			map.put("result", "length != 10");
-		}
+		map.put("result", TimeUtils.timeStamp2Date(timeStamp, "yyyy/MM/dd HH:mm:ss"));
 		return map;
 	}	
 
