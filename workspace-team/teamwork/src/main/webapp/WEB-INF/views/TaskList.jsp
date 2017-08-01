@@ -332,6 +332,7 @@
 					<li><a href="${ctx}/information">资料</a></li>
 					<li><a href="${ctx}/activity">活动</a></li>
 					<li><a href="${ctx}/tool">工具</a></li>
+					<li><a href="${ctx}/account/dologout">[${userInfo}]退出</a></li>
 				</ul>
 			</div>
 			<!--/.navbar-collapse -->

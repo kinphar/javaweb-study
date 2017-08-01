@@ -22,4 +22,11 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectByExample(example);
 	}
 
+	@Override
+	public List<User> getUserByEmailAndPassword(String email, String password) {
+		UserExample example = new UserExample();
+		example.createCriteria().andEmailEqualTo(email).andPasswordEqualTo(password);
+		return userMapper.selectByExample(example);		
+	}
+
 }

@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class TaskController {
 	private TaskCheckListService taskCheckListService;
 	
 	@RequestMapping("/task_list")
-	public String listTasks(Model model, @ModelAttribute TaskQuery taskQuery) {
+	public String listTasks(Model model, @ModelAttribute TaskQuery taskQuery, HttpServletRequest request) {
 		System.out.println("---Request--- : task_list");
 		
 		List<Project> projects = projectService.getAllProject();
@@ -87,6 +88,11 @@ public class TaskController {
 
 		//任务数量
 		model.addAttribute("number", taskService.getTaskNumByFilter(taskQuery));  
+		
+		//从session中读取账户信息
+		HttpSession session = request.getSession();
+		String userInfo = (String) session.getAttribute("useremail");
+		model.addAttribute("userInfo", userInfo);
 				
 		return "TaskList";		
 	}
