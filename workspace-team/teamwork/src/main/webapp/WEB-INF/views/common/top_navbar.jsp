@@ -23,8 +23,8 @@
 				<li><a href="${ctx}/task/task_list">任务</a></li>
 				<li><a href="${ctx}/knowledge">知识</a></li>
 				<li><a href="${ctx}/information">资料</a></li>
-				<li><a href="${ctx}/activity">活动</a></li>
 				<li><a href="${ctx}/tools/init">工具</a></li>
+				<li><a href="${ctx}/activity">活动</a></li>				
 				<li><a href="${ctx}/account/dologout">[${userInfo}]退出</a></li>
 			</ul>
 		</div>

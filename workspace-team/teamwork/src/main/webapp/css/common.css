@@ -1,5 +1,9 @@
 body>.container {
-	padding: 40px 15px 0px;
+	padding: 40px 15px 0px;	
+}
+
+body{
+	background-color: #EEEEEE;
 }
 
 body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {

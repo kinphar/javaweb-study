@@ -71,6 +71,11 @@ public class TaskController {
 		model.addAttribute("projects", projects);						
 		model.addAttribute("taskQuery", taskQuery);		
 		
+		if (taskQuery.getQueryTask() == null) {
+			Task task = new Task();
+			task.setStatus("10002");			
+			taskQuery.setQueryTask(task);
+		}
 		List<Task> tasks = taskService.getTaskByFilter(taskQuery);
 		model.addAttribute("tasks", tasks);
 		
@@ -78,12 +83,7 @@ public class TaskController {
 		model.addAttribute("newTaskInfo", newTaskInfo);
 		
 		//返回任务状态，用于高亮对应的状态tab
-		String statusFilter = null;
-		if (taskQuery.getQueryTask() == null) {
-			statusFilter = "all";
-		} else {
-			statusFilter = taskQuery.getQueryTask().getStatus();
-		}
+		String statusFilter = taskQuery.getQueryTask().getStatus();
 		model.addAttribute("statusFilter", statusFilter);		
 
 		//任务数量
@@ -93,6 +93,9 @@ public class TaskController {
 		HttpSession session = request.getSession();
 		String userInfo = (String) session.getAttribute("useremail");
 		model.addAttribute("userInfo", userInfo);
+		
+		//导航分类
+		model.addAttribute("cate", "task");
 				
 		return "TaskList";		
 	}

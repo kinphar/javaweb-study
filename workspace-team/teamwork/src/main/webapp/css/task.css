@@ -1,6 +1,20 @@
 
 .table-for-tasklist {
 	margin-top: 10px;
+	border-collapse:separate; 
+	border-spacing:0px 6px;
+}
+
+.table>tbody>tr>td {
+	border-top:0px;
+}
+
+.tr-task {
+	background-color:#fff;
+}
+
+.table>thead>tr>th {
+    border-bottom: 1px dashed #777;
 }
 
 .navbar-default {
@@ -46,6 +60,11 @@
 	background-color:#BBB;
 }
 
+.badge-num {
+	vertical-align: top;
+	background-color:#bbb;
+}
+
 .modal-dialog-task {
     width: 1000px;
 }
@@ -65,4 +84,19 @@
 .well {
 	margin: 0px 4px 4px 4px;
 }
+
+h3 {
+	margin-top: 15px;
+	margin-bottom: 6px;
+}
+
+.radio-task-status {
+	/* color: #446e9b; */
+}
+
+.breadcrumb {
+    background-color: #fff
+}
+
+
 

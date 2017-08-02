@@ -19,15 +19,18 @@ import com.teamwork.common.utils.TimeUtils;
 public class ToolsController {
 	
 	@RequestMapping("/init")
-	public String init(Model mode, HttpServletRequest request) {
+	public String init(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userInfo = (String) session.getAttribute("useremail");
-		mode.addAttribute("userInfo", userInfo);
+		model.addAttribute("userInfo", userInfo);
 		
 		long currentTimeStamp = System.currentTimeMillis() / 1000;
 		String currentDate = TimeUtils.timeStamp2Date(currentTimeStamp + "", "yyyy/MM/dd HH:mm:ss");
-		mode.addAttribute("currentTimeStamp", currentTimeStamp);
-		mode.addAttribute("currentDate", currentDate);
+		model.addAttribute("currentTimeStamp", currentTimeStamp);
+		model.addAttribute("currentDate", currentDate);
+		
+		//导航分类
+		model.addAttribute("cate", "tools");
 		
 		return "tools/tools_home";
 	}

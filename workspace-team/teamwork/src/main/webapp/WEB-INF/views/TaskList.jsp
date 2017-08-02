@@ -15,8 +15,17 @@
 <link rel="stylesheet" href="/css/task.css" />
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/take/icheck/skins/square/green.css" /> 
+<script type="application/javascript" src="/take/icheck/icheck.min.js"></script>
+
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(document).ready(function(){
+		$('input').iCheck({
+	   		checkboxClass: 'icheckbox_square-green', 
+	   		radioClass: 'iradio_square-green',
+	   		increaseArea: '20%' // optional
+	 	});
 	});
 
 	$(function() {
@@ -233,7 +242,7 @@
 			showObjectById("saveTaskButton");
 			enableFieldSet(true, "taskInfoFieldSet");
 			enableFieldSet(true, "taskFinishFieldSet");
-			enableFieldSet(false, "taskOptFieldSet");			
+			enableFieldSet(false, "taskOptFieldSet");
 			$('#myModalLabel').html("新建任务");
 		} else {
 			fillTaskForm(id);
@@ -299,10 +308,10 @@
 		var url = "task_export" + "/" + id;
 		window.open(url);
 	}
-	
+
 	function doLinkCopy() {
 		var link = document.getElementById("editFinishLink");
-		link.select(); 
+		link.select();
 		document.execCommand("Copy");
 	}
 </script>
@@ -318,11 +327,31 @@
 
 		<form:form id="filterForm" commandName="taskQuery"
 			action="${ctx}/task/task_list" method="post" class="form-inline">
-			<div class="row breadcrumb"
-				style="margin: 10px 0px; padding: 8px 2px">
+			<div class="row breadcrumb" style="margin: 0px 0px; padding: 8px 2px">
 				<div class="col-sm-12">
-					<div class="form-group">
-						所属项目：
+					<label class="radio-inline radio-task-status"
+						onclick="queryFormSubmitWithStatus('10002')"> <input
+						<c:if test="${statusFilter=='10002'}">checked="checked"</c:if>
+						type="radio" value="option1">  正在处理 <span
+						class="badge badge-num" id="status_10002">${number[2]}</span>
+					</label> <label class="radio-inline radio-task-status"
+						onclick="queryFormSubmitWithStatus('10006')"> <input
+						<c:if test="${statusFilter=='10006'}">checked="checked"</c:if>
+						type="radio" value="option2">  暂停 <span
+						class="badge badge-num" id="status_10002">${number[2]}</span>
+					</label> <label class="radio-inline radio-task-status"
+						onclick="queryFormSubmitWithStatus('10003')"> <input
+						<c:if test="${statusFilter=='10003'}">checked="checked"</c:if>
+						type="radio" value="option4">  完成 <span
+						class="badge badge-num" id="status_10003">${number[3]}</span>
+					</label> <label class="radio-inline radio-task-status"
+						onclick="queryFormSubmitWithStatus('10001')"> <input
+						<c:if test="${statusFilter=='10001'}">checked="checked"</c:if>
+						type="radio" value="option3">  初稿 <span
+						class="badge badge-num" id="status_10001">${number[1]}</span>
+					</label>
+
+					<div class="form-group" style="margin-left: 50px">
 						<form:select onchange="queryFormSubmit();" class="form-control"
 							path="queryTask.projectName" id="queryTask.projectName">
 							<form:option value="all" label="所有项目" />
@@ -332,7 +361,6 @@
 					</div>
 
 					<div class="form-group">
-						负责人：
 						<form:select onchange="queryFormSubmit();" class="form-control"
 							path="queryTask.assignTo" id="queryTask.assignTo">
 							<form:option value="all" label="所有人" />
@@ -358,40 +386,14 @@
 				</div>
 			</div>
 
-			<ul class="nav nav-tabs" role="tablist">
-				<li <c:if test="${statusFilter=='all'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus('all');"><a href="#">全部
-						<span class="badge" id="status_all">${number[0]}</span>
-				</a></li>
-				<li <c:if test="${statusFilter=='10001'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus(10001);"><a href="#">未开始
-						<span class="badge" id="status_10001">${number[1]}</span>
-				</a></li>
-				<li <c:if test="${statusFilter=='10002'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus(10002);"><a href="#">正在处理
-						<span class="badge" id="status_10002"
-						style="background-color: #5bc0de">${number[2]}</span>
-				</a></li>
-				<li <c:if test="${statusFilter=='10003'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus(10003);"><a href="#">已完成
-						<span class="badge" id="status_10003"
-						style="background-color: #5cb85c">${number[3]}</span>
-				</a></li>
-				<li <c:if test="${statusFilter=='10005'}">class="active"</c:if>
-					onclick="queryFormSubmitWithStatus(10005);"><a href="#">已归档
-						<span class="badge" id="status_10005">${number[4]}</span>
-				</a></li>
-			</ul>
-
 			<form:hidden path="queryTask.status" id="statusFilter"
 				name="statusFilter" />
 		</form:form>
 
-		<table
-			class="table table-striped table-bordered table-hover table-for-tasklist">
+		<table class="table table-hover table-for-tasklist">
 			<colgroup>
 				<col style="">
-				<col style="width: 40%">
+				<col style="width: 35%">
 				<col style="">
 				<col style="">
 				<col style="width: 8%">
@@ -409,10 +411,11 @@
 			</thead>
 			<tbody>
 				<c:forEach items="${tasks}" var="task" varStatus="states">
-					<tr id="task_${task.id}">
+					<tr class="tr-task" id="task_${task.id}">
 						<td style="text-align: center; color: #446e9b">${task.projectName}</td>
 						<td>${task.title}</td>
-						<td style="text-align: center">${task.assignTo}</td>
+						<td style="text-align: center"><span
+							class="badge badge-success">${task.assignTo}</span></td>
 						<td style="text-align: center">${task.expectFinishDate}</td>
 						<td>
 							<div class="progress">
@@ -482,7 +485,7 @@
 													class="pull-right">标题：</label></td>
 												<td class="width-l" colspan="3"><form:input
 														class="form-control" path="task.title" id="editTaskTitle"
-														required="true"/></td>
+														required="true" /></td>
 												<td class="width-l" rowspan="6"><label><span
 														class="glyphicon glyphicon-th-list"></span> 分解任务：</label>
 													<div class="well"
@@ -597,7 +600,8 @@
 														<input type="text" name="task.finishLink"
 															id="editFinishLink" class="form-control"> <span
 															class="input-group-btn">
-															<button class="btn btn-default" type="button" onClick="doLinkCopy()">
+															<button class="btn btn-default" type="button"
+																onClick="doLinkCopy()">
 																<span class="glyphicon glyphicon-duplicate"></span>
 															</button>
 														</span>
