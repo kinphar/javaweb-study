@@ -225,16 +225,9 @@
 		document.getElementById("newTaskForm").reset();
 		checkListReset();
 		if (id == null) {
-			showObjectById("saveTaskButton");
-			enableFieldSet(true, "taskInfoFieldSet");
-			enableFieldSet(true, "taskFinishFieldSet");
-			enableFieldSet(false, "taskOptFieldSet");
 			$('#myModalLabel').html("新建任务");
 		} else {
 			fillTaskForm(id);
-			hideObjectById("saveTaskButton");
-			enableFieldSet(false, "taskInfoFieldSet");
-			enableFieldSet(false, "taskFinishFieldSet");
 			$('#myModalLabel').html("任务详情");
 		}
 

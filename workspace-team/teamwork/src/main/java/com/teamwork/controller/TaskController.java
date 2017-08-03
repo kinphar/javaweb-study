@@ -34,6 +34,7 @@ import com.teamwork.pojo.SysDict;
 import com.teamwork.pojo.Task;
 import com.teamwork.pojo.TaskCheckList;
 import com.teamwork.pojo.User;
+import com.teamwork.service.EmailService;
 import com.teamwork.service.MiscService;
 import com.teamwork.service.ProjectService;
 import com.teamwork.service.TaskCheckListService;
@@ -54,6 +55,8 @@ public class TaskController {
 	private TaskService taskService;
 	@Autowired
 	private TaskCheckListService taskCheckListService;
+	@Autowired
+	private EmailService emailService;
 	
 	@RequestMapping("/task_list")
 	public String listTasks(Model model, @ModelAttribute TaskQuery taskQuery, HttpServletRequest request) {
@@ -96,7 +99,7 @@ public class TaskController {
 		
 		//导航分类
 		model.addAttribute("cate", "task");
-				
+						
 		return "TaskList";		
 	}
 	
@@ -106,6 +109,7 @@ public class TaskController {
 		String taskId = task.getId();
 		if (StringUtils.isBlank(taskId)) {
 			taskService.createTask(task);
+			emailService.emailManage();
 		} else {
 			taskService.updateTask(task);			
 		}
