@@ -1,6 +1,6 @@
 
 .table-for-tasklist {
-	margin-top: 10px;
+	margin-top: 6px;
 	border-collapse:separate; 
 	border-spacing:0px 6px;
 }
@@ -13,8 +13,15 @@
 	background-color:#fff;
 }
 
+.th-task {
+	color: #aaa;
+	font-weight: normal;
+	text-align: center;
+}
+
 .table>thead>tr>th {
-    border-bottom: 1px dashed #777;
+    /* border-bottom: 1px dashed #777; */
+    border-bottom: 1px solid #ddd;
 }
 
 .navbar-default {
@@ -62,7 +69,7 @@
 
 .badge-num {
 	vertical-align: top;
-	background-color:#bbb;
+	background-color:#ccc;
 }
 
 .modal-dialog-task {
@@ -90,13 +97,22 @@ h3 {
 	margin-bottom: 6px;
 }
 
-.radio-task-status {
-	/* color: #446e9b; */
-}
-
 .breadcrumb {
-    background-color: #fff
+    background-color: #fff;
 }
 
+.label-progress {
+	background-color: #54d09f;
+}
 
+#progress-content { 	 
+	margin: 0 auto;  
+	background: #fff;
+	color: #2489c5;
+	font-size: 12px;
+	width: 40px;
+	vertical-align: middle;
+	border: 1px solid #2489c5; 
+	border-radius:3px;
+}
 

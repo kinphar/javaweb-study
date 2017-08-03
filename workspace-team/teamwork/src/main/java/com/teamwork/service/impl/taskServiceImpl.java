@@ -31,7 +31,7 @@ public class taskServiceImpl implements TaskService {
 		Date date = new Date();
 		task.setCreateDate(date);
 		task.setUpdateDate(date);
-		task.setProgress("0");
+		task.setProgress("0%");
 		task.setDelFlag("0");
 		taskMapper.insert(task);
 		

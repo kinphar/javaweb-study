@@ -16,42 +16,29 @@
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="/take/icheck/skins/square/green.css" /> 
+<link rel="stylesheet" href="/take/icheck/skins/square/blue.css" />
 <script type="application/javascript" src="/take/icheck/icheck.min.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(document).ready(function() {
 		$('input').iCheck({
-	   		checkboxClass: 'icheckbox_square-green', 
-	   		radioClass: 'iradio_square-green',
-	   		increaseArea: '20%' // optional
-	 	});
-	});
-
-	$(function() {
-		$("#enableEditCheckbox").click(function() {
-			if (this.checked) {
-				$('#myModalLabel').html("编辑任务");
-				enableFieldSet(true, "taskInfoFieldSet");
-				if ($('#editTaskStatus').val() == "10003") {
-					enableFieldSet(true, "taskFinishFieldSet");
-				}
-				showObjectById("saveTaskButton");
-			} else {
-				$('#myModalLabel').html("任务详情");
-				enableFieldSet(false, "taskInfoFieldSet");
-				enableFieldSet(false, "taskFinishFieldSet");
-				hideObjectById("saveTaskButton");
-			}
-		})
+			checkboxClass : 'icheckbox_square-blue',
+			radioClass : 'iradio_square-blue',
+			increaseArea : '20%' // optional
+		});
+		$('input').on('ifChecked', function(event){
+			var s = event.target.value;
+			queryFormSubmitWithStatus(s);
+		});
 	});
 
 	function queryFormSubmit() {
-		document.getElementById("statusFilter").value = "all";
+		document.getElementById("statusFilter").value = "10002";
 		var form = document.getElementById("filterForm");
 		form.submit();
 	}
 	function queryFormSubmitWithStatus(s) {
+		console.log("queryFormSubmitWithStatus:" + s);
 		document.getElementById("statusFilter").value = s;
 		var form = document.getElementById("filterForm");
 		form.submit();
@@ -238,7 +225,6 @@
 		document.getElementById("newTaskForm").reset();
 		checkListReset();
 		if (id == null) {
-			hideObjectById("editEnableGroud");
 			showObjectById("saveTaskButton");
 			enableFieldSet(true, "taskInfoFieldSet");
 			enableFieldSet(true, "taskFinishFieldSet");
@@ -246,7 +232,6 @@
 			$('#myModalLabel').html("新建任务");
 		} else {
 			fillTaskForm(id);
-			showObjectById("editEnableGroud");
 			hideObjectById("saveTaskButton");
 			enableFieldSet(false, "taskInfoFieldSet");
 			enableFieldSet(false, "taskFinishFieldSet");
@@ -329,26 +314,22 @@
 			action="${ctx}/task/task_list" method="post" class="form-inline">
 			<div class="row breadcrumb" style="margin: 0px 0px; padding: 8px 2px">
 				<div class="col-sm-12">
-					<label class="radio-inline radio-task-status"
-						onclick="queryFormSubmitWithStatus('10002')"> <input
+					<label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10002'}">checked="checked"</c:if>
-						type="radio" value="option1">  正在处理 <span
-						class="badge badge-num" id="status_10002">${number[2]}</span>
-					</label> <label class="radio-inline radio-task-status"
-						onclick="queryFormSubmitWithStatus('10006')"> <input
+						type="radio" value="10002"> 正在处理 <span
+						class="badge badge-num">${number[2]}</span>
+					</label> <label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10006'}">checked="checked"</c:if>
-						type="radio" value="option2">  暂停 <span
-						class="badge badge-num" id="status_10002">${number[2]}</span>
-					</label> <label class="radio-inline radio-task-status"
-						onclick="queryFormSubmitWithStatus('10003')"> <input
+						type="radio" value="10006"> 暂停 <span
+						class="badge badge-num">${number[2]}</span>
+					</label> <label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10003'}">checked="checked"</c:if>
-						type="radio" value="option4">  完成 <span
-						class="badge badge-num" id="status_10003">${number[3]}</span>
-					</label> <label class="radio-inline radio-task-status"
-						onclick="queryFormSubmitWithStatus('10001')"> <input
+						type="radio" value="10003"> 完成 <span
+						class="badge badge-num">${number[3]}</span>
+					</label> <label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10001'}">checked="checked"</c:if>
-						type="radio" value="option3">  初稿 <span
-						class="badge badge-num" id="status_10001">${number[1]}</span>
+						type="radio" value="10001"> 初稿 <span
+						class="badge badge-num">${number[1]}</span>
 					</label>
 
 					<div class="form-group" style="margin-left: 50px">
@@ -390,7 +371,8 @@
 				name="statusFilter" />
 		</form:form>
 
-		<table class="table table-hover table-for-tasklist">
+		<table class="table table-hover table-for-tasklist"
+			style="background-color: #f8f6f2; padding-bottom: 4px">
 			<colgroup>
 				<col style="">
 				<col style="width: 35%">
@@ -401,33 +383,29 @@
 			</colgroup>
 			<thead>
 				<tr>
-					<th style="text-align: center">所属项目</th>
-					<th>标题</th>
-					<th style="text-align: center">负责人</th>
-					<th style="text-align: center">到期时间</th>
-					<th style="text-align: center">进度</th>
-					<th>操作</th>
+					<th class="th-task">所属项目</th>
+					<th class="th-task">标题</th>
+					<th class="th-task">负责人</th>
+					<th class="th-task">到期时间</th>
+					<th class="th-task">进度</th>
+					<th class="th-task">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${tasks}" var="task" varStatus="states">
 					<tr class="tr-task" id="task_${task.id}">
-						<td style="text-align: center; color: #446e9b">${task.projectName}</td>
+						<td	style="text-align: center; color: #446e9b; border-left: 8px solid #f8f6f2;">
+							${task.projectName}</td>
 						<td>${task.title}</td>
 						<td style="text-align: center"><span
 							class="badge badge-success">${task.assignTo}</span></td>
 						<td style="text-align: center">${task.expectFinishDate}</td>
-						<td>
-							<div class="progress">
-								<div class="progress-bar progress-bar-info" role="progressbar"
-									aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
-									style="width: ${task.progress};"></div>
-							</div>
+						<td style="text-align: center; vertical-align: middle">
+							<div id="progress-content">${task.progress}</div>
 						</td>
-
-						<td><a class="btn btn-default btn-opt"
-							onClick="editTask('${task.id}')"> <span
-								class="glyphicon glyphicon-screenshot glyphicon-opt"></span>打开
+						<td style="text-align: center; border-right: 8px solid #f8f6f2;"><a
+							class="btn btn-default btn-opt" onClick="editTask('${task.id}')">
+								<span class="glyphicon glyphicon-screenshot glyphicon-opt"></span>打开
 						</a> <a class="btn btn-default btn-opt"
 							onClick="delTask('${task.id}')"> <span
 								class="glyphicon glyphicon-trash glyphicon-opt"></span>删除
@@ -629,9 +607,6 @@
 							</fieldset>
 
 							<div class="modal-footer">
-								<label id="editEnableGroud" class="checkbox-inline pull-left">
-									<input type="checkbox" id="enableEditCheckbox" value="option1">改一下
-								</label>
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">关闭</button>
 								<button id="saveTaskButton" type="button"
