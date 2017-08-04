@@ -29,4 +29,18 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectByExample(example);		
 	}
 
+	@Override
+	public String getEmailByUserName(String name) {
+		// TODO Auto-generated method stub
+		
+		UserExample example = new UserExample();
+		example.createCriteria().andNameEqualTo(name);
+		List<User> users = userMapper.selectByExample(example);
+		String userEmail = "";
+		if (users != null && users.size() > 0) {
+			userEmail = users.get(0).getEmail();
+		}
+		return userEmail;
+	}
+
 }

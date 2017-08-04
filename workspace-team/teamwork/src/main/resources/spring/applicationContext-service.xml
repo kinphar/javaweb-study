@@ -33,12 +33,5 @@
 			<value>UTF-8</value>
 		</property>
 	</bean>
-
-	<bean id="simpleMailMessage" class="org.springframework.mail.SimpleMailMessage">
-		<property name="from" value="${mail.from}" />
-		<property name="subject" value="${mail.subject}" />
-		<property name="to" value="${mail.to}" />
-		<!-- <property name="text" value="邮件内容" /> -->
-	</bean>
 		
 </beans>

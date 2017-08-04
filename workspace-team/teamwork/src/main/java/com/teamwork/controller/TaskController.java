@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.teamwork.common.pojo.EmailContent;
 import com.teamwork.common.pojo.NewTaskInfo;
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.common.utils.ExcelUtil;
@@ -109,7 +110,7 @@ public class TaskController {
 		String taskId = task.getId();
 		if (StringUtils.isBlank(taskId)) {
 			taskService.createTask(task);
-			emailService.emailManage();
+			newTaskEmail(task);
 		} else {
 			taskService.updateTask(task);			
 		}
@@ -223,5 +224,35 @@ public class TaskController {
 
         return listmap;
     }
+    
+    private boolean newTaskEmail(Task task) {    	
+    	EmailContent mail = new EmailContent();
+    	
+    	//title
+    	mail.setSubject("收到一项新任务！"); 
+    	
+    	//receiver
+    	String emailAddress = userService.getEmailByUserName(task.getAssignTo());
+    	mail.setToEmails(emailAddress);
+    	
+    	//content
+    	StringBuilder builder = new StringBuilder();
+        builder.append("<html><body>" + task.getAssignTo() + "你好！<br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务标题：" + task.getTitle() +"<br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务内容：" + task.getDescription() + "<br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务链接：您可以<a href=" + "http://localhost:8684/task/task_list" + ">进入teamwork查看详情</a><br />");
+        builder.append("</body></html>");
+        String content = builder.toString();        
+        mail.setContent(content);
+                
+        //do send
+        emailService.sendEmail(mail);
+    	return true;
+    }
 	
 }
+
+
+
+
+
