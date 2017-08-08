@@ -240,7 +240,7 @@ public class TaskController {
         builder.append("<html><body>" + task.getAssignTo() + "你好！<br /><br />");
         builder.append("&nbsp&nbsp&nbsp&nbsp任务标题：" + task.getTitle() +"<br />");
         builder.append("&nbsp&nbsp&nbsp&nbsp任务内容：" + task.getDescription() + "<br />");
-        builder.append("&nbsp&nbsp&nbsp&nbsp任务链接：您可以<a href=" + "http://localhost:8684/task/task_list" + ">进入teamwork查看详情</a><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务链接：您可以<a href=" + "http://localhost:8684/task/task_list" + ">进入teamwork查看详情</a><br /><br />");
         builder.append("</body></html>");
         String content = builder.toString();        
         mail.setContent(content);

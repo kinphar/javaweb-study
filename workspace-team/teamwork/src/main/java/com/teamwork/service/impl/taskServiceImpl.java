@@ -128,7 +128,7 @@ public class taskServiceImpl implements TaskService {
 		List<Task> tasks = taskMapper.selectByExample(example);
 		
 		int n_all = tasks.size();
-		int n_10001 = 0, n_10002 = 0, n_10003 = 0, n_10005 = 0;
+		int n_10001 = 0, n_10002 = 0, n_10003 = 0, n_10006 = 0;
 		for (Task item : tasks) {
 			switch (item.getStatus()) {
 				case "10001" :
@@ -137,11 +137,11 @@ public class taskServiceImpl implements TaskService {
 					n_10002++; break;
 				case "10003" :
 					n_10003++; break;
-				case "10005" :
-					n_10005++; break;
+				case "10006" :
+					n_10006++; break;
 			}
 		}
-		List<Integer> nums = Arrays.asList(n_all, n_10001, n_10002, n_10003, n_10005);
+		List<Integer> nums = Arrays.asList(n_all, n_10001, n_10002, n_10003, n_10006);
 		return nums;
 	}		
 }

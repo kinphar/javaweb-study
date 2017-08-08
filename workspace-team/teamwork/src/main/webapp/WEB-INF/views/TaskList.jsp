@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/common.css" />
 <link rel="stylesheet" href="/css/task.css" />
+
+<!-- <link rel="stylesheet" href="/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/css/ace.min.css" />
+<link rel="stylesheet" href="/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="/css/ace-skins.min.css" />
+ -->
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 
@@ -26,9 +32,18 @@
 			radioClass : 'iradio_square-blue',
 			increaseArea : '20%' // optional
 		});
-		$('input').on('ifChecked', function(event){
+		$('input').on('ifChecked', function(event) {
 			var s = event.target.value;
 			queryFormSubmitWithStatus(s);
+		});
+
+		$('textarea').each(function() {
+			this.setAttribute('style', 'height:38px; overflow-y:hidden;');
+			console.log("this.scrollHeight1=" + this.scrollHeight);
+		}).on('input', function() {
+			this.style.height = 'auto';
+			this.style.height = (this.scrollHeight) + 'px';
+			console.log("this.scrollHeight2=" + this.scrollHeight);
 		});
 	});
 
@@ -314,7 +329,7 @@
 					</label> <label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10006'}">checked="checked"</c:if>
 						type="radio" value="10006"> 暂停 <span
-						class="badge badge-num">${number[2]}</span>
+						class="badge badge-num">${number[4]}</span>
 					</label> <label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10003'}">checked="checked"</c:if>
 						type="radio" value="10003"> 完成 <span
@@ -387,7 +402,8 @@
 			<tbody>
 				<c:forEach items="${tasks}" var="task" varStatus="states">
 					<tr class="tr-task" id="task_${task.id}">
-						<td	style="text-align: center; color: #446e9b; border-left: 8px solid #f8f6f2;">
+						<td
+							style="text-align: center; color: #446e9b; border-left: 8px solid #f8f6f2;">
 							${task.projectName}</td>
 						<td>${task.title}</td>
 						<td style="text-align: center"><span
@@ -407,6 +423,121 @@
 				</c:forEach>
 			</tbody>
 		</table>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div id="accordion" class="accordion-style1 panel-group">
+					<c:forEach items="${tasks}" var="task" varStatus="states">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a class="accordion-toggle collapsed" data-toggle="collapse"
+										data-parent="#accordion" href="#collapse_${task.title}">
+										&nbsp; <label class="label-title">${task.title}</label> <label
+										class="label-project"><span
+											class="glyphicon glyphicon-stop glyphicon-project"></span>
+											${task.projectName}</label> <label class="label-name"><span
+											class="label label-span-name">李</span></label> <label
+										class="label-percent"><span
+											class="label label-span-percent">${task.progress}</span></label> <label
+										class="label-deadline"><span
+											class="glyphicon glyphicon-time"></span>
+											${task.expectFinishDate}</label>
+									</a>
+								</h4>
+							</div>
+
+							<div class="panel-collapse collapse" id="collapse_${task.title}">
+								<div class="panel-body" style="padding: 10px 50px 30px">
+									<input class="form-control form-control-title"
+										id="focusedInput" type="text" value="${task.title}">
+									<hr />
+									<div class="col-sm-6">
+										<textarea id="content-textarea"
+											class="form-control form-control-content"
+											placeholder="+点击新增需求描述">${task.description}</textarea>
+										<div class="task-assign">
+											<h5 style="color: #A4A3A2">分配给：</h5>
+											<ul class="list-inline">
+												<li><label class="label-name"><span
+														class="label label-span-name">李</span></label></li>
+												<li><label class="label-name"><span
+														class="label label-span-name">丁</span></label></li>
+												<li><label class="label-name"><span
+														class="label label-span-name">吴</span></label></li>
+												<li><label class="label-name"><span
+														class="label label-span-name">陈</span></label></li>
+												<li><label class="label-name"><span
+														class="label label-span-name"> + </span></label></li>
+											</ul>
+										</div>
+										<div class="task-follow">
+											<h5 style="color: #A4A3A2">关注人：</h5>
+											<ul class="list-inline">
+												<li><label class="label-name"><span
+														class="label label-span-name">李</span></label></li>
+												<li><label class="label-name"><span
+														class="label label-span-name">丁</span></label></li>
+												<li><label class="label-name"><span
+														class="label label-span-name">吴</span></label></li>
+												<li><label class="label-name"><span
+														class="label label-span-name">陈</span></label></li>
+												<li><label class="label-name"><span
+														class="label label-span-name"> + </span></label></li>
+											</ul>
+										</div>
+										<div class="task-follow">
+											<h5 style="color: #A4A3A2">截止日期：${task.expectFinishDate}</h5>
+										</div>
+										<div class="task-follow">
+											<h5 style="color: #A4A3A2">任务状态：${task.status}</h5>
+										</div>
+										<div class="task-follow">
+											<h5 style="color: #A4A3A2">附件：</h5>
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<div class="well"
+											style="background-color: #F8F6F2; border-width: 0px; padding: 10px 10px; margin-top: 6px">
+											<h5 style="color: #A4A3A2">
+												<span class="glyphicon glyphicon-th-list"></span> 分解任务：
+											</h5>
+											<div class="progress">
+												<div class="progress-bar progress-bar-success"
+													id="progressCheckList" role="progressbar"
+													aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+													style="width: 0%;"></div>
+											</div>
+
+											<ul id="taskCheckList" class="list-unstyled checkbox"
+												style="margin-left: 24px">
+											</ul>
+
+											<a id="addCheckList" href="#"
+												onclick="checkListToInputMode();">+新增检查项</a>
+
+											<div id="inputCheckList" style="display: none">
+												<input type="text" class="form-control"
+													style="margin: 5px 0px" id="inputContent"
+													placeholder="请输入内容">
+												<button type="button" onclick="checkListToIdleMode();"
+													class="btn btn-default">取消</button>
+												<button type="button" onclick="createNewCheckList();"
+													class="btn btn-newtask">确认</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr />
+								<h5>评论</h5>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+			<!-- /span -->
+		</div>
 
 		<!-- 删除确认 -->
 		<div class="modal modal-small fade" id="delcfmModel">

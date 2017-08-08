@@ -19,10 +19,12 @@
 	<div class="container">
 		<form class="form-signin" action="${ctx}/account/dologin"
 			method="POST">
-			<img class="img-rounded" alt="Brand" src="/images/justgun.gif"
-				style="height: 100%; width: 100%; margin-top: 10px; margin-bottom: 30px">
+			<div style="text-align:center">
+				<img class="img-rounded" alt="Brand" src="/images/justgun.gif"
+				style="height: 80%; width: 80%; margin-top: 10px; margin-bottom: 30px">
+			</div>			
 				
-			<h4 class="form-signin-heading">诺曼底登录</h4>
+			<h5 class="form-signin-heading">诺曼底登录</h5>
 			<input type="email" id="inputEmail" name="email" class="form-control"
 				placeholder="Email" required autofocus> <input
 				type="password" id="inputPassword" name="password"
