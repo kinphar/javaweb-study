@@ -48,7 +48,6 @@
 			language : 'zh-CN',//中文，需要引用zh-CN.js包
 			startView : 2,//月视图
 			minView : 2
-		//日期时间选择器所能够提供的最精确的时间选择视图
 		});
 	});
 
@@ -148,55 +147,65 @@
 			success : function(data) {
 				console.log("checklist:" + data.length);
 				for (var i = 0; i < data.length; i++) {
-					addCheckList(data[i].status, data[i].description);
+					addCheckList(id, data[i].status, data[i].description);
 				}
-				calculateCheckListProgress();
+				calculateCheckListProgress(id);
 			},
 			error : function(xhr) {
 			}
 		});
 	}
 
-	function doCheck() {
-		calculateCheckListProgress();
+	function doCheck(id) {
+		calculateCheckListProgress(id);
 	}
 
-	function delEmpty(index) {
-		var id = 'checkList[' + index + '].description';
+	function delEmpty(id, index) {
+		var id = 'checkList_' + id + '[' + index + '].description';
 		var e = document.getElementById(id);
 		if (e.value == "") {
-			var top = document.getElementById("taskCheckList");
+			var top = document.getElementById("taskCheckList_" + id);
 			var li = top.getElementsByTagName("li");
 			li[index].remove();
 		}
 	}
 
-	function addCheckList(checked, desc) {
-		var top = document.getElementById("taskCheckList");
+	function addCheckList(id, checked, desc) {
+		var top = document.getElementById("taskCheckList_" + id);
 		var num = top.getElementsByTagName("li").length;
 		var li = document.createElement("li");
 		var checkedFlag = (checked == '1') ? 'checked="checked"' : '';
-		li.innerHTML = '<input type="checkbox" onClick="doCheck()" name=checkList['
+		li.innerHTML = '<input type="checkbox" onClick="doCheck(\''
+				+ id 
+				+ '\')" name=checkList_'
+				+ id
+				+ '['
 				+ num
 				+ '].status '
 				+ checkedFlag
 				+ '>'
-				+ '<input type="text" onchange="delEmpty('
+				+ '<input type="text" onchange="delEmpty(\''
+				+ id
+				+ '\','
 				+ num
 				+ ')" style="background-color: #F8F6F2; border-width: 0px; width:90%"'
-				+ 'name="checkList['
+				+ 'name="checkList_'
+				+ id
+				+ '['
 				+ num
-				+ '].description" id="checkList['
+				+ '].description" id="checkList_'
+				+ id
+				+ '['
 				+ num + '].description" value=' + desc + '>';
 		console.log(li.innerHTML);
 		top.appendChild(li);
-		calculateCheckListProgress();
+		calculateCheckListProgress(id);
 	}
 
-	function calculateCheckListProgress() {
-		var liList = document.getElementById("taskCheckList")
+	function calculateCheckListProgress(id) {
+		var liList = document.getElementById("taskCheckList_" + id)
 				.getElementsByTagName("li");
-		var inputList = document.getElementById("taskCheckList")
+		var inputList = document.getElementById("taskCheckList_" + id)
 				.getElementsByTagName("input");
 		var inputNum = inputList.length;
 		var checkedNum = 0;
@@ -218,11 +227,13 @@
 		if (checkboxTotal != 0) {
 			p = checkedNum * 100 / checkboxTotal;
 		}
-		var progress = document.getElementById("progressCheckList");
+		var progress = document.getElementById("progressCheckList_" + id);
 		progress.style.width = p + "%";
+		
+		console.log("progress:" + p);
 	}
 
-	function checkListReset() {
+	function checkListReset(id) {
 		var list = document.getElementById("taskCheckList")
 				.getElementsByTagName("li");
 		var len = list.length;
@@ -230,8 +241,8 @@
 			list[0].remove();
 		}
 
-		calculateCheckListProgress();
-		checkListToIdleMode();
+		calculateCheckListProgress(id);
+		checkListToIdleMode(id);
 	}
 
 	function enableFieldSet(bool, fieldSet) {
@@ -241,7 +252,7 @@
 
 	function editTask(id) {
 		document.getElementById("newTaskForm").reset();
-		checkListReset();
+		checkListReset(id);
 		if (id == null) {
 			$('#myModalLabel').html("新建任务");
 		} else {
@@ -279,23 +290,23 @@
 		ui.style.display = "none";
 	}
 
-	function checkListToInputMode() {
-		document.getElementById("inputContent").value = "";
-		showObjectById("inputCheckList");
-		hideObjectById("addCheckList");
+	function checkListToInputMode(id) {
+		document.getElementById('inputContent_' + id).value = "";
+		showObjectById('inputCheckList_' + id);
+		hideObjectById('addCheckList_' + id);
 	}
 
-	function checkListToIdleMode() {
-		showObjectById("addCheckList");
-		hideObjectById("inputCheckList");
+	function checkListToIdleMode(id) {
+		showObjectById('addCheckList_' + id);
+		hideObjectById('inputCheckList_' + id);
 	}
 
-	function createNewCheckList() {
-		var content = $("#inputContent").val();
+	function createNewCheckList(id) {
+		var content = $("#inputContent_" + id).val();
 		if (content != null && content != "") {
-			addCheckList('0', $("#inputContent").val());
+			addCheckList(id, '0', $("#inputContent_" + id).val());
 		}
-		checkListToIdleMode();
+		checkListToIdleMode(id);
 	}
 
 	function exportExcel() {
@@ -620,32 +631,31 @@
 										</div>
 
 										<div class="col-sm-6">
-											<div class="well"
-												style="background-color: #F8F6F2; border-width: 0px; padding: 10px 10px; margin-top: 6px">
-												<h5 style="color: #A4A3A2">
-													<span class="glyphicon glyphicon-th-list"></span> 分解任务：
-												</h5>
+											<h5>
+												<span class="glyphicon glyphicon-th-list"></span> 分解任务：
+											</h5>
+											<div class="well well-checklist">												
 												<div class="progress">
 													<div class="progress-bar progress-bar-success"
-														id="progressCheckList" role="progressbar"
+														id="progressCheckList_${task.id}" role="progressbar"
 														aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
 														style="width: 0%;"></div>
 												</div>
 
-												<ul id="taskCheckList" class="list-unstyled checkbox"
+												<ul id="taskCheckList_${task.id}" class="list-unstyled checkbox"
 													style="margin-left: 24px">
 												</ul>
 
-												<a id="addCheckList" href="#"
-													onclick="checkListToInputMode();">+新增检查项</a>
+												<a id="addCheckList_${task.id}" href="#"
+													onclick="checkListToInputMode('${task.id}')">+新增分解项</a>
 
-												<div id="inputCheckList" style="display: none">
+												<div id="inputCheckList_${task.id}" style="display: none">
 													<input type="text" class="form-control"
-														style="margin: 5px 0px" id="inputContent"
+														style="margin: 5px 0px" id="inputContent_${task.id}"
 														placeholder="请输入内容">
-													<button type="button" onclick="checkListToIdleMode();"
+													<button type="button" onclick="checkListToIdleMode('${task.id}');"
 														class="btn btn-default">取消</button>
-													<button type="button" onclick="createNewCheckList();"
+													<button type="button" onclick="createNewCheckList('${task.id}');"
 														class="btn btn-newtask">确认</button>
 												</div>
 											</div>
@@ -710,189 +720,8 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- 新建任务，模态框（Modal） -->
-		<form:form id="newTaskForm" commandName="newTaskInfo"
-			action="${ctx}/task/task_save" method="post">
-			<div class="modal fade" id="taskModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-task">
-					<div class="modal-content"
-						style="padding: 2px 20px; padding-left: 30px">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel"
-								style="font-weight: bold">新建任务</h4>
-						</div>
-						<div class="modal-body">
-							<form role="form" class="form-inline">
-								<form:input type="hidden" path="task.id" id="editTaskId" />
-								<fieldset id="taskInfoFieldSet">
-									<table class="table table-bordered table-condensed">
-										<tbody>
-											<tr>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">标题：</label></td>
-												<td class="width-l" colspan="3"><form:input
-														class="form-control" path="task.title" id="editTaskTitle"
-														required="true" /></td>
-												<td class="width-l" rowspan="6"><label><span
-														class="glyphicon glyphicon-th-list"></span> 分解任务：</label>
-													<div class="well"
-														style="background-color: #F8F6F2; border-width: 0px; padding: 10px 20px;">
-														<form:input type="hidden" path="task.progress"
-															id="editTaskProgress" />
-														<div class="progress">
-															<div class="progress-bar progress-bar-success"
-																id="progressCheckList" role="progressbar"
-																aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
-																style="width: 0%;"></div>
-														</div>
-
-														<ul id="taskCheckList" class="list-unstyled checkbox"
-															style="margin-left: 24px">
-														</ul>
-
-														<a id="addCheckList" href="#"
-															onclick="checkListToInputMode();">+新增检查项</a>
-
-														<div id="inputCheckList" style="display: none">
-															<input type="text" class="form-control"
-																style="margin: 5px 0px" id="inputContent"
-																placeholder="请输入内容">
-															<button type="button" onclick="checkListToIdleMode();"
-																class="btn btn-default">取消</button>
-															<button type="button" onclick="createNewCheckList();"
-																class="btn btn-newtask">确认</button>
-														</div>
-													</div></td>
-											</tr>
-											<tr>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">内容：</label></td>
-												<td class="width-l" colspan="3"><form:textarea
-														class="form-control" path="task.description"
-														id="editTaskDescription" rows="5" placeholder="描述需求详情。" />
-												</td>
-											</tr>
-											<tr>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">所属项目：</label></td>
-												<td class="width-m"><form:select class="form-control"
-														path="task.projectName" id="editTaskProjectName"
-														required="true">
-														<form:option value="" label="" />
-														<form:options items="${projects}" itemLabel="name"
-															itemValue="name" />
-													</form:select></td>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">分配给：</label></td>
-												<td class="width-m"><form:select class="form-control"
-														path="task.assignTo" id="editTaskAssignTo" required="true">
-														<form:option value="" label="" />
-														<form:options items="${users}" itemLabel="name"
-															itemValue="name" />
-													</form:select></td>
-											</tr>
-											<tr>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">状态：</label></td>
-												<td class="width-m"><form:select class="form-control"
-														onchange="taskStatusChange()" path="task.status"
-														id="editTaskStatus" required="true">
-														<form:option value="" label="" />
-														<form:options items="${statuses}" itemLabel="name"
-															itemValue="id" />
-													</form:select></td>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">期限：</label></td>
-												<td class="width-m"><form:input class="form-control"
-														type="date" path="task.expectFinishDate"
-														id="editTaskExpectFinishDate" required="true" /></td>
-											</tr>
-											<tr>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">附件(3)：</label></td>
-												<td class="width-l" colspan="3"><p>test.txt</p></td>
-											</tr>
-										</tbody>
-									</table>
-								</fieldset>
-
-								<fieldset id="taskFinishFieldSet">
-									<table class="table table-bordered table-condensed"
-										id="taskFinishTable">
-										<tbody>
-											<tr>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">完成时间：</label></td>
-												<td style="width: 60%"><form:input class="form-control"
-														type="date" path="task.realFinishDate"
-														id="editTaskRealFinishDate" /></td>
-												<td
-													style="width: 20%; text-align: center; vertical-align: middle;"
-													rowspan="4"><img class="img-rounded" alt="Brand"
-													src="/images/qrcode.jpg"
-													style="height: 160px; width: 160px;"></td>
-											</tr>
-											<tr>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">处理说明：</label></td>
-												<td style="width: 70%"><form:textarea
-														class="form-control" path="task.finishInfo"
-														id="editFinishInfo" rows="4" placeholder="说明处理方法和结果" /></td>
-											</tr>
-											<tr>
-												<td class="width-s active" style="vertical-align: middle"><label
-													class="pull-right">软件链接：</label></td>
-												<td style="width: 70%">
-													<div class="input-group">
-														<input type="text" name="task.finishLink"
-															id="editFinishLink" class="form-control"> <span
-															class="input-group-btn">
-															<button class="btn btn-default" type="button"
-																onClick="doLinkCopy()">
-																<span class="glyphicon glyphicon-duplicate"></span>
-															</button>
-														</span>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</fieldset>
-							</form>
-
-							<fieldset id="taskOptFieldSet">
-								<table class="table table-bordered table-condensed">
-									<tbody>
-										<tr>
-											<td class="width-s active" style="vertical-align: middle"><label
-												class="pull-right">操作：</label></td>
-											<td style="width: 90%"><a
-												class="btn btn-default btn-opt" onClick="exportExcel()">
-													<span class="glyphicon glyphicon-export glyphicon-opt"></span>导出到EXCEL
-											</a></td>
-										</tr>
-									</tbody>
-								</table>
-							</fieldset>
-
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">关闭</button>
-								<button id="saveTaskButton" type="button"
-									onclick="newTaskFormSubmit();" class="btn btn-newtask">保存</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form:form>
-
+		
 	</div>
-
 
 </body>
 </html>

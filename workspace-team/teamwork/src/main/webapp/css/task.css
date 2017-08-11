@@ -89,8 +89,12 @@
 	width: 10%;
 }
 
-.well {
-	margin: 0px 4px 4px 4px;
+.well-checklist {
+	margin: 10px 10px;
+	background-color: #F8F6F2; 
+	border-width: 0px; 
+	padding: 16px 20px; 
+	border: 0px;
 }
 
 h3 {
