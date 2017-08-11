@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -81,6 +82,10 @@ public class TaskController {
 			taskQuery.setQueryTask(task);
 		}
 		List<Task> tasks = taskService.getTaskByFilter(taskQuery);
+		Task taskForCreate = new Task();
+		taskForCreate.setId("T00000000000000");
+		taskForCreate.setTitle("这是一个新任务");
+		tasks.add(0, taskForCreate);
 		model.addAttribute("tasks", tasks);
 		
 		NewTaskInfo newTaskInfo = new NewTaskInfo();
@@ -130,14 +135,12 @@ public class TaskController {
 		taskCheckListService.deleteCheckListByParentId(taskid);
 		
 		String status = taskService.getTaskStatusById(taskid);
-		int numCur = taskService.getTaskNumByStatus(status);
-		int numAll = taskService.getTaskNumByStatus("all");
+		int num = taskService.getTaskNumByStatus(status);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", taskid);
-		map.put("statusCur", status);
-		map.put("numCur", numCur);
-		map.put("numAll", numAll);
+		map.put("status", status);
+		map.put("statusNum", num);
 		return map;
 	}
 	
@@ -249,6 +252,17 @@ public class TaskController {
         emailService.sendEmail(mail);
     	return true;
     }
+    
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> titleUpdate(Task task) {
+    	taskService.updateTask(task);	
+    	
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("result", "ok");
+		return map;
+	}	
+
 	
 }
 

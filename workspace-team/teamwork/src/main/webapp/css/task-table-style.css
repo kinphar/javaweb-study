@@ -1,0 +1,163 @@
+.table-for-tasklist {
+	margin-top: 6px;
+	border-collapse: separate;
+	border-spacing: 0px 6px;
+}
+
+.table>tbody>tr>td {
+	border-top: 0px;
+}
+
+.tr-task {
+	background-color: #fff;
+}
+
+.th-task {
+	color: #aaa;
+	font-weight: normal;
+	text-align: center;
+}
+
+.table>thead>tr>th {
+	/* border-bottom: 1px dashed #777; */
+	border-bottom: 1px solid #ddd;
+}
+
+.navbar-default {
+	padding: 8px 2px;
+}
+
+.btn-opt {
+	padding: 1px 4px;
+}
+
+.btn-newtask {
+	color: #ffffff;
+	background-color: #54D09F;
+}
+
+.btn-newtask:active, .btn-newtask:hover, .btn-newtask:focus {
+	color: #ffffff;
+	background-color: #4DBE91;
+}
+
+.form-group {
+	margin-right: 20px;
+}
+
+.progress {
+	height: 10px;
+	margin-top: 5px;
+	margin-bottom: 4px;
+}
+
+.glyphicon-opt {
+	font-size: 5px;
+	margin-right: 2px;
+}
+
+.modal-small {
+	top: 30%;
+}
+
+.page-header {
+	margin: 30px 0 10px;
+}
+
+.badge {
+	background-color: #BBB;
+}
+
+.badge-num {
+	vertical-align: top;
+	background-color: #ccc;
+}
+
+.modal-dialog-task {
+	width: 1000px;
+}
+
+.width-l {
+	width: 40%;
+}
+
+.width-m {
+	width: 15%;
+}
+
+.width-s {
+	width: 10%;
+}
+
+.well {
+	margin: 0px 4px 4px 4px;
+}
+
+h3 {
+	margin-top: 15px;
+	margin-bottom: 6px;
+}
+
+.breadcrumb {
+	background-color: #fff;
+}
+
+.label-progress {
+	background-color: #54d09f;
+}
+
+.label-title, .label-project, .label-name, .label-percent,
+	.label-deadline {
+	font-weight: normal;
+	margin-bottom: 0px;
+	vertical-align: middle;
+}
+
+.label-title, .label-project, .label-name, .label-percent {
+	text-align: left;
+}
+
+.label-title {
+	width: 56%;
+}
+
+.label-project {
+	width: 12%;
+	color: gray;
+}
+
+.label-name {
+	width: 12%
+}
+
+.label-percent {
+	width: 6%;
+}
+
+.label-deadline {
+	color: gray;
+	width: 10%;
+	text-align: right;
+}
+
+.glyphicon-project {
+	color: #0E76BD;
+}
+
+.label-value {
+	font-size: 14px;
+	color: #0E76BD;
+	background-color: #F8F6F2;
+}
+
+#progress-content {
+	margin: 0 auto;
+	background: #fff;
+	color: #2489c5;
+	font-size: 12px;
+	width: 40px;
+	vertical-align: middle;
+	border: 1px solid #2489c5;
+	border-radius: 3px;
+}
+

@@ -99,7 +99,7 @@ h3 {
 }
 
 .breadcrumb {
-	background-color: #fff;
+	background-color: #f8f8f8;
 }
 
 .label-progress {
@@ -158,6 +158,12 @@ h3 {
 	padding: .2em .5em .2em;
 	border: 1px solid #2489c5;
 	border-radius: 3px;
+}
+
+.label-value {
+	font-size: 14px;
+	color: #0E76BD;
+	background-color: #F8F6F2;
 }
 
 #progress-content {
@@ -244,11 +250,12 @@ h3 {
 }
 
 .form-control-title {
-    width: 50%;
-    font-size: 16px;
+    width: 95%;
+    font-size: 18px;
     font-weight: bold;
     border: 0px solid #ccc;
     box-shadow: inset 0 0px 0px rgba(0,0,0,.075);
+    padding:2px 2px;
 }
 
 input:focus {
@@ -258,12 +265,19 @@ input:focus {
 }
 
 .form-control-content {
-    width: 100%;
-    height: 38px;
-    border: 0px solid #ccc;
-    box-shadow: inset 0 0px 0px rgba(0,0,0,.075); 
+    width: 98%;
+    resize:none;
+    display:none;    
+}
+
+.form-control-comment {
+    width: 45%;
+    height: 64px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075); 
     overflow-y:hidden;
     resize:none;
+    margin-top:40px;
 }
 
 textarea:focus {
@@ -271,19 +285,127 @@ textarea:focus {
 	border: 1px solid #ccc;
 }
 
+.form-control-content::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #0E76BD;
+}
+.form-control-content:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #0E76BD;
+}
+.form-control-content::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #0E76BD;
+}
+.form-control-content::-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #0E76BD;
+}
+
+.form-control-content:focus::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: transparent;
+}
+.form-control-content:focus:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: transparent;
+}
+.form-control-content:focus::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: transparent;
+}
+.form-control-content:focus::-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: transparent;
+}
+
+.task-assign, .task-follower, .task-deadline, .task-status, .task-project, .task-file {
+	margin-left: 20px;
+}
+
 .task-assign{
-	margin-left: 16px;
+	margin-top: 16px
+}
+
+.task-follower{
 	margin-top: 10px
 }
 
-.task-follow{
-	margin-left: 16px;
+.task-deadline {
+	margin-top: 12px
+}
+
+.task-status {
+	margin-top: 16px
+}
+
+.task-project {
+	margin-top: 16px
+}
+
+.task-file {
 	margin-top: 20px
 }
 
+.task-comment-head {
+	margin-left: 26px;
+	margin-top: 40px
+}
+
+.task-comment-item {
+	margin-left: 26px;
+	margin-top: 5px
+}
+
+.task-desc {
+	margin-left: 20px;
+	margin-top: 10px;
+	margin-bottom: 36px;
+}
+
+.btn-delete {
+	font-size: 16px; 
+	color: #A4A3A2;
+}
+
+.btn-delete:hover {
+	color: #0E76BD;
+	background-color: #F8F6F2;
+}
+
+.input-deadline {
+	width: 30%;
+	font-size: 14px;
+    font-weight: bold;
+    border: 0px solid #ccc;
+    box-shadow: inset 0 0px 0px rgba(0,0,0,.075);
+    color: #0E76BD;
+    background-color: #F8F6F2;
+}
+
+.select-project, .select-status {
+	width: 30%;
+	font-weight: bold;
+	border: 0px solid #ccc;
+    box-shadow: inset 0 0px 0px rgba(0,0,0,.075);
+    color: #0E76BD;
+    background-color: #F8F6F2;
+          
+    appearance:none;   
+    -moz-appearance:none;   
+    -webkit-appearance:none;   
+    background: url("") no-repeat scroll rightright center transparent;
+}
+
+.select-project:focus, .select-status:focus {
+	font-weight: normal;
+	border: 1px solid #ccc;
+}
+
 hr {
-    margin-top: 10px;
+    margin-top: 4px;
     margin-bottom: 10px;
     border: 0;
     border-top: 1px solid #eee;
 }
+
