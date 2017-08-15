@@ -31,14 +31,19 @@
 	padding: 1px 4px;
 }
 
-.btn-newtask {
+.btn-saveUsers, .btn-newtask {
 	color: #ffffff;
 	background-color: #54D09F;
 }
 
-.btn-newtask:active, .btn-newtask:hover, .btn-newtask:focus {
+.btn-newtask:active, .btn-newtask:hover, .btn-newtask:focus,
+.btn-saveUsers:active, .btn-saveUsers:hover, .btn-saveUsers:focus {
 	color: #ffffff;
 	background-color: #4DBE91;
+}
+
+.btn-saveUsers {
+	padding:5px 30px;
 }
 
 .form-group {
@@ -93,7 +98,7 @@
 	margin: 10px 10px;
 	background-color: #F8F6F2; 
 	border-width: 0px; 
-	padding: 16px 20px; 
+	padding: 12px 20px; 
 	border: 0px;
 }
 
@@ -289,66 +294,34 @@ textarea:focus {
 	border: 1px solid #ccc;
 }
 
-.form-control-content::-webkit-input-placeholder {
-  /* WebKit browsers */
-  color: #0E76BD;
-}
-.form-control-content:-moz-placeholder {
-  /* Mozilla Firefox 4 to 18 */
-  color: #0E76BD;
-}
-.form-control-content::-moz-placeholder {
-  /* Mozilla Firefox 19+ */
-  color: #0E76BD;
-}
-.form-control-content::-ms-input-placeholder {
-  /* Internet Explorer 10+ */
-  color: #0E76BD;
-}
-
-.form-control-content:focus::-webkit-input-placeholder {
-  /* WebKit browsers */
-  color: transparent;
-}
-.form-control-content:focus:-moz-placeholder {
-  /* Mozilla Firefox 4 to 18 */
-  color: transparent;
-}
-.form-control-content:focus::-moz-placeholder {
-  /* Mozilla Firefox 19+ */
-  color: transparent;
-}
-.form-control-content:focus::-ms-input-placeholder {
-  /* Internet Explorer 10+ */
-  color: transparent;
-}
-
-.task-assign, .task-follower, .task-deadline, .task-status, .task-project, .task-file {
+.task-deadline, .task-status, .task-project, .task-file {
 	margin-left: 20px;
 }
 
 .task-assign{
+	margin-left: 10px;
 	margin-top: 16px
 }
 
 .task-follower{
+	margin-left: 10px;
 	margin-top: 10px
 }
 
 .task-deadline {
-	margin-top: 12px
+	margin-top: 20px
 }
 
 .task-status {
-	margin-top: 16px
+	margin-top: 24px
 }
 
 .task-project {
-	margin-top: 16px
+	margin-top: 24px
 }
 
 .task-file {
-	margin-top: 20px
+	margin-top: 28px
 }
 
 .task-comment-head {
@@ -370,6 +343,11 @@ textarea:focus {
 .btn-delete {
 	font-size: 16px; 
 	color: #A4A3A2;
+}
+
+.task-split-title {
+	margin-left: 10px;
+	margin-top: 30px;
 }
 
 .btn-delete:hover {
@@ -413,3 +391,21 @@ hr {
     border-top: 1px solid #eee;
 }
 
+.edit-user-btn {
+	margin-left: 8px;
+}
+
+.photo-small {
+	height: 26px; 
+	width: 26px;
+	margin-right:3px;
+}
+
+.photo-medium {
+	height: 30px; 
+	width: 30px;
+}
+
+.divider-related-user {
+	margin:3px 0px;
+}

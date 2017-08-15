@@ -17,6 +17,8 @@ public class Task {
 
     private String assignTo;
 
+    private String follower;
+
     private String createBy;
 
     private Date createDate;
@@ -89,6 +91,14 @@ public class Task {
 
     public void setAssignTo(String assignTo) {
         this.assignTo = assignTo == null ? null : assignTo.trim();
+    }
+
+    public String getFollower() {
+        return follower;
+    }
+
+    public void setFollower(String follower) {
+        this.follower = follower == null ? null : follower.trim();
     }
 
     public String getCreateBy() {

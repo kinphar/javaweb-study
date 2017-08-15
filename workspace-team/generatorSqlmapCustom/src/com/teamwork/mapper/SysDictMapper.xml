@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.teamwork.pojo.SysDict" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="en_name" property="enName" jdbcType="VARCHAR" />
     <result column="sort" property="sort" jdbcType="VARCHAR" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, sort, create_by, create_date, update_by, update_date, del_flag
+    id, name, en_name, sort, create_by, create_date, update_by, update_date, del_flag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.SysDictExample" >
     select
@@ -103,12 +104,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.teamwork.pojo.SysDict" >
-    insert into sys_dict (id, name, sort, 
-      create_by, create_date, update_by, 
-      update_date, del_flag)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR}, 
-      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
-      #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR})
+    insert into sys_dict (id, name, en_name, 
+      sort, create_by, create_date, 
+      update_by, update_date, del_flag
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{enName,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.teamwork.pojo.SysDict" >
     insert into sys_dict
@@ -118,6 +121,9 @@
       </if>
       <if test="name != null" >
         name,
+      </if>
+      <if test="enName != null" >
+        en_name,
       </if>
       <if test="sort != null" >
         sort,
@@ -144,6 +150,9 @@
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null" >
+        #{enName,jdbcType=VARCHAR},
       </if>
       <if test="sort != null" >
         #{sort,jdbcType=VARCHAR},
@@ -180,6 +189,9 @@
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.enName != null" >
+        en_name = #{record.enName,jdbcType=VARCHAR},
+      </if>
       <if test="record.sort != null" >
         sort = #{record.sort,jdbcType=VARCHAR},
       </if>
@@ -207,6 +219,7 @@
     update sys_dict
     set id = #{record.id,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
+      en_name = #{record.enName,jdbcType=VARCHAR},
       sort = #{record.sort,jdbcType=VARCHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
@@ -222,6 +235,9 @@
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null" >
+        en_name = #{enName,jdbcType=VARCHAR},
       </if>
       <if test="sort != null" >
         sort = #{sort,jdbcType=VARCHAR},
@@ -247,6 +263,7 @@
   <update id="updateByPrimaryKey" parameterType="com.teamwork.pojo.SysDict" >
     update sys_dict
     set name = #{name,jdbcType=VARCHAR},
+      en_name = #{enName,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=VARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},

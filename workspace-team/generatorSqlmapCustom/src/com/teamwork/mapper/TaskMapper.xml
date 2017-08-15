@@ -9,6 +9,7 @@
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="progress" property="progress" jdbcType="VARCHAR" />
     <result column="assign_to" property="assignTo" jdbcType="VARCHAR" />
+    <result column="follower" property="follower" jdbcType="VARCHAR" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
@@ -78,9 +79,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, project_name, title, description, status, progress, assign_to, create_by, create_date, 
-    update_by, update_date, expect_finish_date, real_finish_date, finish_info, finish_link, 
-    del_flag
+    id, project_name, title, description, status, progress, assign_to, follower, create_by, 
+    create_date, update_by, update_date, expect_finish_date, real_finish_date, finish_info, 
+    finish_link, del_flag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.TaskExample" >
     select
@@ -115,16 +116,16 @@
   <insert id="insert" parameterType="com.teamwork.pojo.Task" >
     insert into task (id, project_name, title, 
       description, status, progress, 
-      assign_to, create_by, create_date, 
-      update_by, update_date, expect_finish_date, 
-      real_finish_date, finish_info, finish_link, 
-      del_flag)
+      assign_to, follower, create_by, 
+      create_date, update_by, update_date, 
+      expect_finish_date, real_finish_date, finish_info, 
+      finish_link, del_flag)
     values (#{id,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{progress,jdbcType=VARCHAR}, 
-      #{assignTo,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{expectFinishDate,jdbcType=VARCHAR}, 
-      #{realFinishDate,jdbcType=VARCHAR}, #{finishInfo,jdbcType=VARCHAR}, #{finishLink,jdbcType=VARCHAR}, 
-      #{delFlag,jdbcType=VARCHAR})
+      #{assignTo,jdbcType=VARCHAR}, #{follower,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{expectFinishDate,jdbcType=VARCHAR}, #{realFinishDate,jdbcType=VARCHAR}, #{finishInfo,jdbcType=VARCHAR}, 
+      #{finishLink,jdbcType=VARCHAR}, #{delFlag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.teamwork.pojo.Task" >
     insert into task
@@ -149,6 +150,9 @@
       </if>
       <if test="assignTo != null" >
         assign_to,
+      </if>
+      <if test="follower != null" >
+        follower,
       </if>
       <if test="createBy != null" >
         create_by,
@@ -199,6 +203,9 @@
       </if>
       <if test="assignTo != null" >
         #{assignTo,jdbcType=VARCHAR},
+      </if>
+      <if test="follower != null" >
+        #{follower,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null" >
         #{createBy,jdbcType=VARCHAR},
@@ -259,6 +266,9 @@
       <if test="record.assignTo != null" >
         assign_to = #{record.assignTo,jdbcType=VARCHAR},
       </if>
+      <if test="record.follower != null" >
+        follower = #{record.follower,jdbcType=VARCHAR},
+      </if>
       <if test="record.createBy != null" >
         create_by = #{record.createBy,jdbcType=VARCHAR},
       </if>
@@ -300,6 +310,7 @@
       status = #{record.status,jdbcType=VARCHAR},
       progress = #{record.progress,jdbcType=VARCHAR},
       assign_to = #{record.assignTo,jdbcType=VARCHAR},
+      follower = #{record.follower,jdbcType=VARCHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
       update_by = #{record.updateBy,jdbcType=VARCHAR},
@@ -333,6 +344,9 @@
       </if>
       <if test="assignTo != null" >
         assign_to = #{assignTo,jdbcType=VARCHAR},
+      </if>
+      <if test="follower != null" >
+        follower = #{follower,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null" >
         create_by = #{createBy,jdbcType=VARCHAR},
@@ -372,6 +386,7 @@
       status = #{status,jdbcType=VARCHAR},
       progress = #{progress,jdbcType=VARCHAR},
       assign_to = #{assignTo,jdbcType=VARCHAR},
+      follower = #{follower,jdbcType=VARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},

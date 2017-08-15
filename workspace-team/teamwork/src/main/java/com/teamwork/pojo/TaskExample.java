@@ -595,6 +595,76 @@ public class TaskExample {
             return (Criteria) this;
         }
 
+        public Criteria andFollowerIsNull() {
+            addCriterion("follower is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerIsNotNull() {
+            addCriterion("follower is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerEqualTo(String value) {
+            addCriterion("follower =", value, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNotEqualTo(String value) {
+            addCriterion("follower <>", value, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerGreaterThan(String value) {
+            addCriterion("follower >", value, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerGreaterThanOrEqualTo(String value) {
+            addCriterion("follower >=", value, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerLessThan(String value) {
+            addCriterion("follower <", value, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerLessThanOrEqualTo(String value) {
+            addCriterion("follower <=", value, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerLike(String value) {
+            addCriterion("follower like", value, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNotLike(String value) {
+            addCriterion("follower not like", value, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerIn(List<String> values) {
+            addCriterion("follower in", values, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNotIn(List<String> values) {
+            addCriterion("follower not in", values, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerBetween(String value1, String value2) {
+            addCriterion("follower between", value1, value2, "follower");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNotBetween(String value1, String value2) {
+            addCriterion("follower not between", value1, value2, "follower");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateByIsNull() {
             addCriterion("create_by is null");
             return (Criteria) this;

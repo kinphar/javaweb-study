@@ -16,6 +16,7 @@
 
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
+<script type="application/javascript" src="/js/common.js"></script>
 
 <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css" />
 <script type="application/javascript"
@@ -33,9 +34,25 @@
 			radioClass : 'iradio_square-blue',
 			increaseArea : '20%' // optional
 		});
-		$('input').on('ifChecked', function(event) {
+		
+		$('input[type="radio"]').on('ifChecked', function(event) {
 			var s = event.target.value;
 			queryFormSubmitWithStatus(s);
+		});
+		
+		$('input[type="checkbox"]').on('ifChecked ifUnchecked', function(event) {		
+			var val = event.target.value;
+			var parentId = event.target.dataset.parentid;
+			console.log(event.type + ":" + val);
+			
+			if (val == "all") {
+				$boxes = $("#" + parentId).find("[type='checkbox']");
+				if (event.type == 'ifChecked') {
+					$boxes.iCheck('check');
+				} else {
+					$boxes.iCheck('uncheck');
+				}
+			}
 		});
 
 		$(".form_datetime").datetimepicker({
@@ -49,7 +66,157 @@
 			startView : 2,//月视图
 			minView : 2
 		});
+
+		$(function() {
+			$('.panel-collapse').on('show.bs.collapse', function() {
+				var taskId = this.dataset.taskid;
+				var taskProcessors = this.dataset.processors;
+				var taskFollowers = this.dataset.followers;
+				updateUserGroup("list-processor_" + taskId, taskProcessors);
+				updateUserGroup("list-follower_" + taskId, taskFollowers);
+			})
+		});
+
 	});
+	
+	function saveSelectUsers(nodePrefix, taskId) {
+		var userSelected = "";		
+		$("#" + nodePrefix + taskId).find("[type='checkbox']").each(function(){
+			if ($(this).is(':checked') && $(this).val() != "all") {
+				if (userSelected != "") {
+					userSelected += ";";					
+				}
+				userSelected += $(this).val();				
+			}
+		})		
+		console.log("userSelected:" + userSelected);
+		
+		//do save.
+		var task = {};
+		task.id = taskId;
+		if (nodePrefix.indexOf("processor") >= 0) {
+			task.assignTo = userSelected;
+		} else if (nodePrefix.indexOf("follower") >= 0) {
+			task.follower = userSelected;
+		}
+		
+		if (doTaskUpdate(task) == "success") {
+			updateUserGroup(nodePrefix + taskId, userSelected);
+			if (nodePrefix.indexOf("processor") >= 0) {
+				updatePanelheadProcessor(taskId, userSelected);
+			}
+		} else {
+			alert("修改未生效！");
+		}		
+	}
+	
+	function updatePanelheadProcessor(taskId, userActived) {
+		$("#panel-head-processor_" + taskId).find("img").each(function(){
+			console.log("$$$" + $(this).attr("src")); 
+			
+			$(this).remove();
+		})	
+
+		var parent = document.getElementById("panel-head-processor_" + taskId);
+		var userArray = userActived.split(";");		
+		for (var i = 0; i < userArray.length; i++) {			
+			if (userArray[i] != "") {
+				var userChild = document.createElement("img");
+				userChild.setAttribute('class','img-circle photo-small');
+				var photo = getPhotoByEmail(userArray[i]);			
+				userChild.setAttribute('src', photo);
+				parent.appendChild(userChild);
+			}
+		}
+	}
+	
+	function dispSelectUsers(nodePrefix, taskId) {		
+		var activeUsers = "";
+		$("#" + nodePrefix + taskId).find("img").each(function(){
+			activeUsers += $(this).attr("value") + ";";
+		})			
+			
+		$("#" + nodePrefix + taskId).find("[type='checkbox']").each(function(){	
+			var userName = $(this).val();
+			if (activeUsers.indexOf(userName) >= 0) {
+				$(this).iCheck('check');
+			} else {
+				$(this).iCheck('uncheck');
+			}
+		})		
+	}
+	
+	function removeAlluser(parent) {
+		var children = parent.childNodes;
+		console.log("removeAlluser");
+		
+		for (var i = children.length - 1; i >= 0; i--) {
+			console.log("remove:" + children[i].className);
+			
+			if (children[i].className == "user") {
+				parent.removeChild(children[i]);
+				console.log("remove:" + children[i].className);
+			}
+		}
+	}
+
+	function findAddUserNode(parent) {
+		var children = parent.childNodes;
+		for (var i = children.length - 1; i >= 0; i--) {
+			var className = children[i].className + "";
+			if (className.indexOf("edit-user-btn") >= 0) {
+				return children[i];
+			}
+		}
+		return null;
+	}
+
+	function updateUserGroup(id, userInfo) {
+		var parent = document.getElementById(id);
+		removeAlluser(parent);
+
+		console.log("id:" + id + "userInfo:" + userInfo);
+		var addUserBtnChild = findAddUserNode(parent);
+		var userArray = userInfo.split(";");
+		
+		for (var i = 0; i < userArray.length; i++) {
+			var userChild = document.createElement("li");
+			userChild.setAttribute('class','user');
+			if (userArray[i] != "") {
+				var photo = getPhotoByEmail(userArray[i]);
+				console.log("email:" + userArray[i] + ";photo:" + photo);
+				userChild.innerHTML = '<img class="img-circle photo-medium" value="'
+					+ userArray[i]
+					+ '" src="'
+				 	+ photo 
+				 	+ '">'
+				parent.insertBefore(userChild, addUserBtnChild);
+			}
+		}
+	}
+
+	function getValidNodes(parentNode) {
+		var sub_child = parentNode.childNodes;
+		//文本节点并且是空的文本节点时，将空文本节点删除
+		for (var i = 0; i < sub_child.length; i++) {
+			if (sub_child[i].nodeType == '3'
+					&& sub_child[i].nodeName == '#text'
+					&& !/\S/.test(sub_child[i].nodeValue)) {
+				parentNode.removeChild(sub_child[i]);
+			}
+		}
+		return parentNode.childNodes;
+	}
+
+	function getPhotoByEmail(email) {
+		var photo = null;
+		<c:forEach items="${users}" var="user">
+		if (email == "${user.email}") {
+			return "${user.photo}"
+		}
+		</c:forEach>
+		return null;
+	}
 
 	function queryFormSubmit() {
 		document.getElementById("statusFilter").value = "10002";
@@ -176,7 +343,7 @@
 		var li = document.createElement("li");
 		var checkedFlag = (checked == '1') ? 'checked="checked"' : '';
 		li.innerHTML = '<input type="checkbox" onClick="doCheck(\''
-				+ id 
+				+ id
 				+ '\')" name=checkList_'
 				+ id
 				+ '['
@@ -189,14 +356,9 @@
 				+ '\','
 				+ num
 				+ ')" style="background-color: #F8F6F2; border-width: 0px; width:90%"'
-				+ 'name="checkList_'
-				+ id
-				+ '['
-				+ num
-				+ '].description" id="checkList_'
-				+ id
-				+ '['
-				+ num + '].description" value=' + desc + '>';
+				+ 'name="checkList_' + id + '[' + num
+				+ '].description" id="checkList_' + id + '[' + num
+				+ '].description" value=' + desc + '>';
 		console.log(li.innerHTML);
 		top.appendChild(li);
 		calculateCheckListProgress(id);
@@ -229,7 +391,7 @@
 		}
 		var progress = document.getElementById("progressCheckList_" + id);
 		progress.style.width = p + "%";
-		
+
 		console.log("progress:" + p);
 	}
 
@@ -399,7 +561,7 @@
 			alert("修改未生效！");
 		}
 	}
-	
+
 	function taskStatusChange(id) {
 		var status = $("#sel_status_" + id).val();
 		var task = {};
@@ -410,10 +572,10 @@
 		} else {
 			alert("修改未生效！");
 		}
-		
+
 		window.location.reload();
 	}
-	
+
 	function taskProjectChange(id) {
 		var project = $("#sel_project_" + id).val();
 		var task = {};
@@ -424,6 +586,12 @@
 		} else {
 			alert("修改未生效！");
 		}
+	}
+
+	function addTaskProcessor() {
+	}
+
+	function addTaskFollower() {
 	}
 
 	function newComment() {
@@ -514,9 +682,13 @@
 										&nbsp; <label id="item_title_${task.id}" class="label-title">${task.title}</label>
 										<label class="label-project"><span
 											class="glyphicon glyphicon-stop glyphicon-project"></span>
-											${task.projectName}</label> <label class="label-name"><span
-											class="label label-span-name">李</span></label> <label
-										class="label-percent"><span
+											${task.projectName}</label> <label class="label-name" id="panel-head-processor_${task.id}"> 
+											<c:forEach
+												items="${users}" var="user">
+												<c:if test="${fn:contains(task.assignTo, user.email)}">
+													<img class="img-circle photo-small" src="${user.photo}">
+												</c:if>
+											</c:forEach></label> <label class="label-percent"><span
 											class="label label-span-percent">${task.progress}</span></label> <label
 										class="label-deadline"><span
 											class="glyphicon glyphicon-time"></span>
@@ -525,7 +697,9 @@
 								</h4>
 							</div>
 
-							<div class="panel-collapse collapse" id="collapse_${task.id}">
+							<div class="panel-collapse collapse" id="collapse_${task.id}"
+								data-taskid="${task.id}" data-processors="${task.assignTo}"
+								data-followers="${task.follower}">
 								<div class="panel-body" style="padding: 10px 50px 30px">
 									<div class="col-sm-12">
 										<div class="col-sm-6">
@@ -547,7 +721,7 @@
 										<div class="col-sm-6">
 											<div class="task-desc">
 												<a id="desc_disp_${task.id}"
-													style="text-decoration: none; font-size: 14px; color: black"
+													style="text-decoration: none; font-size: 14px; color: #0E76BD;"
 													href="#" onclick="taskDescEditMode('${task.id}')"> <c:if
 														test="${empty task.description}">添加需求描述</c:if>${task.description}</a>
 												<textarea id="desc_input_${task.id}"
@@ -555,32 +729,6 @@
 													onblur="taskDescDispMode('${task.id}')" rows="10">${task.description}</textarea>
 											</div>
 
-											<div class="task-assign">
-												<ul class="list-inline">
-													<li><h5 style="color: #A4A3A2">分配给：</h5></li>
-													<li><label class="label-name"><span
-															class="label label-span-name">李</span></label></li>
-													<li><label class="label-name"><span
-															class="label label-span-name">丁</span></label></li>
-													<li><label class="label-name"><span
-															class="label label-span-name"> + </span></label></li>
-												</ul>
-											</div>
-											<div class="task-follower">
-												<ul class="list-inline">
-													<li><h5 style="color: #A4A3A2">关注人：</h5></li>
-													<li><label class="label-name"><span
-															class="label label-span-name">李</span></label></li>
-													<li><label class="label-name"><span
-															class="label label-span-name">丁</span></label></li>
-													<li><label class="label-name"><span
-															class="label label-span-name">吴</span></label></li>
-													<li><label class="label-name"><span
-															class="label label-span-name">陈</span></label></li>
-													<li><label class="label-name"><span
-															class="label label-span-name"> + </span></label></li>
-												</ul>
-											</div>
 											<div class="task-deadline">
 												<div style="float: left">
 													<h5 style="color: #A4A3A2">截止日期：</h5>
@@ -621,7 +769,7 @@
 														</option>
 													</c:forEach>
 												</select>
-												
+
 											</div>
 											<div class="task-file">
 												<h5 style="color: #A4A3A2">
@@ -631,10 +779,63 @@
 										</div>
 
 										<div class="col-sm-6">
-											<h5>
-												<span class="glyphicon glyphicon-th-list"></span> 分解任务：
-											</h5>
-											<div class="well well-checklist">												
+											<div class="task-assign">
+												<ul class="list-inline" id="list-processor_${task.id}">
+													<li class="title"><h5 style="color: #A4A3A2">分配给：</h5></li>													
+													<li class="dropdown circle edit-user-btn"><a href="#"
+														class="dropdown-toggle circle-text" data-toggle="dropdown"
+														onclick="dispSelectUsers('list-processor_', '${task.id}');">
+														<span class="glyphicon glyphicon-pencil"></span>
+														</a>
+														<ul class="dropdown-menu" style="padding: 8px 0px">
+															<li style="margin-left: 10px"><input type="checkbox"
+																value="all" data-parentid="list-processor_${task.id}"> 全有/全无</li>
+															<li class="divider divider-related-user"></li>
+															<c:forEach items="${users}" var="user">
+																<li style="margin:5px 10px"><input
+																	type="checkbox" value="${user.email}"
+																	<c:if test="${fn:contains(task.assignTo, user.email)}">checked="checked"</c:if>>
+																	${user.name}</li>
+															</c:forEach>
+															<li class="divider divider-related-user"></li>
+															<li style="text-align: center"><button type="button"
+																	onclick="saveSelectUsers('list-processor_', '${task.id}');" 
+																	class="btn btn-saveUsers">保存</button></li>
+														</ul></li>
+												</ul>
+											</div>
+											<div class="task-follower">
+												<ul class="list-inline" id="list-follower_${task.id}">
+													<li><h5 style="color: #A4A3A2">关注人：</h5></li>
+													<li class="dropdown circle edit-user-btn"><a href="#"
+														class="dropdown-toggle circle-text" data-toggle="dropdown"
+														onclick="dispSelectUsers('list-follower_', '${task.id}');">
+														<span class="glyphicon glyphicon-pencil"></a>
+														<ul class="dropdown-menu" style="padding: 8px 0px">
+															<li style="margin-left: 10px"><input type="checkbox"
+																value="all" data-parentid="list-follower_${task.id}"> 全有/全无</li>
+															<li class="divider divider-related-user"></li>
+															<c:forEach items="${users}" var="user">
+																<li style="margin: 5px 10px"><input
+																	type="checkbox" value="${user.email}"
+																	<c:if test="${fn:contains(task.follower, user.email)}">checked="checked"</c:if>>
+																	${user.name}</li>
+															</c:forEach>
+															<li class="divider divider-related-user"></li>
+															<li style="text-align: center"><button type="button"
+																	onclick="saveSelectUsers('list-follower_', '${task.id}');" 
+																	class="btn btn-saveUsers">保存</button></li>
+														</ul></li>
+												</ul>
+											</div>
+
+											<div class="task-split-title">
+												<h5>
+													<span class="glyphicon glyphicon-th-list"></span> 分解任务：
+												</h5>
+											</div>
+
+											<div class="well well-checklist">
 												<div class="progress">
 													<div class="progress-bar progress-bar-success"
 														id="progressCheckList_${task.id}" role="progressbar"
@@ -642,8 +843,8 @@
 														style="width: 0%;"></div>
 												</div>
 
-												<ul id="taskCheckList_${task.id}" class="list-unstyled checkbox"
-													style="margin-left: 24px">
+												<ul id="taskCheckList_${task.id}"
+													class="list-unstyled checkbox" style="margin-left: 24px">
 												</ul>
 
 												<a id="addCheckList_${task.id}" href="#"
@@ -653,9 +854,11 @@
 													<input type="text" class="form-control"
 														style="margin: 5px 0px" id="inputContent_${task.id}"
 														placeholder="请输入内容">
-													<button type="button" onclick="checkListToIdleMode('${task.id}');"
+													<button type="button"
+														onclick="checkListToIdleMode('${task.id}');"
 														class="btn btn-default">取消</button>
-													<button type="button" onclick="createNewCheckList('${task.id}');"
+													<button type="button"
+														onclick="createNewCheckList('${task.id}');"
 														class="btn btn-newtask">确认</button>
 												</div>
 											</div>
@@ -720,7 +923,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 
 </body>

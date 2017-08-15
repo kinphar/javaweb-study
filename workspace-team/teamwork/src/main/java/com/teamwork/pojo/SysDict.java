@@ -7,6 +7,8 @@ public class SysDict {
 
     private String name;
 
+    private String enName;
+
     private String sort;
 
     private String createBy;
@@ -33,6 +35,14 @@ public class SysDict {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getEnName() {
+        return enName;
+    }
+
+    public void setEnName(String enName) {
+        this.enName = enName == null ? null : enName.trim();
     }
 
     public String getSort() {

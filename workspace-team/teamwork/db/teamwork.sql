@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-07-28 15:45:29
+Date: 2017-08-14 15:05:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,7 +42,6 @@ CREATE TABLE `project` (
 -- ----------------------------
 INSERT INTO `project` VALUES ('10', '板卡定制', null, null, null, null, 'admin', null, null, null, null, null, null);
 INSERT INTO `project` VALUES ('100', 'T91R', 'first project', null, null, null, 'dqf', '2017-07-27 19:45:16', null, null, null, null, null);
-INSERT INTO `project` VALUES ('1001', 'T91R', null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `project` VALUES ('1002', 'I66', null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `project` VALUES ('1003', 'I68', null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `project` VALUES ('1004', 'teamwork', null, null, null, null, '丁庆发', null, null, null, null, null, null);
@@ -58,6 +57,7 @@ DROP TABLE IF EXISTS `sys_dict`;
 CREATE TABLE `sys_dict` (
   `id` varchar(64) NOT NULL COMMENT '编号',
   `name` varchar(64) DEFAULT NULL COMMENT '名称',
+  `en_name` varchar(64) DEFAULT NULL COMMENT '英文名称',
   `sort` varchar(64) DEFAULT NULL COMMENT '分类',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
@@ -72,11 +72,12 @@ CREATE TABLE `sys_dict` (
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
-INSERT INTO `sys_dict` VALUES ('10001', '未开始', 'task_status', null, null, null, null, null);
-INSERT INTO `sys_dict` VALUES ('10002', '正在处理', 'task_status', null, null, null, null, null);
-INSERT INTO `sys_dict` VALUES ('10003', '已完成', 'task_status', null, null, null, null, null);
-INSERT INTO `sys_dict` VALUES ('10004', '已审核', 'task_status', null, null, null, null, null);
-INSERT INTO `sys_dict` VALUES ('10005', '已归档', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10001', '初稿', 'new', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10002', '正在处理', 'doing', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10003', '完成', 'done', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10004', '已审核', 'checked', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10005', '已归档', 'archived', 'task_status', null, null, null, null, null);
+INSERT INTO `sys_dict` VALUES ('10006', '暂停', 'pause', 'task_status', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for task
@@ -89,7 +90,8 @@ CREATE TABLE `task` (
   `description` varchar(512) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '任务描述',
   `status` varchar(64) DEFAULT NULL COMMENT '任务状态：1、未分配，2、正在处理，3、已完成，4、已审核，5、已归档',
   `progress` varchar(64) DEFAULT NULL COMMENT '任务进度',
-  `assign_to` varchar(64) DEFAULT NULL COMMENT '处理者',
+  `assign_to` varchar(128) DEFAULT NULL COMMENT '处理者',
+  `follower` varchar(256) DEFAULT NULL COMMENT '关注人',
   `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
@@ -106,21 +108,20 @@ CREATE TABLE `task` (
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES ('10088', null, null, '这是一个测试任务', 'doing', null, null, 'dqf', '2017-07-27 19:45:18', null, null, null, null, null, null, null);
-INSERT INTO `task` VALUES ('T17071817141458', 'teamwork', '支持发送邮件', '12341234', '10003', '0', '丁庆发', '', '2017-07-18 17:14:14', null, '2017-07-25 16:01:02', '2017-07-21', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17071817150796', 'teamwork', '账号注册登录以及权限校验', 'fsfffffffff啊手动阀手动阀', '10002', '25%', '丁庆发', null, '2017-07-18 17:15:07', null, '2017-07-28 15:41:13', '2017-07-21', null, null, null, '0');
-INSERT INTO `task` VALUES ('T17071909424315', 'T91R', 'test', '', '10003', '0', '陈钟', null, '2017-07-19 09:42:43', null, '2017-07-24 17:36:42', '2017-07-15', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17071914373941', 'I68', '检查项测试任务', '123412341', '10003', '0', '丁庆发', null, '2017-07-19 14:37:40', null, '2017-07-25 08:57:39', '2017-07-14', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17071917375748', 'T91R', '检查项测试', '', '10001', '0', '陈钟', null, '2017-07-19 17:37:57', null, '2017-07-19 17:37:57', '2017-07-22', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17072111340965', '板卡定制', '任务状态增加数量显示；', '', '10002', '0%', '丁庆发', null, '2017-07-21 11:34:10', null, '2017-07-28 11:38:15', '2017-07-31', null, null, null, '0');
-INSERT INTO `task` VALUES ('T17072119425981', 'I68', '两只垃圾桶，一只乌龟。一只小鸟。', '什么鸟', '10002', '0', '陈钟', null, '2017-07-21 19:43:00', null, '2017-07-21 19:49:45', '2017-07-22', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17072119590044', 'I66', '测试任务 1234132', '', '10001', '0', '丁庆发', null, '2017-07-21 19:59:00', null, '2017-07-21 19:59:07', '2017-07-14', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17072200154722', 'T91R', '测试任务', '', '10003', '0', '陈钟', null, '2017-07-22 00:15:47', null, '2017-07-22 00:15:47', '2017-07-30', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17072323154929', 'teamwork', '检查项测试任务', '', '10001', '0', '陈钟', null, '2017-07-23 23:15:50', null, '2017-07-23 23:16:36', '2017-07-14', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17072400483980', '板卡定制', '检查项测试任务', '', '10002', '0', '丁庆发', null, '2017-07-24 00:48:39', null, '2017-07-24 17:35:24', '2017-07-14', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17072416440079', '板卡定制', '123134', '', '10002', '0', '陈钟', null, '2017-07-24 16:44:01', null, '2017-07-24 23:38:52', '2017-07-15', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17072417032911', 'T91R', '12341', '', '10002', '0', '李晴', null, '2017-07-24 17:03:30', null, '2017-07-25 00:03:42', '2017-07-08', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17072610461800', 'T91R', '瓦力瓦力', '', '10001', '0', '陈钟', null, '2017-07-26 10:46:18', null, '2017-07-26 10:46:18', '2017-07-14', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17071817150796', 'teamwork', '账号注册登录以及权限校验', 'fsfffffffff啊手动阀手动阀', '10006', '100%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-07-18 17:15:07', null, '2017-08-02 18:42:07', '2017-07-21', '', '', '', '0');
+INSERT INTO `task` VALUES ('T17072111340965', 'teamwork', '魔镜第二阶段，新样机，带网线', '需要实现以下功能：<br />1. 重新设计UI；<br />2. 编写桌面空间widget；<br />3. 实现基本功能，呼叫中心、监视、记录；<br />', '10002', '5%', 'dingqingfa@star-net.cn;chenzhong.sy@star-net.cn', 'dingqingfa@star-net.cn;liqing@star-net.cn', null, '2017-07-21 11:34:10', null, '2017-08-12 15:29:29', '2017-08-31', '2017-07-29', '处理说明', 'http://www.baidu.com/abcd', '0');
+INSERT INTO `task` VALUES ('T17072610461800', 'T91R', '瓦力瓦力', '', '10003', '0%', '陈钟', 'dingqingfa@star-net.cn', null, '2017-07-26 10:46:18', null, '2017-07-28 16:03:46', '2017-07-14', '2017-07-31', '小菜一碟', 'http://192.168.12.111111', '0');
+INSERT INTO `task` VALUES ('T17073000453713', 'teamwork', '文件上传与管理功能', '添加需求描述', '10003', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-07-30 00:45:38', null, '2017-08-11 23:53:47', '2017-07-30', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17080215071754', 'T91R', '搜索功能', '', '10002', '100%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-02 15:07:18', null, '2017-08-11 16:57:13', '2017-08-10', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17080318152860', '板卡定制', '又一个邮件发送测试', 'how do you do.', '10001', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-03 18:15:28', null, '2017-08-04 10:56:36', '2017-08-11', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17080401011453', '板卡定制', '1234132412', '', '10001', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-04 01:01:14', null, '2017-08-04 01:01:14', '2017-08-10', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17080410271187', '板卡定制', '邮箱测试新任务', '就是实现发送任务简述发送。', '10001', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-04 10:27:11', null, '2017-08-04 10:27:11', '2017-08-17', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17080410341638', 'teamwork', '发送邮件测试任务', '发送邮件测试任务。。。。', '10003', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-04 10:34:17', null, '2017-08-04 11:16:49', '2017-08-10', '2017-08-04', '', '', '0');
+INSERT INTO `task` VALUES ('T17080410424594', 'T91R', '新的邮件任务发送测试', '爱情两个字多烦忧。', '10002', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-04 10:42:46', null, '2017-08-11 16:57:32', '2017-08-18', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17080411022388', 'I66', '有一个新的发送邮件测试任务', 'how are you.', '10006', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-04 11:02:23', null, '2017-08-04 11:14:59', '2017-08-11', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17081110415211', 'I68', '测试任务吧', '', '10001', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-11 10:41:53', null, '2017-08-11 10:41:53', '2017-08-25', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17081110510556', '板卡定制', '测试一下flash读写', '略', '10001', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-11 10:51:05', null, '2017-08-11 10:51:05', '2017-08-17', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17081111014068', 'T91R', '嘻哈嘻哈', '没有什么', '10001', '0%', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-11 11:01:41', null, '2017-08-11 11:01:41', '2017-08-18', null, null, null, '1');
 
 -- ----------------------------
 -- Table structure for task_check_list
@@ -138,15 +139,15 @@ CREATE TABLE `task_check_list` (
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COMMENT='任务检查项';
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 COMMENT='任务检查项';
 
 -- ----------------------------
 -- Records of task_check_list
 -- ----------------------------
-INSERT INTO `task_check_list` VALUES ('70', 'T17071817150796', '1234123', '1', null, '2017-07-28 15:41:13', null, '2017-07-28 15:41:13', '0');
-INSERT INTO `task_check_list` VALUES ('71', 'T17071817150796', '41234', '0', null, '2017-07-28 15:41:13', null, '2017-07-28 15:41:13', '0');
-INSERT INTO `task_check_list` VALUES ('72', 'T17071817150796', '1234123', '0', null, '2017-07-28 15:41:13', null, '2017-07-28 15:41:13', '0');
-INSERT INTO `task_check_list` VALUES ('73', 'T17071817150796', '789789', '0', null, '2017-07-28 15:41:13', null, '2017-07-28 15:41:13', '0');
+INSERT INTO `task_check_list` VALUES ('86', 'T17071817150796', '1234123', '1', null, '2017-08-02 18:42:08', null, '2017-08-02 18:42:08', '0');
+INSERT INTO `task_check_list` VALUES ('87', 'T17071817150796', '41234', '1', null, '2017-08-02 18:42:08', null, '2017-08-02 18:42:08', '0');
+INSERT INTO `task_check_list` VALUES ('88', 'T17071817150796', '1234123', '1', null, '2017-08-02 18:42:08', null, '2017-08-02 18:42:08', '0');
+INSERT INTO `task_check_list` VALUES ('89', 'T17071817150796', '789789', '1', null, '2017-08-02 18:42:08', null, '2017-08-02 18:42:08', '0');
 
 -- ----------------------------
 -- Table structure for user
@@ -187,6 +188,9 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('101', null, null, null, null, 'T10316', '丁庆发', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `user` VALUES ('102', null, null, null, null, 'T11478', '陈钟', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `user` VALUES ('103', null, null, null, null, 'T10667', '李晴', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('101', null, null, null, '115513875', 'T10316', '丁庆发', 'dingqingfa@star-net.cn', null, null, null, '/images/ding.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('102', null, null, null, '123456', 'T11478', '陈钟', 'chenzhong.sy@star-net.cn', null, null, null, '/images/chen.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('103', null, null, null, null, 'T10667', '李晴', 'liqing@star-net.cn', null, null, null, '/images/justgun.gif', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('104', null, null, null, null, 'T11441', '林圣腾', 'linshengteng@star-net.cn', null, null, null, '/images/lin.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('105', null, null, null, null, 'T4025', '方雪嵘', 'fangxuerong@star-net.cn', null, null, null, '/images/fang.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('106', null, null, null, null, 'T12665', '黄文文', 'huangwenwen@star-net.cn', null, null, null, '/images/fang.png', null, null, null, null, null, null, null, null, null, null);

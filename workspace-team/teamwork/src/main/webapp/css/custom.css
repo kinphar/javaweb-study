@@ -1,16 +1,14 @@
-
-
 body {
 	background-color: #F8F6F2;
-} 
+}
 
-body > .container {
-	padding: 30px 15px 0px;	
+body>.container {
+	padding: 30px 15px 0px;
 }
 
 .pre-scrollable {
-  	max-height: 660px;
-  	overflow-y: scroll;
+	max-height: 660px;
+	overflow-y: scroll;
 }
 
 .panel {
@@ -19,7 +17,7 @@ body > .container {
 }
 
 .panel-body {
-    padding: 8px;
+	padding: 8px;
 }
 
 .well {
@@ -29,7 +27,8 @@ body > .container {
 	background-color: #FFFFFF;
 }
 
-body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 { 
-	font-family: Microsoft YaHei,'ËÎÌå' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+	font-family: Microsoft YaHei, 'ï¿½ï¿½ï¿½ï¿½', Tahoma, Helvetica, Arial,
+		"\5b8b\4f53", sans-serif;
 }
 

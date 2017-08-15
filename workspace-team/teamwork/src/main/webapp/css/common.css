@@ -14,3 +14,30 @@ body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
 	font-family: Microsoft YaHei, '����', Tahoma, Helvetica, Arial,
 		"\5b8b\4f53", sans-serif;
 }
+
+.circle {
+	width: 34px;
+	height: 34px;
+	border: 1px solid #bbb;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+}
+
+.circle-text {
+	height: 34px; 
+	line-height: 32px; 
+	display: block; 
+	color: #bbb; 
+	text-align: center;
+}
+
+.circle:hover {
+	border: 1px solid #0E76BD;
+} 
+
+.circle-text:hover  {
+	color: #0E76BD; 
+}
+
+
