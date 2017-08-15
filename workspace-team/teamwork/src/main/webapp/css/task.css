@@ -294,39 +294,41 @@ textarea:focus {
 	border: 1px solid #ccc;
 }
 
-.task-deadline, .task-status, .task-project, .task-file {
+.task-assign, .task-follower, .task-deadline, .task-status, .task-project, .task-file, .task-operation {
 	margin-left: 20px;
 }
 
 .task-assign{
-	margin-left: 10px;
-	margin-top: 16px
-}
-
-.task-follower{
-	margin-left: 10px;
-	margin-top: 10px
-}
-
-.task-deadline {
 	margin-top: 20px
 }
 
+.task-follower{
+	margin-top: 12px
+}
+
+.task-deadline {
+	margin-top: 30px
+}
+
 .task-status {
-	margin-top: 24px
+	margin-top: 16px
 }
 
 .task-project {
-	margin-top: 24px
+	margin-top: 16px
 }
 
 .task-file {
-	margin-top: 28px
+	margin-top: 24px
+}
+
+.task-operation {
+	margin-top: 26px
 }
 
 .task-comment-head {
 	margin-left: 26px;
-	margin-top: 40px
+	margin-top: 30px
 }
 
 .task-comment-item {
@@ -347,7 +349,7 @@ textarea:focus {
 
 .task-split-title {
 	margin-left: 10px;
-	margin-top: 30px;
+	margin-top: 10px;
 }
 
 .btn-delete:hover {

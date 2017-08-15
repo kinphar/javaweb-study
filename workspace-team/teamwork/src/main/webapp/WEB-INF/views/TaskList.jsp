@@ -71,9 +71,32 @@
 			$('.panel-collapse').on('show.bs.collapse', function() {
 				var taskId = this.dataset.taskid;
 				updateTaskFromRemote(taskId);
+				updateCheckListFromRemote(taskId);
 			})
 		});
 	});
+	
+	
+	function updateCheckListFromRemote(id) {	
+		$.ajax({
+			type : "GET",
+			url : "${ctx}/task/task_get_checklist",
+			data : {
+				taskid : id
+			},
+			dataType : 'json',
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				console.log("checklist:" + data.length);
+				for (var i = 0; i < data.length; i++) {
+					addCheckList(id, data[i].status, data[i].description);
+				}
+				calcCheckListProgress(id);
+			},
+			error : function(xhr) {
+			}
+		});
+	}
 	
 	function saveSelectUsers(nodePrefix, taskId) {
 		var userSelected = "";		
@@ -330,7 +353,7 @@
 				for (var i = 0; i < data.length; i++) {
 					addCheckList(id, data[i].status, data[i].description);
 				}
-				calculateCheckListProgress(id);
+				calcCheckListProgress(id);
 			},
 			error : function(xhr) {
 			}
@@ -338,7 +361,7 @@
 	}
 
 	function doCheck(id) {
-		calculateCheckListProgress(id);
+		calcCheckListProgress(id);
 	}
 
 	function delEmpty(id, index) {
@@ -356,7 +379,7 @@
 		var num = top.getElementsByTagName("li").length;
 		var li = document.createElement("li");
 		var checkedFlag = (checked == '1') ? 'checked="checked"' : '';
-		li.innerHTML = '<input type="checkbox" onClick="doCheck(\''
+		li.innerHTML = '<input type="checkbox" zoom="120%" onClick="doCheck(\''
 				+ id
 				+ '\')" name=checkList_'
 				+ id
@@ -375,10 +398,10 @@
 				+ '].description" value=' + desc + '>';
 		console.log(li.innerHTML);
 		top.appendChild(li);
-		calculateCheckListProgress(id);
+		calcCheckListProgress(id);
 	}
 
-	function calculateCheckListProgress(id) {
+	function calcCheckListProgress(id) {
 		var liList = document.getElementById("taskCheckList_" + id)
 				.getElementsByTagName("li");
 		var inputList = document.getElementById("taskCheckList_" + id)
@@ -417,7 +440,7 @@
 			list[0].remove();
 		}
 
-		calculateCheckListProgress(id);
+		calcCheckListProgress(id);
 		checkListToIdleMode(id);
 	}
 
@@ -485,9 +508,7 @@
 		checkListToIdleMode(id);
 	}
 
-	function exportExcel() {
-		var id = $("#editTaskId").val();
-		console.log("exportExcel:" + id);
+	function exportExcel(id) {
 		var url = "task_export" + "/" + id;
 		window.open(url);
 	}
@@ -741,6 +762,57 @@
 													class="form-control form-control-content"
 													onblur="taskDescDispMode('${task.id}')" rows="10">${task.description}</textarea>
 											</div>
+											
+											<div class="task-assign">
+												<ul class="list-inline" id="list-processor_${task.id}">
+													<li class="title"><h5 style="color: #A4A3A2">分配给：</h5></li>													
+													<li class="dropdown circle edit-user-btn"><a href="#"
+														class="dropdown-toggle circle-text" data-toggle="dropdown"
+														onclick="dispSelectUsers('list-processor_', '${task.id}');">
+														<span class="glyphicon glyphicon-pencil"></span>
+														</a>
+														<ul class="dropdown-menu" style="padding: 8px 0px">
+															<li style="margin-left: 10px"><input type="checkbox"
+																value="all" data-parentid="list-processor_${task.id}"> 全有/全无</li>
+															<li class="divider divider-related-user"></li>
+															<c:forEach items="${users}" var="user">
+																<li style="margin:5px 10px"><input
+																	type="checkbox" value="${user.email}"
+																	<c:if test="${fn:contains(task.assignTo, user.email)}">checked="checked"</c:if>>
+																	${user.name}</li>
+															</c:forEach>
+															<li class="divider divider-related-user"></li>
+															<li style="text-align: center"><button type="button"
+																	onclick="saveSelectUsers('list-processor_', '${task.id}');" 
+																	class="btn btn-saveUsers">保存</button></li>
+														</ul></li>
+												</ul>
+											</div>
+											
+											<div class="task-follower">
+												<ul class="list-inline" id="list-follower_${task.id}">
+													<li><h5 style="color: #A4A3A2">关注人：</h5></li>
+													<li class="dropdown circle edit-user-btn"><a href="#"
+														class="dropdown-toggle circle-text" data-toggle="dropdown"
+														onclick="dispSelectUsers('list-follower_', '${task.id}');">
+														<span class="glyphicon glyphicon-pencil"></a>
+														<ul class="dropdown-menu" style="padding: 8px 0px">
+															<li style="margin-left: 10px"><input type="checkbox"
+																value="all" data-parentid="list-follower_${task.id}"> 全有/全无</li>
+															<li class="divider divider-related-user"></li>
+															<c:forEach items="${users}" var="user">
+																<li style="margin: 5px 10px"><input
+																	type="checkbox" value="${user.email}"
+																	<c:if test="${fn:contains(task.follower, user.email)}">checked="checked"</c:if>>
+																	${user.name}</li>
+															</c:forEach>
+															<li class="divider divider-related-user"></li>
+															<li style="text-align: center"><button type="button"
+																	onclick="saveSelectUsers('list-follower_', '${task.id}');" 
+																	class="btn btn-saveUsers">保存</button></li>
+														</ul></li>
+												</ul>
+											</div>
 
 											<div class="task-deadline">
 												<div style="float: left">
@@ -784,71 +856,39 @@
 												</select>
 
 											</div>
+											
 											<div class="task-file">
 												<h5 style="color: #A4A3A2">
-													关联附件：<a href=#>+添加</a>
+													关联附件：
+													 <span class="label label-default">hello.txt</span>
+													 <span class="label label-info">dog.png</span>
+													 <span class="label label-primary">resource.zip</span>
+												</h5>
+											</div>
+											
+											<div class="task-operation">
+												<h5 style="color: #A4A3A2">
+													花哨操作：
+													<a class="btn btn-default btn-opt"
+														onClick="exportExcel('${task.id}')"> <span
+														class="glyphicon glyphicon-export glyphicon-opt"></span>导出Excel
+													</a>
+													<a class="btn btn-default btn-opt"
+														onClick="addAttachment('${task.id}')"> <span
+														class="glyphicon glyphicon-paperclip glyphicon-opt"></span>添加文件
+													</a>
 												</h5>
 											</div>
 										</div>
 
 										<div class="col-sm-6">
-											<div class="task-assign">
-												<ul class="list-inline" id="list-processor_${task.id}">
-													<li class="title"><h5 style="color: #A4A3A2">分配给：</h5></li>													
-													<li class="dropdown circle edit-user-btn"><a href="#"
-														class="dropdown-toggle circle-text" data-toggle="dropdown"
-														onclick="dispSelectUsers('list-processor_', '${task.id}');">
-														<span class="glyphicon glyphicon-pencil"></span>
-														</a>
-														<ul class="dropdown-menu" style="padding: 8px 0px">
-															<li style="margin-left: 10px"><input type="checkbox"
-																value="all" data-parentid="list-processor_${task.id}"> 全有/全无</li>
-															<li class="divider divider-related-user"></li>
-															<c:forEach items="${users}" var="user">
-																<li style="margin:5px 10px"><input
-																	type="checkbox" value="${user.email}"
-																	<c:if test="${fn:contains(task.assignTo, user.email)}">checked="checked"</c:if>>
-																	${user.name}</li>
-															</c:forEach>
-															<li class="divider divider-related-user"></li>
-															<li style="text-align: center"><button type="button"
-																	onclick="saveSelectUsers('list-processor_', '${task.id}');" 
-																	class="btn btn-saveUsers">保存</button></li>
-														</ul></li>
-												</ul>
-											</div>
-											<div class="task-follower">
-												<ul class="list-inline" id="list-follower_${task.id}">
-													<li><h5 style="color: #A4A3A2">关注人：</h5></li>
-													<li class="dropdown circle edit-user-btn"><a href="#"
-														class="dropdown-toggle circle-text" data-toggle="dropdown"
-														onclick="dispSelectUsers('list-follower_', '${task.id}');">
-														<span class="glyphicon glyphicon-pencil"></a>
-														<ul class="dropdown-menu" style="padding: 8px 0px">
-															<li style="margin-left: 10px"><input type="checkbox"
-																value="all" data-parentid="list-follower_${task.id}"> 全有/全无</li>
-															<li class="divider divider-related-user"></li>
-															<c:forEach items="${users}" var="user">
-																<li style="margin: 5px 10px"><input
-																	type="checkbox" value="${user.email}"
-																	<c:if test="${fn:contains(task.follower, user.email)}">checked="checked"</c:if>>
-																	${user.name}</li>
-															</c:forEach>
-															<li class="divider divider-related-user"></li>
-															<li style="text-align: center"><button type="button"
-																	onclick="saveSelectUsers('list-follower_', '${task.id}');" 
-																	class="btn btn-saveUsers">保存</button></li>
-														</ul></li>
-												</ul>
-											</div>
-
 											<div class="task-split-title">
-												<h5>
+												<h5 style="color: #A4A3A2">
 													<span class="glyphicon glyphicon-th-list"></span> 分解任务：
 												</h5>
 											</div>
 
-											<div class="well well-checklist">
+											<div class="well well-checklist">											
 												<div class="progress">
 													<div class="progress-bar progress-bar-success"
 														id="progressCheckList_${task.id}" role="progressbar"
@@ -861,7 +901,7 @@
 												</ul>
 
 												<a id="addCheckList_${task.id}" href="#"
-													onclick="checkListToInputMode('${task.id}')">+新增分解项</a>
+													onclick="checkListToInputMode('${task.id}')">+小任务+</a>
 
 												<div id="inputCheckList_${task.id}" style="display: none">
 													<input type="text" class="form-control"
