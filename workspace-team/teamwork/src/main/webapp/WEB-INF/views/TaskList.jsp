@@ -70,13 +70,9 @@
 		$(function() {
 			$('.panel-collapse').on('show.bs.collapse', function() {
 				var taskId = this.dataset.taskid;
-				var taskProcessors = this.dataset.processors;
-				var taskFollowers = this.dataset.followers;
-				updateUserGroup("list-processor_" + taskId, taskProcessors);
-				updateUserGroup("list-follower_" + taskId, taskFollowers);
+				updateTaskFromRemote(taskId);
 			})
 		});
-
 	});
 	
 	function saveSelectUsers(nodePrefix, taskId) {
@@ -270,6 +266,24 @@
 
 				$("#panel_" + data.id).remove();
 				$("#status_" + data.status).html(data.statusNum)
+			},
+			error : function(xhr) {
+			}
+		});
+	}
+	
+	function updateTaskFromRemote(id) {
+		$.ajax({
+			type : "GET",
+			url : "${ctx}/task/task_get",
+			data : {
+				taskid : id
+			},
+			dataType : 'json',
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				updateUserGroup("list-processor_" + id, data.assignTo);
+				updateUserGroup("list-follower_" + id, data.follower);
 			},
 			error : function(xhr) {
 			}
@@ -698,8 +712,7 @@
 							</div>
 
 							<div class="panel-collapse collapse" id="collapse_${task.id}"
-								data-taskid="${task.id}" data-processors="${task.assignTo}"
-								data-followers="${task.follower}">
+								data-taskid="${task.id}">
 								<div class="panel-body" style="padding: 10px 50px 30px">
 									<div class="col-sm-12">
 										<div class="col-sm-6">
