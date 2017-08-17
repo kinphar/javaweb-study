@@ -48,7 +48,17 @@ public class IDUtils {
 	}
 	
 	/**
-	 * 任务ID生成   T170711-032
+	 * 任务检查项ID生成： 秒数 + 2个随机数
+	 */
+	public static long getCheckListId() {
+		long sec = System.currentTimeMillis() / 1000;
+		Random random = new Random();
+		int ran2 = random.nextInt(99);
+		return sec * 100 + ran2;
+	}
+	
+	/**
+	 * 任务ID生成 
 	 */
 	public static String genTaskId() {
 		SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss");

@@ -12,4 +12,5 @@ public interface TaskCheckListService {
 	List<TaskCheckList> getCheckListByParentId(String id);
 	FriendlyResult updateCheckLists(List<TaskCheckList> list, String parentId);
 	FriendlyResult deleteCheckListByParentId(String parentId);
+	FriendlyResult updateCheckList(TaskCheckList item);
 }
