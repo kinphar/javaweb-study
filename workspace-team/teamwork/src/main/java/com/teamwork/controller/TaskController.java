@@ -272,7 +272,9 @@ public class TaskController {
 	@ResponseBody
 	public Map<String,Object> checkListUpdate(TaskCheckList subTask) {
     	
-    	System.out.println("updateSubTask:" + subTask.getParentId() + ";" + subTask.getDescription());    	
+    	System.out.println("updateSubTask:" + subTask.getParentId() 
+    		+ ";" + subTask.getId() + ";status=" + subTask.getStatus() 
+    		+ ";" + subTask.getDescription());    	
     	
     	FriendlyResult result = taskCheckListService.updateCheckList(subTask);    	
 		Map<String,Object> map = new HashMap<String,Object>();
