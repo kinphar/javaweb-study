@@ -89,5 +89,11 @@ public class TaskCheckListServiceImpl implements TaskCheckListService {
 		
 		return FriendlyResult.ok(newId);
 	}
+
+	@Override
+	public FriendlyResult deleteCheckListById(Long id) {
+		taskCheckListMapper.deleteByPrimaryKey(id);
+		return FriendlyResult.ok();
+	}
 	
 }

@@ -270,7 +270,7 @@ public class TaskController {
 
     @RequestMapping(value = "/updateSubTask", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> titleUpdate(TaskCheckList subTask) {
+	public Map<String,Object> checkListUpdate(TaskCheckList subTask) {
     	
     	System.out.println("updateSubTask:" + subTask.getParentId() + ";" + subTask.getDescription());    	
     	
@@ -280,6 +280,17 @@ public class TaskController {
 		map.put("id", result.getData().toString());
 		return map;
 	}	
+    
+    @RequestMapping(value = "/deleteSubTask", method = RequestMethod.POST)
+  	@ResponseBody
+  	public Map<String,Object> checkListDelete(TaskCheckList subTask) {
+      	taskCheckListService.deleteCheckListById(subTask.getId());    	
+      	System.out.println("checkListDelete:" + subTask.getId());
+      	
+  		Map<String,Object> map = new HashMap<String,Object>();
+  		map.put("result", "ok");
+  		return map;
+  	}	
 }
 
 

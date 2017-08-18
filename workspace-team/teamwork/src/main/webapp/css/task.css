@@ -417,6 +417,11 @@ hr {
 	margin:3px 0px;
 }
 
+.checklist-item {
+	margin-top: 8px; 
+	display: none;
+}
+
 .checklist-item-input {
 	margin-left: 5px;
 	background-color: #F8F6F2; 
@@ -424,8 +429,5 @@ hr {
 	width: 80%;
 }
 
-.checklist-item-delete {
-	color: #A4A3A2;
-	display: none;
-	margin-left: 5px;
-}
+
+

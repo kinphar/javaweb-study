@@ -52,18 +52,24 @@
 		});
 
 		$(".checklist-item-input").blur(function() {
-			var taskId = $(this).data("taskid");
+			var subTask = $(this).parent();
+			var taskId = subTask.data("taskid");
 			var val = $(this).val();
 			if (val == "") {
+				var itemId = subTask.data("itemid");
+				if (itemId != "") {
+					deleteSubTask(subTask); //delete empty content;
+				}
+				console.log("delete subtask view");
 				$(this).parent().remove();
 			}
 		});
-		
+
 		$(".checklist-item-input").change(function() {
-			var taskId = $(this).data("taskid");
-			var val = $(this).val();
-			if (val != "") {
-				editSubTaskWork(taskId);
+			var subTask = $(this).parent();
+			var content = $(this).val();
+			if (content != "") {
+				saveSubTask(subTask);
 			}
 		});
 	});
@@ -82,44 +88,71 @@
 
 		$('input[type="checkbox"]').on('ifChecked ifUnchecked',
 				function(event) {
-					var val = event.target.value;
+					var type = $(this).attr('class');
 					var parentId = event.target.dataset.parentid;
-					console.log(event.type + ":" + val);
 
-					if (val == "all") {
+					if (type == "select-all") {
 						$boxes = $("#" + parentId).find("[type='checkbox']");
 						if (event.type == 'ifChecked') {
 							$boxes.iCheck('check');
 						} else {
 							$boxes.iCheck('uncheck');
 						}
+					} else if (type == "subtask-done") {						
+						var subTaskNode = $(this).parent().parent();
+						saveSubTask(subTaskNode);
 					}
 				});
 	}
-	
-	function editSubTaskWork(taskId, subTaskId) {		
-		var subTask = {}; 
-		subTask.id = subTaskId;
-		subTask.parentId = taskId;
-		subTask.status = "1";
-		subTask.description = "爱拼才会赢";
-		
-		return doSubTaskUpdate(subTask);
+
+	function saveSubTask(subTaskView) {
+		var subTaskData = {};
+		subTaskData.id = subTaskView.data("itemid");
+		subTaskData.parentId = subTaskView.data("taskid");
+		var check = subTaskView.find("input[type='checkbox']").get(0).checked;
+		subTaskData.status = (check == true) ? 1 : 0;
+		subTaskData.description = subTaskView.find("input[type='text']").get(0).value;
+
+		var remoteId = doSubTaskUpdate(subTaskData);
+		subTaskView.data("itemid", remoteId);
 	}
-	
+
 	function doSubTaskUpdate(param) {
+		var remoteId = "";
 		$.ajax({
 			type : "POST",
 			url : "${ctx}/task/updateSubTask",
 			data : param,
 			datatype : "json",
 			async : false,
-			success : function(data) {				
-				result = "success";
-				console.log("doSubTaskUpdate:" + data.id + ";" + data.result);
+			success : function(data) {
+				console.log("doSubTaskUpdate:id=" + data.id);
+				remoteId = data.id;
 			},
 			error : function(xhr) {
-				result = "fail";
+			}
+		});
+		return remoteId;
+	}
+	
+	function deleteSubTask(subTaskView) {
+		var subTaskData = {};
+		subTaskData.id = subTaskView.data("itemid");
+		
+		var result = false; 
+		$.ajax({
+			type : "POST",
+			url : "${ctx}/task/deleteSubTask",
+			data : subTaskData,
+			datatype : "json",
+			async : false,
+			success : function(data) {
+				console.log("deleteSubTask:" + data.result);
+				result = true;
+			},
+			error : function(xhr) {
+				alert("删除未生效！");
+				result = false;
 			}
 		});
 		return result;
@@ -137,7 +170,7 @@
 			success : function(data) {
 				console.log("checklist:" + data.length);
 				for (var i = 0; i < data.length; i++) {
-					addCheckList(id, data[i].status, data[i].description);
+					/* addCheckList(id, data[i].status, data[i].description); */
 				}
 				calcCheckListProgress(id);
 			},
@@ -786,8 +819,8 @@
 													</a>
 														<ul class="dropdown-menu" style="padding: 8px 0px">
 															<li style="margin-left: 10px"><input type="checkbox"
-																value="all" data-parentid="list-processor_${task.id}">
-																全有/全无</li>
+																class="select-all"
+																data-parentid="list-processor_${task.id}"> 全有/全无</li>
 															<li class="divider divider-related-user"></li>
 															<c:forEach items="${users}" var="user">
 																<li style="margin: 5px 10px"><input type="checkbox"
@@ -813,8 +846,8 @@
 													</a>
 														<ul class="dropdown-menu" style="padding: 8px 0px">
 															<li style="margin-left: 10px"><input type="checkbox"
-																value="all" data-parentid="list-follower_${task.id}">
-																全有/全无</li>
+																class="select-all"
+																data-parentid="list-follower_${task.id}"> 全有/全无</li>
 															<li class="divider divider-related-user"></li>
 															<c:forEach items="${users}" var="user">
 																<li style="margin: 5px 10px"><input type="checkbox"
@@ -909,12 +942,10 @@
 
 												<div style="margin-left: 10px">
 													<ul id="taskCheckList_${task.id}" class="list-unstyled">
-														<li style="margin-top: 8px; display: none"><input
-															type="checkbox" value="subTaskList"> <input
-															type="text" class="checklist-item-input"
-															data-taskid="${task.id}" )" 
-																value="">
-														</li>
+														<li class="checklist-item" data-taskid="${task.id}"
+															data-itemid=""><input type="checkbox"
+															class="subtask-done"> <input type="text"
+															class="checklist-item-input" value=""></li>
 													</ul>
 												</div>
 
