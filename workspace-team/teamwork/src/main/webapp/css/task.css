@@ -336,7 +336,7 @@ textarea:focus {
 	margin-top: 30px
 }
 
-.task-comment-item {
+.task-comment-area {
 	margin-left: 26px;
 	margin-top: 5px
 }
@@ -438,4 +438,32 @@ hr {
 }
 
 
+.recent-comments {
+	margin: 0;
+	padding: 0;
+}
+.recent-comments li {
+    border-bottom: 1px dotted #AEBDC8;
+    list-style: none outside none;
+    padding: 10px;
+}
+.recent-comments .comments {
+    margin-left: 60px;
+}
+
+.user-thumb {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #B6BCBF;
+    float: left;
+    height: 40px;
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 2px;
+    width: 40px;
+}
+
+.user-info {
+    color: #666666;
+    font-size: 11px;
+}
 
