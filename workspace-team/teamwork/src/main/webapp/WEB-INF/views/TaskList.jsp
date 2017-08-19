@@ -75,6 +75,7 @@
 				saveSubTask(subTask);
 			}
 		});
+
 	});
 
 	function iCheckInit() {
@@ -925,51 +926,55 @@
 										<hr />
 									</div>
 
-									<div class="col-sm-12 task-comment-area">
+									<div class="col-sm-12 task-comment-item">
 										<ul class="recent-comments">
 											<li>
 												<div class="user-thumb">
-													<img width="40" height="40" alt="User"
+													<img class="img-circle img-thumb" alt="User"
 														src="/images/justgun.gif">
 												</div>
 												<div class="comments">
 													<span class="user-info"> User: michelle on IP:
 														172.10.56.3 </span>
 													<p>
-														<a href="#">Vivamus sed auctor nibh congue, ligula
+														<a>Vivamus sed auctor nibh congue, ligula
 															vitae tempus pharetra...</a>
 													</p>
-													<a href="#" class="btn btn-primary btn-mini">Edit</a> <a
-														href="#" class="btn btn-success btn-mini">Approve</a> <a
-														href="#" class="btn btn-warning btn-mini">Mark as spam</a>
-													<a href="#" class="btn btn-danger btn-mini">Delete</a>
+													<a class="btn btn-default btn-opt"> <span
+														class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
+													</a>
+												</div>
+											</li>
+											<li>
+												<div class="user-thumb">
+													<img class="img-circle img-thumb" alt="User"
+														src="/images/ding.png">
+												</div>
+												<div class="comments">
+													<span class="user-info"> User: 丁庆发 on 2017-08-19
+														16:10, IP:192.168.60.213 </span>
+													<p>
+														<a>今天搞得不错哦, ligula
+															vitae tempus pharetra...</a>
+													</p>
+													<a class="btn btn-default btn-opt"> <span
+														class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
+													</a>
 												</div>
 											</li>
 										</ul>
+									</div>
 
-										<div class="col-sm-12 task-comment-item">
-											<ul class="list-inline" style="margin-bottom: 2px">
-												<li><img class="img-rounded" alt="Brand"
-													src="/images/justgun.gif"
-													style="height: 35px; width: 35px; margin-top: 10px"></li>
-												<li>丁庆发</li>
-												<li><p style="color: #A4A3A2">2017-08-09 09:35</p></li>
-												<li><button type="button" class="close"
-														style="margin-left: 30px" aria-hidden="true">×</button></li>
-											</ul>
-											<label style="margin-left: 50px">有意义的回忆。</label>
-
-											<textarea class="form-control form-control-comment"
-												placeholder="新内容..."></textarea>
-											<button type="button" onclick="newComment();"
-												style="margin-top: 3px; margin-left: 5px"
-												class="btn btn-newtask">发表</button>
-										</div>
-
-
+									<div class="col-sm-12 task-comment-item">
+										<textarea class="form-control form-control-comment"
+											placeholder="新内容..."></textarea>
+										<button type="button" onclick="newComment();"
+											style="margin-top: 3px; margin-left: 5px"
+											class="btn btn-newtask">发表</button>
 									</div>
 								</div>
 							</div>
+						</div>
 					</c:forEach>
 				</div>
 			</div>
