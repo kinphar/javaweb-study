@@ -65,6 +65,10 @@
 	top: 30%;
 }
 
+.modal-comment {
+	top: 10%;
+}
+
 .modal-task {
 	top: 6%;
 }
@@ -282,16 +286,6 @@ input:focus {
     width: 98%;
     resize:none;
     display:none;    
-}
-
-.form-control-comment {
-    width: 45%;
-    height: 64px;
-    border: 1px solid #ccc;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075); 
-    overflow-y:hidden;
-    resize:none;
-    margin-top:40px;
 }
 
 textarea:focus {

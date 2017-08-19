@@ -50,7 +50,7 @@ public class IDUtils {
 	/**
 	 * 任务检查项ID生成： 秒数 + 2个随机数
 	 */
-	public static long getCheckListId() {
+	public static long getIdByTimeStamp() {
 		long sec = System.currentTimeMillis() / 1000;
 		Random random = new Random();
 		int ran2 = random.nextInt(99);

@@ -350,12 +350,67 @@
 	}
 
 	function delTask(id) {
-		$('#taskId').val(id); //给会话中的隐藏属性URL赋值  
+		$('#taskIdDeleting').val(id); //给会话中的隐藏属性URL赋值  
 		$('#delcfmModel').modal(); //显示对话框
 	}
 
+	function newCommentdShow(id) {
+		$('#newCommentModel').data("taskid", id);
+		$('#newCommentModel').modal(); //显示对话框
+		$('#newCommentModel').data("taskid", id);
+	}
+	
+	function newCommentSave() {
+		var id = $('#newCommentModel').data("taskid");
+		var content = $('#newCommentModel').find("textarea").first().val();
+		content = content.replace(/\n/g, "<br />");
+		console.log("newCommentSave:" + id + "; " + content);
+		
+		var comment = {};
+		comment.parentId = id;
+		comment.description = content;
+		
+		$.ajax({
+			type : "POST",
+			url : "${ctx}/comment/new",
+			data : comment,
+			datatype : "json",
+			async : false,
+			success : function(data) {
+				console.log("new comment ok.");
+			},
+			error : function(xhr) {
+			}
+		});
+		
+		/* insert comment */
+	}
+	
+	function newCommentInsertView(item) {
+		
+	}
+		
+	function deleteComment() {
+		var id = $(this).parent().parent().data("commentid");
+		$.ajax({
+			type : "POST",
+			url : "${ctx}/comment/new",
+			data : {
+				commentid : id
+			},
+			datatype : "json",
+			async : false,
+			success : function(data) {
+				console.log("delete comment ok.");
+			},
+			error : function(xhr) {
+			}
+		});
+	}
+	
+
 	function doDelTask() {
-		var id = document.getElementById('taskId').value;
+		var id = document.getElementById('taskIdDeleting').value;
 		$.ajax({
 			type : "POST",
 			url : "${ctx}/task/task_delete",
@@ -458,6 +513,8 @@
 		cloneItem.find('input[type="checkbox"]').first().iCheck(
 				status == 1 ? 'check' : 'uncheck');
 		$("#" + parentId).append(cloneItem);
+
+		console.log("restoreSubTask:" + id);
 	}
 
 	function createSubTask(id) {
@@ -477,7 +534,6 @@
 		$("#taskCheckList_" + id).find("li").each(
 				function() {
 					var display = $(this).css("display");
-					console.log("display:" + display);
 
 					if (display == "block") {
 						var checked = $(this).find("input[type='checkbox']")
@@ -632,8 +688,6 @@
 		}
 	}
 
-	function newComment() {
-	}
 </script>
 </head>
 
@@ -917,10 +971,19 @@
 									</div>
 
 									<div class="col-sm-12 task-comment-head">
-										<h5>
-											日志与交流：<span
-												style="font-size: 8px; color: #e4e3e2; margin-bottom: 0px">在此记录一段有意义的回忆</span>
-										</h5>
+										<div style="float: left">
+											<h5>
+												日志与交流：<span
+													style="font-size: 8px; color: #e4e3e2; margin-bottom: 0px">在此记录一段有意义的回忆</span>
+											</h5>
+										</div>
+										<div class="pull-right"
+											style="margin-top: 5px; margin-right: 40px">
+											<a class="btn btn-default btn-opt"
+												onclick="newCommentShow('${task.id}')"> <span
+												class="glyphicon glyphicon-bullhorn glyphicon-opt"></span>留个言
+											</a>
+										</div>
 									</div>
 									<div class="col-sm-12">
 										<hr />
@@ -937,10 +1000,10 @@
 													<span class="user-info"> User: michelle on IP:
 														172.10.56.3 </span>
 													<p>
-														<a>Vivamus sed auctor nibh congue, ligula
-															vitae tempus pharetra...</a>
+														<a>Vivamus sed auctor nibh congue, ligula vitae tempus
+															pharetra...</a>
 													</p>
-													<a class="btn btn-default btn-opt"> <span
+													<a class="btn btn-default btn-opt" onclick="deleteComment()"> <span
 														class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
 													</a>
 												</div>
@@ -951,13 +1014,12 @@
 														src="/images/ding.png">
 												</div>
 												<div class="comments">
-													<span class="user-info"> User: 丁庆发 on 2017-08-19
-														16:10, IP:192.168.60.213 </span>
+													<span class="user-info"> User: 丁庆发 on
+														IP:192.168.8.123; [2017-08-19 23:14] </span>
 													<p>
-														<a>今天搞得不错哦, ligula
-															vitae tempus pharetra...</a>
+														<a>今天搞得不错哦, ligula vitae tempus pharetra...</a>
 													</p>
-													<a class="btn btn-default btn-opt"> <span
+													<a class="btn btn-default btn-opt" onclick="deleteComment()"> <span
 														class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
 													</a>
 												</div>
@@ -966,8 +1028,6 @@
 									</div>
 
 									<div class="col-sm-12 task-comment-item">
-										<textarea class="form-control form-control-comment"
-											placeholder="新内容..."></textarea>
 										<button type="button" onclick="newComment();"
 											style="margin-top: 3px; margin-left: 5px"
 											class="btn btn-newtask">发表</button>
@@ -996,7 +1056,7 @@
 						<label class="text-center">确定删除该任务吗？</label>
 					</div>
 					<div class="modal-footer">
-						<input type="hidden" id="taskId" />
+						<input type="hidden" id="taskIdDeleting" />
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 						<a onclick="doDelTask()" class="btn btn-newtask"
 							data-dismiss="modal">确定</a>
@@ -1086,6 +1146,30 @@
 				</div>
 			</div>
 		</form:form>
+
+		<!-- 新留言 -->
+		<div class="modal modal-comment fade" id="newCommentModel">
+			<div class="modal-dialog">
+				<div class="modal-content message_align">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+						<h4 class="modal-title">新增留言</h4>
+					</div>
+					<div class="modal-body">
+						<textarea class="form-control" rows="10"
+							placeholder="说点什么..."></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<a onclick="newCommentSave()" class="btn btn-newtask"
+							data-dismiss="modal">确定</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 

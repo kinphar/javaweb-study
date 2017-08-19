@@ -76,7 +76,7 @@ public class TaskCheckListServiceImpl implements TaskCheckListService {
 		System.out.println("id=" + id);
 		Long newId = (long) 0;
 		if (id == null) {	
-			newId = IDUtils.getCheckListId();
+			newId = IDUtils.getIdByTimeStamp();
 			item.setId(newId);
 			item.setCreateDate(new Date());
 			item.setUpdateDate(new Date());
