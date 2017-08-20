@@ -47,7 +47,8 @@
 			$('.panel-collapse').on('show.bs.collapse', function() {
 				var taskId = this.dataset.taskid;
 				updateTaskFromRemote(taskId);
-				_updateSubTaskFromRemote(taskId);
+				updateSubTaskFromRemote(taskId);
+				updateCommentFromRemote(taskId);
 			})
 		});
 
@@ -75,7 +76,28 @@
 				saveSubTask(subTask);
 			}
 		});
-
+		
+		$("a[name='delete-comment']").click(function() {
+			var commentNode = $(this).parent().parent();
+			commentId = commentNode.data("commentid");
+			console.log("deleteComment:id=" + commentId);
+			
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/comment/delete",
+				data : {
+					commentid : commentId
+				},
+				datatype : "json",
+				async : false,
+				success : function(data) {
+					console.log("delete comment ok.");
+					commentNode.remove();
+				},
+				error : function(xhr) {
+				}
+			});
+		});
 	});
 
 	function iCheckInit() {
@@ -106,7 +128,6 @@
 
 		$('input[type="checkbox"][class="subtask-finish"]').on(
 				'ifChecked ifUnchecked', function(event) {
-					console.log("=== subtask-finish");
 					var subTaskNode = $(this).parent().parent();
 					saveSubTask(subTaskNode);
 					taskProgressChange(subTaskNode.data("taskid"));
@@ -171,8 +192,8 @@
 		return result;
 	}
 
-	function _updateSubTaskFromRemote(id) {
-		_removeOldSubTask(id);
+	function updateSubTaskFromRemote(id) {
+		removeOldSubTask(id);
 		$.ajax({
 			type : "GET",
 			url : "${ctx}/task/task_get_checklist",
@@ -192,6 +213,30 @@
 					}
 					iCheckInit();
 					taskProgressChange(id);
+				}
+			},
+			error : function(xhr) {
+			}
+		});
+	}
+	
+	function updateCommentFromRemote(id) {
+		$.ajax({
+			type : "GET",
+			url : "${ctx}/comment/get",
+			data : {
+				taskid : id
+			},
+			dataType : 'json',
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				console.log("comment:len=" + data.length);
+				removeAllOldComment();
+				var len = data.length;
+				if (len > 0) {
+					for (var i = 0; i < len; i++) {
+						newCommentInsertView(data[i]);
+					}
 				}
 			},
 			error : function(xhr) {
@@ -337,6 +382,16 @@
 		</c:forEach>
 		return null;
 	}
+	
+	function getRealNameByEmail(email) {
+		var name = null;
+		<c:forEach items="${users}" var="user">
+		if (email == "${user.email}") {
+			return "${user.name}"
+		}
+		</c:forEach>
+		return null;
+	}
 
 	function queryFormSubmit() {
 		document.getElementById("statusFilter").value = "10002";
@@ -354,11 +409,30 @@
 		$('#delcfmModel').modal(); //显示对话框
 	}
 
-	function newCommentdShow(id) {
+	function newCommentShow(id) {
 		$('#newCommentModel').data("taskid", id);
 		$('#newCommentModel').modal(); //显示对话框
 		$('#newCommentModel').data("taskid", id);
 	}
+	
+	function add0(val) {
+		return (val < 10) ? '0' + val : val; 
+	}
+	
+	function timeStamp2Date(timeStamp) {
+		var date = new Date(timeStamp);
+		var y = date.getFullYear();
+		var m = date.getMonth()+1;
+		var d = date.getDate();
+		var h = date.getHours();
+		var mm = date.getMinutes();
+		var s = date.getSeconds();
+		var time = y + '-' + add0(m) + '-' + add0(d)
+			+ ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+		console.log("timeStamp2Date:" + time);
+		return time;
+	}
+
 	
 	function newCommentSave() {
 		var id = $('#newCommentModel').data("taskid");
@@ -369,6 +443,7 @@
 		var comment = {};
 		comment.parentId = id;
 		comment.description = content;
+		comment.category = "task";
 		
 		$.ajax({
 			type : "POST",
@@ -377,43 +452,42 @@
 			datatype : "json",
 			async : false,
 			success : function(data) {
-				console.log("new comment ok.");
-			},
-			error : function(xhr) {
-			}
-		});
-		
-		/* insert comment */
-	}
-	
-	function newCommentInsertView(item) {
-		
-	}
-		
-	function deleteComment() {
-		var id = $(this).parent().parent().data("commentid");
-		$.ajax({
-			type : "POST",
-			url : "${ctx}/comment/new",
-			data : {
-				commentid : id
-			},
-			datatype : "json",
-			async : false,
-			success : function(data) {
-				console.log("delete comment ok.");
+				newCommentInsertView(data);
 			},
 			error : function(xhr) {
 			}
 		});
 	}
 	
+	function removeAllOldComment() {
+		$('ul.recent-comments li').each(function() {
+			if ($(this).css("display") != "none") {
+				$(this).remove();
+			}
+		});
+	}
+	
+	function newCommentInsertView(comment) {	
+		var newComment = $('ul.recent-comments li:last').clone(true);
+		var userPhoto = getPhotoByEmail(comment.createBy)		
+		var userName = getRealNameByEmail(comment.createBy);
+		var date = timeStamp2Date(comment.createDate);
+		
+		newComment.data("commentid", comment.id);
+		newComment.find("img").attr("src", userPhoto);
+		newComment.find(".user-info").html('User: ' + userName + ' on ' + date);
+		newComment.find(".comment-content").text(comment.description);
+		newComment.css("display", "block");
+		
+		var topComment = $('ul.recent-comments li:first');
+		$(newComment).insertBefore(topComment);		
+	}	
 
 	function doDelTask() {
 		var id = document.getElementById('taskIdDeleting').value;
 		$.ajax({
 			type : "POST",
-			url : "${ctx}/task/task_delete",
+			url : "${ctx}/task/delete",
 			data : {
 				taskid : id
 			},
@@ -496,7 +570,7 @@
 		ui.style.display = "none";
 	}
 
-	function _removeOldSubTask(id) {
+	function removeOldSubTask(id) {
 		$("#taskCheckList_" + id).children("li").each(function() {
 			if ($(this).css("display") != "none") {
 				$(this).remove();
@@ -980,8 +1054,8 @@
 										<div class="pull-right"
 											style="margin-top: 5px; margin-right: 40px">
 											<a class="btn btn-default btn-opt"
-												onclick="newCommentShow('${task.id}')"> <span
-												class="glyphicon glyphicon-bullhorn glyphicon-opt"></span>留个言
+												onclick="newCommentShow('${task.id}')"><span
+												class="glyphicon glyphicon-bullhorn glyphicon-opt"></span>+
 											</a>
 										</div>
 									</div>
@@ -991,46 +1065,22 @@
 
 									<div class="col-sm-12 task-comment-item">
 										<ul class="recent-comments">
-											<li>
+											<li class="comment-seed", style="display:none">
 												<div class="user-thumb">
 													<img class="img-circle img-thumb" alt="User"
-														src="/images/justgun.gif">
+														src="">
 												</div>
 												<div class="comments">
-													<span class="user-info"> User: michelle on IP:
-														172.10.56.3 </span>
+													<span class="user-info"></span>
 													<p>
-														<a>Vivamus sed auctor nibh congue, ligula vitae tempus
-															pharetra...</a>
+														<a class="comment-content"></a>
 													</p>
-													<a class="btn btn-default btn-opt" onclick="deleteComment()"> <span
-														class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
-													</a>
-												</div>
-											</li>
-											<li>
-												<div class="user-thumb">
-													<img class="img-circle img-thumb" alt="User"
-														src="/images/ding.png">
-												</div>
-												<div class="comments">
-													<span class="user-info"> User: 丁庆发 on
-														IP:192.168.8.123; [2017-08-19 23:14] </span>
-													<p>
-														<a>今天搞得不错哦, ligula vitae tempus pharetra...</a>
-													</p>
-													<a class="btn btn-default btn-opt" onclick="deleteComment()"> <span
+													<a name="delete-comment" class="btn btn-default btn-opt"> <span
 														class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
 													</a>
 												</div>
 											</li>
 										</ul>
-									</div>
-
-									<div class="col-sm-12 task-comment-item">
-										<button type="button" onclick="newComment();"
-											style="margin-top: 3px; margin-left: 5px"
-											class="btn btn-newtask">发表</button>
 									</div>
 								</div>
 							</div>
@@ -1165,7 +1215,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 						<a onclick="newCommentSave()" class="btn btn-newtask"
-							data-dismiss="modal">确定</a>
+							data-dismiss="modal">发表</a>
 					</div>
 				</div>
 			</div>

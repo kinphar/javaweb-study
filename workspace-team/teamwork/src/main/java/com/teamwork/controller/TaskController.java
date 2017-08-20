@@ -32,11 +32,13 @@ import com.teamwork.common.pojo.FriendlyResult;
 import com.teamwork.common.pojo.NewTaskInfo;
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.common.utils.ExcelUtil;
+import com.teamwork.pojo.Comment;
 import com.teamwork.pojo.Project;
 import com.teamwork.pojo.SysDict;
 import com.teamwork.pojo.Task;
 import com.teamwork.pojo.TaskCheckList;
 import com.teamwork.pojo.User;
+import com.teamwork.service.CommentService;
 import com.teamwork.service.EmailService;
 import com.teamwork.service.MiscService;
 import com.teamwork.service.ProjectService;
@@ -60,6 +62,8 @@ public class TaskController {
 	private TaskCheckListService taskCheckListService;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private CommentService commentService;
 	
 	@RequestMapping("/task_list")
 	public String listTasks(Model model, @ModelAttribute TaskQuery taskQuery, HttpServletRequest request) {
@@ -107,11 +111,21 @@ public class TaskController {
 	}
 	
 	@RequestMapping("/task_save") 
-	public String saveTask(@ModelAttribute NewTaskInfo newTaskInfo) {
+	public String saveTask(@ModelAttribute NewTaskInfo newTaskInfo, HttpServletRequest request) {
 		Task task = newTaskInfo.getTask();
 		String taskId = task.getId();
 		if (StringUtils.isBlank(taskId)) {
-			taskService.createTask(task);
+			taskService.createTask(task);			
+			
+			HttpSession session = request.getSession();
+			String userLogin = (String) session.getAttribute("useremail");
+			Comment comment = new Comment();			
+			comment.setParentId(task.getId());
+			comment.setCreateBy(userLogin);
+			comment.setUpdateBy(userLogin);
+			comment.setCategory("task");
+			comment.setDescription("创建了这个任务。" + "--(Operation log)");
+			commentService.createComment(comment);
 			newTaskEmail(task);
 		} else {
 			taskService.updateTask(task);			

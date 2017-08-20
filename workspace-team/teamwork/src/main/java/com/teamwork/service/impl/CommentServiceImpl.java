@@ -1,6 +1,7 @@
 package com.teamwork.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,17 +33,23 @@ public class CommentServiceImpl implements CommentService {
 	}
 	
 	@Override
-	public FriendlyResult createComment(Comment comment) {
+	public Comment createComment(Comment comment) {
 		Long id = IDUtils.getIdByTimeStamp();
 		comment.setId(id);
 		Date date = new Date();
 		comment.setCreateDate(date);
 		comment.setUpdateDate(date);
 		comment.setDelFlag("0");
-		comment.setCategory("task");
 		commentMapper.insert(comment);
 		
-		return FriendlyResult.ok(id);
+		return comment;
+	}
+
+	@Override
+	public List<Comment> getCommentByParentId(String id) {
+		CommentExample example = new CommentExample();
+		example.createCriteria().andParentIdEqualTo(id).andDelFlagEqualTo("0");
+		return commentMapper.selectByExample(example);
 	}
 
 }
