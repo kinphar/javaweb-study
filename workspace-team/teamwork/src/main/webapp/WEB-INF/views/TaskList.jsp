@@ -46,6 +46,7 @@
 		$(function() {
 			$('.panel-collapse').on('show.bs.collapse', function() {
 				var taskId = this.dataset.taskid;
+				console.log("> panel expand:" + taskId);
 				updateTaskFromRemote(taskId);
 				updateSubTaskFromRemote(taskId);
 				updateCommentFromRemote(taskId);
@@ -76,12 +77,12 @@
 				saveSubTask(subTask);
 			}
 		});
-		
-		$("a[name='delete-comment']").click(function() {
+
+		$("a[class*='btn-delete-comment']").click(function() {
 			var commentNode = $(this).parent().parent();
 			commentId = commentNode.data("commentid");
 			console.log("deleteComment:id=" + commentId);
-			
+
 			$.ajax({
 				type : "POST",
 				url : "${ctx}/comment/delete",
@@ -219,7 +220,7 @@
 			}
 		});
 	}
-	
+
 	function updateCommentFromRemote(id) {
 		$.ajax({
 			type : "GET",
@@ -382,7 +383,7 @@
 		</c:forEach>
 		return null;
 	}
-	
+
 	function getRealNameByEmail(email) {
 		var name = null;
 		<c:forEach items="${users}" var="user">
@@ -411,40 +412,40 @@
 
 	function newCommentShow(id) {
 		$('#newCommentModel').data("taskid", id);
+		$('#newCommentModel').find("textarea:first").val("");
 		$('#newCommentModel').modal(); //显示对话框
 		$('#newCommentModel').data("taskid", id);
 	}
-	
+
 	function add0(val) {
-		return (val < 10) ? '0' + val : val; 
+		return (val < 10) ? '0' + val : val;
 	}
-	
+
 	function timeStamp2Date(timeStamp) {
 		var date = new Date(timeStamp);
 		var y = date.getFullYear();
-		var m = date.getMonth()+1;
+		var m = date.getMonth() + 1;
 		var d = date.getDate();
 		var h = date.getHours();
 		var mm = date.getMinutes();
 		var s = date.getSeconds();
-		var time = y + '-' + add0(m) + '-' + add0(d)
-			+ ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+		var time = y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':'
+				+ add0(mm) + ':' + add0(s);
 		console.log("timeStamp2Date:" + time);
 		return time;
 	}
 
-	
 	function newCommentSave() {
 		var id = $('#newCommentModel').data("taskid");
 		var content = $('#newCommentModel').find("textarea").first().val();
 		content = content.replace(/\n/g, "<br />");
 		console.log("newCommentSave:" + id + "; " + content);
-		
+
 		var comment = {};
 		comment.parentId = id;
 		comment.description = content;
 		comment.category = "task";
-		
+
 		$.ajax({
 			type : "POST",
 			url : "${ctx}/comment/new",
@@ -458,7 +459,7 @@
 			}
 		});
 	}
-	
+
 	function removeAllOldComment() {
 		$('ul.recent-comments li').each(function() {
 			if ($(this).css("display") != "none") {
@@ -466,22 +467,27 @@
 			}
 		});
 	}
-	
-	function newCommentInsertView(comment) {	
-		var newComment = $('ul.recent-comments li:last').clone(true);
-		var userPhoto = getPhotoByEmail(comment.createBy)		
+
+	function newCommentInsertView(comment) {
+		var parent = $("#list-comment_" + comment.parentId);
+		var newComment = parent.children(".comment-seed").clone(true);
+		var userPhoto = getPhotoByEmail(comment.createBy)
 		var userName = getRealNameByEmail(comment.createBy);
 		var date = timeStamp2Date(comment.createDate);
-		
+
+		newComment.attr("class", "comment-item")
 		newComment.data("commentid", comment.id);
 		newComment.find("img").attr("src", userPhoto);
 		newComment.find(".user-info").html('User: ' + userName + ' on ' + date);
-		newComment.find(".comment-content").text(comment.description);
+		newComment.find(".comment-content").html(comment.description);
 		newComment.css("display", "block");
+
+		var topComment = parent.children("li:first");		
+		$(newComment).insertBefore(topComment);
 		
-		var topComment = $('ul.recent-comments li:first');
-		$(newComment).insertBefore(topComment);		
-	}	
+		console.log("newComment:class=" + newComment.attr("class"));
+		console.log("topComment:class=" + topComment.attr("class"));
+	}
 
 	function doDelTask() {
 		var id = document.getElementById('taskIdDeleting').value;
@@ -761,7 +767,6 @@
 			alert("修改未生效！");
 		}
 	}
-
 </script>
 </head>
 
@@ -850,8 +855,8 @@
 											class="glyphicon glyphicon-stop glyphicon-project"></span>
 											${task.projectName}</label> <label class="label-name"
 										id="panel-head-processor_${task.id}"> <c:forEach
-												items="${users}" var="user">
-												<c:if test="${fn:contains(task.assignTo, user.email)}">
+												items="${users}" var="user" varStatus="status">
+												<c:if test="${fn:contains(task.assignTo, user.email) and status.count <= 3}">
 													<img class="img-circle photo-small" src="${user.photo}">
 												</c:if>
 											</c:forEach></label> <label class="label-percent"
@@ -929,7 +934,7 @@
 													<li class="dropdown circle edit-user-btn"><a href="#"
 														class="dropdown-toggle circle-text" data-toggle="dropdown"
 														onclick="dispSelectUsers('list-follower_', '${task.id}');">
-															<span class="glyphicon glyphicon-pencil">
+															<span class="glyphicon glyphicon-pencil"></span>
 													</a>
 														<ul class="dropdown-menu" style="padding: 8px 0px">
 															<li style="margin-left: 10px"><input type="checkbox"
@@ -1064,19 +1069,32 @@
 									</div>
 
 									<div class="col-sm-12 task-comment-item">
-										<ul class="recent-comments">
-											<li class="comment-seed", style="display:none">
+										<ul class="recent-comments" id="list-comment_${task.id}">
+											<li class="comment-seed" style="display: none">
 												<div class="user-thumb">
-													<img class="img-circle img-thumb" alt="User"
-														src="">
+													<img class="img-circle img-thumb" alt="User" src="">
 												</div>
 												<div class="comments">
 													<span class="user-info"></span>
 													<p>
 														<a class="comment-content"></a>
 													</p>
-													<a name="delete-comment" class="btn btn-default btn-opt"> <span
-														class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
+													<a class="btn btn-default btn-opt btn-delete-comment">
+														<span class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
+													</a>
+												</div>
+											</li>
+											<li class="comment-seed">
+												<div class="user-thumb">
+													<img class="img-circle img-thumb" alt="User" src="/images/ding.png">
+												</div>
+												<div class="comments">
+													<span class="user-info"></span>
+													<p>
+														<a class="comment-content">我是DIVCSS5，欢迎来divcss5做客！<br />DIVCSS5希望您能学好CSS知识！ </a>
+													</p>
+													<a class="btn btn-default btn-opt btn-delete-comment">
+														<span class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
 													</a>
 												</div>
 											</li>
@@ -1184,13 +1202,14 @@
 										</tr>
 									</tbody>
 								</table>
+							</form>
 
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default"
-										data-dismiss="modal">关闭</button>
-									<button type="button" class="btn btn-newtask"
-										onclick="newTaskFormSubmit();">提交</button>
-								</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-newtask"
+									onclick="newTaskFormSubmit();">提交</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -1209,8 +1228,7 @@
 						<h4 class="modal-title">新增留言</h4>
 					</div>
 					<div class="modal-body">
-						<textarea class="form-control" rows="10"
-							placeholder="说点什么..."></textarea>
+						<textarea class="form-control" rows="10" placeholder="说点什么..."></textarea>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

@@ -24,17 +24,19 @@
 				style="height: 80%; width: 80%; margin-top: 10px; margin-bottom: 30px">
 			</div>			
 				
-			<h5 class="form-signin-heading">诺曼底登录</h5>
+			<!-- <h5 class="form-signin-heading">诺曼底登录</h5> -->
 			<input type="email" id="inputEmail" name="email" class="form-control"
-				placeholder="Email" required autofocus> <input
-				type="password" id="inputPassword" name="password"
+				placeholder="Email" required autofocus> 
+				
+			<input type="password" id="inputPassword" name="password" style="margin-top:10px"
 				class="form-control" placeholder="Password" required>
+				
 			<!-- <div class="checkbox">
 				<label> <input type="checkbox" value="remember-me">
 					记住我
 				</label>
 			</div> -->
-			<button class="btn btn-lg btn-primary btn-block" type="submit">登录
+			<button class="btn btn-lg btn-success btn-block" style="margin-top:16px" type="submit">登录
 				Login</button>
 			
 		</form>
