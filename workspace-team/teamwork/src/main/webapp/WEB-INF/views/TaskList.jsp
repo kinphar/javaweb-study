@@ -108,10 +108,20 @@
 			increaseArea : '20%' // optional
 		});
 
-		$('input[type="radio"]').on('ifChecked', function(event) {
-			var s = event.target.value;
-			queryFormSubmitWithStatus(s);
-		});
+		$('input[type="radio"][class="task-select"]').on('ifChecked',
+				function(event) {
+					var s = event.target.value;
+					queryFormSubmitWithStatus(s);
+				});
+
+		$('input[type="radio"][class="priority-setting"]').on('ifChecked',
+				function(event) {
+					var val = event.target.value;
+					var taskId = event.target.dataset.taskid;
+					var pri = (val == "urgent") ? "1" : "0";
+
+					taskPriorityChange(taskId, pri);
+				});
 
 		$('input[type="checkbox"][class="select-all"]').on(
 				'ifChecked ifUnchecked',
@@ -280,8 +290,6 @@
 
 	function updatePanelheadProcessor(taskId, userActived) {
 		$("#panel-head-processor_" + taskId).find("img").each(function() {
-			console.log("$$$" + $(this).attr("src"));
-
 			$(this).remove();
 		})
 
@@ -518,10 +526,20 @@
 			success : function(data) {
 				updateUserGroup("list-processor_" + id, data.assignTo);
 				updateUserGroup("list-follower_" + id, data.follower);
+				updateTaskPriority("priority-setting_" + id, data.priority);
 			},
 			error : function(xhr) {
 			}
 		});
+	}
+
+	function updateTaskPriority(id, pri) {
+		var radios = $("#" + id).find("input[type='radio']");
+		if (pri == "1") {
+			radios.last().iCheck('check');
+		} else {
+			radios.first().iCheck('check');
+		}
 	}
 
 	function createNewTask() {
@@ -735,6 +753,20 @@
 		}
 	}
 
+	function taskPriorityChange(id, pri) {
+		var dateTime = $("#input_deadline_" + id).val();
+		var task = {};
+		task.id = id;
+		task.priority = pri;
+
+		if (doTaskUpdate(task) == "success") {
+			var display = (pri == "1") ? "inline" : "none";
+			$("#item_title_" + id).find("span").css("display", display);
+		} else {
+			alert("修改未生效！");
+		}
+	}
+
 	function taskStatusChange(id) {
 		var status = $("#sel_status_" + id).val();
 		var task = {};
@@ -785,19 +817,19 @@
 				<div class="col-sm-12">
 					<label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10002'}">checked="checked"</c:if>
-						type="radio" value="10002"> 正在处理 <span
+						class="task-select" type="radio" value="10002"> 正在处理 <span
 						class="badge badge-num" id="status_10002">${number[2]}</span>
 					</label> <label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10006'}">checked="checked"</c:if>
-						type="radio" value="10006"> 暂停 <span
+						class="task-select" type="radio" value="10006"> 暂停 <span
 						class="badge badge-num" id="status_10006">${number[4]}</span>
 					</label> <label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10003'}">checked="checked"</c:if>
-						type="radio" value="10003"> 完成 <span
+						class="task-select" type="radio" value="10003"> 完成 <span
 						class="badge badge-num" id="status_10003">${number[3]}</span>
 					</label> <label class="radio-inline"> <input
 						<c:if test="${statusFilter=='10001'}">checked="checked"</c:if>
-						type="radio" value="10001"> 初稿 <span
+						class="task-select" type="radio" value="10001"> 初稿 <span
 						class="badge badge-num" id="status_10001">${number[1]}</span>
 					</label>
 
@@ -849,27 +881,28 @@
 							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a class="accordion-toggle collapsed" data-toggle="collapse"
-										data-parent="#accordion" href="#collapse_${task.id}">
-										&nbsp; <label id="item_title_${task.id}" class="label-title">
-											<c:if test="${task.priority == '1'}">
-												<span class="glyphicon glyphicon-fire"
-													style="color: red; font-size: 12px"></span>
-											</c:if> ${task.title}
+										data-parent="#accordion" href="#collapse_${task.id}">&nbsp;
+										<label id="item_title_${task.id}" class="label-title">${task.title}
+											<span class="glyphicon glyphicon-fire glyphicon-fire-title"
+											<c:if test="${task.priority == '1'}">style="display:inline"</c:if>>
+										</span>
 									</label> <label class="label-project"><span
 											class="glyphicon glyphicon-stop glyphicon-project"></span>
-											${task.projectName}</label> <label class="label-name"
+											${task.projectName} </label> <label class="label-name"
 										id="panel-head-processor_${task.id}"> <c:forEach
 												items="${users}" var="user" varStatus="status">
 												<c:if
 													test="${fn:contains(task.assignTo, user.email) and status.count <= 3}">
 													<img class="img-circle photo-small" src="${user.photo}">
 												</c:if>
-											</c:forEach></label> <label class="label-percent"
-										id="panel-head-progress_${task.id}"><span
-											class="label label-span-percent">${task.progress}</span></label> <label
-										class="label-deadline"><span
+											</c:forEach>
+									</label> <label class="label-percent"
+										id="panel-head-progress_${task.id}"> <span
+											class="label label-span-percent">${task.progress} </span>
+									</label> <label class="label-deadline"> <span
 											class="glyphicon glyphicon-time"></span>
-											${task.expectFinishDate}</label>
+											${task.expectFinishDate}
+									</label>
 									</a>
 								</h4>
 							</div>
@@ -1005,15 +1038,14 @@
 												<div style="float: left">
 													<h5 style="color: #A4A3A2">紧急程度：</h5>
 												</div>
-												<div style="padding-top: 6px">
+												<div style="padding-top: 6px"
+													id="priority-setting_${task.id}">
 													<label class="radio-inline"> <input type="radio"
-														value="0"
-														<c:if test="${task.priority == '0'}">checked="checked"</c:if>>
-														正常
+														class="priority-setting" name="prioritySetting"
+														value="normal" data-taskid="${task.id}"> 正常
 													</label> <label class="radio-inline"> <input type="radio"
-														value="1"
-														<c:if test="${task.priority == '1'}">checked="checked"</c:if>>
-														紧急
+														class="priority-setting" name="prioritySetting"
+														value="urgent" data-taskid="${task.id}"> 紧急
 													</label>
 												</div>
 											</div>

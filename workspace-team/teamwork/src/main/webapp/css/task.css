@@ -455,6 +455,11 @@ hr {
 	width: 34px;
 }
 
+.glyphicon-fire-title {
+	color: red;
+	display: none;
+}
+
 .user-thumb {    
     float: left;
     height: 40px;
