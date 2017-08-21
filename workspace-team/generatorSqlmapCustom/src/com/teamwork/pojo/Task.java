@@ -15,6 +15,8 @@ public class Task {
 
     private String progress;
 
+    private String priority;
+
     private String assignTo;
 
     private String follower;
@@ -83,6 +85,14 @@ public class Task {
 
     public void setProgress(String progress) {
         this.progress = progress == null ? null : progress.trim();
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority == null ? null : priority.trim();
     }
 
     public String getAssignTo() {

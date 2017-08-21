@@ -197,7 +197,7 @@
 		removeOldSubTask(id);
 		$.ajax({
 			type : "GET",
-			url : "${ctx}/task/task_get_checklist",
+			url : "${ctx}/task/get_subtask",
 			data : {
 				taskid : id
 			},
@@ -482,9 +482,9 @@
 		newComment.find(".comment-content").html(comment.description);
 		newComment.css("display", "block");
 
-		var topComment = parent.children("li:first");		
+		var topComment = parent.children("li:first");
 		$(newComment).insertBefore(topComment);
-		
+
 		console.log("newComment:class=" + newComment.attr("class"));
 		console.log("topComment:class=" + topComment.attr("class"));
 	}
@@ -850,13 +850,15 @@
 								<h4 class="panel-title">
 									<a class="accordion-toggle collapsed" data-toggle="collapse"
 										data-parent="#accordion" href="#collapse_${task.id}">
-										&nbsp; <label id="item_title_${task.id}" class="label-title">${task.title}</label>
-										<label class="label-project"><span
+										&nbsp; <label id="item_title_${task.id}" class="label-title"><span
+											class="glyphicon glyphicon-fire" style="color:red; font-size:12px"></span> ${task.title}</label> <label
+										class="label-project"><span
 											class="glyphicon glyphicon-stop glyphicon-project"></span>
 											${task.projectName}</label> <label class="label-name"
 										id="panel-head-processor_${task.id}"> <c:forEach
 												items="${users}" var="user" varStatus="status">
-												<c:if test="${fn:contains(task.assignTo, user.email) and status.count <= 3}">
+												<c:if
+													test="${fn:contains(task.assignTo, user.email) and status.count <= 3}">
 													<img class="img-circle photo-small" src="${user.photo}">
 												</c:if>
 											</c:forEach></label> <label class="label-percent"
@@ -1086,12 +1088,14 @@
 											</li>
 											<li class="comment-seed">
 												<div class="user-thumb">
-													<img class="img-circle img-thumb" alt="User" src="/images/ding.png">
+													<img class="img-circle img-thumb" alt="User"
+														src="/images/ding.png">
 												</div>
 												<div class="comments">
 													<span class="user-info"></span>
 													<p>
-														<a class="comment-content">我是DIVCSS5，欢迎来divcss5做客！<br />DIVCSS5希望您能学好CSS知识！ </a>
+														<a class="comment-content">我是DIVCSS5，欢迎来divcss5做客！<br />DIVCSS5希望您能学好CSS知识！
+														</a>
 													</p>
 													<a class="btn btn-default btn-opt btn-delete-comment">
 														<span class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete

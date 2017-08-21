@@ -46,7 +46,7 @@
 		<table schema="" tableName="task"></table>
 		<table schema="" tableName="project"></table>
 		<table schema="" tableName="sys_dict"></table>
-		<table schema="" tableName="task_check_list"></table>
+		<table schema="" tableName="subtask"></table>
 		<table schema="" tableName="comment"></table>
 
 	</context>

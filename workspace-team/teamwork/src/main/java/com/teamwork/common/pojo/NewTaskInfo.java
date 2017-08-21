@@ -2,13 +2,13 @@ package com.teamwork.common.pojo;
 
 import java.util.List;
 
+import com.teamwork.pojo.Subtask;
 import com.teamwork.pojo.Task;
-import com.teamwork.pojo.TaskCheckList;
 
 public class NewTaskInfo {
 	
 	private Task task;
-	private List<TaskCheckList> checkList;
+	private List<Subtask> subtask;
 	
 	public Task getTask() {
 		return task;
@@ -16,10 +16,10 @@ public class NewTaskInfo {
 	public void setTask(Task task) {
 		this.task = task;
 	}
-	public List<TaskCheckList> getCheckList() {
-		return checkList;
+	public List<Subtask> getSubtask() {
+		return subtask;
 	}
-	public void setCheckList(List<TaskCheckList> checkList) {
-		this.checkList = checkList;
+	public void setSubtask(List<Subtask> subtask) {
+		this.subtask = subtask;
 	}
 }

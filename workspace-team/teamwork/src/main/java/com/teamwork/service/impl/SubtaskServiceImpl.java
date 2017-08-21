@@ -8,45 +8,45 @@ import org.springframework.stereotype.Service;
 
 import com.teamwork.common.pojo.FriendlyResult;
 import com.teamwork.common.utils.IDUtils;
-import com.teamwork.mapper.TaskCheckListMapper;
+import com.teamwork.mapper.SubtaskMapper;
+import com.teamwork.pojo.Subtask;
+import com.teamwork.pojo.SubtaskExample;
 import com.teamwork.pojo.Task;
-import com.teamwork.pojo.TaskCheckList;
-import com.teamwork.pojo.TaskCheckListExample;
-import com.teamwork.service.TaskCheckListService;
+import com.teamwork.service.SubtaskService;
 
 @Service
-public class TaskCheckListServiceImpl implements TaskCheckListService {
+public class SubtaskServiceImpl implements SubtaskService {
 	
 	@Autowired
-	private TaskCheckListMapper taskCheckListMapper;
+	private SubtaskMapper subtaskMapper;
 
 	@Override
-	public List<TaskCheckList> getCheckListByTasks(List<Task> tasks) {
-		List<TaskCheckList> list = null;
+	public List<Subtask> getSubtaskByTasks(List<Task> tasks) {
+		List<Subtask> list = null;
 		for (Task item : tasks) {
 			if (list == null) {
-				list = getCheckListByParentId(item.getId());
+				list = getSubtaskByParentId(item.getId());
 			} else {
-				list.addAll(getCheckListByParentId(item.getId()));
+				list.addAll(getSubtaskByParentId(item.getId()));
 			}
 		}
 		return list;
 	}
 
 	@Override
-	public List<TaskCheckList> getCheckListByParentId(String id) {
-		TaskCheckListExample example = new TaskCheckListExample();
+	public List<Subtask> getSubtaskByParentId(String id) {
+		SubtaskExample example = new SubtaskExample();
 		example.createCriteria().andParentIdEqualTo(id);		
-		return taskCheckListMapper.selectByExample(example);
+		return subtaskMapper.selectByExample(example);
 	}
 
 	@Override
-	public FriendlyResult updateCheckLists(List<TaskCheckList> list, String parentId) {
+	public FriendlyResult updateSubtasks(List<Subtask> list, String parentId) {
 		if (list != null && list.size() > 0) {
 			//delete all first.
-			deleteCheckListByParentId(parentId);
+			deleteSubtaskByParentId(parentId);
 			
-			for (TaskCheckList item : list) {
+			for (Subtask item : list) {
 				if (item.getStatus() == null || item.getDescription() == null) {
 					continue; //to delete item.
 				}
@@ -55,7 +55,7 @@ public class TaskCheckListServiceImpl implements TaskCheckListService {
 				item.setCreateDate(date);
 				item.setUpdateDate(date);
 				item.setDelFlag("0");
-				taskCheckListMapper.insert(item);
+				subtaskMapper.insert(item);
 			}			
 		}
 
@@ -63,15 +63,15 @@ public class TaskCheckListServiceImpl implements TaskCheckListService {
 	}
 
 	@Override
-	public FriendlyResult deleteCheckListByParentId(String parentId) {
-		TaskCheckListExample example = new TaskCheckListExample();
+	public FriendlyResult deleteSubtaskByParentId(String parentId) {
+		SubtaskExample example = new SubtaskExample();
 		example.createCriteria().andParentIdEqualTo(parentId);
-		taskCheckListMapper.deleteByExample(example);
+		subtaskMapper.deleteByExample(example);
 		return FriendlyResult.ok();
 	}
 
 	@Override
-	public FriendlyResult updateCheckList(TaskCheckList item) {
+	public FriendlyResult updateSubtask(Subtask item) {
 		Long id = item.getId();
 		System.out.println("id=" + id);
 		Long newId = (long) 0;
@@ -80,19 +80,19 @@ public class TaskCheckListServiceImpl implements TaskCheckListService {
 			item.setId(newId);
 			item.setCreateDate(new Date());
 			item.setUpdateDate(new Date());
-			taskCheckListMapper.insertSelective(item);
+			subtaskMapper.insertSelective(item);
 		} else {
 			newId = id;
 			item.setUpdateDate(new Date());
-			taskCheckListMapper.updateByPrimaryKeySelective(item);			
+			subtaskMapper.updateByPrimaryKeySelective(item);			
 		}
 		
 		return FriendlyResult.ok(newId);
 	}
 
 	@Override
-	public FriendlyResult deleteCheckListById(Long id) {
-		taskCheckListMapper.deleteByPrimaryKey(id);
+	public FriendlyResult deleteSubtaskById(Long id) {
+		subtaskMapper.deleteByPrimaryKey(id);
 		return FriendlyResult.ok();
 	}
 	

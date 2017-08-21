@@ -2,7 +2,7 @@ package com.teamwork.pojo;
 
 import java.util.Date;
 
-public class TaskCheckList {
+public class Subtask {
     private Long id;
 
     private String parentId;

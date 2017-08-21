@@ -34,15 +34,15 @@ import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.common.utils.ExcelUtil;
 import com.teamwork.pojo.Comment;
 import com.teamwork.pojo.Project;
+import com.teamwork.pojo.Subtask;
 import com.teamwork.pojo.SysDict;
 import com.teamwork.pojo.Task;
-import com.teamwork.pojo.TaskCheckList;
 import com.teamwork.pojo.User;
 import com.teamwork.service.CommentService;
 import com.teamwork.service.EmailService;
 import com.teamwork.service.MiscService;
 import com.teamwork.service.ProjectService;
-import com.teamwork.service.TaskCheckListService;
+import com.teamwork.service.SubtaskService;
 import com.teamwork.service.TaskService;
 import com.teamwork.service.UserService;
 
@@ -59,7 +59,7 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 	@Autowired
-	private TaskCheckListService taskCheckListService;
+	private SubtaskService subtaskService;
 	@Autowired
 	private EmailService emailService;
 	@Autowired
@@ -131,9 +131,9 @@ public class TaskController {
 			taskService.updateTask(task);			
 		}
 		
-		List<TaskCheckList> list = newTaskInfo.getCheckList();
+		List<Subtask> list = newTaskInfo.getSubtask();
 		if (list != null && list.size() > 0) {
-			taskCheckListService.updateCheckLists(list, task.getId());
+			subtaskService.updateSubtasks(list, task.getId());
 		}
 		
 		return "redirect:task_list";
@@ -151,7 +151,7 @@ public class TaskController {
 	@ResponseBody
 	public Map<String,Object> deleteTask(@RequestParam("taskid") String taskid) {
 		taskService.deleteTaskById(taskid);
-		taskCheckListService.deleteCheckListByParentId(taskid);
+		subtaskService.deleteSubtaskByParentId(taskid);
 		
 		String status = taskService.getTaskStatusById(taskid);
 		int num = taskService.getTaskNumByStatus(status);
@@ -170,10 +170,10 @@ public class TaskController {
 		return task;
 	}
 	
-	@RequestMapping("/task_get_checklist")
+	@RequestMapping("/get_subtask")
 	@ResponseBody
-	public List<TaskCheckList> getTaskCheckList(@RequestParam("taskid") String taskid) {
-		List<TaskCheckList> list = taskCheckListService.getCheckListByParentId(taskid);
+	public List<Subtask> getSubtask(@RequestParam("taskid") String taskid) {
+		List<Subtask> list = subtaskService.getSubtaskByParentId(taskid);
 		System.out.println("checklist.num=" + list.size());
 		return list;
 	}
@@ -284,13 +284,13 @@ public class TaskController {
 
     @RequestMapping(value = "/updateSubTask", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> checkListUpdate(TaskCheckList subTask) {
+	public Map<String,Object> checkListUpdate(Subtask subTask) {
     	
     	System.out.println("updateSubTask:" + subTask.getParentId() 
     		+ ";" + subTask.getId() + ";status=" + subTask.getStatus() 
     		+ ";" + subTask.getDescription());    	
     	
-    	FriendlyResult result = taskCheckListService.updateCheckList(subTask);    	
+    	FriendlyResult result = subtaskService.updateSubtask(subTask);    	
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("result", "ok");
 		map.put("id", result.getData().toString());
@@ -299,8 +299,8 @@ public class TaskController {
     
     @RequestMapping(value = "/deleteSubTask", method = RequestMethod.POST)
   	@ResponseBody
-  	public Map<String,Object> checkListDelete(TaskCheckList subTask) {
-      	taskCheckListService.deleteCheckListById(subTask.getId());    	
+  	public Map<String,Object> checkListDelete(Subtask subTask) {
+      	subtaskService.deleteSubtaskById(subTask.getId());    	
       	System.out.println("checkListDelete:" + subTask.getId());
       	
   		Map<String,Object> map = new HashMap<String,Object>();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.teamwork.mapper.TaskCheckListMapper" >
-  <resultMap id="BaseResultMap" type="com.teamwork.pojo.TaskCheckList" >
+<mapper namespace="com.teamwork.mapper.SubtaskMapper" >
+  <resultMap id="BaseResultMap" type="com.teamwork.pojo.Subtask" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
@@ -74,13 +74,13 @@
     id, parent_id, description, status, create_by, create_date, update_by, update_date, 
     del_flag
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.TaskCheckListExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.teamwork.pojo.SubtaskExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from task_check_list
+    from subtask
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from task_check_list
+    from subtask
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from task_check_list
+    delete from subtask
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.teamwork.pojo.TaskCheckListExample" >
-    delete from task_check_list
+  <delete id="deleteByExample" parameterType="com.teamwork.pojo.SubtaskExample" >
+    delete from subtask
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.teamwork.pojo.TaskCheckList" >
-    insert into task_check_list (id, parent_id, description, 
+  <insert id="insert" parameterType="com.teamwork.pojo.Subtask" >
+    insert into subtask (id, parent_id, description, 
       status, create_by, create_date, 
       update_by, update_date, del_flag
       )
@@ -114,8 +114,8 @@
       #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.teamwork.pojo.TaskCheckList" >
-    insert into task_check_list
+  <insert id="insertSelective" parameterType="com.teamwork.pojo.Subtask" >
+    insert into subtask
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -175,14 +175,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.teamwork.pojo.TaskCheckListExample" resultType="java.lang.Integer" >
-    select count(*) from task_check_list
+  <select id="countByExample" parameterType="com.teamwork.pojo.SubtaskExample" resultType="java.lang.Integer" >
+    select count(*) from subtask
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update task_check_list
+    update subtask
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update task_check_list
+    update subtask
     set id = #{record.id,jdbcType=BIGINT},
       parent_id = #{record.parentId,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
@@ -231,8 +231,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.pojo.TaskCheckList" >
-    update task_check_list
+  <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.pojo.Subtask" >
+    update subtask
     <set >
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=VARCHAR},
@@ -261,8 +261,8 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.teamwork.pojo.TaskCheckList" >
-    update task_check_list
+  <update id="updateByPrimaryKey" parameterType="com.teamwork.pojo.Subtask" >
+    update subtask
     set parent_id = #{parentId,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},

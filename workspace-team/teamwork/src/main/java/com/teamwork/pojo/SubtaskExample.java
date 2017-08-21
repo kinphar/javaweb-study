@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TaskCheckListExample {
+public class SubtaskExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public TaskCheckListExample() {
+    public SubtaskExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
