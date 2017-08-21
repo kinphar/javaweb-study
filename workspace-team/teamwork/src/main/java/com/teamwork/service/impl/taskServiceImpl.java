@@ -33,6 +33,7 @@ public class taskServiceImpl implements TaskService {
 		task.setUpdateDate(date);
 		task.setProgress("0%");
 		task.setDelFlag("0");
+		task.setPriority("0");
 		task.setFollower(task.getAssignTo());
 		taskMapper.insert(task);
 		

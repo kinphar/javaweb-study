@@ -293,7 +293,8 @@ textarea:focus {
 	border: 1px solid #ccc;
 }
 
-.task-assign, .task-follower, .task-deadline, .task-status, .task-project, .task-file, .task-operation {
+.task-assign, .task-follower, .task-deadline, .task-status, .task-priority,
+.task-project, .task-file, .task-operation {
 	margin-left: 20px;
 }
 
@@ -313,12 +314,16 @@ textarea:focus {
 	margin-top: 16px
 }
 
+.task-priority {
+	margin-top: 16px
+}
+
 .task-project {
 	margin-top: 16px
 }
 
 .task-file {
-	margin-top: 24px
+	margin-top: 26px
 }
 
 .task-operation {

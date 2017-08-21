@@ -21,13 +21,15 @@ public class CommentServiceImpl implements CommentService {
 	private CommentMapper commentMapper;
 
 	@Override
-	public FriendlyResult deleteCommentById(Long id) {
+	public FriendlyResult deleteCommentById(Long id, String userOpt) {
 		//logic delete.
 		CommentExample example = new CommentExample();
 		Criteria createCriteria = example.createCriteria();
 		createCriteria.andIdEqualTo(id);		
 		Comment comment = new Comment();
 		comment.setDelFlag("1");		
+		comment.setUpdateBy(userOpt);
+		comment.setUpdateDate(new Date());
 		commentMapper.updateByExampleSelective(comment, example);
 		return FriendlyResult.ok();
 	}

@@ -40,7 +40,9 @@ public class CommentController {
 	@ResponseBody
 	public Map<String, Object> deleteComment(@RequestParam("commentid") Long id, HttpServletRequest request) {
 		System.out.println("deleteComment:" + id);
-		commentService.deleteCommentById(id);		
+		HttpSession session = request.getSession();
+		String userLogin = (String) session.getAttribute("useremail");
+		commentService.deleteCommentById(id, userLogin);		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("result", "ok");
 		return map;

@@ -509,7 +509,7 @@
 	function updateTaskFromRemote(id) {
 		$.ajax({
 			type : "GET",
-			url : "${ctx}/task/task_get",
+			url : "${ctx}/task/get",
 			data : {
 				taskid : id
 			},
@@ -647,7 +647,7 @@
 	}
 
 	function exportExcel(id) {
-		var url = "task_export" + "/" + id;
+		var url = "export" + "/" + id;
 		window.open(url);
 	}
 
@@ -780,7 +780,7 @@
 
 
 		<form:form id="filterForm" commandName="taskQuery"
-			action="${ctx}/task/task_list" method="post" class="form-inline">
+			action="${ctx}/task/list" method="post" class="form-inline">
 			<div class="row breadcrumb" style="margin: 5px 0px; padding: 8px 2px">
 				<div class="col-sm-12">
 					<label class="radio-inline"> <input
@@ -850,9 +850,12 @@
 								<h4 class="panel-title">
 									<a class="accordion-toggle collapsed" data-toggle="collapse"
 										data-parent="#accordion" href="#collapse_${task.id}">
-										&nbsp; <label id="item_title_${task.id}" class="label-title"><span
-											class="glyphicon glyphicon-fire" style="color:red; font-size:12px"></span> ${task.title}</label> <label
-										class="label-project"><span
+										&nbsp; <label id="item_title_${task.id}" class="label-title">
+											<c:if test="${task.priority == '1'}">
+												<span class="glyphicon glyphicon-fire"
+													style="color: red; font-size: 12px"></span>
+											</c:if> ${task.title}
+									</label> <label class="label-project"><span
 											class="glyphicon glyphicon-stop glyphicon-project"></span>
 											${task.projectName}</label> <label class="label-name"
 										id="panel-head-processor_${task.id}"> <c:forEach
@@ -997,7 +1000,22 @@
 														</option>
 													</c:forEach>
 												</select>
-
+											</div>
+											<div class="task-priority">
+												<div style="float: left">
+													<h5 style="color: #A4A3A2">紧急程度：</h5>
+												</div>
+												<div style="padding-top: 6px">
+													<label class="radio-inline"> <input type="radio"
+														value="0"
+														<c:if test="${task.priority == '0'}">checked="checked"</c:if>>
+														正常
+													</label> <label class="radio-inline"> <input type="radio"
+														value="1"
+														<c:if test="${task.priority == '1'}">checked="checked"</c:if>>
+														紧急
+													</label>
+												</div>
 											</div>
 
 											<div class="task-file">
@@ -1080,22 +1098,6 @@
 													<span class="user-info"></span>
 													<p>
 														<a class="comment-content"></a>
-													</p>
-													<a class="btn btn-default btn-opt btn-delete-comment">
-														<span class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete
-													</a>
-												</div>
-											</li>
-											<li class="comment-seed">
-												<div class="user-thumb">
-													<img class="img-circle img-thumb" alt="User"
-														src="/images/ding.png">
-												</div>
-												<div class="comments">
-													<span class="user-info"></span>
-													<p>
-														<a class="comment-content">我是DIVCSS5，欢迎来divcss5做客！<br />DIVCSS5希望您能学好CSS知识！
-														</a>
 													</p>
 													<a class="btn btn-default btn-opt btn-delete-comment">
 														<span class="glyphicon glyphicon-remove glyphicon-opt"></span>Delete

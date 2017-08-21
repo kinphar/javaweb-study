@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.teamwork.common.pojo.EmailContent;
 import com.teamwork.common.pojo.FriendlyResult;
-import com.teamwork.common.pojo.NewTaskInfo;
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.common.utils.ExcelUtil;
 import com.teamwork.pojo.Comment;
@@ -65,10 +64,8 @@ public class TaskController {
 	@Autowired
 	private CommentService commentService;
 	
-	@RequestMapping("/task_list")
+	@RequestMapping("/list")
 	public String listTasks(Model model, @ModelAttribute TaskQuery taskQuery, HttpServletRequest request) {
-		System.out.println("---Request--- : task_list");
-		
 		List<Project> projects = projectService.getAllProject();
 		List<User> users = userService.getAllUser();
 		List<SysDict> dicts = miscService.getTaskStatusDict();				
@@ -110,41 +107,29 @@ public class TaskController {
 		return "TaskList";		
 	}
 	
-	@RequestMapping("/task_save") 
-	public String saveTask(@ModelAttribute NewTaskInfo newTaskInfo, HttpServletRequest request) {
-		Task task = newTaskInfo.getTask();
-		String taskId = task.getId();
-		if (StringUtils.isBlank(taskId)) {
-			taskService.createTask(task);			
-			
-			HttpSession session = request.getSession();
-			String userLogin = (String) session.getAttribute("useremail");
-			Comment comment = new Comment();			
-			comment.setParentId(task.getId());
-			comment.setCreateBy(userLogin);
-			comment.setUpdateBy(userLogin);
-			comment.setCategory("task");
-			comment.setDescription("创建了这个任务。" + "--(Operation log)");
-			commentService.createComment(comment);
-			newTaskEmail(task);
-		} else {
-			taskService.updateTask(task);			
-		}
-		
-		List<Subtask> list = newTaskInfo.getSubtask();
-		if (list != null && list.size() > 0) {
-			subtaskService.updateSubtasks(list, task.getId());
-		}
-		
-		return "redirect:task_list";
-	}
-	
 	@RequestMapping("/new") 
-	public String newTask(@ModelAttribute Task newTask) {
+	public String newTask(@ModelAttribute Task newTask, HttpServletRequest request) {
 		taskService.createTask(newTask);
 		newTaskEmail(newTask);
+		addNewTaskComment(newTask, request);		
 		
-		return "redirect:task_list";
+		return "redirect:list";
+	}
+	
+	private void addNewTaskComment(Task task, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userLogin = (String) session.getAttribute("useremail");
+		Date dateNow = new Date();
+		
+		Comment comment = new Comment();			
+		comment.setParentId(task.getId());
+		comment.setCreateBy(userLogin);
+		comment.setUpdateBy(userLogin);
+		comment.setUpdateDate(dateNow);
+		comment.setCreateDate(dateNow);
+		comment.setCategory("task");
+		comment.setDescription("创建了这个任务。" + " --auto create");
+		commentService.createComment(comment);
 	}
 	
 	@RequestMapping("/delete")
@@ -163,7 +148,7 @@ public class TaskController {
 		return map;
 	}
 	
-	@RequestMapping("/task_get")
+	@RequestMapping("/get")
 	@ResponseBody
 	public Task getTask(@RequestParam("taskid") String taskid) {
 		Task task = taskService.getTaskById(taskid);
@@ -178,7 +163,7 @@ public class TaskController {
 		return list;
 	}
 		
-	@RequestMapping("/task_export/{taskId}")
+	@RequestMapping("/export/{taskId}")
     public String exportTask(@PathVariable String taskId, HttpServletRequest request,HttpServletResponse response) throws IOException{
         String fileName = taskId + "-任务数据";
         
@@ -262,7 +247,7 @@ public class TaskController {
         builder.append("<html><body>" + task.getAssignTo() + "你好！<br /><br />");
         builder.append("&nbsp&nbsp&nbsp&nbsp任务标题：" + task.getTitle() +"<br />");
         builder.append("&nbsp&nbsp&nbsp&nbsp任务内容：" + task.getDescription() + "<br />");
-        builder.append("&nbsp&nbsp&nbsp&nbsp任务链接：您可以<a href=" + "http://localhost:8684/task/task_list" + ">进入teamwork查看详情</a><br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务链接：您可以<a href=" + "http://localhost:8684/task/list" + ">进入teamwork查看详情</a><br /><br />");
         builder.append("</body></html>");
         String content = builder.toString();        
         mail.setContent(content);

@@ -30,7 +30,7 @@ public class AccountController {
 		List<User> users = userService.getUserByEmailAndPassword(email, password);
 		if (users != null && users.size() == 1) {
 			session.setAttribute("useremail", email);
-			return "redirect:/task/task_list";
+			return "redirect:/task/list";
 		} else {
 			return "redirect:/account/login";
 		}		
