@@ -145,6 +145,7 @@
 	}
 
 	function taskDataDelayLoad(id) {
+		uiProgressValueSet(id, "0");
 		removeOldSubTask(id);
 		setTimeout(function() {
 			updateSubTaskFromRemote(id)
@@ -743,13 +744,16 @@
 	}
 
 	// textarea 换行 \n，html换行<br /> 
-	function taskDescEditMode(id) {
+	function taskDescEditMode(id, content) {
 		showObjectById('desc_input_' + id);
 		hideObjectById('desc_disp_' + id);
 
-		var desc = document.getElementById("desc_disp_" + id).innerHTML;
-		desc = desc.replace(/<br>/g, "\n");
-		document.getElementById("desc_input_" + id).value = desc;
+		console.log("content:" + content);
+		if (content != "") {
+			var desc = document.getElementById("desc_disp_" + id).innerHTML;
+			desc = desc.replace(/<br>/g, "\n");
+			document.getElementById("desc_input_" + id).value = desc;
+		} 
 		document.getElementById('desc_input_' + id).focus();
 	}
 
@@ -758,9 +762,14 @@
 		hideObjectById('desc_input_' + id);
 
 		var desc = $("#desc_input_" + id).val();
-		desc = desc.replace(/\n/g, "<br />")
-		document.getElementById("desc_input_" + id).value = desc;
-		document.getElementById("desc_disp_" + id).innerHTML = desc;
+		if (desc == "") {
+			desc = "添加需求描述";
+			document.getElementById("desc_disp_" + id).innerHTML = desc;
+		} else {
+			desc = desc.replace(/\n/g, "<br />");
+			document.getElementById("desc_input_" + id).value = desc;
+			document.getElementById("desc_disp_" + id).innerHTML = desc;
+		}
 
 		taskDescChange(id);
 	}
@@ -909,7 +918,7 @@
 										id="panel-head-processor_${task.id}"> <c:forEach
 												items="${users}" var="user" varStatus="status">
 												<c:if
-													test="${fn:contains(task.assignTo, user.email) and status.count <= 3}">
+													test="${fn:contains(task.assignTo, user.email)}">
 													<img class="img-circle photo-small" src="${user.photo}">
 												</c:if>
 											</c:forEach>
@@ -949,7 +958,7 @@
 											<div class="task-desc">
 												<a id="desc_disp_${task.id}"
 													style="text-decoration: none; font-size: 14px; color: #0E76BD;"
-													href="javascript:void(0)" onclick="taskDescEditMode('${task.id}')"> <c:if
+													href="javascript:void(0)" onclick="taskDescEditMode('${task.id}', '${task.description}')"> <c:if
 														test="${empty task.description}">添加需求描述</c:if>${task.description}</a>
 												<textarea id="desc_input_${task.id}"
 													class="form-control form-control-content"
