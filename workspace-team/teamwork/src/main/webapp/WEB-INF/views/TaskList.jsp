@@ -811,7 +811,7 @@
 			alert("修改未生效！");
 		}
 
-		/* window.location.reload(); */
+		window.location.reload();
 	}
 
 	function taskProjectChange(id) {
@@ -824,6 +824,8 @@
 		} else {
 			alert("修改未生效！");
 		}
+		
+		window.location.reload();
 	}
 </script>
 </head>

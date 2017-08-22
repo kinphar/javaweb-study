@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2017-08-21 14:11:12
+Date: 2017-08-22 19:36:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,31 +31,44 @@ CREATE TABLE `comment` (
   `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=150329512070 DEFAULT CHARSET=utf8 COMMENT='评论';
+) ENGINE=InnoDB AUTO_INCREMENT=150340156388 DEFAULT CHARSET=utf8 COMMENT='评论';
 
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
 INSERT INTO `comment` VALUES ('150327840738', 'task', 'T17072111340965', '456789', 'chenzhong.sy@star-net.cn', '2017-08-21 09:20:08', 'chenzhong.sy@star-net.cn', '2017-08-21 09:20:08', '1');
-INSERT INTO `comment` VALUES ('150328346498', 'task', 'T17081614174204', '9999', 'chenzhong.sy@star-net.cn', '2017-08-21 10:44:25', 'chenzhong.sy@star-net.cn', '2017-08-21 10:44:25', '0');
-INSERT INTO `comment` VALUES ('150328354240', 'task', 'T17081614174204', '12456', 'chenzhong.sy@star-net.cn', '2017-08-21 10:45:42', 'chenzhong.sy@star-net.cn', '2017-08-21 10:45:42', '0');
-INSERT INTO `comment` VALUES ('150328382070', 'task', 'T17081614174204', '333333', 'chenzhong.sy@star-net.cn', '2017-08-21 10:50:21', 'chenzhong.sy@star-net.cn', '2017-08-21 10:50:21', '0');
-INSERT INTO `comment` VALUES ('150328445045', 'task', 'T17081614174204', '123456', 'chenzhong.sy@star-net.cn', '2017-08-21 11:00:50', 'chenzhong.sy@star-net.cn', '2017-08-21 11:00:50', '0');
-INSERT INTO `comment` VALUES ('150328469519', 'task', 'T17072111340965', '可怜', 'chenzhong.sy@star-net.cn', '2017-08-21 11:04:55', 'chenzhong.sy@star-net.cn', '2017-08-21 11:04:55', '0');
-INSERT INTO `comment` VALUES ('150328472200', 'task', 'T17080215071754', '可怜', 'chenzhong.sy@star-net.cn', '2017-08-21 11:05:22', 'chenzhong.sy@star-net.cn', '2017-08-21 11:05:22', '0');
-INSERT INTO `comment` VALUES ('150328478190', 'task', 'T17080215071754', '002396', 'chenzhong.sy@star-net.cn', '2017-08-21 11:06:21', 'chenzhong.sy@star-net.cn', '2017-08-21 11:06:21', '0');
-INSERT INTO `comment` VALUES ('150328480313', 'task', 'T17080215071754', '10086', 'chenzhong.sy@star-net.cn', '2017-08-21 11:06:43', 'chenzhong.sy@star-net.cn', '2017-08-21 11:06:43', '0');
-INSERT INTO `comment` VALUES ('150328589869', 'task', 'T17080215071754', 'ABCD', 'chenzhong.sy@star-net.cn', '2017-08-21 11:24:59', 'chenzhong.sy@star-net.cn', '2017-08-21 11:24:59', '0');
-INSERT INTO `comment` VALUES ('150328618928', 'task', 'T17072111340965', '我来了', 'dingqingfa@star-net.cn', '2017-08-21 11:29:49', 'dingqingfa@star-net.cn', '2017-08-21 11:29:49', '0');
+INSERT INTO `comment` VALUES ('150328346498', 'task', 'T17081614174204', '9999', 'chenzhong.sy@star-net.cn', '2017-08-21 10:44:25', 'chenzhong.sy@star-net.cn', '2017-08-21 10:44:25', '1');
+INSERT INTO `comment` VALUES ('150328354240', 'task', 'T17081614174204', '12456', 'chenzhong.sy@star-net.cn', '2017-08-21 10:45:42', 'chenzhong.sy@star-net.cn', '2017-08-21 10:45:42', '1');
+INSERT INTO `comment` VALUES ('150328382070', 'task', 'T17081614174204', '333333', 'chenzhong.sy@star-net.cn', '2017-08-21 10:50:21', 'chenzhong.sy@star-net.cn', '2017-08-21 10:50:21', '1');
+INSERT INTO `comment` VALUES ('150328445045', 'task', 'T17081614174204', '123456', 'chenzhong.sy@star-net.cn', '2017-08-21 11:00:50', 'chenzhong.sy@star-net.cn', '2017-08-21 11:00:50', '1');
+INSERT INTO `comment` VALUES ('150328469519', 'task', 'T17072111340965', '可怜', 'chenzhong.sy@star-net.cn', '2017-08-21 11:04:55', 'chenzhong.sy@star-net.cn', '2017-08-21 11:04:55', '1');
+INSERT INTO `comment` VALUES ('150328472200', 'task', 'T17080215071754', '可怜', 'chenzhong.sy@star-net.cn', '2017-08-21 11:05:22', 'chenzhong.sy@star-net.cn', '2017-08-22 13:48:07', '1');
+INSERT INTO `comment` VALUES ('150328478190', 'task', 'T17080215071754', '002396', 'chenzhong.sy@star-net.cn', '2017-08-21 11:06:21', 'chenzhong.sy@star-net.cn', '2017-08-21 16:55:55', '1');
+INSERT INTO `comment` VALUES ('150328480313', 'task', 'T17080215071754', '10086', 'chenzhong.sy@star-net.cn', '2017-08-21 11:06:43', 'chenzhong.sy@star-net.cn', '2017-08-21 16:55:55', '1');
+INSERT INTO `comment` VALUES ('150328589869', 'task', 'T17080215071754', 'ABCD', 'chenzhong.sy@star-net.cn', '2017-08-21 11:24:59', 'chenzhong.sy@star-net.cn', '2017-08-21 16:55:54', '1');
+INSERT INTO `comment` VALUES ('150328618928', 'task', 'T17072111340965', '我来了', 'dingqingfa@star-net.cn', '2017-08-21 11:29:49', 'dingqingfa@star-net.cn', '2017-08-21 11:29:49', '1');
 INSERT INTO `comment` VALUES ('150328621766', 'task', 'T17081614174204', '搞啥子<br />', 'dingqingfa@star-net.cn', '2017-08-21 11:30:17', 'dingqingfa@star-net.cn', '2017-08-21 11:30:17', '1');
-INSERT INTO `comment` VALUES ('150328622447', 'task', 'T17081614174204', '搞啥子', 'dingqingfa@star-net.cn', '2017-08-21 11:30:25', 'dingqingfa@star-net.cn', '2017-08-21 11:30:25', '0');
+INSERT INTO `comment` VALUES ('150328622447', 'task', 'T17081614174204', '搞啥子', 'dingqingfa@star-net.cn', '2017-08-21 11:30:25', 'dingqingfa@star-net.cn', '2017-08-21 11:30:25', '1');
 INSERT INTO `comment` VALUES ('150328623004', 'task', 'T17081614174204', '搞啥子<br />', 'dingqingfa@star-net.cn', '2017-08-21 11:30:30', 'dingqingfa@star-net.cn', '2017-08-21 11:30:30', '1');
-INSERT INTO `comment` VALUES ('150328639687', 'task', 'T17072111340965', '还要多久；\n我才能在你身边；', 'dingqingfa@star-net.cn', '2017-08-21 11:33:16', 'dingqingfa@star-net.cn', '2017-08-21 11:33:16', '0');
-INSERT INTO `comment` VALUES ('150328643210', 'task', 'T17072111340965', '好不容易；\n又能再多爱一天；\n说了拜拜。', 'dingqingfa@star-net.cn', '2017-08-21 11:33:53', 'dingqingfa@star-net.cn', '2017-08-21 11:33:53', '0');
-INSERT INTO `comment` VALUES ('150328646714', 'task', 'T17072111340965', '我怎么看不见。<br />没想到；<br />我还流着泪。', 'dingqingfa@star-net.cn', '2017-08-21 11:34:27', 'dingqingfa@star-net.cn', '2017-08-21 11:34:27', '0');
+INSERT INTO `comment` VALUES ('150328639687', 'task', 'T17072111340965', '还要多久；\n我才能在你身边；', 'dingqingfa@star-net.cn', '2017-08-21 11:33:16', 'chenzhong.sy@star-net.cn', '2017-08-22 18:21:30', '1');
+INSERT INTO `comment` VALUES ('150328643210', 'task', 'T17072111340965', '好不容易；\n又能再多爱一天；\n说了拜拜。', 'dingqingfa@star-net.cn', '2017-08-21 11:33:53', 'chenzhong.sy@star-net.cn', '2017-08-22 18:21:29', '1');
+INSERT INTO `comment` VALUES ('150328646714', 'task', 'T17072111340965', '我怎么看不见。<br />没想到；<br />我还流着泪。', 'dingqingfa@star-net.cn', '2017-08-21 11:34:27', 'chenzhong.sy@star-net.cn', '2017-08-22 17:53:06', '1');
 INSERT INTO `comment` VALUES ('150329484087', 'task', 'T17082113454481', 'c:if 标签多条件判断；<br /><c:if test=\"${fn:contains(task.assignTo, user.email) and status.count <= 3}\"><br />	<img class=\"img-circle photo-small\" src=\"${user.photo}\"><br /></c:if>', 'chenzhong.sy@star-net.cn', '2017-08-21 13:54:01', 'chenzhong.sy@star-net.cn', '2017-08-21 13:54:01', '1');
 INSERT INTO `comment` VALUES ('150329489305', 'task', 'T17082113454481', 'c:if 标签多条件判断：<br />\"<c:if test=\"${fn:contains(task.assignTo, user.email) and status.count <= 3}\"><br />													<img class=\"img-circle photo-small\" src=\"${user.photo}\"><br />												</c:if>\"', 'dingqingfa@star-net.cn', '2017-08-21 13:54:54', 'dingqingfa@star-net.cn', '2017-08-21 13:54:54', '1');
 INSERT INTO `comment` VALUES ('150329512069', 'task', 'T17082113454481', '新增留言时先清空输入框内容。', 'dingqingfa@star-net.cn', '2017-08-21 13:58:41', 'dingqingfa@star-net.cn', '2017-08-21 13:58:41', '0');
+INSERT INTO `comment` VALUES ('150330014669', 'task', 'T17082115212269', 'AMQP，即Advanced Message Queuing Protocol,一个提供统一消息服务的应用层标准高级消息队列协议,是应用层协议的一个开放标准,为面向消息的中间件设计。', 'chenzhong.sy@star-net.cn', '2017-08-21 15:22:27', 'chenzhong.sy@star-net.cn', '2017-08-21 15:22:27', '1');
+INSERT INTO `comment` VALUES ('150330017243', 'task', 'T17082115212269', 'AMQP，即Advanced Message Queuing Protocol,一个提供统一消息服务的应用层标准高级消息队列协议,是应用层协议的一个开放标准,为面向消息的中间件设计。', 'dingqingfa@star-net.cn', '2017-08-21 15:22:53', 'dingqingfa@star-net.cn', '2017-08-21 15:22:53', '0');
+INSERT INTO `comment` VALUES ('150330058162', 'task', 'T17082115212269', 'RabbitMQ是一个由erlang开发的AMQP（Advanced Message Queue ）的开源实现。AMQP 的出现其实也是应了广大人民群众的需求，虽然在同步消息通讯的世界里有很多公开标准（如 COBAR的 IIOP ，或者是 SOAP 等），但是在异步消息处理中却不是这样，只有大企业有一些商业实现（如微软的 MSMQ ，IBM 的 Websphere MQ 等），因此，在 2006 年的 6 月，Cisco 、Redhat、iMatix 等联合制定了 AMQP 的公开标准。', 'dingqingfa@star-net.cn', '2017-08-21 15:29:42', 'dingqingfa@star-net.cn', '2017-08-21 15:29:42', '1');
+INSERT INTO `comment` VALUES ('150330059653', 'task', 'T17082115212269', 'RabbitMQ是一个由erlang开发的AMQP（Advanced Message Queue ）的开源实现。<br />AMQP 的出现其实也是应了广大人民群众的需求，虽然在同步消息通讯的世界里有很多公开标准（如 COBAR的 IIOP ，或者是 SOAP 等），但是在异步消息处理中却不是这样，只有大企业有一些商业实现（如微软的 MSMQ ，IBM 的 Websphere MQ 等），因此，在 2006 年的 6 月，Cisco 、Redhat、iMatix 等联合制定了 AMQP 的公开标准。', 'dingqingfa@star-net.cn', '2017-08-21 15:29:57', 'dingqingfa@star-net.cn', '2017-08-21 15:29:57', '0');
+INSERT INTO `comment` VALUES ('150330063722', 'task', 'T17082115212269', 'http://blog.csdn.net/anzhsoft/article/details/19563091', 'dingqingfa@star-net.cn', '2017-08-21 15:30:37', 'dingqingfa@star-net.cn', '2017-08-21 15:30:37', '0');
+INSERT INTO `comment` VALUES ('150338880877', 'task', 'T17082216000748', '创建了这个任务。 --auto create', 'chenzhong.sy@star-net.cn', '2017-08-22 16:00:08', 'chenzhong.sy@star-net.cn', '2017-08-22 16:00:08', '0');
+INSERT INTO `comment` VALUES ('150338973749', 'task', 'T17082216153745', '创建了这个任务。 --auto create', 'chenzhong.sy@star-net.cn', '2017-08-22 16:15:37', 'chenzhong.sy@star-net.cn', '2017-08-22 16:15:37', '0');
+INSERT INTO `comment` VALUES ('150339003366', 'task', 'T17082216202844', '创建了这个任务。 --auto create', 'chenzhong.sy@star-net.cn', '2017-08-22 16:20:34', 'chenzhong.sy@star-net.cn', '2017-08-22 16:20:34', '0');
+INSERT INTO `comment` VALUES ('150339257109', 'task', 'T17082217025165', '创建了这个任务。 --auto create', 'chenzhong.sy@star-net.cn', '2017-08-22 17:02:52', 'chenzhong.sy@star-net.cn', '2017-08-22 17:02:52', '0');
+INSERT INTO `comment` VALUES ('150339729672', 'task', 'T17072111340965', '说点什么', 'chenzhong.sy@star-net.cn', '2017-08-22 18:21:37', 'chenzhong.sy@star-net.cn', '2017-08-22 18:21:37', '0');
+INSERT INTO `comment` VALUES ('150340085366', 'task', 'T17082219204886', '创建了这个任务。 --auto create', 'dingqingfa@star-net.cn', '2017-08-22 19:20:53', 'dingqingfa@star-net.cn', '2017-08-22 19:20:53', '0');
+INSERT INTO `comment` VALUES ('150340121635', 'task', 'T17082219265146', '创建了这个任务。 --auto create', 'dingqingfa@star-net.cn', '2017-08-22 19:26:57', 'dingqingfa@star-net.cn', '2017-08-22 19:26:57', '0');
+INSERT INTO `comment` VALUES ('150340156387', 'task', 'T17082219323841', '创建了这个任务。 --automatic generation--', 'dingqingfa@star-net.cn', '2017-08-22 19:32:43', 'dingqingfa@star-net.cn', '2017-08-22 19:32:43', '0');
 
 -- ----------------------------
 -- Table structure for project
@@ -91,6 +104,34 @@ INSERT INTO `project` VALUES ('12', '成品定制', null, null, null, null, 'adm
 INSERT INTO `project` VALUES ('13', '方案预研', null, null, null, null, 'admin', null, null, null, null, null, null);
 INSERT INTO `project` VALUES ('14', '成品维护', null, null, null, null, 'admin', null, null, null, null, null, null);
 INSERT INTO `project` VALUES ('15', '板卡定制', null, null, null, null, 'admin', null, null, null, null, null, null);
+INSERT INTO `project` VALUES ('P17082219354920', 'X66L', '楼宇设备新产品，DS2600处理器，linux平台。\r\n和X66_3.0 共用主板。', '0', '0%', 'liqing@star-net.cn', 'dingqingfa@star-net.cn', '2017-08-22 19:35:50', 'dingqingfa@star-net.cn', '2017-08-22 19:35:50', '2017-08-22 19:35:50', null, '0');
+
+-- ----------------------------
+-- Table structure for subtask
+-- ----------------------------
+DROP TABLE IF EXISTS `subtask`;
+CREATE TABLE `subtask` (
+  `id` bigint(64) NOT NULL COMMENT '主键',
+  `parent_id` varchar(64) DEFAULT NULL COMMENT '所属任务',
+  `description` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '检查项描述',
+  `status` varchar(64) DEFAULT NULL COMMENT '任务状态：0、未完成，1、已完成',
+  `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='子任务';
+
+-- ----------------------------
+-- Records of subtask
+-- ----------------------------
+INSERT INTO `subtask` VALUES ('150303539524', 'T17072111340965', '重新设计UI', '1', null, '2017-08-18 13:49:56', null, '2017-08-22 18:19:32', null);
+INSERT INTO `subtask` VALUES ('150329438031', 'T17082113454481', '任务面板头部最多显示3个处理人；', '1', null, '2017-08-21 13:46:20', null, '2017-08-21 13:47:11', null);
+INSERT INTO `subtask` VALUES ('150336782165', 'T17080410424594', '测试', '1', null, '2017-08-22 10:10:21', null, '2017-08-22 10:10:23', null);
+INSERT INTO `subtask` VALUES ('150339717184', 'T17072111340965', '编写桌面widget', '0', null, '2017-08-22 18:19:31', null, '2017-08-22 18:19:31', null);
+INSERT INTO `subtask` VALUES ('150339719694', 'T17072111340965', '实现监视、呼叫物业、布撤防、通话记录功能。', '0', null, '2017-08-22 18:19:56', null, '2017-08-22 18:19:56', null);
 
 -- ----------------------------
 -- Table structure for sys_dict
@@ -151,62 +192,17 @@ CREATE TABLE `task` (
 -- ----------------------------
 -- Records of task
 -- ----------------------------
-INSERT INTO `task` VALUES ('T17071817150796', 'teamwork', '账号注册登录以及权限校验', 'fsfffffffff啊手动阀手动阀', '10006', '100%', '0', 'dingqingfa@star-net.cn;chenzhong.sy@star-net.cn;liqing@star-net.cn', 'dingqingfa@star-net.cn;liqing@star-net.cn;fangxuerong@star-net.cn', null, '2017-07-18 17:15:07', null, '2017-08-15 19:24:15', '2017-07-21', '', '', '', '0');
-INSERT INTO `task` VALUES ('T17072111340965', 'teamwork', '魔镜第二阶段，新样机，带网线', '需要实现以下功能：<br />1. 重新设计UI；<br />2. 编写桌面空间widget；<br />3. 实现基本功能，呼叫中心、监视、记录；<br />', '10002', '50%', '0', 'dingqingfa@star-net.cn;chenzhong.sy@star-net.cn;liqing@star-net.cn;fangxuerong@star-net.cn', '', null, '2017-07-21 11:34:10', null, '2017-08-21 14:10:11', '2017-08-31', '2017-07-29', '处理说明', 'http://www.baidu.com/abcd', '0');
-INSERT INTO `task` VALUES ('T17072610461800', 'T91R', '瓦力瓦力', '', '10003', '0%', '0', 'dingqingfa@star-net.cn;linshengteng@star-net.cn', 'chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;fangxuerong@star-net.cn;huangwenwen@star-net.cn', null, '2017-07-26 10:46:18', null, '2017-08-17 11:34:04', '2017-07-14', '2017-07-31', '小菜一碟', 'http://192.168.12.111111', '0');
-INSERT INTO `task` VALUES ('T17073000453713', 'teamwork', '文件上传与管理功能', '添加需求描述', '10003', '0%', '0', 'chenzhong.sy@star-net.cn', 'dingqingfa@star-net.cn;chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;fangxuerong@star-net.cn;huangwenwen@star-net.cn', null, '2017-07-30 00:45:38', null, '2017-08-15 17:34:30', '2017-07-30', null, null, null, '0');
-INSERT INTO `task` VALUES ('T17080215071754', 'T91R', '搜索功能', '', '10002', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn;chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;fangxuerong@star-net.cn;huangwenwen@star-net.cn', null, '2017-08-02 15:07:18', null, '2017-08-21 11:25:07', '2017-08-10', null, null, null, '0');
-INSERT INTO `task` VALUES ('T17080318152860', '板卡定制', '又一个邮件发送测试', 'how do you do.', '10001', '0%', '0', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-03 18:15:28', null, '2017-08-04 10:56:36', '2017-08-11', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17080401011453', '板卡定制', '1234132412', '', '10001', '0%', '0', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-04 01:01:14', null, '2017-08-04 01:01:14', '2017-08-10', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17080410271187', '板卡定制', '邮箱测试新任务', '就是实现发送任务简述发送。', '10001', '0%', '0', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-04 10:27:11', null, '2017-08-04 10:27:11', '2017-08-17', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17080410341638', 'teamwork', '发送邮件测试任务', '发送邮件测试任务。。。。', '10003', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn;chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;fangxuerong@star-net.cn;huangwenwen@star-net.cn', null, '2017-08-04 10:34:17', null, '2017-08-15 17:34:57', '2017-08-10', '2017-08-04', '', '', '0');
-INSERT INTO `task` VALUES ('T17080410424594', 'T91R', '新的邮件任务发送测试', '爱情两个字多烦忧。', '10002', '0%', '0', 'dingqingfa@star-net.cn;liqing@star-net.cn', 'chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;huangwenwen@star-net.cn', null, '2017-08-04 10:42:46', null, '2017-08-16 09:08:53', '2017-08-18', null, null, null, '0');
-INSERT INTO `task` VALUES ('T17080411022388', 'I66', '有一个新的发送邮件测试任务', 'how are you.', '10006', '0%', '0', 'chenzhong.sy@star-net.cn', 'dingqingfa@star-net.cn;chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;fangxuerong@star-net.cn;huangwenwen@star-net.cn', null, '2017-08-04 11:02:23', null, '2017-08-15 18:59:23', '2017-08-11', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17081110415211', 'I68', '测试任务吧', '', '10001', '0%', '0', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-11 10:41:53', null, '2017-08-11 10:41:53', '2017-08-25', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17081110510556', '板卡定制', '测试一下flash读写', '略', '10001', '0%', '0', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-11 10:51:05', null, '2017-08-11 10:51:05', '2017-08-17', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17081111014068', 'T91R', '嘻哈嘻哈', '没有什么', '10001', '0%', '0', '丁庆发', 'dingqingfa@star-net.cn', null, '2017-08-11 11:01:41', null, '2017-08-11 11:01:41', '2017-08-18', null, null, null, '1');
-INSERT INTO `task` VALUES ('T17081614174204', 'teamwork', '使用redis缓存', '提高系统响应速度；<br />管理用户登录信息；', '10002', '83%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn;linshengteng@star-net.cn;huangwenwen@star-net.cn', null, '2017-08-16 14:17:42', null, '2017-08-21 14:01:43', '2017-08-19', null, null, null, '0');
-INSERT INTO `task` VALUES ('T17081614410417', 'teamwork', '增加redis机制', '提高系统反应速度；<br />管理用户登录状态；', '10001', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn', null, '2017-08-16 14:41:04', null, '2017-08-16 14:41:04', '2017-08-18', null, null, null, '0');
-INSERT INTO `task` VALUES ('T17082109121894', '成品定制', '小咚批量生产问题跟踪', '新一批小咚代工生产过程中出现一定数量设备无法正常配对的问题。', '10001', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn', null, '2017-08-21 09:12:18', null, '2017-08-21 09:12:18', '2017-08-25', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17071817150796', 'teamwork', '账号注册登录以及权限校验', 'fsfffffffff啊手动阀手动阀', '10003', '100%', '0', 'dingqingfa@star-net.cn', 'chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;fangxuerong@star-net.cn;huangwenwen@star-net.cn;hongguifang@star-net.cn;chenronghui@star-net.cn;dingqingfa@star-net.cn', null, '2017-07-18 17:15:07', null, '2017-08-22 19:12:18', '2017-07-21', '', '', '', '0');
+INSERT INTO `task` VALUES ('T17072111340965', 'teamwork', '魔镜第二阶段，新样机，带网线', '需要实现以下功能：<br />1. 重新设计UI；<br />2. 编写桌面空间widget；<br />3. 实现基本功能，呼叫中心、监视、记录；<br />', '10002', '33%', '1', 'hongguifang@star-net.cn', 'chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;fangxuerong@star-net.cn;huangwenwen@star-net.cn;hongguifang@star-net.cn;chenronghui@star-net.cn;dingqingfa@star-net.cn', null, '2017-07-21 11:34:10', null, '2017-08-22 19:36:07', '2017-09-15', '2017-07-29', '处理说明', 'http://www.baidu.com/abcd', '0');
+INSERT INTO `task` VALUES ('T17073000453713', 'teamwork', '文件上传与管理功能', '', '10001', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn;chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;fangxuerong@star-net.cn;huangwenwen@star-net.cn', null, '2017-07-30 00:45:38', null, '2017-08-22 19:34:17', '2017-07-30', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17080215071754', 'teamwork', '搜索功能', '搜索内容', '10002', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn;chenzhong.sy@star-net.cn;liqing@star-net.cn;linshengteng@star-net.cn;fangxuerong@star-net.cn;huangwenwen@star-net.cn;hongguifang@star-net.cn;chenronghui@star-net.cn', null, '2017-08-02 15:07:18', null, '2017-08-22 19:36:04', '2017-08-10', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17081614174204', 'teamwork', '使用redis缓存', '提高系统响应速度；<br />管理用户登录信息；', '10002', '83%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn;huangwenwen@star-net.cn', null, '2017-08-16 14:17:42', null, '2017-08-22 19:07:43', '2017-08-19', null, null, null, '1');
+INSERT INTO `task` VALUES ('T17082109121894', '成品定制', '小咚批量生产问题跟踪', '新一批小咚代工生产过程中出现一定数量设备无法正常配对的问题。', '10001', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn', null, '2017-08-21 09:12:18', null, '2017-08-22 19:34:17', '2017-08-25', null, null, null, '0');
 INSERT INTO `task` VALUES ('T17082113454481', 'teamwork', '任务管理功能完善', '详见', '10003', '100%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn', null, '2017-08-21 13:45:44', null, '2017-08-21 13:59:28', '2017-08-25', null, null, null, '0');
-
--- ----------------------------
--- Table structure for subtask
--- ----------------------------
-DROP TABLE IF EXISTS `subtask`;
-CREATE TABLE `subtask` (
-  `id` bigint(64) NOT NULL COMMENT '主键',
-  `parent_id` varchar(64) DEFAULT NULL COMMENT '所属任务',
-  `description` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '检查项描述',
-  `status` varchar(64) DEFAULT NULL COMMENT '任务状态：0、未完成，1、已完成',
-  `create_by` varchar(64) DEFAULT NULL COMMENT '创建者',
-  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(64) DEFAULT NULL COMMENT '更新者',
-  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
-  `del_flag` varchar(64) DEFAULT NULL COMMENT '逻辑删除标记（0：显示；1：隐藏）',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='子任务';
-
--- ----------------------------
--- Records of subtask
--- ----------------------------
-INSERT INTO `subtask` VALUES ('150302715946', 'T17072111340965', 'HELLO I miss you！', '0', null, '2017-08-18 11:32:40', null, '2017-08-19 16:48:29', null);
-INSERT INTO `subtask` VALUES ('150302734343', 'T17072111340965', '好样的', '0', null, '2017-08-18 11:35:43', null, '2017-08-19 16:48:29', null);
-INSERT INTO `subtask` VALUES ('150303539524', 'T17072111340965', '重新设计UI', '1', null, '2017-08-18 13:49:56', null, '2017-08-19 16:48:29', null);
-INSERT INTO `subtask` VALUES ('150307143520', 'T17072111340965', '搞笑不搞笑', '0', null, '2017-08-18 23:50:36', null, '2017-08-19 16:48:30', null);
-INSERT INTO `subtask` VALUES ('150307143908', 'T17072111340965', 'ABC abc', '1', null, '2017-08-18 23:50:40', null, '2017-08-19 16:48:23', null);
-INSERT INTO `subtask` VALUES ('150307144409', 'T17072111340965', '是我是我。', '1', null, '2017-08-18 23:50:44', null, '2017-08-19 16:48:30', null);
-INSERT INTO `subtask` VALUES ('150307145037', 'T17072111340965', '来我加完吧。', '0', null, '2017-08-18 23:50:51', null, '2017-08-19 16:48:30', null);
-INSERT INTO `subtask` VALUES ('150307145466', 'T17072111340965', '对啊对啊', '1', null, '2017-08-18 23:50:54', null, '2017-08-19 16:48:31', null);
-INSERT INTO `subtask` VALUES ('150313262885', 'T17081614174204', '1234', '1', null, '2017-08-19 16:50:29', null, '2017-08-19 16:50:56', null);
-INSERT INTO `subtask` VALUES ('150313263370', 'T17081614174204', '12341234', '1', null, '2017-08-19 16:50:33', null, '2017-08-19 16:50:56', null);
-INSERT INTO `subtask` VALUES ('150313264530', 'T17081614174204', '24124', '1', null, '2017-08-19 16:50:45', null, '2017-08-19 16:50:55', null);
-INSERT INTO `subtask` VALUES ('150313264722', 'T17081614174204', '12341234', '1', null, '2017-08-19 16:50:48', null, '2017-08-19 16:50:56', null);
-INSERT INTO `subtask` VALUES ('150313265053', 'T17081614174204', '阿萨德发第三方', '0', null, '2017-08-19 16:50:50', null, '2017-08-19 16:50:50', null);
-INSERT INTO `subtask` VALUES ('150313265379', 'T17081614174204', '啊发顺丰', '1', null, '2017-08-19 16:50:53', null, '2017-08-19 16:50:55', null);
-INSERT INTO `subtask` VALUES ('150327800576', 'T17080215071754', '未开始', '0', null, '2017-08-21 09:13:25', null, '2017-08-21 09:13:25', null);
-INSERT INTO `subtask` VALUES ('150329438031', 'T17082113454481', '任务面板头部最多显示3个处理人；', '1', null, '2017-08-21 13:46:20', null, '2017-08-21 13:47:11', null);
+INSERT INTO `task` VALUES ('T17082115212269', '成品定制', 'T91对接花样年云平台', '1.使用AMQP协议。', '10001', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn', null, '2017-08-21 15:21:23', null, '2017-08-22 19:34:16', '2017-09-30', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17082219204886', 'teamwork', '知识文章功能模块', '支持文章增删改；<br />支持按类别查看；', '10001', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn', null, '2017-08-22 19:20:48', null, '2017-08-22 19:34:15', '2017-08-25', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17082219265146', '成品定制', '花样年T91对接云平台', '支持sip对讲；<br />实现amqp协议；<br />实现远程控制；', '10001', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn', null, '2017-08-22 19:26:52', null, '2017-08-22 19:34:14', '2017-09-30', null, null, null, '0');
+INSERT INTO `task` VALUES ('T17082219323841', 'teamwork', '测试任务1', '什么事；<br />阿萨德发<br />a文文；', '10001', '0%', '0', 'dingqingfa@star-net.cn', 'dingqingfa@star-net.cn', null, '2017-08-22 19:32:38', null, '2017-08-22 19:34:03', '2017-08-31', null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for user
@@ -247,9 +243,11 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('101', null, null, null, '115513875', 'T10316', '丁庆发', 'dingqingfa@star-net.cn', null, null, null, '/images/ding.png', null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `user` VALUES ('102', null, null, null, '123456', 'T11478', '陈钟', 'chenzhong.sy@star-net.cn', null, null, null, '/images/chen.png', null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `user` VALUES ('103', null, null, null, null, 'T10667', '李晴', 'liqing@star-net.cn', null, null, null, '/images/justgun.gif', null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `user` VALUES ('104', null, null, null, null, 'T11441', '林圣腾', 'linshengteng@star-net.cn', null, null, null, '/images/lin.png', null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `user` VALUES ('105', null, null, null, null, 'T4025', '方雪嵘', 'fangxuerong@star-net.cn', null, null, null, '/images/fang.png', null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `user` VALUES ('106', null, null, null, null, 'T12665', '黄文文', 'huangwenwen@star-net.cn', null, null, null, '/images/fang.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('102', null, null, null, 'T11478', 'T11478', '陈钟', 'chenzhong.sy@star-net.cn', null, null, null, '/images/photo/giraffe.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('103', null, null, null, 'T10667', 'T10667', '李晴', 'liqing@star-net.cn', null, null, null, '/images/photo/lion.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('104', null, null, null, 'T11441', 'T11441', '林圣腾', 'linshengteng@star-net.cn', null, null, null, '/images/photo/rhino.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('105', null, null, null, 'T4025', 'T4025', '方雪嵘', 'fangxuerong@star-net.cn', null, null, null, '/images/photo/zebra.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('106', null, null, null, 'T12665', 'T12665', '黄文文', 'huangwenwen@star-net.cn', null, null, null, '/images/photo/dragon.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('107', null, null, null, 'T12693', 'T12693', '洪桂芳', 'hongguifang@star-net.cn', null, null, null, '/images/photo/elephant.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('108', null, null, null, 'T13482', 'T13482', '陈荣辉', 'chenronghui@star-net.cn', null, null, null, '/images/photo/pig.png', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `user` VALUES ('109', null, null, null, '115513875', 'T10316', '丁庆发', 'dingqingfa@star-net.cn', null, null, null, '/images/photo/hippo.png', null, null, null, null, null, null, null, null, null, null);

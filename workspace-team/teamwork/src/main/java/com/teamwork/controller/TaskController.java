@@ -114,7 +114,7 @@ public class TaskController {
 	@RequestMapping("/new") 
 	public String newTask(@ModelAttribute Task newTask, HttpServletRequest request) {
 		taskService.createTask(newTask);
-		/*newTaskEmail(newTask);*/
+		newTaskEmail(newTask);
 		addNewTaskComment(newTask, request);		
 		
 		return "redirect:list";
@@ -132,7 +132,7 @@ public class TaskController {
 		comment.setUpdateDate(dateNow);
 		comment.setCreateDate(dateNow);
 		comment.setCategory("task");
-		comment.setDescription("创建了这个任务。" + " --auto create");
+		comment.setDescription("创建了这个任务。" + " --automatic generation--");
 		commentService.createComment(comment);
 	}
 	
@@ -248,10 +248,14 @@ public class TaskController {
     	
     	//content
     	StringBuilder builder = new StringBuilder();
-        builder.append("<html><body>" + task.getAssignTo() + "你好！<br /><br />");
+        builder.append("<html><body>" + "您好！任务详情如下：<br /><br />");
         builder.append("&nbsp&nbsp&nbsp&nbsp任务标题：" + task.getTitle() +"<br />");
-        builder.append("&nbsp&nbsp&nbsp&nbsp任务内容：" + task.getDescription() + "<br />");
-        builder.append("&nbsp&nbsp&nbsp&nbsp任务链接：您可以<a href=" + "http://localhost:8684/task/list" + ">进入teamwork查看详情</a><br /><br />");
+        String desc = task.getDescription();
+        System.out.println(desc);
+        desc = desc.replace("<br />", "");
+        System.out.println(desc);
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务内容：" + desc + "<br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp 您可以<a href=" + "http://localhost:8684/task/list" + ">进入 Zoo Party 查看详情</a>（登录账号：邮箱地址，初始密码：工号）<br /><br />");
         builder.append("</body></html>");
         String content = builder.toString();        
         mail.setContent(content);
