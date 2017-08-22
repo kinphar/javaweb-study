@@ -150,11 +150,13 @@ h3 {
 
 .label-percent {
 	width: 6%;
+	text-align: left;
 }
 
 .label-deadline {
 	color: gray;
 	width: 10%;
+	font-size: 12px;
 	text-align: right;
 }
 
@@ -315,7 +317,7 @@ textarea:focus {
 }
 
 .task-priority {
-	margin-top: 16px
+	margin-top: 30px
 }
 
 .task-project {
@@ -364,19 +366,15 @@ textarea:focus {
 .input-deadline {
 	width: 30%;
 	font-size: 14px;
-    font-weight: bold;
     border: 0px solid #ccc;
     box-shadow: inset 0 0px 0px rgba(0,0,0,.075);
-    color: #0E76BD;
     background-color: #F8F6F2;
 }
 
 .select-project, .select-status {
 	width: 30%;
-	font-weight: bold;
 	border: 0px solid #ccc;
     box-shadow: inset 0 0px 0px rgba(0,0,0,.075);
-    color: #0E76BD;
     background-color: #F8F6F2;
           
     appearance:none;   

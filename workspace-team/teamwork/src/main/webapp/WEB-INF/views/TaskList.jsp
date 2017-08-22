@@ -24,7 +24,7 @@
 <script type="application/javascript"
 	src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
 
-<link rel="stylesheet" href="/take/icheck/skins/square/blue.css" />
+<link rel="stylesheet" href="/take/icheck/skins/square/yellow.css" />
 <script type="application/javascript" src="/take/icheck/icheck.min.js"></script>
 
 <script type="text/javascript">
@@ -46,10 +46,14 @@
 		$(function() {
 			$('.panel-collapse').on('show.bs.collapse', function() {
 				var taskId = this.dataset.taskid;
-				console.log("> panel expand:" + taskId);
-				updateTaskFromRemote(taskId);
-				updateSubTaskFromRemote(taskId);
-				updateCommentFromRemote(taskId);
+				var className = $(this).attr('class');
+				
+				if(className.indexOf("in") >= 0) {
+					/* deadline setting; */
+				} else {
+					updateTaskFromRemote(taskId);
+					taskDataDelayLoad(taskId);
+				}
 			})
 		});
 
@@ -57,14 +61,12 @@
 			var subTask = $(this).parent();
 			var taskId = subTask.data("taskid");
 			var val = $(this).val();
-			console.log("=== onBlur:" + val);
 			if (val == "") {
 				var itemId = subTask.data("itemid");
 				if (itemId != "") {
 					deleteSubTask(subTask); //delete empty content;
 					taskProgressChange(taskId);
 				}
-				console.log("delete subtask view");
 				$(this).parent().remove();
 			}
 		});
@@ -72,7 +74,6 @@
 		$(".checklist-item-input").change(function() {
 			var subTask = $(this).parent();
 			var content = $(this).val();
-			console.log("=== onChange:" + content);
 			if (content != "") {
 				saveSubTask(subTask);
 			}
@@ -81,7 +82,6 @@
 		$("a[class*='btn-delete-comment']").click(function() {
 			var commentNode = $(this).parent().parent();
 			commentId = commentNode.data("commentid");
-			console.log("deleteComment:id=" + commentId);
 
 			$.ajax({
 				type : "POST",
@@ -92,7 +92,7 @@
 				datatype : "json",
 				async : false,
 				success : function(data) {
-					console.log("delete comment ok.");
+					console.log("delete comment ok；" + commentId);
 					commentNode.remove();
 				},
 				error : function(xhr) {
@@ -103,8 +103,8 @@
 
 	function iCheckInit() {
 		$('input').iCheck({
-			checkboxClass : 'icheckbox_square-blue',
-			radioClass : 'iradio_square-blue',
+			checkboxClass : 'icheckbox_square-yellow',
+			radioClass : 'iradio_square-yellow',
 			increaseArea : '20%' // optional
 		});
 
@@ -143,6 +143,14 @@
 					saveSubTask(subTaskNode);
 					taskProgressChange(subTaskNode.data("taskid"));
 				});
+	}
+	
+	function taskDataDelayLoad(id) {
+		removeOldSubTask(id);
+		setTimeout(function(){updateSubTaskFromRemote(id)}, 200);		
+		
+		removeAllOldComment(id);
+		setTimeout(function(){updateCommentFromRemote(id)}, 500);
 	}
 
 	function iCheckBoxUnbindEvent(id) {
@@ -192,7 +200,7 @@
 			datatype : "json",
 			async : false,
 			success : function(data) {
-				console.log("deleteSubTask:" + data.result);
+				console.log("deleteSubTask:" + subTaskData.id + ";" + data.result);
 				result = true;
 			},
 			error : function(xhr) {
@@ -204,17 +212,17 @@
 	}
 
 	function updateSubTaskFromRemote(id) {
-		removeOldSubTask(id);
 		$.ajax({
 			type : "GET",
 			url : "${ctx}/task/get_subtask",
 			data : {
 				taskid : id
 			},
+			async : true,
 			dataType : 'json',
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
-				console.log("checklist:" + data.length);
+				console.log("subTask:len=" + data.length);
 				var len = data.length;
 				if (len > 0) {
 					iCheckBoxUnbindEvent();
@@ -223,7 +231,8 @@
 								data[i].status, data[i].description);
 					}
 					iCheckInit();
-					taskProgressChange(id);
+					var p = calcTaskProgressByCheck(id);
+					uiProgressValueSet(id, p);					
 				}
 			},
 			error : function(xhr) {
@@ -241,12 +250,11 @@
 			dataType : 'json',
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
-				console.log("comment:len=" + data.length);
-				removeAllOldComment();
+				console.log("comment:len=" + data.length);				
 				var len = data.length;
 				if (len > 0) {
 					for (var i = 0; i < len; i++) {
-						newCommentInsertView(data[i]);
+						uiCommentInsertNew(data[i]);
 					}
 				}
 			},
@@ -267,7 +275,6 @@
 						userSelected += $(this).val();
 					}
 				})
-		console.log("userSelected:" + userSelected);
 
 		//do save.
 		var task = {};
@@ -324,12 +331,10 @@
 
 	function removeAlluser(parent) {
 		var children = parent.childNodes;
-		console.log("removeAlluser");
 
 		for (var i = children.length - 1; i >= 0; i--) {
 			if (children[i].className == "user") {
 				parent.removeChild(children[i]);
-				console.log("remove:" + children[i].className);
 			}
 		}
 	}
@@ -349,7 +354,6 @@
 		var parent = document.getElementById(id);
 		removeAlluser(parent);
 
-		console.log("id:" + id + "userInfo:" + userInfo);
 		var addUserBtnChild = findAddUserNode(parent);
 		var userArray = userInfo.split(";");
 
@@ -358,7 +362,6 @@
 			userChild.setAttribute('class', 'user');
 			if (userArray[i] != "") {
 				var photo = getPhotoByEmail(userArray[i]);
-				console.log("email:" + userArray[i] + ";photo:" + photo);
 				userChild.innerHTML = '<img class="img-circle photo-medium" value="'
 					+ userArray[i]
 					+ '" src="'
@@ -439,7 +442,6 @@
 		var s = date.getSeconds();
 		var time = y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':'
 				+ add0(mm) + ':' + add0(s);
-		console.log("timeStamp2Date:" + time);
 		return time;
 	}
 
@@ -461,22 +463,22 @@
 			datatype : "json",
 			async : false,
 			success : function(data) {
-				newCommentInsertView(data);
+				uiCommentInsertNew(data);
 			},
 			error : function(xhr) {
 			}
 		});
 	}
 
-	function removeAllOldComment() {
-		$('ul.recent-comments li').each(function() {
+	function removeAllOldComment(id) {
+		$("#list-comment_" + id).children("li").each(function() {
 			if ($(this).css("display") != "none") {
 				$(this).remove();
 			}
 		});
 	}
 
-	function newCommentInsertView(comment) {
+	function uiCommentInsertNew(comment) {
 		var parent = $("#list-comment_" + comment.parentId);
 		var newComment = parent.children(".comment-seed").clone(true);
 		var userPhoto = getPhotoByEmail(comment.createBy)
@@ -492,9 +494,6 @@
 
 		var topComment = parent.children("li:first");
 		$(newComment).insertBefore(topComment);
-
-		console.log("newComment:class=" + newComment.attr("class"));
-		console.log("topComment:class=" + topComment.attr("class"));
 	}
 
 	function doDelTask() {
@@ -624,11 +623,10 @@
 
 		cloneItem.children(".checklist-item-input").focus();
 	}
-
-	function taskProgressChange(id) {
+	
+	function calcTaskProgressByCheck(id) {
 		var checkedNum = 0;
 		var totalNum = 0;
-		console.log("===id:" + id);
 		$("#taskCheckList_" + id).find("li").each(
 				function() {
 					var display = $(this).css("display");
@@ -647,21 +645,31 @@
 		if (totalNum != 0) {
 			p = parseInt(checkedNum * 100 / totalNum);
 		}
-		console.log("taskProgressChange:" + checkedNum + "/" + totalNum + ";"
+		console.log("progress:" + checkedNum + "/" 
+				+ totalNum + ";"
 				+ p + "%");
+		
+		return p;
+	}
 
+	function taskProgressChange(id) {
+		var p = calcTaskProgressByCheck(id);
 		var task = {};
 		task.id = id;
 		task.progress = p + "%";
 
 		if (doTaskUpdate(task) == "success") {
 			$("#sub-task-progress_" + id).css("width", p + "%");
-			$("#panel-head-progress_" + id).html(
-					'<span	class="label label-span-percent">' + p + '%'
-							+ '</span>');
+			uiProgressValueSet(id, p);
 		} else {
 			alert("修改未生效！");
 		}
+	}
+	
+	function uiProgressValueSet(taskId, p) {
+		$("#panel-head-progress_" + taskId).html(
+				'<span	class="label label-span-percent">' + p + '%'
+						+ '</span>');
 	}
 
 	function exportExcel(id) {
@@ -774,13 +782,6 @@
 		task.status = status;
 
 		if (doTaskUpdate(task) == "success") {
-			var p = $("#sub-task-progress_" + id).css("width");
-			if (p == "0%") {
-				$("#sub-task-progress_" + id).css("width", "5%");
-				$("#panel-head-progress_" + id).html(
-						'<span	class="label label-span-percent">' + p + '%'
-								+ '</span>');
-			}
 		} else {
 			alert("修改未生效！");
 		}
@@ -1094,7 +1095,7 @@
 												</div>
 
 												<div style="margin-left: 10px">
-													<a id="addCheckList_${task.id}" href="#"
+													<a id="addCheckList_${task.id}" href="javascript:void(0)"
 														onclick="createSubTask('${task.id}')">+Add+</a>
 												</div>
 											</div>
