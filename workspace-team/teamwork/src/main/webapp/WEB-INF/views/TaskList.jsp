@@ -47,8 +47,8 @@
 			$('.panel-collapse').on('show.bs.collapse', function() {
 				var taskId = this.dataset.taskid;
 				var className = $(this).attr('class');
-				
-				if(className.indexOf("in") >= 0) {
+
+				if (className.indexOf("in") >= 0) {
 					/* deadline setting; */
 				} else {
 					updateTaskFromRemote(taskId);
@@ -66,7 +66,7 @@
 				if (itemId != "") {
 					deleteSubTask(taskId, subTask); //delete data and ui;
 				} else {
-					subTask.remove();  //only delete ui;
+					subTask.remove(); //only delete ui;
 				}
 			}
 		});
@@ -143,13 +143,17 @@
 					saveSubTask(subTaskNode);
 				});
 	}
-	
+
 	function taskDataDelayLoad(id) {
 		removeOldSubTask(id);
-		setTimeout(function(){updateSubTaskFromRemote(id)}, 200);		
-		
+		setTimeout(function() {
+			updateSubTaskFromRemote(id)
+		}, 200);
+
 		removeAllOldComment(id);
-		setTimeout(function(){updateCommentFromRemote(id)}, 500);
+		setTimeout(function() {
+			updateCommentFromRemote(id)
+		}, 500);
 	}
 
 	function iCheckBoxUnbindEvent(id) {
@@ -192,9 +196,10 @@
 			datatype : "json",
 			async : false,
 			success : function(data) {
-				console.log("deleteSubTask:" + subTaskData.id + ";" + data.result);
+				console.log("deleteSubTask:" + subTaskData.id + ";"
+						+ data.result);
 				subTaskView.remove();
-				taskProgressChange(taskId);	
+				taskProgressChange(taskId);
 			},
 			error : function(xhr) {
 				alert("删除未生效！");
@@ -222,7 +227,7 @@
 								data[i].status, data[i].description);
 					}
 					iCheckInit();
-					updateTaskProgress(id);					
+					updateTaskProgress(id);
 				}
 			},
 			error : function(xhr) {
@@ -240,7 +245,7 @@
 			dataType : 'json',
 			contentType : "application/json; charset=utf-8",
 			success : function(data) {
-				console.log("comment:len=" + data.length);				
+				console.log("comment:len=" + data.length);
 				var len = data.length;
 				if (len > 0) {
 					for (var i = 0; i < len; i++) {
@@ -535,6 +540,10 @@
 		$('#taskModal').modal();
 	}
 
+	function createNewProject() {
+		$('#projectModal').modal();
+	}
+
 	function newTaskFormSubmit() {
 		var f = document.getElementById("newTaskForm");
 		if (checkNewTaskFrom(f) == true) {
@@ -545,13 +554,28 @@
 		}
 	}
 
-	function checkNewTaskFrom(form) {
+	function newProjectFormSubmit() {
+		var f = document.getElementById("newProjectForm");
+		if (checkNewProjectFrom(f) == true) {
+			f.submit();
+		}
+	}
+
+	function checkNewProjectFrom(form) {
 		if (form.title.value == '') {
 			form.title.focus();
 			return false;
 		}
-		if (form.description.value == '') {
-			form.description.focus();
+		if (form.projectManager.value == '') {
+			form.projectManager.focus();
+			return false;
+		}
+		return true;
+	}
+
+	function checkNewTaskFrom(form) {
+		if (form.title.value == '') {
+			form.title.focus();
 			return false;
 		}
 		if (form.projectName.value == '') {
@@ -613,7 +637,7 @@
 
 		cloneItem.children(".checklist-item-input").focus();
 	}
-	
+
 	function calcTaskProgressByCheck(id) {
 		var checkedNum = 0;
 		var totalNum = 0;
@@ -634,10 +658,8 @@
 		if (totalNum != 0) {
 			p = parseInt(checkedNum * 100 / totalNum);
 		}
-		console.log("progress:" + checkedNum + "/" 
-				+ totalNum + ";"
-				+ p + "%");
-		
+		console.log("progress:" + checkedNum + "/" + totalNum + ";" + p + "%");
+
 		return p;
 	}
 
@@ -647,24 +669,23 @@
 		task.id = id;
 		task.progress = p + "%";
 
-		if (doTaskUpdate(task) == "success") {			
+		if (doTaskUpdate(task) == "success") {
 			uiProgressValueSet(id, p);
 		} else {
 			alert("修改未生效！");
 		}
 	}
-	
+
 	function updateTaskProgress(id) {
 		var p = calcTaskProgressByCheck(id);
 		uiProgressValueSet(id, p);
 	}
-	
+
 	function uiProgressValueSet(taskId, p) {
 		var pStr = p + "%";
 		$("#sub-task-progress_" + taskId).css("width", pStr);
 		$("#panel-head-progress_" + taskId).html(
-				'<span	class="label label-span-percent">' + pStr
-						+ '</span>');
+				'<span	class="label label-span-percent">' + pStr + '</span>');
 	}
 
 	function exportExcel(id) {
@@ -858,7 +879,7 @@
 							<li role="presentation"><a role="menuitem" tabindex="-1"
 								href="#" class="text-center" onclick="createNewTask();">新建任务</a></li>
 							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="#" class="text-center">新建项目</a></li>
+								href="#" class="text-center" onclick="createNewProject();">新建项目</a></li>
 						</ul>
 					</div>
 				</div>
@@ -928,7 +949,7 @@
 											<div class="task-desc">
 												<a id="desc_disp_${task.id}"
 													style="text-decoration: none; font-size: 14px; color: #0E76BD;"
-													href="#" onclick="taskDescEditMode('${task.id}')"> <c:if
+													href="javascript:void(0)" onclick="taskDescEditMode('${task.id}')"> <c:if
 														test="${empty task.description}">添加需求描述</c:if>${task.description}</a>
 												<textarea id="desc_input_${task.id}"
 													class="form-control form-control-content"
@@ -1171,13 +1192,13 @@
 		<form:form id="newTaskForm" commandName="newTask"
 			action="${ctx}/task/new" method="post">
 			<div class="modal modal-task fade" id="taskModal" tabindex="-1"
-				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-task">
 					<div class="modal-content" style="padding: 0px 10px">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel"
+							<h4 class="modal-title" id="taskModalLabel"
 								style="font-weight: bold">新建任务</h4>
 						</div>
 						<div class="modal-body">
@@ -1188,7 +1209,7 @@
 											<td class="new-task-subject"><p class="pull-right">标题：</p></td>
 											<td class="new-task-content"><form:input
 													class="form-control" path="title" style="width:90%"
-													id="editTaskTitle" required="true" /></td>
+													required="true" /></td>
 										</tr>
 										<tr>
 											<td class="new-task-subject"><p class="pull-right">内容：</p></td>
@@ -1249,6 +1270,66 @@
 				</div>
 			</div>
 		</form:form>
+
+		<!-- 新建项目，模态框（Modal） -->
+		<form:form id="newProjectForm" commandName="newProject"
+			action="${ctx}/project/new" method="post">
+			<div class="modal modal-project fade" id="projectModal" tabindex="-1"
+				role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-project">
+					<div class="modal-content" style="padding: 0px 10px">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="projectModalLabel"
+								style="font-weight: bold">新建项目</h4>
+						</div>
+						<div class="modal-body">
+							<form role="form" class="form-inline">
+								<table class="table table-condensed">
+									<tbody>
+										<tr>
+											<td class="new-project-subject"><p class="pull-right">名称：</p></td>
+											<td class="new-project-content"><form:input
+													class="form-control" path="name" style="width:90%"
+													required="true" /></td>
+										</tr>
+										<tr>
+											<td class="new-project-subject"><p class="pull-right">内容：</p></td>
+											<td class="new-project-content"><form:textarea
+													class="form-control" path="description" style="width:90%"
+													rows="6" placeholder="描述项目需求详情。" /></td>
+										</tr>
+										<tr>
+											<td class="new-project-subject"><p class="pull-right">项目经理：</p></td>
+											<td class="new-project-content"><form:select
+													class="form-control" path="projectManager"
+													style="width:36%" required="true">
+													<form:option value="" label="" />
+													<form:options items="${users}" itemLabel="name"
+														itemValue="email" />
+												</form:select></td>
+										</tr>
+										<tr>
+											<td class="new-project-subject"><p class="pull-right">附件：</p></td>
+											<td class="new-project-content"><p>test.txt</p></td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-newProject"
+									onclick="newProjectFormSubmit();">提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form:form>
+
 
 		<!-- 新留言 -->
 		<div class="modal modal-comment fade" id="newCommentModel">

@@ -31,12 +31,13 @@
 	padding: 1px 4px;
 }
 
-.btn-saveUsers, .btn-newtask {
+.btn-saveUsers, .btn-newtask, .btn-newProject {
 	color: #ffffff;
 	background-color: #54D09F;
 }
 
 .btn-newtask:active, .btn-newtask:hover, .btn-newtask:focus,
+.btn-newProject:active, .btn-newProject:hover, .btn-newProject:focus,
 .btn-saveUsers:active, .btn-saveUsers:hover, .btn-saveUsers:focus {
 	color: #ffffff;
 	background-color: #4DBE91;
@@ -69,7 +70,7 @@
 	top: 10%;
 }
 
-.modal-task {
+.modal-task, .modal-project {
 	top: 6%;
 }
 
@@ -86,20 +87,20 @@
 	background-color: #ccc;
 }
 
-.modal-dialog-task {
+.modal-dialog-task, .modal-dialog-project {
 	width: 640px;
 }
 
-.modal-content-task {
+.modal-content-task, .modal-content-project {
 	padding: 5px 10px; 
 }
 
-.new-task-subject {
+.new-task-subject, .new-project-subject {
 	width: 10%;
 	vertical-align: middle;
 }
 
-.new-task-content {
+.new-task-content, .new-project-content {
 	width: 60%;
 }
 

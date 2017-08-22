@@ -60,17 +60,17 @@ public class IDUtils {
 	/**
 	 * 任务ID生成 
 	 */
-	public static String genTaskId() {
+	public static String genIdStartWith(String start) {
 		SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss");
-		String preTaskId = "T" + df.format(new Date()) + "";
+		String preTaskId = start + df.format(new Date()) + "";
 		Random random = new Random();
 		int end3 = random.nextInt(99);
 		return preTaskId + String.format("%02d", end3);		
 	}
 	
 	public static void main(String[] args) {
-		for(int i = 0; i < 100; i++)
-			System.out.println(genTaskId());
+		/*for(int i = 0; i < 100; i++)*/
+			/*System.out.println(genTaskId());*/
 			//System.out.println(genItemId());
 	}
 }

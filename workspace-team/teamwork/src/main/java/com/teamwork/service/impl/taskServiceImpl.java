@@ -25,7 +25,7 @@ public class taskServiceImpl implements TaskService {
 
 	@Override
 	public FriendlyResult createTask(Task task) {		
-		String taskId = IDUtils.genTaskId();
+		String taskId = IDUtils.genIdStartWith("T");
 		task.setId(taskId);	
 
 		Date date = new Date();

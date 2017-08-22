@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.teamwork.common.pojo.EmailContent;
-import com.teamwork.common.pojo.FriendlyResult;
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.common.utils.ExcelUtil;
 import com.teamwork.pojo.Comment;
@@ -86,8 +85,13 @@ public class TaskController {
 		List<Task> tasks = taskService.getTaskByFilter(taskQuery);		
 		model.addAttribute("tasks", tasks);
 		
+		//new task form
 		Task newTask = new Task();
 		model.addAttribute("newTask", newTask);
+		
+		//new project form
+		Project newProject = new Project();
+		model.addAttribute("newProject", newProject);
 		
 		//返回任务状态，用于高亮对应的状态tab
 		String statusFilter = taskQuery.getQueryTask().getStatus();
@@ -110,7 +114,7 @@ public class TaskController {
 	@RequestMapping("/new") 
 	public String newTask(@ModelAttribute Task newTask, HttpServletRequest request) {
 		taskService.createTask(newTask);
-		newTaskEmail(newTask);
+		/*newTaskEmail(newTask);*/
 		addNewTaskComment(newTask, request);		
 		
 		return "redirect:list";
@@ -239,7 +243,7 @@ public class TaskController {
     	mail.setSubject("收到一项新任务！"); 
     	
     	//receiver
-    	String emailAddress = userService.getEmailByUserName(task.getAssignTo());
+    	String emailAddress = task.getAssignTo();
     	mail.setToEmails(emailAddress);
     	
     	//content
