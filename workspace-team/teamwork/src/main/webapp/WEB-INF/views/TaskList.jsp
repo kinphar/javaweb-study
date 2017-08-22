@@ -24,7 +24,7 @@
 <script type="application/javascript"
 	src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
 
-<link rel="stylesheet" href="/take/icheck/skins/square/yellow.css" />
+<link rel="stylesheet" href="/take/icheck/skins/square/green.css" />
 <script type="application/javascript" src="/take/icheck/icheck.min.js"></script>
 
 <script type="text/javascript">
@@ -64,10 +64,10 @@
 			if (val == "") {
 				var itemId = subTask.data("itemid");
 				if (itemId != "") {
-					deleteSubTask(subTask); //delete empty content;
-					taskProgressChange(taskId);
+					deleteSubTask(taskId, subTask); //delete data and ui;
+				} else {
+					subTask.remove();  //only delete ui;
 				}
-				$(this).parent().remove();
 			}
 		});
 
@@ -103,8 +103,8 @@
 
 	function iCheckInit() {
 		$('input').iCheck({
-			checkboxClass : 'icheckbox_square-yellow',
-			radioClass : 'iradio_square-yellow',
+			checkboxClass : 'icheckbox_square-green',
+			radioClass : 'iradio_square-green',
 			increaseArea : '20%' // optional
 		});
 
@@ -141,7 +141,6 @@
 				'ifChecked ifUnchecked', function(event) {
 					var subTaskNode = $(this).parent().parent();
 					saveSubTask(subTaskNode);
-					taskProgressChange(subTaskNode.data("taskid"));
 				});
 	}
 	
@@ -166,33 +165,26 @@
 		var check = subTaskView.find("input[type='checkbox']").get(0).checked;
 		subTaskData.status = (check == true) ? 1 : 0;
 
-		var remoteId = doSubTaskUpdate(subTaskData);
-		subTaskView.data("itemid", remoteId);
-	}
-
-	function doSubTaskUpdate(param) {
-		var remoteId = "";
 		$.ajax({
 			type : "POST",
 			url : "${ctx}/task/updateSubTask",
-			data : param,
+			data : subTaskData,
 			datatype : "json",
 			async : false,
 			success : function(data) {
-				console.log("doSubTaskUpdate:id=" + data.id);
-				remoteId = data.id;
+				console.log("saveSubTask:id=" + data.id);
+				subTaskView.data("itemid", data.id);
+				taskProgressChange(data.parentId)
 			},
 			error : function(xhr) {
 			}
 		});
-		return remoteId;
 	}
 
-	function deleteSubTask(subTaskView) {
+	function deleteSubTask(taskId, subTaskView) {
 		var subTaskData = {};
 		subTaskData.id = subTaskView.data("itemid");
 
-		var result = false;
 		$.ajax({
 			type : "POST",
 			url : "${ctx}/task/deleteSubTask",
@@ -201,14 +193,13 @@
 			async : false,
 			success : function(data) {
 				console.log("deleteSubTask:" + subTaskData.id + ";" + data.result);
-				result = true;
+				subTaskView.remove();
+				taskProgressChange(taskId);	
 			},
 			error : function(xhr) {
 				alert("删除未生效！");
-				result = false;
 			}
 		});
-		return result;
 	}
 
 	function updateSubTaskFromRemote(id) {
@@ -231,8 +222,7 @@
 								data[i].status, data[i].description);
 					}
 					iCheckInit();
-					var p = calcTaskProgressByCheck(id);
-					uiProgressValueSet(id, p);					
+					updateTaskProgress(id);					
 				}
 			},
 			error : function(xhr) {
@@ -630,7 +620,6 @@
 		$("#taskCheckList_" + id).find("li").each(
 				function() {
 					var display = $(this).css("display");
-
 					if (display == "block") {
 						var checked = $(this).find("input[type='checkbox']")
 								.get(0).checked;
@@ -658,17 +647,23 @@
 		task.id = id;
 		task.progress = p + "%";
 
-		if (doTaskUpdate(task) == "success") {
-			$("#sub-task-progress_" + id).css("width", p + "%");
+		if (doTaskUpdate(task) == "success") {			
 			uiProgressValueSet(id, p);
 		} else {
 			alert("修改未生效！");
 		}
 	}
 	
+	function updateTaskProgress(id) {
+		var p = calcTaskProgressByCheck(id);
+		uiProgressValueSet(id, p);
+	}
+	
 	function uiProgressValueSet(taskId, p) {
+		var pStr = p + "%";
+		$("#sub-task-progress_" + taskId).css("width", pStr);
 		$("#panel-head-progress_" + taskId).html(
-				'<span	class="label label-span-percent">' + p + '%'
+				'<span	class="label label-span-percent">' + pStr
 						+ '</span>');
 	}
 

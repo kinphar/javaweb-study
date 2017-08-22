@@ -12,6 +12,6 @@ public interface SubtaskService {
 	List<Subtask> getSubtaskByParentId(String id);
 	FriendlyResult updateSubtasks(List<Subtask> list, String parentId);
 	FriendlyResult deleteSubtaskByParentId(String parentId);
-	FriendlyResult updateSubtask(Subtask item);
+	Subtask updateSubtask(Subtask item);
 	FriendlyResult deleteSubtaskById(Long id);
 }

@@ -71,7 +71,7 @@ public class SubtaskServiceImpl implements SubtaskService {
 	}
 
 	@Override
-	public FriendlyResult updateSubtask(Subtask item) {
+	public Subtask updateSubtask(Subtask item) {
 		Long id = item.getId();
 		System.out.println("id=" + id);
 		Long newId = (long) 0;
@@ -82,12 +82,11 @@ public class SubtaskServiceImpl implements SubtaskService {
 			item.setUpdateDate(new Date());
 			subtaskMapper.insertSelective(item);
 		} else {
-			newId = id;
 			item.setUpdateDate(new Date());
 			subtaskMapper.updateByPrimaryKeySelective(item);			
 		}
 		
-		return FriendlyResult.ok(newId);
+		return item;
 	}
 
 	@Override
