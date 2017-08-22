@@ -864,7 +864,7 @@
 							path="queryTask.assignTo" id="queryTask.assignTo">
 							<form:option value="all" label="所有人" />
 							<form:options items="${taskQuery.selectUsers}" itemLabel="name"
-								itemValue="name" />
+								itemValue="email" />
 						</form:select>
 					</div>
 

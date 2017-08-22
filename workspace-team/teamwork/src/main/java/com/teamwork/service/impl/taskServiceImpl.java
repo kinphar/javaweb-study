@@ -58,7 +58,8 @@ public class taskServiceImpl implements TaskService {
 			}
 			String assignTo = taskQuery.getQueryTask().getAssignTo();
 			if (!StringUtils.isBlank(assignTo) && !assignTo.equals("all")) {
-				createCriteria.andAssignToEqualTo(assignTo);
+				String queryUser = "%" + assignTo + "%";  
+				createCriteria.andAssignToLike(queryUser);
 			}
 			String status = taskQuery.getQueryTask().getStatus();
 			if (!StringUtils.isBlank(status) && !status.equals("all")) {
