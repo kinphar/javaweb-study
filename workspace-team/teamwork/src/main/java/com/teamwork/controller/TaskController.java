@@ -6,6 +6,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -114,8 +116,11 @@ public class TaskController {
 	@RequestMapping("/new") 
 	public String newTask(@ModelAttribute Task newTask, HttpServletRequest request) {
 		taskService.createTask(newTask);
-		newTaskEmail(newTask);
-		addNewTaskComment(newTask, request);		
+		addNewTaskComment(newTask, request);
+		
+		if (isInternetOnLine()) {
+			newTaskEmail(newTask);
+		}				
 		
 		return "redirect:list";
 	}
@@ -234,6 +239,24 @@ public class TaskController {
         listmap.add(mapValue);
 
         return listmap;
+    }
+    
+    private boolean isInternetOnLine() {
+    	String remoteHost = "www.baidu.com";
+    	int timeOut = 3000;
+    	boolean status = false;
+		try {
+			status = InetAddress.getByName(remoteHost).isReachable(timeOut);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("isInternetOnLine:" + status);
+    	return status;
     }
     
     private boolean newTaskEmail(Task task) {    	
