@@ -18,7 +18,7 @@ import com.teamwork.common.utils.TimeUtils;
 @RequestMapping("/tools")
 public class ToolsController {
 	
-	@RequestMapping("/init")
+	@RequestMapping("/main")
 	public String init(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userInfo = (String) session.getAttribute("useremail");
@@ -32,7 +32,7 @@ public class ToolsController {
 		//导航分类
 		model.addAttribute("cate", "tools");
 		
-		return "tools/tools_home";
+		return "tools/tools_main";
 	}
 	
 	@RequestMapping("/timestamp_convert")

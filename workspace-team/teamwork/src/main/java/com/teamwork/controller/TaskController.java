@@ -255,7 +255,7 @@ public class TaskController {
         desc = desc.replace("<br />", "");
         System.out.println(desc);
         builder.append("&nbsp&nbsp&nbsp&nbsp任务内容：" + desc + "<br /><br />");
-        builder.append("&nbsp&nbsp&nbsp&nbsp 您可以<a href=" + "http://localhost:8684/task/list" + ">进入 Zoo Party 查看详情</a>（登录账号：邮箱地址，初始密码：工号）<br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp 您可以<a href=" + "http://192.168.60.213:8080/task/list" + ">进入 Zoo Party 查看详情</a>（登录账号：邮箱地址，初始密码：工号）<br /><br />");
         builder.append("</body></html>");
         String content = builder.toString();        
         mail.setContent(content);

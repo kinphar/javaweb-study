@@ -5,22 +5,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>盐巴</title>
+<title>Zoo Party</title>
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/common.css" />
-<script type="application/javascript" src="/js/bootstrap.min.js"></script>
 <script type="application/javascript" src="/js/jquery.min.js"></script>
+<script type="application/javascript" src="/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+</script>
 </head>
 
 <body>
-	<%@ include file="common/top_navbar.jsp"%>
+	<%@ include file="../common/top_navbar.jsp"%>
 
 	<div class="container theme-showcase" role="main">
 		<div class="page-header">
-			<h3>资料库</h3>
+			<h3>资料</h3>
 		</div>
-	</div>
 
+	</div>
 
 
 </body>
