@@ -11,7 +11,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Zoo Party</a> <img id="Brand"
+			<a class="navbar-brand" href="#">Zootopia</a> <img id="Brand"
 				class="img-rounded" alt="Brand" src="/images/bug.gif"
 				style="height: 35px; width: 35px; margin-top: 8px">
 			<form class="navbar-form navbar-right">
