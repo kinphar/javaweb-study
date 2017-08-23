@@ -31,8 +31,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getEmailByUserName(String name) {
-		// TODO Auto-generated method stub
-		
 		UserExample example = new UserExample();
 		example.createCriteria().andNameEqualTo(name);
 		List<User> users = userMapper.selectByExample(example);
@@ -41,6 +39,18 @@ public class UserServiceImpl implements UserService {
 			userEmail = users.get(0).getEmail();
 		}
 		return userEmail;
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		UserExample example = new UserExample();
+		example.createCriteria().andEmailEqualTo(email);
+		List<User> users = userMapper.selectByExample(example);
+		if (users != null && users.size() > 0) {
+			return users.get(0);
+		} else {
+			return null;
+		}
 	}
 
 }

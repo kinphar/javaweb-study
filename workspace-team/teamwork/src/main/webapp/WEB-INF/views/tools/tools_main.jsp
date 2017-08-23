@@ -57,10 +57,9 @@
 					type="button" onclick="timeStampConvert()" class="btn btn-success btn-block">==转换=></button></li>
 			<li>北京时间：</li>
 			<li><input type="text" class="form-control" id="inputDate" value="${currentDate}"></li>
-		</ul>
+		</ul>		
 
 	</div>
-
 
 </body>
 </html>

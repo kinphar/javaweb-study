@@ -15,7 +15,7 @@
 				class="img-rounded" alt="Brand" src="/images/bug.gif"
 				style="height: 35px; width: 35px; margin-top: 8px">
 			<form class="navbar-form navbar-right">
-				<input type="text" class="form-control" placeholder="Search...（未开发）">
+				<input type="text" class="form-control" placeholder="Search...(coming soon)">
 			</form>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
