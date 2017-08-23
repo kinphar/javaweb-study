@@ -113,6 +113,7 @@
 .article-title .label {
 	font-size: 12px;
 	vertical-align: middle;
+	padding: .2em .6em .2em;
 }
 
 .glyphicon-opt {
@@ -133,7 +134,23 @@
 	margin-right: 5px;
 }
 
-.article-info p {
+.article-info .category {
+	float: left;
+	font-size:12px; 
+	color:gray; 
+	text-align:left;
+}
+
+.article-info .category  span {
+	color: #00CED1;
+	border: 1px solid #00CED1;
+	padding: 0px 5px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;  
+}
+
+.article-info .info {
 	font-size:12px; 
 	color:gray; 
 	text-align:right;

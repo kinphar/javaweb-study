@@ -105,7 +105,11 @@
 										</p>
 									</div>
 									<div class="article-info">
-										<p>
+										<p class="category">
+											<span>linux</span>
+											<span>DS2600</span>
+										</p>
+										<p class="info">
 											<span>王锦乐</span> 
 											<span>2017-08-23 17:07</span> 
 											<span>阅读(100)</span> 
@@ -125,9 +129,13 @@
 										</p>
 									</div>
 									<div class="article-info">
-										<p>
+										<p class="category">
+											<span>linux</span>
+											<span>DS2600</span>
+										</p>
+										<p class="info">
 											<span>丁庆发</span> 
-											<span>2017-08-23 08:37</span> 
+											<span>2017-08-23 17:07</span> 
 											<span>阅读(100)</span> 
 											<span>评论(0)</span>
 										</p>
