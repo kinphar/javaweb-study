@@ -32,5 +32,11 @@ public class KnowledgeController {
 		
 		return "knowledge/knowledge_main";
 	}
+	
+	@RequestMapping("/new") 
+	public String newArticle(Model model) {
+		System.out.println("newArticle");
+		return "knowledge/writeArticle";
+	}
  
 }

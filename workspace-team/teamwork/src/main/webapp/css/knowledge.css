@@ -97,7 +97,7 @@
 
 .articles-list {
 	margin: 0;
-	padding: 0;
+	padding: 0 0 20px;
 }
 
 .articles-list li {

@@ -13,8 +13,14 @@
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-	
+
+function newArticle() {
+	var url = "new";
+	window.open(url);
+}	
+
 </script>
+
 </head>
 
 <body>
@@ -39,12 +45,15 @@
 									<span style="color: gray">撰文：</span>3篇
 								</p>
 								<p>
+									<span style="color: gray">草稿：</span>1篇
+								</p>
+								<p>
 									<span style="color: gray">等级：</span>白银
 								</p>
 							</div>
 							<hr />
 							<div style="text-align: center">
-								<a href="#" class="btn btn-success"><span
+								<a href="#" class="btn btn-success" onclick="newArticle()"><span
 									class="glyphicon glyphicon-pencil"></span> 写文章</a>
 							</div>
 						</div>
@@ -145,6 +154,7 @@
 						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>
