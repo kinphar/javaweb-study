@@ -24,7 +24,7 @@
 <script type="application/javascript"
 	src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
 
-<link rel="stylesheet" href="/take/icheck/skins/square/green.css" />
+<link rel="stylesheet" href="/static/icheck/skins/square/green.css" />
 <script type="application/javascript" src="/static/icheck/icheck.min.js"></script>
 
 <script type="text/javascript">

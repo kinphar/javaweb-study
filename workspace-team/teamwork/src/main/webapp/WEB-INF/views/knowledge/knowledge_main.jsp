@@ -40,7 +40,7 @@ function newArticle() {
 								<label>${userLogin.name}</label>
 							</div>
 							<hr />
-							<div style="text-align: center">
+							<div style="text-align: left; padding-left: 15px">
 								<p>
 									<span style="color: gray">撰文：</span>3篇
 								</p>
