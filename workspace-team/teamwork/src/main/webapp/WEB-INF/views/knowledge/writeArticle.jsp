@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+ <%
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+ %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="../../favicon.ico">
+<link rel="icon" href="#">
 <title>撰写文章</title>
 
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -22,6 +25,8 @@
 
 
 <script type="text/javascript">
+	var basePath = "<%=basePath%>";
+	
 	$(document).ready(function() {
 		var item = {
 			toolbars : [
@@ -46,10 +51,21 @@
 			padding : 0,
 			saveInterval : 5000000, 			// 将其设置大点，模拟去掉自动保存功能
 			allowDivTransToP : false
-		};
+		};		
+		
 		//传参生成实例
-		ue = UE.getEditor('myEditor', item); 
-
+		UE.getEditor('myEditor', item); 		
+		UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;		
+		UE.Editor.prototype.getActionUrl = function(action){
+			console.log("action:" + action);
+			if(action == '/resource/upload/images'){
+				return basePath + 'resource/upload/images';
+			}else{
+				return this._bkGetActionUrl.call(this, action);
+			}
+		}
+				
+		console.log("basePath:" + basePath);
 	});
 </script>
 
@@ -60,8 +76,13 @@
 	<div class="container">
 
 		<p>在这里写文章</p>
+		<form action="new" method="post">
+    		<script type="text/plain" id="myEditor">		
+    		</script>
+    		<input type="submit" name="submit" value="提交">
+		</form>
 
-		<div id="myEditor"></div>
+		<!-- <div id="myEditor"></div> -->
 	</div>
 	<!-- /container -->
 

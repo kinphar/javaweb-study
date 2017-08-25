@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.baidu.ueditor.ActionEnter;
 
 @Controller
+@RequestMapping("/ueditor")
 public class UeditorController {
 		private Logger logger = Logger.getLogger(UeditorController.class);
 		
@@ -22,7 +23,7 @@ public class UeditorController {
 		 * @param response
 		 * @param request
 		 */
-		@RequestMapping("/ueditor/init")
+		@RequestMapping("/config")
 		public void initUeditor(HttpServletResponse response,HttpServletRequest request) {
 			response.setContentType("application/json");
 
@@ -30,6 +31,9 @@ public class UeditorController {
 			String rootPath = request.getSession().getServletContext().getRealPath("/static");
 			// 将config.json放到与ueditor.config.js同一级的目录下。将ueditor所有文件放入到wapapp-static-ueditor下
 			// 设置获取服务端配置文件地址修正路径，此路径同时作用于文件上传
+			
+			System.out.println("initUeditor:rootPath" + rootPath);
+			
 			PrintWriter writer = null;
 			try {
 				String exec = new ActionEnter(request, rootPath).exec();
@@ -44,4 +48,5 @@ public class UeditorController {
 				}
 			}
 		}
+		
 }

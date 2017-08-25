@@ -15,7 +15,7 @@
 <script type="text/javascript">
 
 function newArticle() {
-	var url = "new";
+	var url = "edit";
 	window.open(url);
 }	
 

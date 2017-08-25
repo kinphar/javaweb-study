@@ -21,10 +21,12 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="${ctx}/task/list">任务</a></li>
-				<li><a href="${ctx}/knowledge/main">知识</a></li>
 				<li><a href="${ctx}/information/main">资料</a></li>
-				<li><a href="${ctx}/tools/main">工具</a></li>
-				<li><a href="${ctx}/activity/main">活动</a></li>				
+				<li><a href="${ctx}/knowledge/main">文章</a></li>
+				<li><a href="#">书籍</a></li>				
+				<li><a href="${ctx}/tools/main">工具</a></li>				
+				<li><a href="${ctx}/activity/main">活动</a></li>		
+						
 				<li><a href="${ctx}/account/dologout">[${userInfo}]退出</a></li>
 			</ul>
 		</div>

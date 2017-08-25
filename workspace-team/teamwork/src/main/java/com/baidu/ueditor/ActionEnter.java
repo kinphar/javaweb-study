@@ -37,6 +37,8 @@ public class ActionEnter {
 		
 		String callbackName = this.request.getParameter("callback");
 		
+		System.out.println("callbackName:" + callbackName);
+		
 		if ( callbackName != null ) {
 
 			if ( !validCallbackName( callbackName ) ) {
@@ -64,6 +66,8 @@ public class ActionEnter {
 		State state = null;
 		
 		int actionCode = ActionMap.getType( this.actionType );
+		
+		System.out.println("actionCode:" + actionCode);
 		
 		Map<String, Object> conf = null;
 		
@@ -94,6 +98,8 @@ public class ActionEnter {
 				break;
 				
 		}
+		
+		System.out.println("state:" + state.toJSONString());
 		
 		return state.toJSONString();
 		

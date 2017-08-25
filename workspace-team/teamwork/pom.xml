@@ -238,7 +238,7 @@
 				<path>/</path>
 				<url>http://192.168.60.213:8080/manager/text</url>
 				<username>tomcat</username>
-				<password>tomcat</password>				
+				<password>tomcat</password>						
 			</configuration>
   		</plugin>
   	</plugins>

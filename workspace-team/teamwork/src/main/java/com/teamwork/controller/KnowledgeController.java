@@ -33,10 +33,18 @@ public class KnowledgeController {
 		return "knowledge/knowledge_main";
 	}
 	
-	@RequestMapping("/new") 
-	public String newArticle(Model model) {
-		System.out.println("newArticle");
+	@RequestMapping("/edit") 
+	public String editArticle(Model model) {
+		System.out.println("editArticle");
 		return "knowledge/writeArticle";
+	}
+	
+	@RequestMapping("/new") 
+	public String newArticle(Model model, HttpServletRequest request) {
+		String content = request.getParameter("editorValue");
+		
+		System.out.println("newArticle:" + content);
+		return "";
 	}
  
 }
