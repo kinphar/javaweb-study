@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zootopia</title>
+<link rel="shortcut icon" href="/images/monkey.jpg">
+
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/common.css" />
 <script type="application/javascript" src="/js/jquery.min.js"></script>
