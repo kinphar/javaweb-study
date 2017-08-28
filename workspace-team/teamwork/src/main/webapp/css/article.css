@@ -2,10 +2,6 @@ body>.container {
     padding: 10px 5px 0px;
 }
 
-table {
-	border:2px solid #00F;
-}
-
 .article-category label, .article-publish label {
 	width: 110px;
 	margin-left: 5px;

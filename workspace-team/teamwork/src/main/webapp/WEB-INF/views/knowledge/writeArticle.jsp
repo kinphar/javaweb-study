@@ -71,7 +71,7 @@
 							'fontsize', 'preview' ] ],
 
 			autoHeightEnabled : false, //是否自动长高，默认true
-			initialFrameHeight : 640, //初始化编辑器高度,默认320
+			initialFrameHeight : 700, //初始化编辑器高度,默认320
 			autoFloatEnabled : false, //是否保持toolbar的位置不动，默认true
 			wordCount : true, //是否开启字数统计 默认true
 			maximumWords : 100000, //允许的最大字符数 默认值：10000
@@ -101,7 +101,6 @@
 
 <body>
 	<div class="container">
-
 		<form class="form-horizontal" role="form">
 		<table class="table table-condensed table-bordered" style="background-color:#fff">
 			<tbody>
@@ -114,10 +113,10 @@
 					<td class="article-category">
 						<div class="checkbox">
 							<ul class="list-unstyled">
-								<li><label><input type="checkbox"> MCU
+								<li><label><input type="checkbox"> DS3000
 								</label><label><input type="checkbox"> DS2000
 								</label><label><input type="checkbox"> DS2600
-								</label><label><input type="checkbox"> DS3000
+								</label><label><input type="checkbox"> MCU
 								</label></li>
 								
 								<li><label><input type="checkbox"> Java
@@ -126,9 +125,9 @@
 								</label><label><input type="checkbox"> javaScript
 								</label></li>
 								
-								<li><label><input type="checkbox"> IOS
-								</label><label><input type="checkbox"> Android
+								<li><label><input type="checkbox"> Android
 								</label><label><input type="checkbox"> Linux
+								</label><label><input type="checkbox"> IOS
 								</label><label><input type="checkbox"> 单片机
 								</label></li>
 							</ul>
@@ -155,8 +154,8 @@
 				<tr>
 					<td colspan="2">
 						<div class="pull-right">
-							<input type="submit" name="submit" value="保存草稿"> 
-							<input type="submit" name="submit" value="发布文章">
+							<button type="submit" class="btn btn-default">保存草稿</button>
+							<button type="submit" class="btn btn-success">发布文章</button>
 						</div>
 					</td>
 				</tr>
