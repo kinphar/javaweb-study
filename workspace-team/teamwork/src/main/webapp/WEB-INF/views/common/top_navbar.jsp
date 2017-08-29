@@ -22,7 +22,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="${ctx}/task/list">任务</a></li>
 				<li><a href="${ctx}/information/main">资料</a></li>
-				<li><a href="${ctx}/knowledge/main">文章</a></li>
+				<li><a href="${ctx}/article/main">文章</a></li>
 				<li><a href="#">书籍</a></li>				
 				<li><a href="${ctx}/tools/main">工具</a></li>				
 				<li><a href="${ctx}/activity/main">活动</a></li>		

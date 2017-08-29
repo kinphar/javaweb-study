@@ -1,3 +1,4 @@
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
@@ -16,7 +17,7 @@
 
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/common.css" />
-<link rel="stylesheet" href="/css/article.css" />
+<link rel="stylesheet" href="/css/article-edit.css" />
 
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
@@ -94,6 +95,24 @@
 			}
 		}
 	});
+	
+	function checkNewArticleFrom(f) {
+		if (!UE.getEditor('myEditor').hasContents()){ 
+			alert('请先填写内容!'); 
+		}
+
+		return true;
+	}
+	
+	function newArticleFormSubmit(status) {
+		var f = document.getElementById("newArticleForm");
+		console.log("status:" + status);
+		if (checkNewArticleFrom(f) == true) {
+			f.status.value = status;
+			f.detail.value = UE.getEditor('myEditor').getContent();
+			f.submit();
+		}
+	}
 </script>
 
 
@@ -101,34 +120,38 @@
 
 <body>
 	<div class="container">
-		<form class="form-horizontal" role="form">
+		<form:form id="newArticleForm" commandName="article" 
+			action="${ctx}/article/save" method="post">			
+		<input type="hidden" name="id" />
+		<input type="hidden" name="status" />
+		<input type="hidden" name="detail" />
 		<table class="table table-condensed table-bordered" style="background-color:#fff">
 			<tbody>
 				<tr>
 					<td class="td-center active"><label>标题：</label></td>
-					<td><input type="text" class="form-control" style="width:60%"/></td>
+					<td><input type="text" class="form-control" name="title" style="width:60%"/></td>
 				</tr>
 				<tr>
 					<td class="td-center active"><label>分类：</label></td>
 					<td class="article-category">
 						<div class="checkbox">
 							<ul class="list-unstyled">
-								<li><label><input type="checkbox"> DS3000
-								</label><label><input type="checkbox"> DS2000
-								</label><label><input type="checkbox"> DS2600
-								</label><label><input type="checkbox"> MCU
+								<li><label><input type="checkbox" name="category" value="DS3000"> DS3000
+								</label><label><input type="checkbox" name="category" value="DS2000"> DS2000
+								</label><label><input type="checkbox" name="category" value="DS2600"> DS2600
+								</label><label><input type="checkbox" name="category" value="MCU"> MCU
 								</label></li>
 								
-								<li><label><input type="checkbox"> Java
-								</label><label><input type="checkbox"> C/C++
-								</label><label><input type="checkbox"> Python
-								</label><label><input type="checkbox"> javaScript
+								<li><label><input type="checkbox" name="category" value="Java"> Java
+								</label><label><input type="checkbox" name="category" value="C/C++"> C/C++
+								</label><label><input type="checkbox" name="category" value="Python"> Python
+								</label><label><input type="checkbox" name="category" value="javaScript"> javaScript
 								</label></li>
 								
-								<li><label><input type="checkbox"> Android
-								</label><label><input type="checkbox"> Linux
-								</label><label><input type="checkbox"> IOS
-								</label><label><input type="checkbox"> 单片机
+								<li><label><input type="checkbox" name="category" value="Android"> Android
+								</label><label><input type="checkbox" name="category" value="Linux"> Linux
+								</label><label><input type="checkbox" name="category" value="IOS"> IOS
+								</label><label><input type="checkbox" name="category" value="单片机"> 单片机
 								</label></li>
 							</ul>
 						</div>
@@ -138,10 +161,10 @@
 					<td class="td-center active"><label>权限：</label></td>
 					<td class="article-publish"><div class="radio">
 						<label> 
-							<input type="radio" name="publishSetting" value="public"> 外网可见
+							<input type="radio" name="access" value="public"> 外网可见
 						</label> 
 						<label> 
-							<input type="radio" name="publishSetting" value="private"> 内部传阅
+							<input type="radio" name="access" value="private"> 内部传阅
 						</label>
 					</div></td>
 				</tr>
@@ -154,14 +177,16 @@
 				<tr>
 					<td colspan="2">
 						<div class="pull-right">
-							<button type="submit" class="btn btn-default">保存草稿</button>
-							<button type="submit" class="btn btn-success">发布文章</button>
+							<button type="button" class="btn btn-default" 
+								onclick="newArticleFormSubmit('draft')">保存草稿</button>
+							<button type="button" class="btn btn-success" 
+								onclick="newArticleFormSubmit('publish')">发布文章</button>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		</form>
+		</form:form>
 
 		<!-- <div id="myEditor"></div> -->
 	</div>

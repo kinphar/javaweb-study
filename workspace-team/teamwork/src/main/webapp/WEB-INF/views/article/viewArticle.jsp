@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,7 +12,7 @@
 
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/common.css" />
-<link rel="stylesheet" href="/css/knowledge.css" />
+<link rel="stylesheet" href="/css/article.css" />
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 
@@ -103,56 +105,31 @@ function newArticle() {
 				<div class="col-sm-10">
 					<div class="widget-box">
 						<div class="widget-content">
-							<ul class="articles-list">
-								<li class="article-item">
-									<div class="article-title">
-										<h4>
-											<span class="label label-success">原创</span>十年之后
-										</h4>
-									</div>
-									<div class="article-content">
-										<p>
-											<a href="javascript:void(0)" class="article-brief">说在前面本文绝大部分参考《JAVA高并发程序设计》，类似读书笔记和扩展。走入并行世界概念同步（synchronous）与异步（asynchronous）同步和异步通常来形容一次方法调用。说在前面本文绝大部分参考《JAVA高并发程序设计》，类似读书笔记和扩展。走入并行世界概念同步（synchronous）与异步（asynchronous）同步和异步通常来形容一次方法调用。同步方法调用一旦开始，调用者必须等到方法调用返回后，才能继续执行任务。</a>
-										</p>
-									</div>
-									<div class="article-info">
-										<p class="category">
-											<span>linux</span>
-											<span>DS2600</span>
-										</p>
-										<p class="info">
-											<span>王锦乐</span> 
-											<span>2017-08-23 17:07</span> 
-											<span>阅读(100)</span> 
-											<span>评论(0)</span>
-										</p>
-									</div>
-								</li>
-								<li class="article-item">
-									<div class="article-title">
-										<h4>
-											<span class="label label-default" style="font-size:12px">转载</span>沉默的等奇迹
-										</h4>
-									</div>
-									<div class="article-content">
-										<p>
-											<a href="javascript:void(0)" class="article-brief">说在前面本文绝大部分参考《JAVA高并发程序设计》，类似读书笔记和扩展。走入并行世界概念同步（synchronous）与异步（asynchronous）同步和异步通常来形容一次方法调用。说在前面本文绝大部分参考《JAVA高并发程序设计》，类似读书笔记和扩展。走入并行世界概念同步（synchronous）与异步（asynchronous）同步和异步通常来形容一次方法调用。同步方法调用一旦开始，调用者必须等到方法调用返回后，才能继续执行任务。</a>
-										</p>
-									</div>
-									<div class="article-info">
-										<p class="category">
-											<span>linux</span>
-											<span>DS2600</span>
-										</p>
-										<p class="info">
-											<span>丁庆发</span> 
-											<span>2017-08-23 17:07</span> 
-											<span>阅读(100)</span> 
-											<span>评论(0)</span>
-										</p>
-									</div>
-								</li>
-							</ul>
+							<div class="article-title full-article-title">
+								<h4>
+									<span class="label label-success">原创</span>${article.title}
+								</h4>
+							</div>
+							<div class="article-info full-article-info">
+								<p class="category">
+									<c:forEach items="${article.category}" var="cate"
+										varStatus="states">
+										<span>${cate}</span>
+									</c:forEach>
+								</p>
+								<p class="info">
+									<span>${article.authorName}</span> 
+									<span><fmt:formatDate
+											value="${article.createDate}" type="both" /></span> 
+									<span>阅读(${article.viewTime})</span>
+									<span>赞(${article.thumbUpTime})</span>
+								</p>
+							</div>				
+							<hr/>
+							<div class="full-article-content">
+								${article.detail}
+							</div>
+
 						</div>
 					</div>
 				</div>
