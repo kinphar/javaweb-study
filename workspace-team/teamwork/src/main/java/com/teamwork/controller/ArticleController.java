@@ -1,5 +1,6 @@
 package com.teamwork.controller;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.teamwork.common.pojo.FriendlyResult;
 import com.teamwork.common.utils.StringUtils;
 import com.teamwork.pojo.Article;
 import com.teamwork.pojo.SysDict;
@@ -100,6 +104,9 @@ public class ArticleController {
 		//get article.
 		Article article = articleService.getArticleById(articleId);
 		model.addAttribute("article", article);
+		
+		//increase view time.
+		articleService.increaseArticleViewTime(articleId);
 		return "article/article-view";
 	}
 	
@@ -128,6 +135,17 @@ public class ArticleController {
 			int count = articleService.getArticleNumByCategory(dict.getName());
 			map.put(dict.getName(), count);
 		}
+		return map;
+	}
+	
+	@RequestMapping("/thumbup")
+	@ResponseBody
+	public Map<String,Object> thumbUp(@RequestParam("articleid") String articleId) {
+		FriendlyResult result = articleService.increaseArticleThumbUpTime(articleId);
+		String time = result.getData().toString();
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("time", time);
 		return map;
 	}
  

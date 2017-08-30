@@ -92,7 +92,6 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public int getArticleNumByCategory(String cate) {
-		// TODO Auto-generated method stub
 		ArticleExample example = new ArticleExample();
 		example.createCriteria().andCategoryLike("%" + cate + "%")
 		.andStatusEqualTo("publish").andDelFlagNotEqualTo("1");
@@ -105,5 +104,29 @@ public class ArticleServiceImpl implements ArticleService {
 		example.createCriteria().andCreateByEqualTo(user).andStatusEqualTo(status)
 			.andDelFlagNotEqualTo("1");;
 		return articleMapper.countByExample(example);
+	}
+
+	@Override
+	public FriendlyResult increaseArticleViewTime(String id) {
+		Article article = articleMapper.selectByPrimaryKey(id);
+		int viewTime = article.getViewTime();
+		
+		Article articleNew = new Article();
+		articleNew.setId(id);
+		articleNew.setViewTime(viewTime + 1);		
+		articleMapper.updateByPrimaryKeySelective(articleNew);
+		return FriendlyResult.ok();
+	}
+
+	@Override
+	public FriendlyResult increaseArticleThumbUpTime(String id) {
+		Article article = articleMapper.selectByPrimaryKey(id);
+		int thumbUpTime = article.getThumbUpTime();
+		
+		Article articleNew = new Article();
+		articleNew.setId(id);
+		articleNew.setThumbUpTime(thumbUpTime + 1);		
+		articleMapper.updateByPrimaryKeySelective(articleNew);
+		return FriendlyResult.ok(thumbUpTime + 1);
 	}
 }

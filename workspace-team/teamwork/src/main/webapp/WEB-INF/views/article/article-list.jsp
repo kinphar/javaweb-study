@@ -17,6 +17,26 @@
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
+	$(document).ready(function() {
+		$(".thump-up").click(function() {
+			var id = $(this).data("articleid");
+			$(this).text("abcd");
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/article/thumbup",
+				data : {
+					articleid : id
+				},
+				success : function(data) {					
+					console.log("thumpUp:" + data.time);
+					/* $(this).text("abcd"); */
+				},
+				error : function(xhr) {
+				}
+			});
+		});
+	});
+	
 	function newArticle() {
 		var url = "edit";
 		window.open(url);
@@ -121,8 +141,10 @@
 											</p>
 											<p class="info">
 												<span>${article.authorName}</span> <span><fmt:formatDate
-														value="${article.createDate}" type="both" /></span> <span>阅读(${article.viewTime})</span>
-												<span>赞(${article.thumbUpTime})</span>
+														value="${article.createDate}" type="both" /></span> 
+												<span>阅读(${article.viewTime})</span>
+												<span><a href="javascript:void(0)" class="thump-up" 
+													data-articleid="${article.id}">赞(${article.thumbUpTime})</a></span>
 											</p>
 										</div></li>
 								</c:forEach>

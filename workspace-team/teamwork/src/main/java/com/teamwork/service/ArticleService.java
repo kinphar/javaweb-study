@@ -13,4 +13,6 @@ public interface ArticleService {
 	Article getArticleById(String id);
 	int getArticleNumByCategory(String cate);
 	int getUserArticleNumByStatus(String user, String status);
+	FriendlyResult increaseArticleViewTime(String id);
+	FriendlyResult increaseArticleThumbUpTime(String id);
 }
