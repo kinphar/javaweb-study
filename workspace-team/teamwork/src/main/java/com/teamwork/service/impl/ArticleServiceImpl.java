@@ -55,9 +55,16 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> getArticleItemList() {
+	public List<Article> getArticleListWithFilter(String author, String category, String status) {
 		ArticleExample example = new ArticleExample();
-		example.createCriteria().andStatusEqualTo("publish");
+		Criteria createCriteria = example.createCriteria();
+		if (!author.equals("allauthor")) {
+			createCriteria.andCreateByEqualTo(author);
+		}
+		if (!category.equals("allcate")) {
+			createCriteria.andCategoryLike("%" + category + "%");
+		}
+		createCriteria.andStatusEqualTo(status);
 		return (List<Article>) articleMapper.selectByExampleWithBLOBs(example);
 	}
 	
@@ -81,5 +88,22 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public Article getArticleById(String id) {
 		return articleMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int getArticleNumByCategory(String cate) {
+		// TODO Auto-generated method stub
+		ArticleExample example = new ArticleExample();
+		example.createCriteria().andCategoryLike("%" + cate + "%")
+		.andStatusEqualTo("publish").andDelFlagNotEqualTo("1");
+		return articleMapper.countByExample(example);
+	}
+
+	@Override
+	public int getUserArticleNumByStatus(String user, String status) {
+		ArticleExample example = new ArticleExample();
+		example.createCriteria().andCreateByEqualTo(user).andStatusEqualTo(status)
+			.andDelFlagNotEqualTo("1");;
+		return articleMapper.countByExample(example);
 	}
 }

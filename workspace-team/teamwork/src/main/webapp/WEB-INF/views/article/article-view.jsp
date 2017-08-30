@@ -46,10 +46,12 @@ function newArticle() {
 							<hr />
 							<div style="text-align: left; padding-left: 15px">
 								<p>
-									<span style="color: gray">撰文：</span>3篇
+									<span style="color: gray">撰文：</span>
+									<a href="${ctx}/article/${userLogin.email}/allcate/publish">${publishNum}篇</a>
 								</p>
 								<p>
-									<span style="color: gray">草稿：</span>1篇
+									<span style="color: gray">草稿：</span>
+									<a href="${ctx}/article/${userLogin.email}/allcate/draft">${draftNum}篇</a>
 								</p>
 								<p>
 									<span style="color: gray">等级：</span>白银
@@ -85,17 +87,10 @@ function newArticle() {
 						<div class="widget-content">
 							<div class="articles-category">
 							<ul class="list-unstyled">
-								<li><a href="javascript:void(0)"><span>DS2600</span>(10)</a></li>
-								<li><a href="javascript:void(0)"><span>DS3000</span>(2)</a></li>
-								<li><a href="javascript:void(0)"><span>DS2000</span>(2)</a></li>
-								<li><a href="javascript:void(0)"><span>Linux</span>(10)</a></li>
-								<li><a href="javascript:void(0)"><span>Android</span>(5)</a></li>
-								<li><a href="javascript:void(0)"><span>JavaWeb</span>(5)</a></li>
-								<li><a href="javascript:void(0)"><span>C/C++</span>(40)</a></li>
-								<li><a href="javascript:void(0)"><span>Java</span>(30)</a></li>
-								<li><a href="javascript:void(0)"><span>python</span>(10)</a></li>
-								<li><a href="javascript:void(0)"><span>shell</span>(6)</a></li>
-								<li><a href="javascript:void(0)"><span>bat</span>(1)</a></li>
+								<c:forEach items="${categoryMap}" var="category" varStatus="states">
+									<li><a href="${ctx}/article/allauthor/${category.key}/publish">
+										<span>${category.key}</span>(${category.value})</a></li>
+								</c:forEach>
 							</ul>
 							</div>
 						</div>

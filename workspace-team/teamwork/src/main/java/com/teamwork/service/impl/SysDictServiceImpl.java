@@ -8,21 +8,27 @@ import org.springframework.stereotype.Service;
 import com.teamwork.mapper.SysDictMapper;
 import com.teamwork.pojo.SysDict;
 import com.teamwork.pojo.SysDictExample;
-import com.teamwork.pojo.SysDictExample.Criteria;
-import com.teamwork.service.MiscService;
+import com.teamwork.service.SysDictService;
 
 @Service
-public class MiscServiceImpl implements MiscService {
+public class SysDictServiceImpl implements SysDictService {
 
 	@Autowired
 	private SysDictMapper sysDictMapper;
 	
 	@Override
-	public List<SysDict> getTaskStatusDict() {
+	public List<SysDict> getDictBySort(String sort) {		
 		SysDictExample example = new SysDictExample();
-		Criteria createCriteria = example.createCriteria();
-		createCriteria.andSortEqualTo("task_status");
+		example.createCriteria().andSortEqualTo(sort);
 		return sysDictMapper.selectByExample(example);
 	}
 
+	@Override
+	public List<SysDict> getDictLikeSort(String sort) {
+		SysDictExample example = new SysDictExample();
+		example.createCriteria().andSortLike(sort);
+		return sysDictMapper.selectByExample(example);
+	}
+
+	
 }

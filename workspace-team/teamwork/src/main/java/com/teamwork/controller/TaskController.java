@@ -40,7 +40,7 @@ import com.teamwork.pojo.Task;
 import com.teamwork.pojo.User;
 import com.teamwork.service.CommentService;
 import com.teamwork.service.EmailService;
-import com.teamwork.service.MiscService;
+import com.teamwork.service.SysDictService;
 import com.teamwork.service.ProjectService;
 import com.teamwork.service.SubtaskService;
 import com.teamwork.service.TaskService;
@@ -55,7 +55,7 @@ public class TaskController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private MiscService miscService;
+	private SysDictService sysDictService;
 	@Autowired
 	private TaskService taskService;
 	@Autowired
@@ -69,7 +69,7 @@ public class TaskController {
 	public String listTasks(Model model, @ModelAttribute TaskQuery taskQuery, HttpServletRequest request) {
 		List<Project> projects = projectService.getAllProject();
 		List<User> users = userService.getAllUser();
-		List<SysDict> dicts = miscService.getTaskStatusDict();				
+		List<SysDict> dicts = sysDictService.getDictBySort("task_status");				
 							
 		taskQuery.setSelectProjects(projects);
 		taskQuery.setSelectUsers(users);

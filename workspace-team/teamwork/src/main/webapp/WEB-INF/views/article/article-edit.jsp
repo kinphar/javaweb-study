@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -136,23 +137,21 @@
 					<td class="article-category">
 						<div class="checkbox">
 							<ul class="list-unstyled">
-								<li><label><input type="checkbox" name="category" value="DS3000"> DS3000
-								</label><label><input type="checkbox" name="category" value="DS2000"> DS2000
-								</label><label><input type="checkbox" name="category" value="DS2600"> DS2600
-								</label><label><input type="checkbox" name="category" value="MCU"> MCU
-								</label></li>
-								
-								<li><label><input type="checkbox" name="category" value="Java"> Java
-								</label><label><input type="checkbox" name="category" value="C/C++"> C/C++
-								</label><label><input type="checkbox" name="category" value="Python"> Python
-								</label><label><input type="checkbox" name="category" value="javaScript"> javaScript
-								</label></li>
-								
-								<li><label><input type="checkbox" name="category" value="Android"> Android
-								</label><label><input type="checkbox" name="category" value="Linux"> Linux
-								</label><label><input type="checkbox" name="category" value="IOS"> IOS
-								</label><label><input type="checkbox" name="category" value="单片机"> 单片机
-								</label></li>
+								<li>
+								<c:forEach items="${category_platform}" var="category" varStatus="states">
+									<label><input type="checkbox" name="category" value="${category.name}"> ${category.name}</label>
+								</c:forEach>
+								</li>
+								<li>
+								<c:forEach items="${category_language}" var="category" varStatus="states">
+									<label><input type="checkbox" name="category" value="${category.name}"> ${category.name}</label>
+								</c:forEach>
+								</li>
+								<li>
+								<c:forEach items="${category_system}" var="category" varStatus="states">
+									<label><input type="checkbox" name="category" value="${category.name}"> ${category.name}</label>
+								</c:forEach>
+								</li>
 							</ul>
 						</div>
 					</td>
