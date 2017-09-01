@@ -138,22 +138,31 @@ public class ArticleController {
 	public String newArticle(@ModelAttribute Article article, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userLogin = (String) session.getAttribute("useremail");
+		User user = userService.getUserByEmail(userLogin);	
 		
-		
-		System.out.println("id:" + article.getId());
-		
-		if (StringUtils.isEmpty(article.getId())) {	
-			User user = userService.getUserByEmail(userLogin);			
+		if (StringUtils.isEmpty(article.getId())) {					
 			article.setAuthorName(user.getName());
 			article.setCreateBy(userLogin);
 			article.setUpdateBy(userLogin);
 			articleService.createArticle(article);
 			
-			String articleUrl = getArticleUrl(request, article.getId());
-			newArticleEmail(article, articleUrl);
+			if (article.getStatus().equals("publish")) {
+				String articleUrl = getArticleUrl(request, article.getId());
+				newArticleEmail(article, articleUrl);
+			}
 		} else {
+			Article articleOld = articleService.getArticleById(article.getId());
+			String statusOld = articleOld.getStatus();
+			String statusNew = article.getStatus();
+			
+			article.setAuthorName(user.getName());
 			article.setUpdateBy(userLogin);
 			articleService.updateArticle(article);
+			
+			if (statusOld.equals("draft") && statusNew.equals("publish")) {
+				String articleUrl = getArticleUrl(request, article.getId());
+				newArticleEmail(article, articleUrl);
+			}
 		}
 		return "redirect:allauthor/allcate/publish";
 	}
@@ -202,6 +211,8 @@ public class ArticleController {
     	String emailAddress = "dingqingfa@star-net.cn;253876774@qq.com";
     	mail.setToEmails(emailAddress);
     	
+    	getAllUserEmail();
+    	
     	//content
     	StringBuilder builder = new StringBuilder();
         builder.append("<html><body>" + "Hi!<br /><br />");
@@ -220,6 +231,21 @@ public class ArticleController {
 		String url = "http://" + request.getServerName() + ":" + request.getServerPort() 
 			+ "/article/view/" + id;
 		return url;
+	}
+	
+	private String getAllUserEmail() {
+		List<User> users = userService.getAllUser();
+		String emails = "";
+		for (User user : users) {
+			if (!emails.equals("")) {
+				emails += ";";
+			}
+			emails += user.getEmail();
+		}
+		
+		System.out.println("emails:" + emails);
+		
+		return emails;
 	}
  
 }

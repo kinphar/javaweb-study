@@ -24,6 +24,8 @@
 		<div class="page-header">
 			<h3>活动</h3>
 		</div>
+		<img src="/images/huangxu.jpg" class="img-responsive"
+			class="img-rounded">
 		<img src="/images/pingtan.JPG" class="img-responsive"
 			class="img-rounded">
 	</div>

@@ -118,6 +118,8 @@
 			console.log("action:" + action);
 			if (action == '/resource/upload/images') {
 				return basePath + 'resource/upload/images';
+			} else if (action == '/resource/upload/file') {
+				return basePath + 'resource/upload/file';
 			} else {
 				return this._bkGetActionUrl.call(this, action);
 			}

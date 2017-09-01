@@ -17,13 +17,14 @@
 		<property name="host">
 			<value>${mail.host}</value>
 		</property>
-		<property name="port">
-			<value>${mail.port}</value>
-		</property>
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtp.auth">true</prop>
-				<prop key="mail.smtp.timeout">${mail.timeout}</prop>
+				<prop key="mail.smtp.timeout">${mail.timeout}</prop>	
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.smtp.socketFactory.fallback">false</prop>			
+				<prop key="mail.smtp.port">${mail.port}</prop>
+				<prop key="mail.smtp.socketFactory.port">${mail.port}</prop>
 			</props>
 		</property>
 		<property name="username">

@@ -145,7 +145,7 @@
 										</div>
 										<div class="article-content">
 											<p>${article.brief}<a href="${ctx}/article/view/${article.id}" 
-												class="article-brief">  看个究竟</a>
+												class="article-brief"> 看个究竟</a>
 											</p>
 										</div>
 										<div class="article-info">
