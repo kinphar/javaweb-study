@@ -208,7 +208,7 @@ public class ArticleController {
     	mail.setSubject(article.getAuthorName() + " 撰文一篇！"); 
     	
     	//receiver
-    	String emailAddress = "dingqingfa@star-net.cn;253876774@qq.com";
+    	String emailAddress = getAllUserEmail();
     	mail.setToEmails(emailAddress);
     	
     	getAllUserEmail();
@@ -243,8 +243,7 @@ public class ArticleController {
 			emails += user.getEmail();
 		}
 		
-		System.out.println("emails:" + emails);
-		
+		System.out.println("emails:" + emails);		
 		return emails;
 	}
  
