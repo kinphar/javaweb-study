@@ -479,11 +479,11 @@ hr {
     font-size: 11px;
 }
 
-ul.recent-comments li a[class^="btn"]{
+ul.recent-comments li div.article-opt{
 	visibility: hidden;
 }
 
-ul.recent-comments li:hover a[class^="btn"]{
+ul.recent-comments li:hover div.article-opt{
 	visibility: visible;
 }
 

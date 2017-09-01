@@ -43,14 +43,12 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 			
 	@Override
-	public FriendlyResult deleteArticleById(String id) {
+	public FriendlyResult deleteArticle(Article article) {
 		//logic delete.
-		ArticleExample example = new ArticleExample();
-		Criteria createCriteria = example.createCriteria();
-		createCriteria.andIdEqualTo(id);		
-		Article article = new Article();
+		Date date = new Date();
+		article.setUpdateDate(date);
 		article.setDelFlag("1");		
-		articleMapper.updateByExampleSelective(article, example);
+		articleMapper.updateByPrimaryKeySelective(article);
 		return FriendlyResult.ok();
 	}
 
@@ -65,6 +63,7 @@ public class ArticleServiceImpl implements ArticleService {
 			createCriteria.andCategoryLike("%" + category + "%");
 		}
 		createCriteria.andStatusEqualTo(status);
+		createCriteria.andDelFlagNotEqualTo("1");
 		return (List<Article>) articleMapper.selectByExampleWithBLOBs(example);
 	}
 	

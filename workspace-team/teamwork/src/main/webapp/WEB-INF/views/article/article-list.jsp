@@ -20,6 +20,7 @@
 	$(document).ready(function() {
 		$(".thump-up").click(function() {
 			var id = $(this).data("articleid");
+			var totalTime = 0;
 			$(this).text("abcd");
 			$.ajax({
 				type : "POST",
@@ -27,18 +28,20 @@
 				data : {
 					articleid : id
 				},
+				async : false,
 				success : function(data) {					
-					console.log("thumpUp:" + data.time);
-					/* $(this).text("abcd"); */
+					totalTime = data.time;
 				},
 				error : function(xhr) {
 				}
 			});
+			console.log("totalTime:" + totalTime);
+			$(this).text("赞(" + totalTime + ")");
 		});
 	});
 	
 	function newArticle() {
-		var url = "edit";
+		var url = "${ctx}/article/edit/new";
 		window.open(url);
 	}
 	
@@ -78,7 +81,8 @@
 							</div>
 							<hr />
 							<div style="text-align: center">
-								<a href="#" class="btn btn-success" onclick="newArticle()"><span
+								<a href="javascript:void(0)" class="btn btn-success" 
+									onclick="newArticle()"><span
 									class="glyphicon glyphicon-pencil"></span> 写文章</a>
 							</div>
 						</div>
@@ -123,13 +127,25 @@
 								<c:forEach items="${articles}" var="article" varStatus="states">
 									<li class="article-item">
 										<div class="article-title">
-											<h4>
+											<h3>
 												<span class="label label-success">原创</span>${article.title}
-											</h4>
+												<c:if test="${article.createBy == userLogin.email}">
+													<div class="article-opt pull-right">
+														<a class="btn btn-default btn-edit-article" 
+															href="${ctx}/article/edit/${article.id}">
+															<span class="glyphicon glyphicon-pencil"></span>
+														</a>
+														<a class="btn btn-default btn-delete-article" 
+															href="${ctx}/article/delete/${article.id}">
+															<span class="glyphicon glyphicon-remove"></span>
+														</a>
+													</div>
+												</c:if>
+											</h3>
 										</div>
 										<div class="article-content">
-											<p>
-												<a href="${ctx}/article/view/${article.id}" class="article-brief">${article.brief}</a>
+											<p>${article.brief}<a href="${ctx}/article/view/${article.id}" 
+												class="article-brief">  看个究竟</a>
 											</p>
 										</div>
 										<div class="article-info">

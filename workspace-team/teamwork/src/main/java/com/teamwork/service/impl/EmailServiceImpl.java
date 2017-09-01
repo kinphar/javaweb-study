@@ -96,6 +96,7 @@ public class EmailServiceImpl implements EmailService {
                 }
             }
             
+            // 添加附件
             if (null != mail.getAttachments()) {
                 for (Iterator<Map.Entry<String, String>> it = mail.getAttachments()
                         .entrySet().iterator(); it.hasNext();) {

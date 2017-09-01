@@ -19,7 +19,7 @@
 <script type="text/javascript">
 
 function newArticle() {
-	var url = "edit";
+	var url = "${ctx}/article/edit/new";
 	window.open(url);
 }	
 
@@ -101,9 +101,9 @@ function newArticle() {
 					<div class="widget-box">
 						<div class="widget-content">
 							<div class="article-title full-article-title">
-								<h4>
+								<h3>
 									<span class="label label-success">原创</span>${article.title}
-								</h4>
+								</h3>
 							</div>
 							<div class="article-info full-article-info">
 								<p class="category">

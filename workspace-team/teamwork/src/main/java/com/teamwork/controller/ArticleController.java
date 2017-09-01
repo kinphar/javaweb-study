@@ -1,5 +1,6 @@
 package com.teamwork.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -17,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.teamwork.common.pojo.EmailContent;
 import com.teamwork.common.pojo.FriendlyResult;
 import com.teamwork.common.utils.StringUtils;
 import com.teamwork.pojo.Article;
 import com.teamwork.pojo.SysDict;
 import com.teamwork.pojo.User;
 import com.teamwork.service.ArticleService;
+import com.teamwork.service.EmailService;
 import com.teamwork.service.SysDictService;
 import com.teamwork.service.UserService;
 
@@ -36,6 +39,13 @@ public class ArticleController {
 	private ArticleService articleService;	
 	@Autowired
 	private SysDictService sysDictService;  
+	@Autowired
+	private EmailService emailService;
+	
+	@RequestMapping("/list")
+	public String listRedirect() {
+		return "redirect:/article/allauthor/allcate/publish";
+	}
 	
 	@RequestMapping("/{author}/{category}/{status}")
 	public String list(Model model, HttpServletRequest request, 
@@ -63,14 +73,22 @@ public class ArticleController {
 		
 		//get article list.
 		List<Article> articles = articleService.getArticleListWithFilter(author, category, status);
+		Collections.reverse(articles);
 		model.addAttribute("articles", articles);
 		
 		return "article/article-list";
 	}
 	
-	@RequestMapping("/edit") 
-	public String editArticle(Model model) {		
-		Article article = new Article();
+	@RequestMapping("/edit/{articleid}") 
+	public String editArticle(Model model, @PathVariable String articleid) {		
+		
+		Article article = null;
+		if (articleid.equals("new")) {
+			article = new Article();
+			article.setAccess("private");
+		} else {
+			article = articleService.getArticleById(articleid);
+		}
 		model.addAttribute("article", article);
 		
 		//种类
@@ -105,6 +123,12 @@ public class ArticleController {
 		Article article = articleService.getArticleById(articleId);
 		model.addAttribute("article", article);
 		
+		//user article.
+		int publishNum = articleService.getUserArticleNumByStatus(useremail, "publish");
+		model.addAttribute("publishNum", publishNum);
+		int draftNum = articleService.getUserArticleNumByStatus(useremail, "draft");
+		model.addAttribute("draftNum", draftNum);	
+		
 		//increase view time.
 		articleService.increaseArticleViewTime(articleId);
 		return "article/article-view";
@@ -115,17 +139,36 @@ public class ArticleController {
 		HttpSession session = request.getSession();
 		String userLogin = (String) session.getAttribute("useremail");
 		
+		
+		System.out.println("id:" + article.getId());
+		
 		if (StringUtils.isEmpty(article.getId())) {	
 			User user = userService.getUserByEmail(userLogin);			
 			article.setAuthorName(user.getName());
 			article.setCreateBy(userLogin);
 			article.setUpdateBy(userLogin);
 			articleService.createArticle(article);
+			
+			String articleUrl = getArticleUrl(request, article.getId());
+			newArticleEmail(article, articleUrl);
 		} else {
 			article.setUpdateBy(userLogin);
 			articleService.updateArticle(article);
 		}
-		return "redirect:list";
+		return "redirect:allauthor/allcate/publish";
+	}
+	
+	@RequestMapping("/delete/{articleId}")
+	public String deleteArticle(Model model, @PathVariable String articleId, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String useremail = (String) session.getAttribute("useremail");
+		
+		Article articleDel = new Article();
+		articleDel.setId(articleId);
+		articleDel.setUpdateBy(useremail);
+		articleService.deleteArticle(articleDel);
+
+		return "redirect:/article/allauthor/allcate/publish";
 	}
 	
 	private Map<String,Object> getArticleCategory(String sort) {
@@ -147,6 +190,36 @@ public class ArticleController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("time", time);
 		return map;
+	}
+	
+	private boolean newArticleEmail(Article article, String url) {    	
+    	EmailContent mail = new EmailContent();
+    	
+    	//title
+    	mail.setSubject(article.getAuthorName() + " 撰文一篇！"); 
+    	
+    	//receiver
+    	String emailAddress = "dingqingfa@star-net.cn;253876774@qq.com";
+    	mail.setToEmails(emailAddress);
+    	
+    	//content
+    	StringBuilder builder = new StringBuilder();
+        builder.append("<html><body>" + "Hi!<br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp" + article.getAuthorName() + " 分享了一篇名为<strong>《" + article.getTitle() + "》</strong>的文章。<br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp 你可以<a href=" + url + "> 点这里去看看写了什么， </a>（登录账号：办公邮箱，初始密码：工号）<br /><br />");
+        builder.append("</body></html>");
+        String content = builder.toString();        
+        mail.setContent(content);
+                
+        //do send
+        emailService.sendEmail(mail);
+    	return true;
+    }
+	
+	private String getArticleUrl(HttpServletRequest request, String id) {
+		String url = "http://" + request.getServerName() + ":" + request.getServerPort() 
+			+ "/article/view/" + id;
+		return url;
 	}
  
 }

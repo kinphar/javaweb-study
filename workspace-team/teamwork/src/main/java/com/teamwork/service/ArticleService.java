@@ -8,7 +8,7 @@ import com.teamwork.pojo.Article;
 public interface ArticleService {	
 	FriendlyResult createArticle(Article article);
 	FriendlyResult updateArticle(Article article);
-	FriendlyResult deleteArticleById(String id);
+	FriendlyResult deleteArticle(Article article);
 	List<Article> getArticleListWithFilter(String author, String category, String status);
 	Article getArticleById(String id);
 	int getArticleNumByCategory(String cate);

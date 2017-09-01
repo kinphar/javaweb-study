@@ -106,7 +106,7 @@
     padding: 16px 24px 0px;
 }
 
-.article-info span, .article-title span {
+.article-info span, .article-title .label {
 	margin-right: 8px;
 }
 
@@ -168,3 +168,23 @@
 .full-article-content {
 	padding: 20px 30px;
 }
+
+.thump-up, .thump-up:active, .thump-up:focus, .thump-up:hover {
+	text-decoration: none;
+}
+
+.btn-edit-article, .btn-delete-article {
+	padding: 2px 5px;
+	border: 1px solid gray;
+    border-radius: 16px;
+}
+
+ul.articles-list li a[class^="btn"]{
+	visibility: hidden;
+}
+
+ul.articles-list li:hover a[class^="btn"]{
+	visibility: visible;
+}
+
+    

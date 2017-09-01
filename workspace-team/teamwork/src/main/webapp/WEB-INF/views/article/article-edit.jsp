@@ -41,6 +41,29 @@
 			increaseArea : '20%' // optional
 		});
 		
+		$(function() {
+			boxes = $('.category-group').find('input[type="checkbox"]');
+			console.log("abcd - " + boxes.length);
+			boxes.each(function() {
+				var categories = '${article.category}';
+				var val = $(this).val();
+				if (categories.indexOf(val) >= 0) {
+					$(this).iCheck('check');
+				}
+			});
+		});
+		
+		$(function() {
+			boxes = $('.article-access').find('input[type="radio"]');
+			boxes.each(function() {
+				var access = '${article.access}';
+				var val = $(this).val();
+				if (access == val) {
+					$(this).iCheck('check');
+				}
+			});
+		});		
+		
 		var item = {
 			toolbars : [
 					[
@@ -85,7 +108,11 @@
 		};
 
 		//传参生成实例
-		UE.getEditor('myEditor', item);
+		var ue = UE.getEditor('myEditor', item);
+		ue.ready(function() {
+		    ue.setContent('${article.detail}');
+		});
+		
 		UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
 		UE.Editor.prototype.getActionUrl = function(action) {
 			console.log("action:" + action);
@@ -94,7 +121,7 @@
 			} else {
 				return this._bkGetActionUrl.call(this, action);
 			}
-		}
+		}				
 	});
 	
 	function checkNewArticleFrom(f) {
@@ -116,27 +143,26 @@
 	}
 </script>
 
-
 </head>
 
 <body>
 	<div class="container">
 		<form:form id="newArticleForm" commandName="article" 
 			action="${ctx}/article/save" method="post">			
-		<input type="hidden" name="id" />
+		<input type="hidden" name="id" value="${article.id}"/>
 		<input type="hidden" name="status" />
 		<input type="hidden" name="detail" />
 		<table class="table table-condensed table-bordered" style="background-color:#fff">
 			<tbody>
 				<tr>
 					<td class="td-center active"><label>标题：</label></td>
-					<td><input type="text" class="form-control" name="title" style="width:60%"/></td>
+					<td><input type="text" class="form-control" name="title" style="width:60%" value="${article.title}"/></td>
 				</tr>
 				<tr>
 					<td class="td-center active"><label>分类：</label></td>
 					<td class="article-category">
 						<div class="checkbox">
-							<ul class="list-unstyled">
+							<ul class="list-unstyled category-group">
 								<li>
 								<c:forEach items="${category_platform}" var="category" varStatus="states">
 									<label><input type="checkbox" name="category" value="${category.name}"> ${category.name}</label>
@@ -158,7 +184,7 @@
 				</tr>
 				<tr>
 					<td class="td-center active"><label>权限：</label></td>
-					<td class="article-publish"><div class="radio">
+					<td class="article-access"><div class="radio">
 						<label> 
 							<input type="radio" name="access" value="public"> 外网可见
 						</label> 

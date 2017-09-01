@@ -13,12 +13,17 @@
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" href="/css/common.css" />
 <link rel="stylesheet" href="/css/signin.css" />
+<script type="text/javascript">
+	var redirect = "${redirect}";
+	console.log("redirect:" + redirect);
+</script>
 </head>
 
 <body>
 	<div class="container">
 		<form class="form-signin" action="${ctx}/account/dologin"
 			method="POST">
+			<input type="hidden" name="redirectUrl" value="${redirectUrl}"/>
 			<div style="text-align:center">
 				<img class="img-rounded" alt="Brand" src="/images/justgun.gif"
 				style="height: 80%; width: 80%; margin-top: 10px; margin-bottom: 30px">

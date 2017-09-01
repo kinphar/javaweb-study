@@ -7,9 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 	
 	@RequestMapping("/index.html")
-	public String toHomePage() {
-		return "redirect:task/task_list";
+	public String indexToDefaultPage() {
+		return "redirect:/task/list";
 	}
 	
+	@RequestMapping("/")
+	public String rootToDefaultPage() {
+		return "redirect:/task/list";
+	}
 
 }

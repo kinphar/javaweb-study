@@ -8,12 +8,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 public class LoginInterceptor implements HandlerInterceptor {
-
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		if (request.getRequestURI().indexOf("/login") > 0
-				|| request.getRequestURI().indexOf("/dologin") > 0) {
+		String requestUri = request.getRequestURI();
+		
+		if (requestUri.indexOf("/login") >= 0
+				|| requestUri.indexOf("/dologin") >= 0) {
 			return true;
 		}
 		
@@ -24,7 +26,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		
-		request.getRequestDispatcher("/WEB-INF/views/account/login.jsp").forward(request, response);	
+		String serverName = request.getServerName();
+		int serverPort = request.getServerPort();
+		String newUrl = "http://" + serverName + ":" + serverPort 
+				+ "/account/login?redirect=" + requestUri;
+		System.out.println("newUrl:" + newUrl);
+		response.sendRedirect(newUrl);
+		
 		return false;
 	}
 
