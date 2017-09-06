@@ -30,7 +30,9 @@
 	<commons-io.version>2.4</commons-io.version>
 	<commons-net.version>3.3</commons-net.version>
 	<poi-ooxml.version>3.9</poi-ooxml.version>
-	<javax.mail.version>1.4.7</javax.mail.version>
+	<javax.mail.version>1.4.7</javax.mail.version>	
+	<amqp-client.version>3.5.1</amqp-client.version>
+	<spring-rabbit.version>1.4.5.RELEASE</spring-rabbit.version>
   </properties>
 
   <dependencies>  	
@@ -204,15 +206,18 @@
     </dependency>
     
     <!-- 
-    	百度富文本编辑器 
+    	RabbitMq 消息队列
     -->
-    <!-- <dependency>  
-        <groupId>ueditor</groupId>  
-        <artifactId>ueditor</artifactId>  
-        <version>1.1.2</version>  
-        <scope>system</scope>
-        <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ueditor-1.1.2.jar</systemPath>
-    </dependency>   -->
+    <dependency>
+	    <groupId>com.rabbitmq</groupId>
+	    <artifactId>amqp-client</artifactId>
+	    <version>${amqp-client.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.springframework.amqp</groupId>
+	    <artifactId>spring-rabbit</artifactId>
+	    <version>${spring-rabbit.version}</version>
+	</dependency>
 	
   </dependencies>
     

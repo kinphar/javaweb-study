@@ -33,6 +33,28 @@
 			});
 		}
 	}	
+	
+	function rabbitMqSendMessage() {
+		var msg = $('#rabbitMqMsgContent').val();
+		if (msg.length <= 0) {
+			alert("没有消息需要发送！");
+		} else {
+			$.ajax({
+				type : "GET",
+				url : "${ctx}/tools/send_message",
+				data : {
+					message : msg
+				},
+				dataType : 'json',
+				contentType : "application/json; charset=utf-8",
+				success : function(data) {
+					console.log("rabbitMqSendMessage:success.");
+				},
+				error : function(xhr) {
+				}
+			});
+		}
+	}	
 
 </script>
 </head>
@@ -45,19 +67,33 @@
 			<h3>工具</h3>
 		</div>
 
-		<div class="page-header">
-			<h4>1. 时间格式转换</h4>
-		</div>		
-		
-		<ul class="list-inline" style="background-color:#f5f5f5; text-align:center; padding:10px 10px">
+		<div style="margin-bottom: 20px">
+		<h4>时间格式转换</h4>		
+		<ul class="list-inline" style="background-color:#fafafa; text-align:center; padding:10px 10px">
 			<li>Unix时间戳（秒）：</li>
 			<li><input type="text" class="form-control" 
 				id="inputTimeStamp" value="${currentTimeStamp}"></li>
-			<li style="margin: 0px 30px;"><button id="saveTaskButton"
-					type="button" onclick="timeStampConvert()" class="btn btn-success btn-block">==转换=></button></li>
+			<li style="margin: 0px 30px;">
+				<button
+					type="button" onclick="timeStampConvert()" 
+					class="btn btn-success btn-block">==转换=>
+				</button></li>
 			<li>北京时间：</li>
 			<li><input type="text" class="form-control" id="inputDate" value="${currentDate}"></li>
 		</ul>		
+		</div>
+		
+		<div style="margin-bottom: 20px">
+		<h4>RabbitMq 测试</h4>		
+		<ul class="list-inline" style="background-color:#fafafa; padding:10px 10px">
+			<li><input type="text" class="form-control" 
+				id="rabbitMqMsgContent" placeholder="消息内容..."></li>
+			<li style="margin: 0px 30px;">
+				<button type="button" onclick="rabbitMqSendMessage()" 
+					class="btn btn-success btn-block">Send
+				</button></li>
+		</ul>
+		</div>
 
 	</div>
 
