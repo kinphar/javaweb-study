@@ -187,4 +187,6 @@ ul.articles-list li:hover a[class^="btn"]{
 	visibility: visible;
 }
 
-    
+.full-article-content img {
+	max-width: 100%; /*图片自适应宽度*/
+}

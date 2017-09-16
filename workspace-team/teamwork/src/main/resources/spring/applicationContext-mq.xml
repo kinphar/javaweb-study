@@ -25,20 +25,24 @@
     <!-- RabbitMQ start -->
     
     <!-- 连接配置 -->
-    <rabbit:connection-factory id="connectionFactory" host="${mq.host}" username="${mq.username}"
-        password="${mq.password}" port="${mq.port}"  />
-        
+    <rabbit:connection-factory id="connectionFactory" host="${mq.host}" virtual-host="/doors" username="${mq.username}"
+        password="${mq.password}" port="${mq.port}"  />        
     <rabbit:admin connection-factory="connectionFactory"/>
     
     <!-- 消息队列客户端 -->
-    <rabbit:template id="amqpTemplate" exchange="${mq.queue}_exchange" connection-factory="connectionFactory"  />
+    <rabbit:template id="amqpTemplate" exchange="${mq.exchange}" connection-factory="connectionFactory"  />
     
     <!-- queue 队列声明 -->
     <!-- 
         durable 是否持久化 
         exclusive 仅创建者可以使用的私有队列，断开后自动删除 
         auto-delete 当所有消费端连接断开后，是否自动删除队列 -->
-    <rabbit:queue id="test_queue" name="${mq.queue}_testQueue" durable="true" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="device_ctl_queue" name="${mq.queue}" durable="false" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="qrcode_queue" name="qrcode" durable="false" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="heartbeat_queue" name="heartbeat" durable="false" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="version_queue" name="version" durable="false" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="open_queue" name="open" durable="false" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="vender_queue" name="FnwnyA2Z" durable="false" auto-delete="false" exclusive="false" />
     
     <!-- 交换机定义 -->
     <!-- 
@@ -47,19 +51,23 @@
         direct 模式:消息与一个特定的路由器完全匹配，才会转发
         topic 模式:按规则转发消息，最灵活
      -->
-    <rabbit:topic-exchange name="${mq.queue}_exchange" durable="true" auto-delete="false">
+    <!-- <rabbit:direct-exchange name="${mq.exchange}" durable="true" auto-delete="false">
         <rabbit:bindings>
-            <!-- 设置消息Queue匹配的pattern (direct模式为key) -->
-            <rabbit:binding queue="test_queue" pattern="${mq.queue}_patt"/>
+            设置消息Queue匹配的 pattern(direct模式为属性为key)
+            <rabbit:binding queue="device_ctl_queue" key="${mq.routingkey}"/>
         </rabbit:bindings>
-    </rabbit:topic-exchange>
+    </rabbit:direct-exchange> -->
         
     <!-- 配置监听 消费者 -->
-    <bean name="rabbitmqService" class="com.teamwork.service.RabbitMqListenService"></bean>
-    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">
-        <!-- 
+    <!-- <bean name="rabbitmqService" class="com.teamwork.service.RabbitMqListenService"></bean>
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">        
             queues 监听队列，多个用逗号分隔 
-            ref 监听器 -->
-        <rabbit:listener queues="test_queue" ref="rabbitmqService"/>
-    </rabbit:listener-container>
+            ref 监听器
+        <rabbit:listener queues="device_ctl_queue" ref="rabbitmqService"/>
+        <rabbit:listener queues="qrcode_queue" ref="rabbitmqService"/>
+        <rabbit:listener queues="heartbeat_queue" ref="rabbitmqService"/>
+        <rabbit:listener queues="version_queue" ref="rabbitmqService"/>
+        <rabbit:listener queues="open_queue" ref="rabbitmqService"/>
+        
+    </rabbit:listener-container> -->
 </beans>

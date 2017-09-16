@@ -24,7 +24,11 @@ public class ToolsController {
 	@Autowired
 	private RabbitMqService mqService;
 	@Value("${mq.queue}")
-    private String queueId;
+    private String MQ_QUEUE;
+	@Value("${mq.exchange}")
+    private String MQ_EXCHANGE;
+	@Value("${mq.routingkey}")
+    private String MQ_ROUTINGKEY;
 	
 	@RequestMapping("/main")
 	public String init(Model model, HttpServletRequest request) {
@@ -57,9 +61,9 @@ public class ToolsController {
 		System.out.println("sendMessage:" + message);
 		
 		try {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("data", message);
-            mqService.sendQueue(queueId + "_exchange", queueId + "_patt", map);
+            /*Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", message);*/
+            mqService.sendQueue(MQ_EXCHANGE, MQ_ROUTINGKEY, message.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }

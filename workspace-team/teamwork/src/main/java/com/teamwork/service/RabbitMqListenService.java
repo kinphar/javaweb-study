@@ -5,7 +5,8 @@ import org.springframework.amqp.core.MessageListener;
 
 public class RabbitMqListenService implements MessageListener {
     public void onMessage(Message message) {
-        System.out.println("消息消费者 = " + message.toString());
+    	String newMsg = new String(message.getBody());    
+        System.out.println("new message : " + newMsg);
     }
 
 }

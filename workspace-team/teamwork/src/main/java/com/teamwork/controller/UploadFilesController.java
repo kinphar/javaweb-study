@@ -26,7 +26,7 @@ import com.teamwork.common.utils.StringUtils;
  */
 @Controller
 @RequestMapping(value="/resource/upload")
-public class UploadImageController {
+public class UploadFilesController {
 	
 	@Value("${uploading.url}")
 	private String UPLOADING_URL;
