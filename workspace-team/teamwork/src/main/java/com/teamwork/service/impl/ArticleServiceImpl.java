@@ -38,6 +38,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public FriendlyResult updateArticle(Article article) {
 		Date date = new Date();
 		article.setUpdateDate(date);
+		article.setBrief(getAbstract(article.getDetail(), 300));
 		articleMapper.updateByPrimaryKeySelective(article);
 		return FriendlyResult.ok();
 	}

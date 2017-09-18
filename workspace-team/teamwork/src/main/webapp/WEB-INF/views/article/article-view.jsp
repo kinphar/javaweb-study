@@ -124,7 +124,7 @@ function newArticle() {
 							<div class="full-article-content">
 								${article.detail}
 							</div>
-
+							<hr/>
 						</div>
 					</div>
 				</div>
