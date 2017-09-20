@@ -26,12 +26,32 @@ public class CommentServiceImpl implements CommentService {
 		CommentExample example = new CommentExample();
 		Criteria createCriteria = example.createCriteria();
 		createCriteria.andIdEqualTo(id);		
+		
 		Comment comment = new Comment();
 		comment.setDelFlag("1");		
 		comment.setUpdateBy(userOpt);
 		comment.setUpdateDate(new Date());
 		commentMapper.updateByExampleSelective(comment, example);
+		
+		deleteRelatedComment(id, userOpt);
 		return FriendlyResult.ok();
+	}
+	
+	//递归删除所有关联评论。
+	private void deleteRelatedComment(Long previousId, String user) {
+		CommentExample example = new CommentExample();
+		Criteria createCriteria = example.createCriteria();
+		createCriteria.andPreviousIdEqualTo(previousId);		
+		List<Comment> comments = commentMapper.selectByExample(example);		
+		
+		for (Comment comment : comments) {			
+			comment.setDelFlag("1");
+			comment.setUpdateBy(user);
+			comment.setUpdateDate(new Date());
+			commentMapper.updateByPrimaryKeySelective(comment);
+			
+			deleteRelatedComment(comment.getId(), user);
+		}
 	}
 	
 	@Override
@@ -52,6 +72,11 @@ public class CommentServiceImpl implements CommentService {
 		CommentExample example = new CommentExample();
 		example.createCriteria().andParentIdEqualTo(id).andDelFlagEqualTo("0");
 		return commentMapper.selectByExample(example);
+	}
+
+	@Override
+	public Comment getCommentById(Long id) {
+		return commentMapper.selectByPrimaryKey(id);
 	}
 
 }

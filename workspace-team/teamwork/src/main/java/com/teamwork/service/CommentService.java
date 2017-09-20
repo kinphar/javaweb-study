@@ -9,4 +9,5 @@ public interface CommentService {
 	FriendlyResult deleteCommentById(Long id, String userOpt);
 	Comment createComment(Comment comment);
 	List<Comment> getCommentByParentId(String id);
+	Comment getCommentById(Long id);
 }

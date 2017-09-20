@@ -17,11 +17,95 @@
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
+$(document).ready(function() {
+	/* $('.article-comment-area').scrollTop($('.article-comment-area').scrollHeight); */
+	
+	$("#comment-save").click(function() {
+		var content = $("#new-comment-input").val();
+		$("#comment-save").text("Saying...");
+		
+		if (content != "") {
+			var index = content.indexOf("【回复 ");
+			var isReply = index == 0 ? true : false;
+			
+			var comment = {};
+			comment.parentId = "${article.id}";
+			if (isReply) {
+				comment.previousId = $("#replied-id").val();
+			}
+			comment.description = content;
+			comment.category = "article";
+
+			$.ajax({
+				type : "POST",
+				url : "${ctx}/comment/new",
+				data : comment,
+				datatype : "json",
+				async : false,
+				success : function(data) {
+					window.location.reload();
+				},
+				error : function(xhr) {
+				}
+			});
+		}
+	});
+});
+
+window.onbeforeunload = function () {
+    var scrollPos;
+    if (typeof window.pageYOffset != 'undefined') {
+        scrollPos = window.pageYOffset;
+    }
+    else if (typeof document.compatMode != 'undefined' && document.compatMode != 'BackCompat') {
+        scrollPos = document.documentElement.scrollTop;
+    }
+    else if (typeof document.body != 'undefined') {
+        scrollPos = document.body.scrollTop;
+    }
+    document.cookie = "scrollTop=" + scrollPos; //存储滚动条位置到cookies中
+}
+
+window.onload = function () {
+    if (document.cookie.match(/scrollTop=([^;]+)(;|$)/) != null) {
+        var arr = document.cookie.match(/scrollTop=([^;]+)(;|$)/); //cookies中不为空，则读取滚动条位置
+        document.documentElement.scrollTop = parseInt(arr[1]);
+        document.body.scrollTop = parseInt(arr[1]);
+    }
+}
+
 
 function newArticle() {
 	var url = "${ctx}/article/edit/new";
 	window.open(url);
 }	
+
+function setReply(id, name) {
+	$("#new-comment-input").val("【回复 " + name + "】： ");
+	$("#new-comment-input").focus();
+	
+	$("#replied-id").val(id);
+}
+
+function deleteComment(id) {
+	console.log("deleteComment:" + id);
+	$.ajax({
+		type : "POST",
+		url : "${ctx}/comment/delete",
+		data : {
+			commentid : id
+		},
+		datatype : "json",
+		async : false,
+		success : function(data) {
+			console.log("delete comment ok；" + id);
+			window.location.reload();
+		},
+		error : function(xhr) {
+		}
+	});
+}
+
 
 </script>
 
@@ -124,7 +208,48 @@ function newArticle() {
 							<div class="full-article-content">
 								${article.detail}
 							</div>
-							<hr/>
+							
+							<div class="comment-head">
+								<h5><strong>七嘴八舌：</strong></h5>	
+								<hr/>
+							</div>
+							<div class="article-comment-area">								
+								<ul class="list-unstyled article-comments">
+									<c:forEach items="${comments}" var="comment">
+										<li class="comment-item">
+											<div class="user-thumb">
+												<img class="img-circle img-thumb" alt="User" src="${comment.authorPhoto}">
+											</div>
+											<div class="comment-info">
+												<span class="user-info">User: ${comment.authorName} on 	
+												<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${comment.createDate}" /></span>
+												<p>
+													<a class="comment-content">${comment.description}</a>
+												</p>											
+											</div>
+											<div class="user-opt pull-right">												
+												<a class="btn btn-default btn-reply-comment" 
+													onclick="setReply('${comment.id}', '${comment.authorName}')">
+													<span class="glyphicon glyphicon-bullhorn glyphicon-opt"></span>
+												</a>					
+												<c:if test="${comment.createBy == userLogin.email}">
+													<a class="btn btn-default btn-delete-comment" 
+														onclick="deleteComment('${comment.id}')">
+														<span class="glyphicon glyphicon-remove glyphicon-opt"></span>
+													</a>
+												</c:if>							
+											</div>
+										</li>
+									</c:forEach>
+								</ul>
+								<div class="input-group comment-input-group">
+									<input id="replied-id" type="hidden" value="">
+				                    <input id="new-comment-input" type="text" class="form-control">
+				                    <span class="input-group-btn">
+				                        <button class="btn btn-default btn-success" id="comment-save" type="button">Say it!</button>
+				                    </span>
+				                </div>
+							</div>							
 						</div>
 					</div>
 				</div>

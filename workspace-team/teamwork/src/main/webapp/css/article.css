@@ -190,3 +190,77 @@ ul.articles-list li:hover a[class^="btn"]{
 .full-article-content img {
 	max-width: 100%; /*图片自适应宽度*/
 }
+
+.img-thumb {
+	height: 34px; 
+	width: 34px;
+}
+
+.user-thumb {    
+    float: left;
+    height: 40px;
+    width: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 2px;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #B6BCBF;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;    
+}
+
+.user-info {
+    color: #666666;
+    font-size: 11px;
+}
+
+.article-comments {
+	margin: 0;
+	padding: 0 20px;
+}
+
+.comment-item {
+    border-bottom: 1px dotted #e0e0e0;
+    list-style: none outside none;
+    padding: 5px 30px;
+}
+
+.comment-info {
+    margin-left: 10px;
+}
+
+.comment-input-group {
+	margin: 40px 100px 50px;	
+}
+
+.comment-info {
+	/* float: left; */
+}
+
+.user-thumb, .comment-info, .user-opt {
+	display:inline-block;
+}
+
+.user-opt {
+	padding-top: 10px;
+}
+
+.btn-reply-comment, .btn-delete-comment {
+	padding: 2px 5px;
+	border: 1px solid gray;
+    border-radius: 16px;
+}
+
+ul.article-comments li a[class^="btn"]{
+	visibility: hidden;
+}
+
+ul.article-comments li:hover a[class^="btn"]{
+	visibility: visible;
+}
+
+.comment-head {
+	margin-top: 30px;
+}

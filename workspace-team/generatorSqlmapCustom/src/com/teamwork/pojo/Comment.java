@@ -9,7 +9,13 @@ public class Comment {
 
     private String parentId;
 
+    private Long previousId;
+
     private String description;
+
+    private String authorName;
+
+    private String authorPhoto;
 
     private String createBy;
 
@@ -45,12 +51,36 @@ public class Comment {
         this.parentId = parentId == null ? null : parentId.trim();
     }
 
+    public Long getPreviousId() {
+        return previousId;
+    }
+
+    public void setPreviousId(Long previousId) {
+        this.previousId = previousId;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName == null ? null : authorName.trim();
+    }
+
+    public String getAuthorPhoto() {
+        return authorPhoto;
+    }
+
+    public void setAuthorPhoto(String authorPhoto) {
+        this.authorPhoto = authorPhoto == null ? null : authorPhoto.trim();
     }
 
     public String getCreateBy() {

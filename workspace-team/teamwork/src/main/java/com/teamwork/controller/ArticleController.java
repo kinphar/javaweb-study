@@ -22,9 +22,11 @@ import com.teamwork.common.pojo.EmailContent;
 import com.teamwork.common.pojo.FriendlyResult;
 import com.teamwork.common.utils.StringUtils;
 import com.teamwork.pojo.Article;
+import com.teamwork.pojo.Comment;
 import com.teamwork.pojo.SysDict;
 import com.teamwork.pojo.User;
 import com.teamwork.service.ArticleService;
+import com.teamwork.service.CommentService;
 import com.teamwork.service.EmailService;
 import com.teamwork.service.SysDictService;
 import com.teamwork.service.UserService;
@@ -41,6 +43,8 @@ public class ArticleController {
 	private SysDictService sysDictService;  
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private CommentService commentService;
 	
 	@RequestMapping("/list")
 	public String listRedirect() {
@@ -129,6 +133,10 @@ public class ArticleController {
 		int draftNum = articleService.getUserArticleNumByStatus(useremail, "draft");
 		model.addAttribute("draftNum", draftNum);	
 		
+		//article comments
+		List<Comment> comments = commentService.getCommentByParentId(articleId);
+		model.addAttribute("comments", comments);	
+		
 		//increase view time.
 		articleService.increaseArticleViewTime(articleId);
 		return "article/article-view";
@@ -210,8 +218,6 @@ public class ArticleController {
     	//receiver
     	String emailAddress = getAllUserEmail();
     	mail.setToEmails(emailAddress);
-    	
-    	getAllUserEmail();
     	
     	//content
     	StringBuilder builder = new StringBuilder();
