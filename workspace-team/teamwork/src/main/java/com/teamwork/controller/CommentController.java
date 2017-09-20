@@ -51,11 +51,12 @@ public class CommentController {
 		Comment newComment = commentService.createComment(comment);
 		
 		if (newComment.getCategory().equals("article")) {
-			String articleUrl = getArticleUrlByComment(newComment, request);
-			newCommentSendEmail(newComment, articleUrl);
+			String articleUrl = getArticleUrlByComment(newComment, request);			
 			if (newComment.getPreviousId() != null) {
 				replayCommentSendEmail(newComment, articleUrl);
 			}
+			
+			newCommentSendEmail(newComment, articleUrl);
 		}
 		return newComment;
 	}
@@ -79,16 +80,30 @@ public class CommentController {
 		return comments;
 	}
 	
-	private boolean newCommentSendEmail(Comment comment, String articleUrl) {    	
+	private boolean newCommentSendEmail(Comment newComment, String articleUrl) {    		
+		// article author.
+    	Article article = articleService.getArticleById(newComment.getParentId());
+    	String articleAuthor = article.getCreateBy();
+    	
+    	// give up send email if article author is comment author.
+    	if (article.getCreateBy().equals(newComment.getCreateBy())) {
+    		return false;
+    	}
+    	
+    	// only send reply email if article author is bereplied comment author.
+    	if (newComment.getPreviousId() != null) {
+	    	Comment beReplyComment = commentService.getCommentById(newComment.getPreviousId());
+	    	String beReplayAuthor = beReplyComment.getCreateBy();
+	    	if (articleAuthor.equals(beReplayAuthor)) {
+	    		return false;
+	    	}
+    	}
+    	    	
     	EmailContent mail = new EmailContent();
     	
     	//title.
-    	mail.setSubject(comment.getAuthorName() + " 评论了你的文章！"); 
-    	
-    	//article author.
-    	Article article = articleService.getArticleById(comment.getParentId());
-    	String articleAuthor = article.getCreateBy();
-    	
+    	mail.setSubject(newComment.getAuthorName() + " 评论了你的文章！"); 
+    	    	
     	//receiver.
     	String emailAddress = articleAuthor;
     	mail.setToEmails(emailAddress);
@@ -97,7 +112,7 @@ public class CommentController {
     	//content
     	StringBuilder builder = new StringBuilder();
         builder.append("<html><body>" + "Hi!<br /><br />");
-        builder.append("&nbsp&nbsp&nbsp&nbsp" + comment.getAuthorName() + " 在你的文章<strong>《" + article.getTitle() + "》</strong>中发表了评论。<br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp" + newComment.getAuthorName() + " 在你的文章<strong>《" + article.getTitle() + "》</strong>中发表了评论。<br />");
         builder.append("&nbsp&nbsp&nbsp&nbsp 你可以<a href=" + articleUrl + "> 点这里去看看写了什么， </a>（登录账号：办公邮箱，初始密码：工号）<br /><br />");
         builder.append("</body></html>");
         String content = builder.toString();        
