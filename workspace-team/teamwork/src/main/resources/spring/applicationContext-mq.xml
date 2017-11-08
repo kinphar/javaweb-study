@@ -69,9 +69,10 @@
     </rabbit:direct-exchange>
         
     <!-- 配置监听 消费者 -->
+    <!-- 
     <bean name="rabbitmqService" class="com.teamwork.service.RabbitMqListenService"></bean>
     <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">        
-            <!-- queues 监听队列，多个用逗号分隔，ref 监听器 -->
+            queues 监听队列，多个用逗号分隔，ref 监听器
         <rabbit:listener queues="device_ctl_queue" ref="rabbitmqService"/>
         <rabbit:listener queues="qrcode_queue" ref="rabbitmqService"/>
         <rabbit:listener queues="heartbeat_queue" ref="rabbitmqService"/>
@@ -79,4 +80,5 @@
         <rabbit:listener queues="open_queue" ref="rabbitmqService"/>
         
     </rabbit:listener-container>
+    -->
 </beans>
