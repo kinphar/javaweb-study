@@ -51,23 +51,32 @@
         direct 模式:消息与一个特定的路由器完全匹配，才会转发
         topic 模式:按规则转发消息，最灵活
      -->
-    <!-- <rabbit:direct-exchange name="${mq.exchange}" durable="true" auto-delete="false">
+    <rabbit:direct-exchange name="${mq.exchange}" durable="true" auto-delete="false">
         <rabbit:bindings>
-            设置消息Queue匹配的 pattern(direct模式为属性为key)
+            <!-- 设置消息Queue匹配的 pattern(direct模式为属性为key) -->
             <rabbit:binding queue="device_ctl_queue" key="${mq.routingkey}"/>
         </rabbit:bindings>
-    </rabbit:direct-exchange> -->
+    </rabbit:direct-exchange>    
+    <rabbit:direct-exchange name="qrcode" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="qrcode_queue" key="FnwnyA2Z"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+    <rabbit:direct-exchange name="heartbeat" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="heartbeat_queue" key="heartbeat"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
         
     <!-- 配置监听 消费者 -->
-    <!-- <bean name="rabbitmqService" class="com.teamwork.service.RabbitMqListenService"></bean>
+    <bean name="rabbitmqService" class="com.teamwork.service.RabbitMqListenService"></bean>
     <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">        
-            queues 监听队列，多个用逗号分隔 
-            ref 监听器
+            <!-- queues 监听队列，多个用逗号分隔，ref 监听器 -->
         <rabbit:listener queues="device_ctl_queue" ref="rabbitmqService"/>
         <rabbit:listener queues="qrcode_queue" ref="rabbitmqService"/>
         <rabbit:listener queues="heartbeat_queue" ref="rabbitmqService"/>
         <rabbit:listener queues="version_queue" ref="rabbitmqService"/>
         <rabbit:listener queues="open_queue" ref="rabbitmqService"/>
         
-    </rabbit:listener-container> -->
+    </rabbit:listener-container>
 </beans>
