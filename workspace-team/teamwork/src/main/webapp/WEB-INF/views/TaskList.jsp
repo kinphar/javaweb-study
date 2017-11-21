@@ -721,7 +721,7 @@
 	}
 
 	function taskTitleChange(id) {
-		var title = $("#title_" + id).val();
+		var title = $("#title_input_" + id).val();
 		var task = {};
 		task.id = id;
 		task.title = title;

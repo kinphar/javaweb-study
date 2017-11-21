@@ -25,7 +25,7 @@
 			method="POST">
 			<input type="hidden" name="redirectUrl" value="${redirectUrl}"/>
 			<div style="text-align:center">
-				<img class="img-rounded" alt="Brand" src="/images/justgun.gif"
+				<img class="img-rounded" alt="Brand" src="/images/bill.jpg"
 				style="height: 80%; width: 80%; margin-top: 10px; margin-bottom: 30px">
 			</div>			
 				
