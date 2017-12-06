@@ -87,7 +87,7 @@ public class ArticleController {
 	public String editArticle(Model model, @PathVariable String articleid) {		
 		
 		Article article = null;
-		if (articleid.equals("new")) {
+		if (articleid.equals("new") || articleid.equals("newmd")) {
 			article = new Article();
 			article.setAccess("private");
 		} else {
@@ -106,7 +106,11 @@ public class ArticleController {
 				sysDictService.getDictLikeSort("article_category_system");
 		model.addAttribute("category_system", category_system);
 		
-		return "article/article-edit";
+		if (articleid.equals("newmd")) {
+			return "article/article-edit-md";
+		} else {
+			return "article/article-edit";
+		}
 	}
 	
 	@RequestMapping("/view/{articleId}")
