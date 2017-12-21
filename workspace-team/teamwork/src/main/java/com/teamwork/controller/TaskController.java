@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.teamwork.common.pojo.EmailContent;
 import com.teamwork.common.pojo.TaskQuery;
 import com.teamwork.common.utils.ExcelUtil;
+import com.teamwork.common.utils.StringUtils;
 import com.teamwork.pojo.Comment;
 import com.teamwork.pojo.Project;
 import com.teamwork.pojo.Subtask;
@@ -295,13 +296,91 @@ public class TaskController {
     	return true;
     }
     
+    private boolean updateRequireEmail(Task task, String url) {    	
+    	EmailContent mail = new EmailContent();
+    	
+    	//title
+    	mail.setSubject("任务需求变更通知！"); 
+    	
+    	//receiver
+    	String emailAddress = task.getAssignTo();
+    	mail.setToEmails(emailAddress);
+    	
+    	//content
+    	StringBuilder builder = new StringBuilder();
+        builder.append("<html><body>" + "您好！任务详情如下：<br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务标题：" + task.getTitle() +"<br />");
+        String desc = task.getDescription();
+        System.out.println(desc);
+        desc = desc.replace("<br />", "");
+        System.out.println(desc);
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务内容：<font color=\"#E800E8\">" + desc + "</font><br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp 您可以<a href=" + url + ">进入 Zootopia 查看详情</a>（登录账号：邮箱地址，初始密码：工号）<br /><br />");
+        builder.append("</body></html>");
+        String content = builder.toString();        
+        mail.setContent(content);
+                
+        //do send
+        emailService.sendEmail(mail);
+    	return true;
+    }
+    
+    private String getNameByEmails(String emails) {    	
+    	String[] emailArray = emails.split(";");
+    	String name = "";
+    	for (String email : emailArray) {
+    		if (name.length() > 0) {
+    			name += "+";
+    		}
+    		User user = userService.getUserByEmail(email);
+    		name += user.getName();
+    	}
+    	return name;
+    }
+    
+    private boolean finishTaskEmail(Task task, String url) {    	
+    	EmailContent mail = new EmailContent();
+    	
+    	//title
+    	mail.setSubject("任务完成通知！"); 
+    	
+    	//receiver
+    	String emailAddress = task.getFollower();
+    	mail.setToEmails(emailAddress);
+    	
+    	//content
+    	StringBuilder builder = new StringBuilder();
+    	String name = getNameByEmails(task.getAssignTo());
+        builder.append("<html><body>" + "^o^ " + name + " 完成了以下任务：<br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务标题：" + task.getTitle() +"<br />");
+        String desc = task.getDescription();
+        System.out.println(desc);
+        desc = desc.replace("<br />", "");
+        System.out.println(desc);
+        builder.append("&nbsp&nbsp&nbsp&nbsp任务内容：" + desc + "<br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp 您可以<a href=" + url + ">进入 Zootopia 查看详情</a>（登录账号：邮箱地址，初始密码：工号）<br /><br />");
+        builder.append("</body></html>");
+        String content = builder.toString();        
+        mail.setContent(content);
+                
+        //do send
+        emailService.sendEmail(mail);
+    	return true;
+    }
+    
     @RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String,Object> UpdateTask(Task task) {
+	public Map<String,Object> UpdateTask(Task task, HttpServletRequest request) {
     	taskService.updateTask(task);	
     	
     	if (task.getDescription() != null) {
-    		// send email.
+    		Task updatedTask = taskService.getTaskById(task.getId());
+    		String url = getTaskUrl(request);
+    		updateRequireEmail(updatedTask, url);
+    	} else if (task.getStatus() != null && task.getStatus().equals("10003")) {
+    		Task updatedTask = taskService.getTaskById(task.getId());
+    		String url = getTaskUrl(request);
+    		finishTaskEmail(updatedTask, url);
     	}
     	
 		Map<String,Object> map = new HashMap<String,Object>();
