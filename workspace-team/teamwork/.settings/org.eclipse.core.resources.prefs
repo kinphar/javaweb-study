@@ -4,6 +4,7 @@ encoding//src/main/resources=UTF-8
 encoding//src/main/resources/resource/mail.properties=UTF-8
 encoding//src/main/resources/resource/mq.properties=UTF-8
 encoding//src/main/resources/resource/resource.properties=UTF-8
+encoding//src/main/webapp/WEB-INF/views/article/article-edit-md.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/common/top_navbar.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/hello.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/test.jsp=UTF-8

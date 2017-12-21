@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.teamwork.common.pojo.EmailContent;
 import com.teamwork.pojo.Article;
 import com.teamwork.pojo.Comment;
+import com.teamwork.pojo.Task;
 import com.teamwork.pojo.User;
 import com.teamwork.service.ArticleService;
 import com.teamwork.service.CommentService;
 import com.teamwork.service.EmailService;
+import com.teamwork.service.TaskService;
 import com.teamwork.service.UserService;
 
 @Controller
@@ -36,6 +38,8 @@ public class CommentController {
 	private EmailService emailService;
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private TaskService taskService;
 
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	@ResponseBody
@@ -57,6 +61,8 @@ public class CommentController {
 			}
 			
 			newCommentSendEmail(newComment, articleUrl);
+		} else if (newComment.getCategory().equals("task")) {
+			newTaskCommentSendEmail(newComment, getTaskUrl(request));
 		}
 		return newComment;
 	}
@@ -114,6 +120,38 @@ public class CommentController {
         builder.append("<html><body>" + "Hi!<br /><br />");
         builder.append("&nbsp&nbsp&nbsp&nbsp" + newComment.getAuthorName() + " 在你的文章<strong>《" + article.getTitle() + "》</strong>中发表了评论。<br />");
         builder.append("&nbsp&nbsp&nbsp&nbsp 你可以<a href=" + articleUrl + "> 点这里去看看写了什么， </a>（登录账号：办公邮箱，初始密码：工号）<br /><br />");
+        builder.append("</body></html>");
+        String content = builder.toString();        
+        mail.setContent(content);
+                
+        //do send
+        emailService.sendEmail(mail);
+    	return true;
+    }
+	
+	private String getTaskUrl(HttpServletRequest request) {
+		String url = "http://" + request.getServerName() + ":" + request.getServerPort() 
+			+ "/task/list";
+		return url;
+	}
+	
+	private boolean newTaskCommentSendEmail(Comment newComment, String url) {    	
+		// get task processors.
+		Task task = taskService.getTaskById(newComment.getParentId());
+		String processors = task.getAssignTo();
+   	    	    	
+		// make email.
+    	EmailContent mail = new EmailContent();    	
+    	// title.
+    	mail.setSubject(newComment.getAuthorName() + "   评论了你的任务！");     	    	
+    	// receiver.
+    	mail.setToEmails(processors);    	    	
+    	// content
+    	StringBuilder builder = new StringBuilder();
+        builder.append("<html><body>" + "Hi!<br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp" + newComment.getAuthorName() + " 在你参与的任务<strong>《" + task.getTitle() + "》</strong>中发表了如下评论：<br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp<font color=\"#E800E8\">“" + newComment.getDescription() + "”</font><br /><br />");
+        builder.append("&nbsp&nbsp&nbsp&nbsp你可以<a href=" + url + "> 点这里查看详情， </a>（登录账号：办公邮箱，初始密码：工号）<br /><br />");
         builder.append("</body></html>");
         String content = builder.toString();        
         mail.setContent(content);

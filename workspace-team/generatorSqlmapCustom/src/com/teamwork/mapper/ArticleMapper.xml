@@ -3,6 +3,7 @@
 <mapper namespace="com.teamwork.mapper.ArticleMapper" >
   <resultMap id="BaseResultMap" type="com.teamwork.pojo.Article" >
     <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="format" property="format" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="brief" property="brief" jdbcType="VARCHAR" />
     <result column="category" property="category" jdbcType="VARCHAR" />
@@ -79,7 +80,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, brief, category, access, status, view_time, thumb_up_time, author_name, 
+    id, format, title, brief, category, access, status, view_time, thumb_up_time, author_name, 
     create_by, create_date, update_by, update_date, del_flag
   </sql>
   <sql id="Blob_Column_List" >
@@ -134,24 +135,27 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.teamwork.pojo.Article" >
-    insert into article (id, title, brief, 
-      category, access, status, 
-      view_time, thumb_up_time, author_name, 
-      create_by, create_date, update_by, 
-      update_date, del_flag, detail
-      )
-    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, 
-      #{category,jdbcType=VARCHAR}, #{access,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
-      #{viewTime,jdbcType=INTEGER}, #{thumbUpTime,jdbcType=INTEGER}, #{authorName,jdbcType=VARCHAR}, 
-      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
-      #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}, #{detail,jdbcType=LONGVARCHAR}
-      )
+    insert into article (id, format, title, 
+      brief, category, access, 
+      status, view_time, thumb_up_time, 
+      author_name, create_by, create_date, 
+      update_by, update_date, del_flag, 
+      detail)
+    values (#{id,jdbcType=VARCHAR}, #{format,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{brief,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{access,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{viewTime,jdbcType=INTEGER}, #{thumbUpTime,jdbcType=INTEGER}, 
+      #{authorName,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.teamwork.pojo.Article" >
     insert into article
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="format != null" >
+        format,
       </if>
       <if test="title != null" >
         title,
@@ -199,6 +203,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="format != null" >
+        #{format,jdbcType=VARCHAR},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
@@ -256,6 +263,9 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=VARCHAR},
       </if>
+      <if test="record.format != null" >
+        format = #{record.format,jdbcType=VARCHAR},
+      </if>
       <if test="record.title != null" >
         title = #{record.title,jdbcType=VARCHAR},
       </if>
@@ -306,6 +316,7 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update article
     set id = #{record.id,jdbcType=VARCHAR},
+      format = #{record.format,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       brief = #{record.brief,jdbcType=VARCHAR},
       category = #{record.category,jdbcType=VARCHAR},
@@ -327,6 +338,7 @@
   <update id="updateByExample" parameterType="map" >
     update article
     set id = #{record.id,jdbcType=VARCHAR},
+      format = #{record.format,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       brief = #{record.brief,jdbcType=VARCHAR},
       category = #{record.category,jdbcType=VARCHAR},
@@ -347,6 +359,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.teamwork.pojo.Article" >
     update article
     <set >
+      <if test="format != null" >
+        format = #{format,jdbcType=VARCHAR},
+      </if>
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
       </if>
@@ -394,7 +409,8 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.teamwork.pojo.Article" >
     update article
-    set title = #{title,jdbcType=VARCHAR},
+    set format = #{format,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
       brief = #{brief,jdbcType=VARCHAR},
       category = #{category,jdbcType=VARCHAR},
       access = #{access,jdbcType=VARCHAR},
@@ -412,7 +428,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.teamwork.pojo.Article" >
     update article
-    set title = #{title,jdbcType=VARCHAR},
+    set format = #{format,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
       brief = #{brief,jdbcType=VARCHAR},
       category = #{category,jdbcType=VARCHAR},
       access = #{access,jdbcType=VARCHAR},

@@ -5,6 +5,8 @@ import java.util.Date;
 public class Article {
     private String id;
 
+    private String format;
+
     private String title;
 
     private String brief;
@@ -39,6 +41,14 @@ public class Article {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format == null ? null : format.trim();
     }
 
     public String getTitle() {

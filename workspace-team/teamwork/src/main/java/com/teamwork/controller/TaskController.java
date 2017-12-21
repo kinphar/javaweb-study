@@ -300,6 +300,10 @@ public class TaskController {
 	public Map<String,Object> UpdateTask(Task task) {
     	taskService.updateTask(task);	
     	
+    	if (task.getDescription() != null) {
+    		// send email.
+    	}
+    	
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("result", "ok");
 		return map;

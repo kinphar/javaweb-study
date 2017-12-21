@@ -87,7 +87,7 @@ public class ArticleController {
 	public String editArticle(Model model, @PathVariable String articleid) {		
 		
 		Article article = null;
-		if (articleid.equals("new") || articleid.equals("newmd")) {
+		if (articleid.equals("new") || articleid.equals("newmd") || articleid.equals("test")) {
 			article = new Article();
 			article.setAccess("private");
 		} else {
@@ -108,6 +108,8 @@ public class ArticleController {
 		
 		if (articleid.equals("newmd")) {
 			return "article/article-edit-md";
+		} else if (articleid.equals("test")) {
+			return "article/article-edit-test";
 		} else {
 			return "article/article-edit";
 		}
@@ -143,7 +145,13 @@ public class ArticleController {
 		
 		//increase view time.
 		articleService.increaseArticleViewTime(articleId);
-		return "article/article-view";
+		
+		String articleFormat = article.getFormat();
+		if (articleFormat.equals("markdown")) {
+			return "article/article-view-md";
+		} else {
+			return "article/article-view";
+		}
 	}
 	
 	@RequestMapping("/save") 

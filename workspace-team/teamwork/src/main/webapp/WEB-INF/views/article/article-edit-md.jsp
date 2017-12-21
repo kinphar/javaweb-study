@@ -23,26 +23,22 @@
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
-<script type="text/javascript" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
-
 <link rel="stylesheet" href="/static/icheck/skins/square/green.css" />
 <script type="application/javascript" src="/static/icheck/icheck.min.js"></script>
 
-<link rel="stylesheet" href="/static/editor.md-master/css/editormd.css" />
-<script type="application/javascript" src="/static/editor.md-master/editormd.min.js"></script>
+<link rel="stylesheet" href="/static/editormd/css/editormd.min.css" />
+<script type="application/javascript" src="/static/editormd/editormd.min.js"></script>
 
 <script type="text/javascript">
 	var basePath = "<%=basePath%>";
 	
 	$(function() {
-	      editormd("my-editormd", {//注意1：这里的就是上面的DIV的id属性值
+	      editormd("my-editormd", {
 	          width   : "100%",
 	          height  : 640,
 	          syncScrolling : "single",
-	          path    : "/static/editor.md-master/lib/",//注意2：你的路径
-	          saveHTMLToTextarea : true//注意3：这个配置，方便post提交表单
+	          path    : "/static/editormd/lib/",
+	          saveHTMLToTextarea : true
 	      });
 	  });
 
@@ -76,26 +72,26 @@
 				}
 			});
 		});		
-	
 	});
 	
 	function checkNewArticleFrom(f) {
-		/*
-		if (!UE.getEditor('myEditor').hasContents()){ 
+		/* if (!UE.getEditor('myEditor').hasContents()){ 
 			alert('请先填写内容!'); 
-		}
-		*/
+		} */
+
 		return true;
 	}
 	
 	function newArticleFormSubmit(status) {
 		var f = document.getElementById("newArticleForm");
 		console.log("status:" + status);
-		if (checkNewArticleFrom(f) == true) {
+		
+		console.log("markdown:" + $("#my-editormd-markdown-doc").val());
+		//if (checkNewArticleFrom(f) == true) {
 			f.status.value = status;
-			//f.detail.value = UE.getEditor('myEditor').getContent();
+			f.detail.value = $("#my-editormd-markdown-doc").val();
 			f.submit();
-		}
+		//}
 	}
 </script>
 
@@ -106,13 +102,14 @@
 		<form:form id="newArticleForm" commandName="article" 
 			action="${ctx}/article/save" method="post">			
 		<input type="hidden" name="id" value="${article.id}"/>
+		<input type="hidden" name="format" value="markdown"/>
 		<input type="hidden" name="status" />
 		<input type="hidden" name="detail" />
 		<table class="table table-condensed table-bordered" style="background-color:#fff">
 			<tbody>
 				<tr>
 					<td class="td-center active"><label>标题：</label></td>
-					<td><input type="text" class="form-control" name="title" style="width:60%" value="装修中... ${article.title}"/></td>
+					<td><input type="text" class="form-control" name="title" style="width:60%" value="${article.title}"/></td>
 				</tr>
 				<tr>
 					<td class="td-center active"><label>分类：</label></td>
@@ -155,8 +152,6 @@
     					</script>
     					<div id="my-editormd" >
 							<textarea id="my-editormd-markdown-doc" name="my-editormd-markdown-doc" style="display:none;"></textarea>
-							<!-- 注意：name属性的值-->
-							<textarea id="my-editormd-html-code" name="my-editormd-html-code" style="display:none;"></textarea>
 						</div>
     				</td>
 				</tr>
