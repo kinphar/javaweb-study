@@ -87,13 +87,20 @@ public class ArticleController {
 	public String editArticle(Model model, @PathVariable String articleid) {		
 		
 		Article article = null;
-		if (articleid.equals("new") || articleid.equals("newmd") || articleid.equals("test")) {
+		if (articleid.equals("new") || articleid.equals("newmd")) {
 			article = new Article();
 			article.setAccess("private");
 		} else {
 			article = articleService.getArticleById(articleid);
 		}
 		model.addAttribute("article", article);
+		
+		String articleFormat = "";
+		if (articleid.equals("newmd") || article.getFormat().equals("markdown")) {
+			articleFormat = "markdown";
+		} else {
+			articleFormat = "rich";
+		}
 		
 		//种类
 		List<SysDict> category_platform = 
@@ -106,10 +113,8 @@ public class ArticleController {
 				sysDictService.getDictLikeSort("article_category_system");
 		model.addAttribute("category_system", category_system);
 		
-		if (articleid.equals("newmd")) {
+		if (articleFormat.equals("markdown")) {
 			return "article/article-edit-md";
-		} else if (articleid.equals("test")) {
-			return "article/article-edit-test";
 		} else {
 			return "article/article-edit";
 		}
@@ -147,7 +152,7 @@ public class ArticleController {
 		articleService.increaseArticleViewTime(articleId);
 		
 		String articleFormat = article.getFormat();
-		if (articleFormat.equals("markdown")) {
+		if (articleFormat != null && articleFormat.equals("markdown")) {
 			return "article/article-view-md";
 		} else {
 			return "article/article-view";

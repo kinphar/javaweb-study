@@ -50,11 +50,6 @@
 		window.open(url);
 	}
 	
-	function newTestArticle() {
-		var url = "${ctx}/article/edit/test";
-		window.open(url);
-	}
-	
 </script>
 
 </head>
@@ -93,17 +88,12 @@
 							<div style="text-align: center; margin-top: 10px">
 								<a href="javascript:void(0)" class="btn btn-success" 
 									onclick="newArticle()"><span
-									class="glyphicon glyphicon-pencil"></span> 写文章</a>
+									class="glyphicon glyphicon-pencil"></span> 写文章  </a>
 							</div>
 							<div style="text-align: center; margin-top: 10px">
 								<a href="javascript:void(0)" class="btn btn-success" 
 									onclick="newMdArticle()"><span
 									class="glyphicon glyphicon-pencil"></span> 写文章MD</a>
-							</div>
-							<div style="text-align: center; margin-top: 10px">
-								<a href="javascript:void(0)" class="btn btn-success" 
-									onclick="newTestArticle()"><span
-									class="glyphicon glyphicon-pencil"></span> TEST</a>
 							</div>
 						</div>
 					</div>

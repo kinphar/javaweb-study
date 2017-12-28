@@ -38,7 +38,11 @@
 	          height  : 640,
 	          syncScrolling : "single",
 	          path    : "/static/editormd/lib/",
-	          saveHTMLToTextarea : true
+	          saveHTMLToTextarea : false,
+	          
+	          emoji : true,
+              taskList : true,
+              tocm            : true,         // Using [TOCM]
 	      });
 	  });
 
@@ -151,7 +155,8 @@
 						<script type="text/plain" id="myEditor">		
     					</script>
     					<div id="my-editormd" >
-							<textarea id="my-editormd-markdown-doc" name="my-editormd-markdown-doc" style="display:none;"></textarea>
+							<textarea id="my-editormd-markdown-doc" name="my-editormd-markdown-doc"
+								style="display:none;">${article.detail}</textarea>
 						</div>
     				</td>
 				</tr>

@@ -16,6 +16,18 @@
 <script type="application/javascript" src="/js/jquery.min.js"></script>
 <script type="application/javascript" src="/js/bootstrap.min.js"></script>
 
+<link rel="stylesheet" href="/static/editormd/css/editormd.min.css" />
+<link rel="stylesheet" href="/static/editormd/css/editormd.logo.min.css" />
+<link rel="stylesheet" href="/static/editormd/css/editormd.preview.min.css" />
+<script src="/static/editormd/lib/marked.min.js"></script>
+<script src="/static/editormd/lib/prettify.min.js"></script>
+<script src="/static/editormd/lib/raphael.min.js"></script>
+<script src="/static/editormd/lib/underscore.min.js"></script>
+<script src="/static/editormd/lib/sequence-diagram.min.js"></script>
+<script src="/static/editormd/lib/flowchart.min.js"></script>
+<script src="/static/editormd/lib/jquery.flowchart.min.js"></script>
+<script src="/static/editormd/editormd.min.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	console.log("dispplay page : article-view-md.")
@@ -75,11 +87,6 @@ window.onload = function () {
 }
 
 
-function newArticle() {
-	var url = "${ctx}/article/edit/new";
-	window.open(url);
-}	
-
 function setReply(id, name) {
 	$("#new-comment-input").val("【回复 " + name + "】： ");
 	$("#new-comment-input").focus();
@@ -106,6 +113,18 @@ function deleteComment(id) {
 	});
 }
 
+var testEditor;
+$(function () {
+    testEditor = editormd.markdownToHTML("doc-content", {
+        htmlDecode: "style,script,iframe",
+        emoji: true,
+        taskList: true,
+        tex: true, 
+        flowChart: true, 
+        sequenceDiagram: true, 
+        codeFold: true,
+});});
+
 </script>
 
 </head>
@@ -116,71 +135,6 @@ function deleteComment(id) {
 	<div class="container theme-showcase" role="main">
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div class="col-sm-2">
-					<div class="widget-box">
-						<div class="widget-title">
-							<h5>Who</h5>
-						</div>
-						<div class="widget-content">
-							<div style="text-align: center">
-								<img class="img-round user-photo" src="${userLogin.photo}">
-								<label>${userLogin.name}</label>
-							</div>
-							<hr />
-							<div style="text-align: left; padding-left: 15px">
-								<p>
-									<span style="color: gray">撰文：</span>
-									<a href="${ctx}/article/${userLogin.email}/allcate/publish">${publishNum}篇</a>
-								</p>
-								<p>
-									<span style="color: gray">草稿：</span>
-									<a href="${ctx}/article/${userLogin.email}/allcate/draft">${draftNum}篇</a>
-								</p>
-								<p>
-									<span style="color: gray">等级：</span>白银
-								</p>
-							</div>
-							<hr />
-							<div style="text-align: center">
-								<a href="#" class="btn btn-success" onclick="newArticle()"><span
-									class="glyphicon glyphicon-pencil"></span> 写文章</a>
-							</div>
-						</div>
-					</div>
-					<div class="widget-box">
-						<div class="widget-title">
-							<h5>Search</h5>
-						</div>
-						<div class="widget-content">
-							<div class="input-group">
-								<input type="text" class="form-control"> <span
-									class="input-group-btn">
-									<button class="btn btn-default" type="button">
-										<span class="glyphicon glyphicon-search"></span>
-									</button>
-								</span>
-							</div>
-						</div>
-					</div>
-
-					<div class="widget-box">
-						<div class="widget-title">
-							<h5>Categories</h5>
-						</div>
-						<div class="widget-content">
-							<div class="articles-category">
-							<ul class="list-unstyled">
-								<c:forEach items="${categoryMap}" var="category" varStatus="states">
-									<li><a href="${ctx}/article/allauthor/${category.key}/publish">
-										<span>${category.key}</span>(${category.value})</a></li>
-								</c:forEach>
-							</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-sm-10">
 					<div class="widget-box">
 						<div class="widget-content">
 							<div class="article-title full-article-title">
@@ -251,12 +205,9 @@ function deleteComment(id) {
 							</div>							
 						</div>
 					</div>
-				</div>
-				
 			</div>
 		</div>
 	</div>
-
 
 </body>
 </html>
