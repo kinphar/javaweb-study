@@ -88,7 +88,7 @@
 							<div style="text-align: center; margin-top: 10px">
 								<a href="javascript:void(0)" class="btn btn-success" 
 									onclick="newArticle()"><span
-									class="glyphicon glyphicon-pencil"></span> 写文章  </a>
+									class="glyphicon glyphicon-pencil"></span> 写文章++</a>
 							</div>
 							<div style="text-align: center; margin-top: 10px">
 								<a href="javascript:void(0)" class="btn btn-success" 

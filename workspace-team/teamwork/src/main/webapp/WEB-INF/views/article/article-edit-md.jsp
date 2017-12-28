@@ -35,14 +35,18 @@
 	$(function() {
 	      editormd("my-editormd", {
 	          width   : "100%",
-	          height  : 640,
+	          height  : 800,
 	          syncScrolling : "single",
 	          path    : "/static/editormd/lib/",
 	          saveHTMLToTextarea : false,
 	          
 	          emoji : true,
               taskList : true,
-              tocm            : true,         // Using [TOCM]
+              tocm : true,
+              
+              imageUpload : true,
+              imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+              imageUploadURL : "/resource/upload/mdfile",
 	      });
 	  });
 
@@ -111,6 +115,10 @@
 		<input type="hidden" name="detail" />
 		<table class="table table-condensed table-bordered" style="background-color:#fff">
 			<tbody>
+				<tr>
+					<td colspan="2"><label class="editor-tip">欢迎使用 Markdown 编辑器！<br />
+					由于Editor.md 插件兼容性限制，将浏览器切换到 IE兼容模式 可获得较好的使用体验，否则工具栏不能用！</label></td>
+				</tr>
 				<tr>
 					<td class="td-center active"><label>标题：</label></td>
 					<td><input type="text" class="form-control" name="title" style="width:60%" value="${article.title}"/></td>
